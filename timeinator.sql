@@ -16,7 +16,6 @@ DROP TABLE IF EXISTS "tasks";
 CREATE TABLE "tasks" (
     "id" int NOT NULL UNIQUE,
     "user" int NOT NULL,
-    "static" boolean DEFAULT 0,
     "active" boolean DEFAULT 0,
     "time" TIMESTAMP NOT NULL,
     "duration" TIME DEFAULT NULL,
@@ -24,5 +23,14 @@ CREATE TABLE "tasks" (
     "cycle" TIME DEFAULT NULL,
     "progress" FLOAT DEFAULT 0,
     "started" boolean DEFAULT 0,
+    PRIMARY KEY ("id")
+);
+
+DROP TABLE IF EXISTS "freetime";
+CREATE TABLE "freetime" (
+    "id" int NOT NULL UNIQUE,
+    "user" int NOT NULL,
+    "begin" TIMESTAMP NOT NULL,
+    "end" TIMESTAMP NOT NULL,
     PRIMARY KEY ("id")
 );
