@@ -3,7 +3,7 @@
 https://docs.google.com/document/d/1VpCnl0fz3ROxbVLxfZ4WzO-_ov4YlYcmyr8OJUiuIrw/edit <br><br>
 
 Zadania:<br>
-  &nbsp;-Stałe:<br>
+  &nbsp;-Stałe: - prostsza wersja - lepiej określić sam przedział czasu wolnego<br>
     &nbsp;&nbsp;&nbsp;-w określonym z góry czasie (np. kurs śpiewania od 18:00 do 20:00)<br>
     &nbsp;&nbsp;&nbsp;-apka w tym czasie nie proponuje innych zadań bo wie że jesteś zajęty<br>
     &nbsp;&nbsp;&nbsp;-może być pobierany z jakiegoś źródła (skomplikowane więc to później)<br>
