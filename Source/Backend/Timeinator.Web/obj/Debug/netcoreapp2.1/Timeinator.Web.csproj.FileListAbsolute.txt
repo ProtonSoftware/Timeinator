@@ -1,0 +1,14 @@
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\bin\Debug\netcoreapp2.1\Timeinator.Web.deps.json
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\bin\Debug\netcoreapp2.1\Timeinator.Web.runtimeconfig.json
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\bin\Debug\netcoreapp2.1\Timeinator.Web.runtimeconfig.dev.json
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\bin\Debug\netcoreapp2.1\Timeinator.Web.dll
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\bin\Debug\netcoreapp2.1\Timeinator.Web.pdb
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\obj\Debug\netcoreapp2.1\Timeinator.Web.csprojAssemblyReference.cache
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\obj\Debug\netcoreapp2.1\Timeinator.Web.csproj.CoreCompileInputs.cache
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\obj\Debug\netcoreapp2.1\Timeinator.Web.RazorAssemblyInfo.cache
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\obj\Debug\netcoreapp2.1\Timeinator.Web.RazorAssemblyInfo.cs
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\obj\Debug\netcoreapp2.1\Timeinator.Web.AssemblyInfoInputs.cache
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\obj\Debug\netcoreapp2.1\Timeinator.Web.AssemblyInfo.cs
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\obj\Debug\netcoreapp2.1\Timeinator.Web.RazorTargetAssemblyInfo.cache
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\obj\Debug\netcoreapp2.1\Timeinator.Web.dll
+D:\Projects\Git\Timeinator\Source\Backend\Timeinator.Web\obj\Debug\netcoreapp2.1\Timeinator.Web.pdb
