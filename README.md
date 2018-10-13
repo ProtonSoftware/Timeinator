@@ -16,6 +16,11 @@ Zadania:<br>
     &nbsp;&nbsp;&nbsp;-Czas na wykonanie:<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-czas przydzielany priorytetowo (algorytm czasu)<br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-czas ustawiony na stałe np. 15 minut<br><br>
+
+Zakończenie zadania:<br>
+  &nbsp;&nbsp;-powiadomienie gdy skończy się czas<br>
+  &nbsp;&nbsp;-możliwość przedłużenia czasu zadania<br>
+  &nbsp;&nbsp;-konieczne jest zatwierdzenie zakończenia zadania<br><br>
    
 Algorytm czasu:<br>
   &nbsp;&nbsp;-{pozostały czas wolny} * {priorytet zadania} / {suma priorytetów zadań}<br>
