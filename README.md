@@ -40,11 +40,8 @@ Algorytm K:<br>
   &nbsp;&nbsp;-zadanie można odłożyć na później i apka zaproponuje następne o niższym priorytecie<br>
 <br>
 Minutnik:<br>
-  &nbsp;&nbsp;-wyciszenie na określony czas - np. 8h<br>
   &nbsp;&nbsp;-każde zadanie będzie musiało zawierać informację o postępie ({czas spędzony} / {czas spodziewany})<br>
-  &nbsp;&nbsp;-apka musi wymagać dla zadań (innych niż stałe) żeby zatwierdzić zaczęcie i skończenie wykonywania zadania<br>
   &nbsp;&nbsp;-możliwość zrobienia przerwy - propozycja innego zadania<br>
-  &nbsp;&nbsp;-przypomnienia o zadaniach stałych (np. siedzimy 30 minut nad matmą w domu, a za godzinę mamy być na wykładzie)<br>
 <br>
 Statystyki:<br>
   &nbsp;&nbsp;-anulowanie zadania przed zaczęciem bez kary<br>
