@@ -5,16 +5,18 @@ https://docs.google.com/document/d/1VpCnl0fz3ROxbVLxfZ4WzO-_ov4YlYcmyr8OJUiuIrw/
 Słownik:<br>
 -priorytet - ile czasu poświęcamy na zadanie, skala od 1 do 5<br>
 -ważność - czy zadanie musi być zrobione dzisiaj/teraz, wpływa na kolejność<br>
+-okres działania - czas od kliknięcia że jestem gotowy do wybranej godziny<br>
 <br>
 Zadania:<br>
-  &nbsp;-Stałe: - funkcja przyszłościowa<br>
+  &nbsp;-olać plan zajęć<br>
+  &nbsp;-uruchomienia aplikacji - Are you ready? YES! - podaj godzinę końca używania apki<br>
+  &nbsp;-ready? yes -> lista wszystkich zadań - odznacz te które chcesz później<br>
+  &nbsp;-W dowolnej chwili wolnego czasu:<br>
     &nbsp;&nbsp;&nbsp;-w określonym z góry czasie (np. kurs śpiewania od 18:00 do 20:00)<br>
-    &nbsp;&nbsp;&nbsp;-apka w tym czasie nie proponuje innych zadań bo wie że jesteś zajęty<br>
-    &nbsp;&nbsp;&nbsp;-może być pobierany z jakiegoś źródła (skomplikowane więc to później)<br>
-    &nbsp;&nbsp;&nbsp;-sen<br>
-  &nbsp;-Bez określonego czasu (w dowolnej chwili wolnego czasu):<br>
-    &nbsp;&nbsp;&nbsp;-obiad<br>
+    &nbsp;&nbsp;&nbsp;-np. obiad<br>
+    &nbsp;&nbsp;&nbsp;proponowana kolejność zadań w apce - edytowalna<br>
     &nbsp;&nbsp;&nbsp;-stałe powiadomienie o aktualnym zadaniu<br>
+    &nbsp;&nbsp;&nbsp;-ważne zadanie ma pierwszeństwo - zadania nieważne po zrobieniu ważnych<br>
     &nbsp;&nbsp;&nbsp;-o określonym priorytecie (skala)<br>
     &nbsp;&nbsp;&nbsp;-mogą być cykliczne lub jednorazowe<br>
     &nbsp;&nbsp;&nbsp;-proponuje najodpowiedniejsze zadanie w aktualnej przerwie między zadaniami stałymi (wolny czas)<br>
@@ -38,6 +40,7 @@ Algorytm K:<br>
   &nbsp;&nbsp;-zadanie można odłożyć na później i apka zaproponuje następne o niższym priorytecie<br>
 <br>
 Minutnik:<br>
+  &nbsp;&nbsp;-wyciszenie na określony czas - np. 8h<br>
   &nbsp;&nbsp;-każde zadanie będzie musiało zawierać informację o postępie ({czas spędzony} / {czas spodziewany})<br>
   &nbsp;&nbsp;-apka musi wymagać dla zadań (innych niż stałe) żeby zatwierdzić zaczęcie i skończenie wykonywania zadania<br>
   &nbsp;&nbsp;-możliwość zrobienia przerwy - propozycja innego zadania<br>
