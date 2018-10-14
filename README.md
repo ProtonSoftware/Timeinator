@@ -3,9 +3,9 @@
 https://docs.google.com/document/d/1VpCnl0fz3ROxbVLxfZ4WzO-_ov4YlYcmyr8OJUiuIrw/edit<br>
 <br>
 Słownik:<br>
--priorytet - ile czasu poświęcamy na zadanie, skala od 1 do 5<br>
--ważność - czy zadanie musi być zrobione dzisiaj/teraz, wpływa na kolejność<br>
--okres działania - czas od kliknięcia że jestem gotowy do wybranej godziny<br>
+-priority - ile czasu poświęcamy na zadanie, skala od 1 do 5<br>
+-importance - czy zadanie musi być zrobione dzisiaj/teraz, wpływa na kolejność<br>
+-action period - czas od kliknięcia że jestem gotowy do wybranej godziny<br>
 <br>
 Zadania:<br>
   &nbsp;-olać plan zajęć<br>
