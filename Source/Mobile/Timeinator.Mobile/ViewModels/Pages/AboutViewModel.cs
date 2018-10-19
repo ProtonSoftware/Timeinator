@@ -5,5 +5,17 @@
     /// </summary>
     public class AboutViewModel : BaseViewModel
     {
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public AboutViewModel()
+        {
+            // Set this page's title
+            Title = "About";
+        }
+
+        #endregion
     }
 }
