@@ -86,3 +86,4 @@ System.Text.Encoding.Extensions
 System.Linq.Queryable
 System.Resources.ResourceManager
 Timeinator.Core
+AutoMapper
