@@ -15,7 +15,6 @@ namespace Timeinator.Mobile.DataAccess
         public bool Important { get; set; }
         public bool Started { get; set; }
         public TimeSpan Cycle { get; set; }
-        public DateTime DT { get; set; }
 
         #region Constructor
         public TimeTask()
