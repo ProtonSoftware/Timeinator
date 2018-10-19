@@ -16,13 +16,10 @@ namespace Timeinator.Mobile
         /// <param name="construction">Framework's construction</param>
         public static FrameworkConstruction AddTimeinatorViewModels(this FrameworkConstruction construction)
         {
-            // Bind to a single instance of Application view model
+            // Bind to a single instance of specified models
             construction.Services.AddSingleton<ApplicationViewModel>();
-
-            // Bind to a single instance of Time Tasks repository
             construction.Services.AddSingleton<ITimeTasksRepository, TimeTasksRepository>();
-
-            // Bind to a single instance of UIManager
+            construction.Services.AddSingleton<TimeTasksManager>();
             construction.Services.AddSingleton<IUIManager, UIManager>();
 
             // Return the construction for chaining

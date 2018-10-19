@@ -23,6 +23,12 @@
     <Compile Update="Views\Menu\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Controls\AddNewTimeTaskControl.xaml.cs">
+      <DependentUpon>AddNewTimeTaskControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Pages\TasksPage.xaml.cs">
+      <DependentUpon>TasksPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
