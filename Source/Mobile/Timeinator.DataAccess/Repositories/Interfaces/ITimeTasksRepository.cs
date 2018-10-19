@@ -1,4 +1,5 @@
-﻿using Timeinator.Core;
+﻿using System.Collections.Generic;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile.DataAccess
 {
@@ -7,6 +8,6 @@ namespace Timeinator.Mobile.DataAccess
     /// </summary>
     public interface ITimeTasksRepository : IRepository<TimeTask, int>
     {
-
+        List<TimeTask> GetSavedTasksForToday();
     }
 }

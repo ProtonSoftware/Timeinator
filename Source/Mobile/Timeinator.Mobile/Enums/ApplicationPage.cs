@@ -11,6 +11,11 @@
         Login,
 
         /// <summary>
+        /// Main tasks page
+        /// </summary>
+        Tasks,
+
+        /// <summary>
         /// Settings page
         /// </summary>
         Settings,
