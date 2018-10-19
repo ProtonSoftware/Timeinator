@@ -1,18 +1,34 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Timeinator.Mobile
 {
+    /// <summary>
+    /// Main entry point for this application
+    /// </summary>
     public partial class App : Application
     {
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public App()
         {
+            // Do default thing
             InitializeComponent();
 
-            MainPage = new MainPage();
+            // Setup our Dependency Injection for this application
+            DI.InitialSetup();
+
+            // Setup main page to host our pages
+            MainPage = new PageHost();
         }
+
+        #endregion
+
+        #region Lifecycle Methods
 
         protected override void OnStart()
         {
@@ -28,5 +44,7 @@ namespace Timeinator.Mobile
         {
             // Handle when your app resumes
         }
+
+        #endregion
     }
 }
