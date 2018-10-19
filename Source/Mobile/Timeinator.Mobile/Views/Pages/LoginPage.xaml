@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Timeinator.Mobile"
+             x:Class="Timeinator.Mobile.LoginPage"
+             Title="{Binding Title}">
+
+    <Grid>
+
+        <Frame VerticalOptions="Center"
+               HorizontalOptions="Center"
+               WidthRequest="300"
+               BackgroundColor="White">
+
+            <Button Text="Bez logowania"
+                    Command="{Binding EnterWithoutLoginCommand}" />
+
+        </Frame>
+
+    </Grid>
+
+
+</local:BasePage>
