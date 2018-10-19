@@ -1,4 +1,5 @@
-﻿using Timeinator.Core;
+﻿using System;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile.DataAccess
 {
@@ -7,6 +8,19 @@ namespace Timeinator.Mobile.DataAccess
     /// </summary>
     public class TimeTask : BaseObject<int>
     {
-        // TODO: Zadanie dla Michała :)
+        public int OrderId { get; set; }
+        public int Priority { get; set; }
+        public float Progress { get; set; }
+        public bool Enabled { get; set; }
+        public bool Important { get; set; }
+        public bool Started { get; set; }
+        public TimeSpan Cycle { get; set; }
+
+        #region Constructor
+        public TimeTask()
+        {
+
+        }
+        #endregion
     }
 }
