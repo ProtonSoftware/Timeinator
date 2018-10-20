@@ -11,7 +11,12 @@ namespace Timeinator.Mobile
     {
         public List<TimeTaskContext> TaskContexts { get; set; }
         public DateTime ReadyTime { get; set; }
-        public TimeSpan AvailableTime { get; set; }
+        private TimeSpan m_availableTime;
+        public TimeSpan AvailableTime
+        {
+            get { return (m_availableTime - (DateTime.Now - ReadyTime)); }
+            set { m_availableTime = value; }
+        }
 
         #region Constructor
         public TimeTasksManager()
@@ -20,14 +25,35 @@ namespace Timeinator.Mobile
         #endregion
 
         #region PublicFunctions
+        public void AddTask(TimeTaskContext timeTask)
+        {
+            TaskContexts.Add(timeTask);
+            refreshContexts();
+        }
+
+        public void RemoveTask(TimeTaskContext timeTask)
+        {
+            TaskContexts.Remove(timeTask);
+            refreshContexts();
+        }
+
+        /// <summary>
+        /// Initialize time managing - user is ready
+        /// </summary>
+        public void UserReady(TimeSpan freetime)
+        {
+            AvailableTime = freetime;
+            ReadyTime = DateTime.Now;
+            CalcDurations();
+        }
+
         /// <summary>
         /// Initialize manager with new TimeTasks
         /// </summary>
         public void UpdateTaskList(List<TimeTaskContext> timecontexts)
         {
             TaskContexts = timecontexts;
-            TaskContexts = ReOrder(TaskContexts);
-            TaskContexts = TaskContexts.OrderBy(x => x.OrderId).ToList();
+            refreshContexts();
         }
 
         /// <summary>
@@ -38,6 +64,7 @@ namespace Timeinator.Mobile
             double priors = sumPriorities(TaskContexts);
             for (int i = 0; i < TaskContexts.Count; i++)
             {
+                TaskContexts[i].Duration = new TimeSpan((long)(AvailableTime.Ticks * (GetRealPriority(TaskContexts[i]) / priors)));
             }
         }
 
@@ -62,16 +89,6 @@ namespace Timeinator.Mobile
             return final;
         }
         
-        /// <summary>
-        /// Initialize time managing - user is ready
-        /// </summary>
-        public void UserReady(TimeSpan freetime)
-        {
-            AvailableTime = freetime;
-            ReadyTime = DateTime.Now;
-            CalcDurations();
-        }
-
         public List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts)
         {
             return contexts.FindAll(x => x.Important);
@@ -84,6 +101,12 @@ namespace Timeinator.Mobile
         #endregion
 
         #region PrivateFunctions
+        void refreshContexts()
+        {
+            TaskContexts = ReOrder(TaskContexts);
+            TaskContexts = TaskContexts.OrderBy(x => x.OrderId).ToList();
+        }
+
         double sumPriorities(List<TimeTaskContext> l)
         {
             double s = 0;
