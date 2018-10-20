@@ -17,8 +17,9 @@ namespace Timeinator.Mobile
         /// Will be first to be offered
         /// </summary>
         public bool Important { get; set; }
+        public bool IsDisabled { get; set; }
         public bool Started => Progress > 0;
 
-        public TimeSpan Duration { get; set; }
+        public TimeSpan AssignedTime { get; set; }
     }
 }
