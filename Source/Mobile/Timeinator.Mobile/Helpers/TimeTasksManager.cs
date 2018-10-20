@@ -10,7 +10,6 @@ namespace Timeinator.Mobile
     public class TimeTasksManager
     {
         public List<TimeTaskContext> TaskContexts { get; set; }
-
         public DateTime ReadyTime { get; set; }
         public TimeSpan AvailableTime { get; set; }
 
@@ -21,11 +20,25 @@ namespace Timeinator.Mobile
         #endregion
 
         #region PublicFunctions
+        /// <summary>
+        /// Initialize manager with new TimeTasks
+        /// </summary>
         public void UpdateTaskList(List<TimeTaskContext> timecontexts)
         {
             TaskContexts = timecontexts;
             TaskContexts = ReOrder(TaskContexts);
             TaskContexts = TaskContexts.OrderBy(x => x.OrderId).ToList();
+        }
+
+        /// <summary>
+        /// Recalculates durations in TimeTasks loaded
+        /// </summary>
+        public void CalcDurations()
+        {
+            double priors = sumPriorities(TaskContexts);
+            for (int i = 0; i < TaskContexts.Count; i++)
+            {
+            }
         }
 
         /// <summary>
@@ -56,6 +69,7 @@ namespace Timeinator.Mobile
         {
             AvailableTime = freetime;
             ReadyTime = DateTime.Now;
+            CalcDurations();
         }
 
         public List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts)
