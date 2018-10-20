@@ -105,7 +105,7 @@ namespace Timeinator.Mobile
         /// </summary>
         public List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts)
         {
-            return contexts.FindAll(x => x.Important);
+            return contexts.FindAll(x => x.IsImportant);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Timeinator.Mobile
         /// </summary>
         public double GetRealPriority(TimeTaskContext tc)
         {
-            return tc.Priority * (1.0 - tc.Progress);
+            return (int)tc.Priority * (1.0 - tc.Progress);
         }
         #endregion
 
