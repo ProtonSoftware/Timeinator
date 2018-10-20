@@ -11,7 +11,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Unique ordinal number of the task
         /// </summary>
-        public uint OrderId { get; set; }
+        public int OrderId { get; set; }
 
         /// <summary>
         /// Name of the task
@@ -39,15 +39,6 @@ namespace Timeinator.Mobile
         public float Progress { get; set; }
 
         /// <summary>
-<<<<<<< HEAD
-        /// Will be first to be offered
-        /// </summary>
-        public bool Important { get; set; }
-        public bool IsDisabled { get; set; }
-        public bool Started => Progress > 0;
-
-        public TimeSpan AssignedTime { get; set; }
-=======
         /// Sets particular task as temporary invisible for <see cref="TimeTasksManager"/>
         /// </summary>
         public bool IsDisabled { get; set; }
@@ -61,6 +52,5 @@ namespace Timeinator.Mobile
         /// Indicates whether task has started
         /// </summary>
         public bool HasStarted => Progress > 0;
->>>>>>> ca61290eeda324d450684c58d935d5cf69e66539
     }
 }
