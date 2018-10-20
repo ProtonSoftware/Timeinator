@@ -20,6 +20,7 @@ namespace Timeinator.Mobile
             construction.Services.AddSingleton<ApplicationViewModel>();
             construction.Services.AddSingleton<ITimeTasksRepository, TimeTasksRepository>();
             construction.Services.AddSingleton<TimeTasksManager>();
+            construction.Services.AddSingleton<TimeTasksMapper>();
             construction.Services.AddSingleton<IUIManager, UIManager>();
 
             // Return the construction for chaining
