@@ -13,7 +13,6 @@ namespace Timeinator.Mobile.DataAccess
         public float Progress { get; set; }
         public bool Enabled { get; set; }
         public bool Important { get; set; }
-        public bool Started { get; set; }
         public TimeSpan Cycle { get; set; }
 
         #region Constructor
