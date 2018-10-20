@@ -10,22 +10,29 @@ namespace Timeinator.Mobile
     public class TimeTasksManager
     {
         public List<TimeTaskContext> TaskContexts { get; set; }
+
         public DateTime ReadyTime { get; set; }
         public TimeSpan AvailableTime { get; set; }
 
         #region Constructor
-        public TimeTasksManager(List<TimeTaskContext> timecontexts)
+        public TimeTasksManager()
         {
-            TaskContexts = timecontexts;
         }
         #endregion
 
         #region PublicFunctions
+        public void UpdateTaskList(List<TimeTaskContext> timecontexts)
+        {
+            TaskContexts = timecontexts;
+            TaskContexts = ReOrder(TaskContexts);
+            TaskContexts = TaskContexts.OrderBy(x => x.OrderId).ToList();
+        }
+
         /// <summary>
         /// Sets order in tasks basing on importance and priority
         /// </summary>
         /// <param name="target">tasks to sort</param>
-        public List<TimeTaskContext> Order(List<TimeTaskContext> target)
+        public List<TimeTaskContext> ReOrder(List<TimeTaskContext> target)
         {
             target = new List<TimeTaskContext>(target);
             int uplim = target.Count;
@@ -33,7 +40,7 @@ namespace Timeinator.Mobile
             for (int g = 0; g < uplim; g++)
             {
                 TimeTaskContext top;
-                List<TimeTaskContext> tmp = target.FindAll(x => x.Important);
+                List<TimeTaskContext> tmp = GetImportant(target);
                 top = getHighestPriority(tmp.Count > 0 ? tmp : target);
                 top.OrderId = g;
                 final.Add(top);
@@ -51,14 +58,14 @@ namespace Timeinator.Mobile
             ReadyTime = DateTime.Now;
         }
 
-        public List<TimeTaskContext> GetEnabled()
+        public List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts)
         {
-            return TaskContexts.FindAll(x => x.Enabled);
+            return contexts.FindAll(x => x.Important);
         }
 
         public double GetRealPriority(TimeTaskContext tc)
         {
-            return tc.Priority * (1.0-tc.Progress);
+            return tc.Priority * (1.0 - tc.Progress);
         }
         #endregion
 

@@ -14,14 +14,9 @@ namespace Timeinator.Mobile
         public int Priority { get; set; }
         public float Progress { get; set; }
         /// <summary>
-        /// Shall be taken into account
-        /// </summary>
-        public bool Enabled { get; set; }
-        /// <summary>
         /// Will be first to be offered
         /// </summary>
         public bool Important { get; set; }
         public bool Started => Progress > 0;
-        public TimeSpan Cycle { get; set; }
     }
 }
