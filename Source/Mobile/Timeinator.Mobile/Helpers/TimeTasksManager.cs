@@ -9,9 +9,20 @@ namespace Timeinator.Mobile
     /// </summary>
     public class TimeTasksManager
     {
+        /// <summary>
+        /// Current tasks that user defined
+        /// </summary>
         public List<TimeTaskContext> TaskContexts { get; set; }
+
+        /// <summary>
+        /// Time when user was ready and declared free time
+        /// </summary>
         public DateTime ReadyTime { get; set; }
+
         private TimeSpan m_availableTime;
+        /// <summary>
+        /// Remaining free time declared by user
+        /// </summary>
         public TimeSpan AvailableTime
         {
             get { return (m_availableTime - (DateTime.Now - ReadyTime)); }
@@ -44,7 +55,7 @@ namespace Timeinator.Mobile
         {
             AvailableTime = freetime;
             ReadyTime = DateTime.Now;
-            CalcDurations();
+            CalcAssignedTimes();
         }
 
         /// <summary>
@@ -59,12 +70,12 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Recalculates durations in TimeTasks loaded
         /// </summary>
-        public void CalcDurations()
+        public void CalcAssignedTimes()
         {
             double priors = sumPriorities(TaskContexts);
             for (int i = 0; i < TaskContexts.Count; i++)
             {
-                TaskContexts[i].Duration = new TimeSpan((long)(AvailableTime.Ticks * (GetRealPriority(TaskContexts[i]) / priors)));
+                TaskContexts[i].AssignedTime = new TimeSpan((long)(AvailableTime.Ticks * (GetRealPriority(TaskContexts[i]) / priors)));
             }
         }
 
@@ -89,11 +100,25 @@ namespace Timeinator.Mobile
             return final;
         }
         
+        /// <summary>
+        /// Returns only important tasks from TaskContexts
+        /// </summary>
         public List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts)
         {
             return contexts.FindAll(x => x.Important);
         }
 
+        /// <summary>
+        /// Returns only enabled tasks from TaskContexts
+        /// </summary>
+        public List<TimeTaskContext> GetEnabled(List<TimeTaskContext> contexts)
+        {
+            return contexts.FindAll(x => !x.IsDisabled);
+        }
+
+        /// <summary>
+        /// Returns priority taking progress into account
+        /// </summary>
         public double GetRealPriority(TimeTaskContext tc)
         {
             return tc.Priority * (1.0 - tc.Progress);
