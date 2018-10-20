@@ -1,4 +1,5 @@
 ﻿using System;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile
 {
@@ -8,20 +9,48 @@ namespace Timeinator.Mobile
     public class TimeTaskContext
     {
         /// <summary>
-        /// User defined order
+        /// Unique ordinal number of the task
         /// </summary>
-        public int OrderId { get; set; }
-        public int Priority { get; set; }
+        public uint OrderId { get; set; }
+
+        /// <summary>
+        /// Name of the task
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Shows priority of the task
+        /// </summary>
+        public Priority Priority { get; set; }
+
+        /// <summary>
+        /// Used by the user to mark as important (optional)
+        /// </summary>
+        public bool IsImportant { get; set; }
+
+        /// <summary>
+        /// Accurate description of the task
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Stores progress of the task
+        /// </summary>
         public float Progress { get; set; }
+
         /// <summary>
-        /// Shall be taken into account
+        /// Sets particular task as temporary invisible for <see cref="TimeTasksManager"/>
         /// </summary>
-        public bool Enabled { get; set; }
+        public bool IsDisabled { get; set; }
+
         /// <summary>
-        /// Will be first to be offered
+        /// Stores time assigned to the task
         /// </summary>
-        public bool Important { get; set; }
-        public bool Started => Progress > 0;
-        public TimeSpan Cycle { get; set; }
+        public TimeSpan AssignedTime { get; set; }
+
+        /// <summary>
+        /// Indicates whether task has started
+        /// </summary>
+        public bool HasStarted => Progress > 0;
     }
 }

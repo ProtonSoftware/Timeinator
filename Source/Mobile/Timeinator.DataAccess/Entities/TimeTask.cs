@@ -8,18 +8,29 @@ namespace Timeinator.Mobile.DataAccess
     /// </summary>
     public class TimeTask : BaseObject<int>
     {
-        public int OrderId { get; set; }
-        public int Priority { get; set; }
+        /// <summary>
+        /// Name of the task
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Shows priority of the task
+        /// </summary>
+        public Priority Priority { get; set; }
+        
+        /// <summary>
+        /// Used by the user to mark as important (optional)
+        /// </summary>
+        public bool IsImportant { get; set; }
+        
+        /// <summary>
+        /// Shows progress of the task
+        /// </summary>
         public float Progress { get; set; }
-        public bool Enabled { get; set; }
-        public bool Important { get; set; }
-        public TimeSpan Cycle { get; set; }
-
-        #region Constructor
-        public TimeTask()
-        {
-
-        }
-        #endregion
+        
+        /// <summary>
+        /// Accurate description of the task
+        /// </summary>
+        public string Description { get; set; }
     }
 }
