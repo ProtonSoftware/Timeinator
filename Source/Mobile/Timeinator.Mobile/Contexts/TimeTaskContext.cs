@@ -18,5 +18,7 @@ namespace Timeinator.Mobile
         /// </summary>
         public bool Important { get; set; }
         public bool Started => Progress > 0;
+
+        public TimeSpan Duration { get; set; }
     }
 }
