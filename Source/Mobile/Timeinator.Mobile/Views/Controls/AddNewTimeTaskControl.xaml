@@ -12,7 +12,24 @@
                WidthRequest="300"
                BackgroundColor="White">
 
-            <Label Text="Nazwa" />
+            <StackLayout Orientation="Vertical">
+
+                <Label Text="Nazwa" />
+                <Entry Text="{Binding TaskName}" />
+                
+                <Label Text="Opis" />
+                <Entry Text="{Binding TaskDescription}" />
+                
+                <Label Text="Czy wazne" />
+                <Switch IsToggled="{Binding TaskImportance}" />
+                
+                <Label Text="Priorytet" />
+                <Slider Maximum="5" Minimum="1" Value="{Binding TaskPriority}" />
+
+                <Button Text="Dodaj"
+                        Command="{Binding AddTaskCommand}" />
+
+            </StackLayout>
 
         </Frame>
 
