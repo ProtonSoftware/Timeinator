@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Timeinator.Mobile.DataAccess
 {
-
     /// <summary>
     /// The repository that handles database access for saving and getting time tasks
     /// </summary>
@@ -26,6 +27,21 @@ namespace Timeinator.Mobile.DataAccess
         public TimeTasksRepository(TimeinatorMobileDbContext dbContext) : base(dbContext)
         {
 
+        }
+
+        #endregion
+
+        #region Interface Implementation
+
+        /// <summary>
+        /// Gets every time task that is saved in the database
+        /// </summary>
+        /// <returns>List of time task entities</returns>
+        public List<TimeTask> GetSavedTasksForToday()
+        {
+            var result = DbSet.Where(x => x.Id > 0);
+
+            return result.ToList();
         }
 
         #endregion
