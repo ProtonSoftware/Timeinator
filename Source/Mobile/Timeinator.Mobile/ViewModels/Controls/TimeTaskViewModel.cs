@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile
 {
@@ -7,6 +9,15 @@ namespace Timeinator.Mobile
     /// </summary>
     public class TimeTaskViewModel
     {
+        #region Private Members
+
+        /// <summary>
+        /// The raw value of priority slider as a double
+        /// </summary>
+        private double mSliderRawValue;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -20,6 +31,11 @@ namespace Timeinator.Mobile
         public string TaskDescription { get; set; }
 
         /// <summary>
+        /// The tag attached to this task
+        /// </summary>
+        public string TaskTag { get; set; }
+
+        /// <summary>
         /// Indicates if new task should have important flag
         /// </summary>
         public bool TaskImportance { get; set; }
@@ -27,7 +43,11 @@ namespace Timeinator.Mobile
         /// <summary>
         /// The priority (1-5 values) of a task that is being created
         /// </summary>
-        public int TaskPriority { get; set; }
+        public int TaskPriority
+        {
+            get => (int)Math.Round(mSliderRawValue);
+            set => mSliderRawValue = value;
+        }
 
         #endregion
 
@@ -60,7 +80,42 @@ namespace Timeinator.Mobile
         /// </summary>
         public void AddNewTask()
         {
-            // TODO: Create context, add it etc.
+            // Check if we have everything we need for new task to create
+            if (!ValidateUserInput())
+                // TODO: Display message to the user
+                return;
+
+            // Data is correct, create new context out of it
+            var newTask = new TimeTaskContext
+            {
+                Name = TaskName,
+                Description = TaskDescription,
+                IsImportant = TaskImportance,
+                Priority = (Priority)TaskPriority,
+                Progress = 0
+            };
+
+            // Add it to the manager to handle it
+            DI.TimeTasksManager.AddTask(newTask);
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Validates user input about new task
+        /// </summary>
+        /// <returns>True if everything is correct, false otherwise</returns>
+        private bool ValidateUserInput()
+        {
+            // If task's name is too short
+            if (TaskName.Length < 4)
+                // Show an error
+                return false;
+
+            // Data is correct, return success
+            return true;
         }
 
         #endregion

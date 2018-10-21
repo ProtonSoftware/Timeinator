@@ -11,15 +11,6 @@
 
     <Grid>
 
-        <Frame VerticalOptions="Center"
-               HorizontalOptions="Center"
-               WidthRequest="300"
-               BackgroundColor="White">
-
-            <Label Text="Tasks page" />
-
-        </Frame>
-
     </Grid>
 
 
