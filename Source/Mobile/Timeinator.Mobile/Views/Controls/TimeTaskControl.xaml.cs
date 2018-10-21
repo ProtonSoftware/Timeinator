@@ -1,34 +1,35 @@
-﻿using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace Timeinator.Mobile
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddNewTimeTaskControl : BasePage
+    public partial class TimeTaskControl : ContentView
     {
         #region Constructor
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AddNewTimeTaskControl()
+        public TimeTaskControl()
         {
             // Do default things
             InitializeComponent();
 
             // Set brand-new view model
-            BindingContext = new AddNewTimeTaskViewModel();
+            BindingContext = new TimeTaskViewModel();
         }
 
         /// <summary>
-        /// Constructor with additional view model to setup for this page
+        /// Constructor with additional view model to setup for this control
         /// </summary>
-        public AddNewTimeTaskControl(AddNewTimeTaskViewModel viewModel)
+        public TimeTaskControl(TimeTaskViewModel viewModel)
         {
             // Do default things
             InitializeComponent();
 
             // Set specified view model
-            BindingContext = viewModel ?? new AddNewTimeTaskViewModel();
+            BindingContext = viewModel ?? new TimeTaskViewModel();
         }
 
         #endregion
