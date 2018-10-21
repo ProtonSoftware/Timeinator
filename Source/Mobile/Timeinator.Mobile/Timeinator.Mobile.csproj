@@ -21,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Controls\TimeTaskControl.xaml.cs">
+      <DependentUpon>TimeTaskControl.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Menu\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
