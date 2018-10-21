@@ -7,21 +7,21 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The manager that handles time tasks interactions
     /// </summary>
-    public class TimeTasksManager
+    public class TimeTasksManager : ITimeTasksManager
     {
         /// <summary>
-        /// Current tasks that user defined
+        /// Current tasks that user defined, this stores newest data about tasks
         /// </summary>
         public List<TimeTaskContext> TaskContexts { get; set; }
 
         /// <summary>
-        /// Time when user was ready and declared free time
+        /// Time when user was ready and declared free time, a moment when user clicked READY
         /// </summary>
         public DateTime ReadyTime { get; set; }
 
         private TimeSpan m_availableTime;
         /// <summary>
-        /// Remaining free time declared by user
+        /// Remaining free time since user clicked READY
         /// </summary>
         public TimeSpan AvailableTime
         {
@@ -39,69 +39,57 @@ namespace Timeinator.Mobile
         public void AddTask(TimeTaskContext timeTask)
         {
             TaskContexts.Add(timeTask);
-            refreshContexts();
+            RefreshContexts();
         }
 
         public void RemoveTask(TimeTaskContext timeTask)
         {
             TaskContexts.Remove(timeTask);
-            refreshContexts();
+            RefreshContexts();
         }
 
         /// <summary>
-        /// Initialize time managing - user is ready
+        /// Initialize time managing - user is ready, sets new amount of free time and calculates times for each task
         /// </summary>
         public void UserReady(TimeSpan freetime)
         {
             AvailableTime = freetime;
             ReadyTime = DateTime.Now;
-            CalcAssignedTimes();
+            CalcAssignedTimes(GetEnabled(TaskContexts));
         }
 
         /// <summary>
-        /// Initialize manager with new TimeTasks
+        /// Initialize manager with new TimeTasks, automatically re-orders tasks discarding user changes
         /// </summary>
         public void UpdateTaskList(List<TimeTaskContext> timecontexts)
         {
             TaskContexts = timecontexts;
-            refreshContexts();
+            RefreshContexts();
         }
 
         /// <summary>
-        /// Recalculates durations in TimeTasks loaded
+        /// Recalculates AssignedTime in TimeTasks loaded to target TimeTasks
         /// </summary>
-        public void CalcAssignedTimes()
+        public void CalcAssignedTimes(List<TimeTaskContext> target)
         {
-            double priors = sumPriorities(TaskContexts);
-            for (int i = 0; i < TaskContexts.Count; i++)
+            double priors = sumPriorities(target);
+            for (int i = 0; i < target.Count; i++)
             {
-                TaskContexts[i].AssignedTime = new TimeSpan((long)(AvailableTime.Ticks * (GetRealPriority(TaskContexts[i]) / priors)));
+                target[i].AssignedTime = new TimeSpan((long)(AvailableTime.Ticks * (GetRealPriority(target[i]) / priors)));
             }
         }
 
         /// <summary>
-        /// Sets order in tasks basing on importance and priority
+        /// Refreshes TaskContexts assigning them a new OrderId
         /// </summary>
-        /// <param name="target">tasks to sort</param>
-        public List<TimeTaskContext> ReOrder(List<TimeTaskContext> target)
+        public void RefreshContexts()
         {
-            target = new List<TimeTaskContext>(target);
-            int uplim = target.Count;
-            List<TimeTaskContext> final = new List<TimeTaskContext>();
-            for (int g = 0; g < uplim; g++)
-            {
-                TimeTaskContext top;
-                List<TimeTaskContext> tmp = GetImportant(target);
-                top = getHighestPriority(tmp.Count > 0 ? tmp : target);
-                top.OrderId = g;
-                final.Add(top);
-                target.Remove(top);
-            }
-            return final;
+            TaskContexts = reOrder(TaskContexts);
+            TaskContexts = TaskContexts.OrderBy(x => x.OrderId).ToList();
         }
         
         /// <summary>
-        /// Returns only important tasks from TaskContexts
+        /// Returns only important tasks from provided TimeTasks
         /// </summary>
         public List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts)
         {
@@ -109,7 +97,7 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Returns only enabled tasks from TaskContexts
+        /// Returns only enabled tasks from provided TimeTasks
         /// </summary>
         public List<TimeTaskContext> GetEnabled(List<TimeTaskContext> contexts)
         {
@@ -126,10 +114,25 @@ namespace Timeinator.Mobile
         #endregion
 
         #region PrivateFunctions
-        void refreshContexts()
+        /// <summary>
+        /// Sets order in tasks basing on importance and priority
+        /// </summary>
+        /// <param name="target">tasks to sort</param>
+        List<TimeTaskContext> reOrder(List<TimeTaskContext> target)
         {
-            TaskContexts = ReOrder(TaskContexts);
-            TaskContexts = TaskContexts.OrderBy(x => x.OrderId).ToList();
+            target = new List<TimeTaskContext>(target);
+            int uplim = target.Count;
+            List<TimeTaskContext> final = new List<TimeTaskContext>();
+            for (int g = 0; g < uplim; g++)
+            {
+                TimeTaskContext top;
+                List<TimeTaskContext> tmp = GetImportant(target);
+                top = getHighestPriority(tmp.Count > 0 ? tmp : target);
+                top.OrderId = g;
+                final.Add(top);
+                target.Remove(top);
+            }
+            return final;
         }
 
         double sumPriorities(List<TimeTaskContext> l)
