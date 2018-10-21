@@ -22,9 +22,11 @@
     </NuGetPackageImportStamp>
     <AndroidKeyStore>true</AndroidKeyStore>
     <AndroidSigningKeyStore>D:\Projects\Git\Timeinator\Resources\timeinator.keystore</AndroidSigningKeyStore>
-    <AndroidSigningStorePass>PiguNitamb30</AndroidSigningStorePass>
+    <AndroidSigningStorePass>
+    </AndroidSigningStorePass>
     <AndroidSigningKeyAlias>timeinator</AndroidSigningKeyAlias>
-    <AndroidSigningKeyPass>PiguNitamb30</AndroidSigningKeyPass>
+    <AndroidSigningKeyPass>
+    </AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
