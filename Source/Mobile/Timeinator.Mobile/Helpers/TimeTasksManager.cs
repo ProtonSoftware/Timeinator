@@ -74,9 +74,7 @@ namespace Timeinator.Mobile
         {
             double priors = sumPriorities(target);
             for (int i = 0; i < target.Count; i++)
-            {
                 target[i].AssignedTime = new TimeSpan((long)(AvailableTime.Ticks * (GetRealPriority(target[i]) / priors)));
-            }
         }
 
         /// <summary>
