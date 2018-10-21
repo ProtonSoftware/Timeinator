@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace Timeinator.Mobile
@@ -11,9 +12,18 @@ namespace Timeinator.Mobile
         #region Public Properties
 
         /// <summary>
-        /// The list of time tasks for today to show in this page
+        /// The list of time tasks for current session to show in this page
         /// </summary>
-        public ObservableCollection<TimeTaskContext> TaskItems { get; set; }
+        public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// An event to raise when tasks list is ready to be shown in the UI
+        /// </summary>
+        public event Action TasksUIReady;
 
         #endregion
 
@@ -36,7 +46,12 @@ namespace Timeinator.Mobile
             // Create commands
             AddNewTaskCommand = new RelayCommand(() => DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
 
-            // TODO: Get tasks from a manager
+            // Get tasks from a manager
+            foreach (var task in DI.TimeTasksManager.TaskContexts)
+                TaskItems.Add(DI.TimeTasksMapper.Map(task));
+
+            // Indicate that the list of task is ready to be shown in UI
+            TasksUIReady.Invoke();
         }
 
         #endregion
