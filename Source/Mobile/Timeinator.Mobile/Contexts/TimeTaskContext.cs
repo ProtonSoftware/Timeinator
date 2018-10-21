@@ -52,5 +52,11 @@ namespace Timeinator.Mobile
         /// Indicates whether task has started
         /// </summary>
         public bool HasStarted => Progress > 0;
+
+        /// <summary>
+        /// Tag set by user that helps finding the task
+        /// </summary>
+        public string Tag { get; set; }
+
     }
 }
