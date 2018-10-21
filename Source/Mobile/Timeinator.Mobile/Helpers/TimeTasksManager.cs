@@ -9,10 +9,17 @@ namespace Timeinator.Mobile
     /// </summary>
     public class TimeTasksManager : ITimeTasksManager
     {
+        private List<TimeTaskContext> m_taskContexts;
         /// <summary>
         /// Current tasks that user defined, this stores newest data about tasks
         /// </summary>
-        public List<TimeTaskContext> TaskContexts { get; set; }
+        public List<TimeTaskContext> TaskContexts {
+            get { return m_taskContexts; }
+            set {
+                m_taskContexts = value;
+                RefreshContexts();
+            }
+        }
 
         /// <summary>
         /// Time when user was ready and declared free time, a moment when user clicked READY
@@ -55,26 +62,20 @@ namespace Timeinator.Mobile
         {
             AvailableTime = freetime;
             ReadyTime = DateTime.Now;
-            CalcAssignedTimes(GetEnabled(TaskContexts));
-        }
-
-        /// <summary>
-        /// Initialize manager with new TimeTasks, automatically re-orders tasks discarding user changes
-        /// </summary>
-        public void UpdateTaskList(List<TimeTaskContext> timecontexts)
-        {
-            TaskContexts = timecontexts;
-            RefreshContexts();
+            m_taskContexts = CalcAssignedTimes(GetEnabled(TaskContexts)).Concat(GetEnabled(TaskContexts, true)).ToList();
         }
 
         /// <summary>
         /// Recalculates AssignedTime in TimeTasks loaded to target TimeTasks
         /// </summary>
-        public void CalcAssignedTimes(List<TimeTaskContext> target)
+        public List<TimeTaskContext> CalcAssignedTimes(List<TimeTaskContext> target)
         {
-            double priors = sumPriorities(target);
-            for (int i = 0; i < target.Count; i++)
-                target[i].AssignedTime = new TimeSpan((long)(AvailableTime.Ticks * (GetRealPriority(target[i]) / priors)));
+            TimeSpan avt = AvailableTime - sumTimes(GetConstant(target));
+            List<TimeTaskContext> tmp = GetConstant(target, true);
+            double priors = sumPriorities(tmp);
+            for (int i = 0; i < tmp.Count; i++)
+                tmp[i].AssignedTime = new TimeSpan((long)(avt.Ticks * (GetRealPriority(tmp[i]) / priors)));
+            return tmp.Concat(GetConstant(target)).ToList();
         }
 
         /// <summary>
@@ -82,25 +83,29 @@ namespace Timeinator.Mobile
         /// </summary>
         public void RefreshContexts()
         {
-            TaskContexts = reOrder(TaskContexts);
-            TaskContexts = TaskContexts.OrderBy(x => x.OrderId).ToList();
+            m_taskContexts = reOrder(TaskContexts);
+            m_taskContexts = m_taskContexts.OrderBy(x => x.OrderId).ToList();
         }
         
         /// <summary>
         /// Returns only important tasks from provided TimeTasks
         /// </summary>
-        public List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts)
-        {
-            return contexts.FindAll(x => x.IsImportant);
-        }
+        public List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts, bool inverse = false) => contexts.FindAll(x => inverse ? !x.IsImportant : x.IsImportant);
 
         /// <summary>
         /// Returns only enabled tasks from provided TimeTasks
         /// </summary>
-        public List<TimeTaskContext> GetEnabled(List<TimeTaskContext> contexts)
-        {
-            return contexts.FindAll(x => !x.IsDisabled);
-        }
+        public List<TimeTaskContext> GetEnabled(List<TimeTaskContext> contexts, bool inverse = false) => contexts.FindAll(x => inverse ? x.IsDisabled : !x.IsDisabled);
+
+        /// <summary>
+        /// Returns only constant time tasks from provided TimeTasks
+        /// </summary>
+        public List<TimeTaskContext> GetConstant(List<TimeTaskContext> contexts, bool inverse = false) => contexts.FindAll(x => inverse ? !x.HasConstantTime : x.HasConstantTime);
+
+        /// <summary>
+        /// Returns only not finished tasks from provided TimeTasks
+        /// </summary>
+        public List<TimeTaskContext> GetNotReady(List<TimeTaskContext> contexts, bool inverse = false) => contexts.FindAll(x => inverse ? !(x.Progress < 1) : (x.Progress < 1));
 
         /// <summary>
         /// Returns priority taking progress into account
@@ -121,7 +126,7 @@ namespace Timeinator.Mobile
             target = new List<TimeTaskContext>(target);
             int uplim = target.Count;
             List<TimeTaskContext> final = new List<TimeTaskContext>();
-            for (int g = 0; g < uplim; g++)
+            for (int g = 0; g < uplim; g++) // g - new OrderId
             {
                 TimeTaskContext top;
                 List<TimeTaskContext> tmp = GetImportant(target);
@@ -139,6 +144,14 @@ namespace Timeinator.Mobile
             foreach (TimeTaskContext c in l)
                 s += GetRealPriority(c);
             return s;
+        }
+
+        TimeSpan sumTimes(List<TimeTaskContext> l)
+        {
+            TimeSpan res = new TimeSpan(0);
+            foreach (TimeTaskContext c in l)
+                res += c.AssignedTime;
+            return res;
         }
 
         TimeTaskContext getHighestPriority(List<TimeTaskContext> l)
