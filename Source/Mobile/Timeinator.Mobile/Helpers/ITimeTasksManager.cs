@@ -6,14 +6,16 @@ namespace Timeinator.Mobile
 {
     public interface ITimeTasksManager
     {
+        List<TimeTaskContext> TaskContexts { get; set; }
         void AddTask(TimeTaskContext timeTask);
         void RemoveTask(TimeTaskContext timeTask);
         void UserReady(TimeSpan freetime);
-        void UpdateTaskList(List<TimeTaskContext> timecontexts);
-        void CalcAssignedTimes(List<TimeTaskContext> target);
+        List<TimeTaskContext> CalcAssignedTimes(List<TimeTaskContext> target);
         void RefreshContexts();
-        List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts);
-        List<TimeTaskContext> GetEnabled(List<TimeTaskContext> contexts);
+        List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts, bool inverse = false);
+        List<TimeTaskContext> GetEnabled(List<TimeTaskContext> contexts, bool inverse = false);
+        List<TimeTaskContext> GetConstant(List<TimeTaskContext> contexts, bool inverse = false);
+        List<TimeTaskContext> GetNotReady(List<TimeTaskContext> contexts, bool inverse = false);
         double GetRealPriority(TimeTaskContext tc);
     }
 }

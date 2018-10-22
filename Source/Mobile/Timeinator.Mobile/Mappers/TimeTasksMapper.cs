@@ -29,6 +29,8 @@ namespace Timeinator.Mobile
             {
                 // Create TimeTask entity to TimeTaskContext map
                 config.CreateMap<TimeTask, TimeTaskContext>();
+                // Create TimeTaskContext to TimeTaskViewModel map
+                config.CreateMap<TimeTaskContext, TimeTaskViewModel>();
             })
             // And create it afterwards
             .CreateMapper();
@@ -44,6 +46,13 @@ namespace Timeinator.Mobile
         /// <param name="entity">The <see cref="TimeTask"/> to map</param>
         /// <returns><see cref="TimeTaskContext"/></returns>
         public TimeTaskContext Map(TimeTask entity) => mMapper.Map<TimeTaskContext>(entity);
+
+        /// <summary>
+        /// Maps a <see cref="TimeTaskContext"/> to a <see cref="TimeTaskViewModel"/> object
+        /// </summary>
+        /// <param name="context">The <see cref="TimeTaskContext"/> to map</param>
+        /// <returns><see cref="TimeTaskViewModel"/></returns>
+        public TimeTaskViewModel Map(TimeTaskContext context) => mMapper.Map<TimeTaskViewModel>(context);
 
         #endregion
     }

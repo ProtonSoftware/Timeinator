@@ -26,8 +26,9 @@ namespace Timeinator.Mobile
             // Initialize menu items list
             ApplicationItems = new List<MenuPageItemViewModel>
             {
+                new MenuPageItemViewModel { Page = ApplicationPage.Tasks, Title = "Main", Icon = ApplicationIconType.Cash },
                 new MenuPageItemViewModel { Page = ApplicationPage.Settings, Title = "Settings", Icon = ApplicationIconType.Settings },
-                new MenuPageItemViewModel { Page = ApplicationPage.About, Title = "Settings", Icon = ApplicationIconType.About  }
+                new MenuPageItemViewModel { Page = ApplicationPage.About, Title = "About", Icon = ApplicationIconType.About  }
             };
         }
 

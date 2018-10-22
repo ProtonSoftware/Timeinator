@@ -9,9 +9,10 @@
         <ToolbarItem Name="+" Command="{Binding AddNewTaskCommand}" />
     </local:BasePage.ToolbarItems>
 
-    <Grid>
+    <StackLayout x:Name="TasksContainer"
+                 Orientation="Vertical">
 
-    </Grid>
+    </StackLayout>
 
 
 </local:BasePage>
