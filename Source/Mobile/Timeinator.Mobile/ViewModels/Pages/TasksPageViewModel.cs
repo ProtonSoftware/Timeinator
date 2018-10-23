@@ -14,7 +14,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// The list of time tasks for current session to show in this page
         /// </summary>
-        public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; }
+        public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<TimeTaskViewModel>();
 
         #endregion
 
@@ -46,6 +46,22 @@ namespace Timeinator.Mobile
             // Create commands
             AddNewTaskCommand = new RelayCommand(() => DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
 
+            // Load saved tasks in database to the manager
+            var taskFound = DI.TimeTasksService.LoadCurrentTasks();
+
+            // If any tasks were found
+            if (taskFound)
+                // Load them to this page
+                LoadTaskList();
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Loads saved tasks from the <see cref="TimeTasksManager"/>
+        /// </summary>
+        public void LoadTaskList()
+        {
             // Get tasks from a manager
             foreach (var task in DI.TimeTasksManager.TaskContexts)
                 TaskItems.Add(DI.TimeTasksMapper.Map(task));
@@ -53,7 +69,5 @@ namespace Timeinator.Mobile
             // Indicate that the list of task is ready to be shown in UI
             TasksUIReady.Invoke();
         }
-
-        #endregion
     }
 }

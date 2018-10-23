@@ -20,11 +20,11 @@
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidKeyStore>false</AndroidKeyStore>
     <AndroidSigningKeyStore>D:\Projects\Git\Timeinator\Resources\timeinator.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>
     </AndroidSigningStorePass>
-    <AndroidSigningKeyAlias>timeinator</AndroidSigningKeyAlias>
+    <AndroidSigningKeyAlias>timeinato</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>
     </AndroidSigningKeyPass>
   </PropertyGroup>
