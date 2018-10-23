@@ -5,6 +5,8 @@
     /// </summary>
     public class TimeTasksService : ITimeTasksService
     {
+        #region Interface Implementation
+
         /// <summary>
         /// Loads saved tasks from the database and passes it in the manager
         /// </summary>
@@ -31,5 +33,23 @@
             // Otherwise, no tasks were saved
             return false;
         }
+
+        /// <summary>
+        /// Saves new task to the database and adds it to the application's task list
+        /// </summary>
+        /// <param name="context">The context of a task to add</param>
+        public void SaveNewTask(TimeTaskContext context)
+        {
+            // Map it to the entity
+            var entity = DI.TimeTasksMapper.ReverseMap(context);
+
+            // Save it into database
+            DI.TimeTasksRepository.SaveTask(entity);
+
+            // TODO: Make it different way - manager should be "refreshed" and load every task
+            DI.TimeTasksManager.AddTask(context);
+        }
+
+        #endregion
     }
 }

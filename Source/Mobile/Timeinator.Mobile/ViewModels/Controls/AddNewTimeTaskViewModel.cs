@@ -95,8 +95,8 @@ namespace Timeinator.Mobile
                 Progress = 0
             };
 
-            // Add it to the manager to handle it
-            DI.TimeTasksManager.AddTask(newTask);
+            // Pass it to the service to handle it
+            DI.TimeTasksService.SaveNewTask(newTask);
         }
 
         #endregion
