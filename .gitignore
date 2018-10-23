@@ -65,6 +65,7 @@ StyleCopReport.xml
 *.meta
 *.obj
 *.iobj
+*.[Cc]ache
 *.pch
 *.pdb
 *.ipdb
@@ -78,6 +79,7 @@ StyleCopReport.xml
 *.tmp
 *.tmp_proj
 *_wpftmp.csproj
+*.csproj.user
 *.log
 *.vspscc
 *.vssscc
