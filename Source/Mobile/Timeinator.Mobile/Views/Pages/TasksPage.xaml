@@ -11,7 +11,9 @@
 
     <StackLayout x:Name="TasksContainer"
                  Orientation="Vertical">
-
+        
+        <Label Text="Brak zadań na dzisiaj - aby je dodać, kliknij ikonkę + u góry" />
+        
     </StackLayout>
 
 

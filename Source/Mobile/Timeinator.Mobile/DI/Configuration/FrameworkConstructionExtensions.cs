@@ -19,6 +19,7 @@ namespace Timeinator.Mobile
             // Bind to a single instance of specified models
             construction.Services.AddSingleton<ApplicationViewModel>();
             construction.Services.AddSingleton<ITimeTasksRepository, TimeTasksRepository>();
+            construction.Services.AddSingleton<ITimeTasksService, TimeTasksService>();
             construction.Services.AddSingleton<TimeTasksManager>();
             construction.Services.AddSingleton<TimeTasksMapper>();
             construction.Services.AddSingleton<IUIManager, UIManager>();

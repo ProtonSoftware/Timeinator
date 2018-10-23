@@ -28,7 +28,7 @@ namespace Timeinator.Mobile
                     return new SettingsPage(viewModel as SettingsViewModel);
 
                 case ApplicationPage.About:
-                    return new AboutPage(viewModel as AboutViewModel);
+                    return new AboutPage(viewModel as AboutPageViewModel);
 
                 // If no page was found, return initial one
                 default:

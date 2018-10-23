@@ -16,7 +16,7 @@
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
-                <local:TasksPage />
+                <local:LoginPage />
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>

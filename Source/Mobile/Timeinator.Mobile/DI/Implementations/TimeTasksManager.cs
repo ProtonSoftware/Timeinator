@@ -9,7 +9,7 @@ namespace Timeinator.Mobile
     /// </summary>
     public class TimeTasksManager : ITimeTasksManager
     {
-        private List<TimeTaskContext> m_taskContexts;
+        private List<TimeTaskContext> m_taskContexts = new List<TimeTaskContext>();
         /// <summary>
         /// Current tasks that user defined, this stores newest data about tasks
         /// </summary>

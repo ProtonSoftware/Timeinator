@@ -48,6 +48,9 @@ namespace Timeinator.Mobile
         {
             // Get current view model state
             var currentVM = BindingContext as TasksPageViewModel;
+            
+            // Remove "No tasks" text from the list
+            TasksContainer.Children.RemoveAt(0);
 
             // For each of the task in the list...
             foreach (var task in currentVM.TaskItems)

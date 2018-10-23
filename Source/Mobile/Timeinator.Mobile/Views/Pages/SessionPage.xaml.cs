@@ -3,32 +3,32 @@
 namespace Timeinator.Mobile
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AboutPage : BasePage
+    public partial class SessionPage : BasePage
     {
         #region Constructor
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AboutPage()
+        public SessionPage()
         {
             // Do default things
             InitializeComponent();
 
             // Set brand-new view model
-            BindingContext = new AboutPageViewModel();
+            BindingContext = new SessionPageViewModel();
         }
 
         /// <summary>
         /// Constructor with additional view model to setup for this page
         /// </summary>
-        public AboutPage(AboutPageViewModel viewModel)
+        public SessionPage(SessionPageViewModel viewModel)
         {
             // Do default things
             InitializeComponent();
 
             // Set specified view model
-            BindingContext = viewModel ?? new AboutPageViewModel();
+            BindingContext = viewModel ?? new SessionPageViewModel();
         }
 
         #endregion

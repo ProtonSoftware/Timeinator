@@ -1,19 +1,24 @@
 ﻿namespace Timeinator.Mobile
 {
     /// <summary>
-    /// The view model for about page
+    /// The view model for tasks session page
     /// </summary>
-    public class AboutViewModel : BaseViewModel
+    public class SessionPageViewModel : BaseViewModel
     {
+        #region Commands
+
+      
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AboutViewModel()
+        public SessionPageViewModel()
         {
-            // Set this page's title
-            Title = "About";
+            
         }
 
         #endregion
