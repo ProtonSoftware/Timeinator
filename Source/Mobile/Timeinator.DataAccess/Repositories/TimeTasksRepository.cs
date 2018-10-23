@@ -43,6 +43,19 @@ namespace Timeinator.Mobile.DataAccess
 
             return result.ToList();
         }
+        
+        /// <summary>
+        /// Saves specified task entity to the database
+        /// </summary>
+        /// <param name="entity">Task entity</param>
+        public void SaveTask(TimeTask entity)
+        {
+            // Add entity to the database
+            DbSet.Add(entity);
+
+            // Save it
+            SaveChanges();
+        }
 
         #endregion
     }

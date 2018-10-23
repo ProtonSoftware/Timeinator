@@ -6,5 +6,6 @@
     public interface ITimeTasksService
     {
         bool LoadCurrentTasks();
+        void SaveNewTask(TimeTaskContext context);
     }
 }
