@@ -16,24 +16,35 @@ namespace Timeinator.Mobile
         public TimeTaskContext CurrentTask => SessionTasks[0] ?? null;
         public event Action TimesUp;
 
-        public void StartTask()
+
+        private new Timer TaskTimer = new Timer();
+        
+        public void StartTask(TimeTaskContext currentTask)
         {
-            CurrentTaskStartTime = CurrentTime;
-            TimeLeft 
+            CurrentTaskStartTime = DateTime.Now;
+            TaskTimer.Interval = CurrentTask.AssignedTime.TotalMilliseconds;
+            TaskTimer.Enabled = true;
         }
 
         public void StopTask()
         {
-
+            TaskTimer.Enabled = false;
+            CurrentTask.AssignedTime = DateTime.Now - CurrentTaskStartTime;
         }
 
+        public void ResumeTask(TimeSpan TimeLeft)
+        {
+
+        }
+            
         public void EndTask()
         {
+            TaskTimer.Enabled = false;
 
         }
 
-        public void SaveProgress()
+        private void SaveProgress()
         {
-
+            CurrentTask.Progress = 
         }
 }
