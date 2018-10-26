@@ -6,17 +6,21 @@
 
     <Frame>
 
-        <StackLayout Orientation="Vertical">
+        <ScrollView>
 
-            <Label Text="{Binding Name}" />
+            <StackLayout Orientation="Vertical">
 
-            <Label Text="{Binding Description}" />
+                <Label Text="{Binding Name}" />
 
-            <Label Text="{Binding Tag}" />
-            
-            <Label Text="{Binding AssignedTime}" />
+                <Label Text="{Binding Description}" />
 
-        </StackLayout>
+                <Label Text="{Binding Tag}" />
+
+                <Label Text="{Binding AssignedTime}" />
+
+            </StackLayout>
+
+        </ScrollView>
 
     </Frame>
 

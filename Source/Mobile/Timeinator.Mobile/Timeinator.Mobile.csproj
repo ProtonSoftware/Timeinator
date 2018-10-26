@@ -30,6 +30,9 @@
     <Compile Update="Views\Controls\AddNewTimeTaskControl.xaml.cs">
       <DependentUpon>AddNewTimeTaskControl.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Pages\SessionPage.xaml.cs">
+      <DependentUpon>SessionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Pages\TasksPage.xaml.cs">
       <DependentUpon>TasksPage.xaml</DependentUpon>
     </Compile>
