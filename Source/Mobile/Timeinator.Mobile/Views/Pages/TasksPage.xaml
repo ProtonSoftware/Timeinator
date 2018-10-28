@@ -9,12 +9,23 @@
         <ToolbarItem Name="+" Command="{Binding AddNewTaskCommand}" />
     </local:BasePage.ToolbarItems>
 
-    <StackLayout x:Name="TasksContainer"
-                 Orientation="Vertical">
+    <ScrollView>
         
-        <Label Text="Brak zadań na dzisiaj - aby je dodać, kliknij ikonkę + u góry" />
-        
-    </StackLayout>
+        <local:ItemsControl ItemsSource="{Binding TaskItems}">
+
+            <local:ItemsControl.PlaceholderText>
+                Brak zadań na dzisiaj - aby je dodać, kliknij ikonkę + u góry
+            </local:ItemsControl.PlaceholderText>
+
+            <local:ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:TimeTaskControl />
+                </DataTemplate>
+            </local:ItemsControl.ItemTemplate>
+
+        </local:ItemsControl>
+
+    </ScrollView>
 
 
 </local:BasePage>

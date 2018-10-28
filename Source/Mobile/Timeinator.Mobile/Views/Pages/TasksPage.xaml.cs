@@ -17,9 +17,6 @@ namespace Timeinator.Mobile
 
             // Set brand-new view model
             BindingContext = new TasksPageViewModel();
-
-            // Subscribe to an event to show task list when it is raised
-            (BindingContext as TasksPageViewModel).TasksUIReady += TasksPage_TasksUIReady;
         }
 
         /// <summary>
@@ -32,30 +29,6 @@ namespace Timeinator.Mobile
 
             // Set specified view model
             BindingContext = viewModel ?? new TasksPageViewModel();
-
-            // Subscribe to an event to show task list when it is raised
-            (BindingContext as TasksPageViewModel).TasksUIReady += TasksPage_TasksUIReady;
-        }
-
-        #endregion
-
-        #region Private Helpers
-
-        /// <summary>
-        /// Fired when view model is ready with its task list so we can show it in the UI here
-        /// </summary>
-        private void TasksPage_TasksUIReady()
-        {
-            // Get current view model state
-            var currentVM = BindingContext as TasksPageViewModel;
-            
-            // Remove "No tasks" text from the list
-            TasksContainer.Children.RemoveAt(0);
-
-            // For each of the task in the list...
-            foreach (var task in currentVM.TaskItems)
-                // Add it to the container
-                TasksContainer.Children.Add(new TimeTaskControl(task));
         }
 
         #endregion

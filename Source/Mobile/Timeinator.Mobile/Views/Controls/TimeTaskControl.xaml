@@ -1,28 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+<local:ContentControl xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Timeinator.Mobile"
              x:Class="Timeinator.Mobile.TimeTaskControl">
 
-    <Frame>
+    <local:ContentControl.Resources>
 
-        <ScrollView>
+        <ResourceDictionary>
+            <ControlTemplate x:Key="ContentTemplate">
 
-            <StackLayout Orientation="Vertical">
+                <Frame>
 
-                <Label Text="{Binding Name}" />
+                    <StackLayout Orientation="Vertical">
 
-                <Label Text="{Binding Description}" />
+                        <Label Text="{Binding Name}" />
 
-                <Label Text="{Binding Tag}" />
+                    </StackLayout>
 
-                <Label Text="{Binding AssignedTime}" />
+                </Frame>
 
-            </StackLayout>
+            </ControlTemplate>
+        </ResourceDictionary>
 
-        </ScrollView>
+    </local:ContentControl.Resources>
 
-    </Frame>
+    <local:ContentControl ControlTemplate="{StaticResource ContentTemplate}" />
 
-
-</ContentView>
+</local:ContentControl>

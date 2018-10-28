@@ -18,15 +18,6 @@ namespace Timeinator.Mobile
 
         #endregion
 
-        #region Events
-
-        /// <summary>
-        /// An event to raise when tasks list is ready to be shown in the UI
-        /// </summary>
-        public event Action TasksUIReady;
-
-        #endregion
-
         #region Commands
 
         /// <summary>
@@ -65,9 +56,6 @@ namespace Timeinator.Mobile
             // Get tasks from a manager
             foreach (var task in DI.TimeTasksManager.TaskContexts)
                 TaskItems.Add(DI.TimeTasksMapper.Map(task));
-
-            // Indicate that the list of task is ready to be shown in UI
-            TasksUIReady.Invoke();
         }
     }
 }
