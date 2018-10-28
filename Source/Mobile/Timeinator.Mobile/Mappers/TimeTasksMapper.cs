@@ -61,7 +61,7 @@ namespace Timeinator.Mobile
         /// </summary>
         /// <param name="context">The <see cref="TimeTaskContext"/> to map</param>
         /// <returns><see cref="TimeTask"/></returns>
-        public TimeTask ReverseMap(TimeTaskContext context) => mMapper.Map<TimeTaskContext>(context);
+        public TimeTask ReverseMap(TimeTaskContext context) => mMapper.Map<TimeTask>(context);
 
         #endregion
     }
