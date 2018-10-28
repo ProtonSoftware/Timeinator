@@ -36,7 +36,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Stores progress of the task
         /// </summary>
-        public float Progress { get; set; }
+        public double Progress { get; set; }
 
         /// <summary>
         /// Sets particular task as temporary invisible for <see cref="TimeTasksManager"/>
