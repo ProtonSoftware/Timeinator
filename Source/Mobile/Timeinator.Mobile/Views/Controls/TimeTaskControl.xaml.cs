@@ -4,7 +4,7 @@ using Xamarin.Forms.Xaml;
 namespace Timeinator.Mobile
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TimeTaskControl : ContentControl
+    public partial class TimeTaskControl : ContentView
     {
         #region Constructor
 
@@ -15,8 +15,6 @@ namespace Timeinator.Mobile
         {
             // Do default things
             InitializeComponent();
-
-            var a = this.BindingContext;
         }
 
         #endregion
