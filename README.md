@@ -12,17 +12,17 @@ Zadania:<br>
   &nbsp;-uruchomienia aplikacji - Are you ready? YES! - podaj godzinę końca używania apki<br>
   &nbsp;-ready? yes -> lista wszystkich zadań - odznacz te które chcesz później<br>
   &nbsp;-W dowolnej chwili wolnego czasu:<br>
-    &nbsp;&nbsp;&nbsp;-w określonym z góry czasie (np. kurs śpiewania od 18:00 do 20:00)<br>
-    &nbsp;&nbsp;&nbsp;-np. obiad<br>
-    &nbsp;&nbsp;&nbsp;proponowana kolejność zadań w apce - edytowalna<br>
-    &nbsp;&nbsp;&nbsp;-stałe powiadomienie o aktualnym zadaniu<br>
-    &nbsp;&nbsp;&nbsp;-ważne zadanie ma pierwszeństwo - zadania nieważne po zrobieniu ważnych<br>
-    &nbsp;&nbsp;&nbsp;-o określonym priorytecie (skala)<br>
-    &nbsp;&nbsp;&nbsp;-mogą być cykliczne lub jednorazowe<br>
-    &nbsp;&nbsp;&nbsp;-proponuje najodpowiedniejsze zadanie w aktualnej przerwie między zadaniami stałymi (wolny czas)<br>
-    &nbsp;&nbsp;&nbsp;-Czas na wykonanie:<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-czas przydzielany priorytetowo (algorytm czasu)<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-czas ustawiony na stałe np. 15 minut<br>
+​    &nbsp;&nbsp;&nbsp;-w określonym z góry czasie (np. kurs śpiewania od 18:00 do 20:00)<br>
+​    &nbsp;&nbsp;&nbsp;-np. obiad<br>
+​    &nbsp;&nbsp;&nbsp;proponowana kolejność zadań w apce - edytowalna<br>
+​    &nbsp;&nbsp;&nbsp;-stałe powiadomienie o aktualnym zadaniu<br>
+​    &nbsp;&nbsp;&nbsp;-ważne zadanie ma pierwszeństwo - zadania nieważne po zrobieniu ważnych<br>
+​    &nbsp;&nbsp;&nbsp;-o określonym priorytecie (skala)<br>
+​    &nbsp;&nbsp;&nbsp;-mogą być cykliczne lub jednorazowe<br>
+​    &nbsp;&nbsp;&nbsp;-proponuje najodpowiedniejsze zadanie w aktualnej przerwie między zadaniami stałymi (wolny czas)<br>
+​    &nbsp;&nbsp;&nbsp;-Czas na wykonanie:<br>
+​      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-czas przydzielany priorytetowo (algorytm czasu)<br>
+​      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-czas ustawiony na stałe np. 15 minut<br>
 <br>
 Zakończenie zadania:<br>
   &nbsp;&nbsp;-powiadomienie gdy skończy się czas<br>
@@ -47,3 +47,4 @@ Statystyki:<br>
   &nbsp;&nbsp;-anulowanie zadania przed zaczęciem bez kary<br>
   &nbsp;&nbsp;-przesunięcie zadania na później bez kary<br>
   &nbsp;&nbsp;-anulowanie niedkończonego zadania - karma Cię spotka<br>
+
