@@ -20,7 +20,7 @@
             <local:ItemsControl ItemsSource="{Binding TaskItems}">
 
                 <local:ItemsControl.PlaceholderText>
-                    Aktualne zadanie
+                    Nie masz aktywnego zadania
                 </local:ItemsControl.PlaceholderText>
 
                 <local:ItemsControl.ItemTemplate>

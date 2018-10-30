@@ -51,6 +51,7 @@ namespace Timeinator.Mobile
         {
             CurrentTaskStartTime = CurrentTime;
             TaskTimer.Interval = CurrentTask.AssignedTime.TotalMilliseconds;
+            TaskTimer.Elapsed += (sender, e) => TimesUp.Invoke();
             TaskTimer.Enabled = true;
         }
 
@@ -79,7 +80,6 @@ namespace Timeinator.Mobile
         public void EndTask()
         {
             TaskTimer.Enabled = false;
-            TaskTimer.Elapsed += (sender, e) => TimesUp.Invoke();
             SaveProgress();
             SessionTasks.Remove(CurrentTask);
         }

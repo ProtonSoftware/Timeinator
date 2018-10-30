@@ -16,7 +16,10 @@ namespace Timeinator.Mobile
         /// The list of time tasks for current session to show in this page
         /// </summary>
         public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<TimeTaskViewModel>();
-        public bool Paused { get; set; }
+        /// <summary>
+        /// Holds current task state
+        /// </summary>
+        public bool Paused { get { return !DI.UserTimeHandler.TaskTimer.Enabled; } }
 
         #endregion
 
@@ -42,9 +45,13 @@ namespace Timeinator.Mobile
             ResumeCommand = new RelayCommand(() => DI.UserTimeHandler.ResumeTask());
             LoadTaskList();
             List<TimeTaskContext> cxts = new List<TimeTaskContext>();
-            foreach (var task in TaskItems)
-                cxts.Add(DI.TimeTasksMapper.ReverseMap(task));
-            DI.UserTimeHandler.StartTimeHandler(cxts);
+            //start usertimehandler only if not started
+            if (DI.UserTimeHandler.SessionTasks.Count <= 0)
+            {
+                foreach (var task in TaskItems)
+                    cxts.Add(DI.TimeTasksMapper.ReverseMap(task));
+                DI.UserTimeHandler.StartTimeHandler(cxts);
+            }
         }
 
         #endregion
