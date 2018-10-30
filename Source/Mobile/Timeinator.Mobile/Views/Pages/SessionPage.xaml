@@ -5,5 +5,22 @@
              x:Class="Timeinator.Mobile.SessionPage"
              Title="{Binding Title}">
 
+    <ScrollView>
+        
+        <local:ItemsControl ItemsSource="{Binding TaskItems}">
+
+            <local:ItemsControl.PlaceholderText>
+                Aktualne zadanie
+            </local:ItemsControl.PlaceholderText>
+
+            <local:ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:TimeTaskControl />
+                </DataTemplate>
+            </local:ItemsControl.ItemTemplate>
+
+        </local:ItemsControl>
+
+    </ScrollView>
 
 </local:BasePage>
