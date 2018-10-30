@@ -30,7 +30,7 @@ namespace Timeinator.Mobile
         /// </summary>
         public Timer TaskTimer { get; set; } = new Timer();
         /// <summary>
-        ///                                                                                               //TO DO!!!!!!!
+        /// Event called when time for task elapsed
         /// </summary>
         public event Action TimesUp;
 
@@ -79,7 +79,7 @@ namespace Timeinator.Mobile
         public void EndTask()
         {
             TaskTimer.Enabled = false;
-            //TaskTimer.Elapsed += TimesUp;                                                         //TO DO!!!!!!!!!
+            TaskTimer.Elapsed += (sender, e) => TimesUp.Invoke();
             SaveProgress();
             SessionTasks.Remove(CurrentTask);
         }
