@@ -9,13 +9,13 @@ would keep its resources in the "Resources" directory of the application:
 
 Resources/
     drawable-hdpi/
-        icon.png
+        logo.png
 
     drawable-ldpi/
-        icon.png
+        logo.png
 
     drawable-mdpi/
-        icon.png
+        logo.png
 
     layout/
         main.xml
@@ -32,7 +32,7 @@ for the above Resources layout, this is what the Resource class would expose:
 
 public class Resource {
     public class drawable {
-        public const int icon = 0x123;
+        public const int logo = 0x123;
     }
 
     public class layout {
@@ -45,6 +45,6 @@ public class Resource {
     }
 }
 
-You would then use R.drawable.icon to reference the drawable/icon.png file, or Resource.layout.main 
+You would then use R.drawable.logo to reference the drawable/icon.png file, or Resource.layout.main 
 to reference the layout/main.xml file, or Resource.strings.first_string to reference the first 
 string in the dictionary file values/strings.xml.
