@@ -7,6 +7,8 @@ CREATE TABLE "users" (
     "email" VARCHAR(255) NOT NULL UNIQUE,
     "password" VARCHAR(255) NOT NULL,
     "salt" VARCHAR(255) NOT NULL,
+    "activeperiod" boolean DEFAULT 0,
+    "activeexpire" TIMESTAMP DEFAULT NULL,
     "token" VARCHAR(255) DEFAULT NULL,
     "token_expiration" TIMESTAMP DEFAULT NULL,
     PRIMARY KEY ("id")
@@ -16,11 +18,10 @@ DROP TABLE IF EXISTS "tasks";
 CREATE TABLE "tasks" (
     "id" int NOT NULL UNIQUE,
     "user" int NOT NULL,
-    "static" boolean DEFAULT 0,
-    "active" boolean DEFAULT 0,
-    "time" TIMESTAMP NOT NULL,
-    "duration" TIME DEFAULT NULL,
+    "orderid" int NOT NULL,
+    "enabled" boolean DEFAULT 0,
     "priority" int NOT NULL,
+    "importance" int NOT NULL,
     "cycle" TIME DEFAULT NULL,
     "progress" FLOAT DEFAULT 0,
     "started" boolean DEFAULT 0,
