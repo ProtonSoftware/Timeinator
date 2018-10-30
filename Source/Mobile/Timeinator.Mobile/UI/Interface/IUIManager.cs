@@ -10,6 +10,8 @@ namespace Timeinator.Mobile
     {
         Task ShowModalOnCurrentNavigation(ContentPage page);
 
+        Task HideRecentModalFromCurrentNavigation();
+
         void HideMenu();
     }
 }

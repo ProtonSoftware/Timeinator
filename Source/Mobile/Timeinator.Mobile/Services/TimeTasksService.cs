@@ -1,4 +1,6 @@
-﻿namespace Timeinator.Mobile
+﻿using System.Collections.Generic;
+
+namespace Timeinator.Mobile
 {
     /// <summary>
     /// The service that mediates between database and <see cref="TimeTasksManager"/> to handle tasks
@@ -15,6 +17,9 @@
         {
             // Get every task in the database
             var dbTasks = DI.TimeTasksRepository.GetSavedTasksForToday();
+
+            // Clear current manager list to begin with
+            DI.TimeTasksManager.TaskContexts = new List<TimeTaskContext>();
 
             // For each of them...
             foreach (var entity in dbTasks)
