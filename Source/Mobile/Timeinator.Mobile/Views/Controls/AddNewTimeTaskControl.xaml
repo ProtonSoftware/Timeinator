@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<local:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Timeinator.Mobile"
+             x:Class="Timeinator.Mobile.AddNewTimeTaskControl">
+
+    <Grid>
+
+        <StackLayout Orientation="Vertical">
+
+            <Label Text="Nazwa" />
+            <Entry Text="{Binding TaskName}" />
+
+            <Label Text="Opis" />
+            <Entry Text="{Binding TaskDescription}" />
+
+            <Label Text="Tag" />
+            <Entry Text="{Binding TaskTag}" />
+
+            <Label Text="Czy wazne" />
+            <Switch IsToggled="{Binding TaskImportance}" />
+
+            <Label Text="Priorytet" />
+            <Slider Maximum="5" 
+                    Minimum="1"
+                    Value="{Binding TaskPriority}" />
+
+            <Button Text="Dodaj"
+                        Command="{Binding AddTaskCommand}" />
+
+        </StackLayout>
+
+    </Grid>
+
+</local:BasePage>
