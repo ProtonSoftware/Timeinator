@@ -6,17 +6,29 @@
 
     <Frame>
 
-        <StackLayout Orientation="Vertical">
+        <Grid>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            
 
-            <Label Text="{Binding Name}" />
+            <StackLayout Orientation="Vertical"
+                         Grid.Column="1">
 
-            <Label Text="{Binding Description}" />
+                <Label Text="{Binding Name}" />
 
-            <Label Text="{Binding Tag}" />
+                <Label Text="{Binding Description}" />
 
-            <Label Text="{Binding AssignedTime}" />
+                <Label Text="{Binding Tag, StringFormat='#{0}'}" />
 
-        </StackLayout>
+                <Label Text="{Binding AssignedTime}" />
+
+            </StackLayout>
+            
+        </Grid>
 
     </Frame>
 
