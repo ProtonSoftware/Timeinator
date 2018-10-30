@@ -20,11 +20,11 @@
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <AndroidKeyStore>true</AndroidKeyStore>
-    <AndroidSigningKeyStore>D:\Projects\Git\Timeinator\Resources\timeinator.keystore</AndroidSigningKeyStore>
+    <AndroidKeyStore>false</AndroidKeyStore>
+    <AndroidSigningKeyStore></AndroidSigningKeyStore>
     <AndroidSigningStorePass>
     </AndroidSigningStorePass>
-    <AndroidSigningKeyAlias>timeinator</AndroidSigningKeyAlias>
+    <AndroidSigningKeyAlias></AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>
     </AndroidSigningKeyPass>
   </PropertyGroup>
@@ -118,4 +118,5 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Import Project="$(CommonLocation)\TiSigning.targets" Condition="Exists('$(CommonLocation)\TiSigning.targets')" />
 </Project>
