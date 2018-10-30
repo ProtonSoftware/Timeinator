@@ -79,7 +79,7 @@ namespace Timeinator.Mobile
         public void EndTask()
         {
             TaskTimer.Enabled = false;
-            TaskTimer.Elapsed += TimesUp;                                                         //TO DO!!!!!!!!!
+            //TaskTimer.Elapsed += TimesUp;                                                         //TO DO!!!!!!!!!
             SaveProgress();
             SessionTasks.Remove(CurrentTask);
         }
