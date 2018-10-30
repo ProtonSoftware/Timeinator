@@ -97,6 +97,9 @@ namespace Timeinator.Mobile
 
             // Pass it to the service to handle it
             DI.TimeTasksService.SaveNewTask(newTask);
+
+            // Close this page
+            DI.UI.HideRecentModalFromCurrentNavigation();
         }
 
         #endregion
