@@ -33,6 +33,9 @@
     <Compile Update="Views\Pages\SessionPage.xaml.cs">
       <DependentUpon>SessionPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Pages\TasksPreparationPage.xaml.cs">
+      <DependentUpon>TasksPreparationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Pages\TasksPage.xaml.cs">
       <DependentUpon>TasksPage.xaml</DependentUpon>
     </Compile>
