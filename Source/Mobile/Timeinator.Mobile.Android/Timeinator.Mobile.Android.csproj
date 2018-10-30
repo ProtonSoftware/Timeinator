@@ -25,7 +25,8 @@
     <AndroidSigningStorePass>
     </AndroidSigningStorePass>
     <AndroidSigningKeyAlias>timeinator</AndroidSigningKeyAlias>
-    <AndroidSigningKeyPass>PiguNitamb30</AndroidSigningKeyPass>
+    <AndroidSigningKeyPass>
+    </AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
