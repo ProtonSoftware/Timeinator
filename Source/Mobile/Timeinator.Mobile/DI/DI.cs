@@ -40,6 +40,10 @@ namespace Timeinator.Mobile
         /// </summary>
         public static IUIManager UI => Framework.Service<IUIManager>();
 
+        /// <summary>
+        /// A shortcut to access the <see cref="UserTimeHandler"/>
+        /// </summary>
+        public static UserTimeHandler UserTimeHandler => Framework.Service<UserTimeHandler>();
         #endregion
 
         #region Public Methods
