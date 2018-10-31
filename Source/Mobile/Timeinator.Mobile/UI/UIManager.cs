@@ -25,6 +25,22 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
+        /// Hides the most recent modal from top of the page host
+        /// </summary>
+        /// <returns></returns>
+        public async Task HideRecentModalFromCurrentNavigation()
+        {
+            // Get current navigation page
+            var navigation = (App.Current.MainPage as PageHost).Detail.Navigation;
+
+            // Pop a modal
+            await navigation.PopAsync(true);
+
+            // Hide the menu afterwards
+            HideMenu();
+        }
+
+        /// <summary>
         /// Hides the menu on demand
         /// </summary>
         public void HideMenu() => (App.Current.MainPage as PageHost).IsPresented = false;
