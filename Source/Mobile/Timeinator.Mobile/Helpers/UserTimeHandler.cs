@@ -33,6 +33,10 @@ namespace Timeinator.Mobile
         ///                                                                                               //TO DO!!!!!!!
         /// </summary>
         public event Action TimesUp;
+        /// <summary>
+        /// Stores extra time user needed to complete task
+        /// </summary>
+        public TimeSpan TaskOverflowTime { get; set; }
 
         /// <summary>
         /// Loads list of tasks to TimeHandler and starts the first one
