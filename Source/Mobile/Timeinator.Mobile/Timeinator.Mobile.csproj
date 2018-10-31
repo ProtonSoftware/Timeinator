@@ -21,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Controls\SessionControl.xaml.cs">
+      <DependentUpon>SessionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Controls\TimeTaskControl.xaml.cs">
       <DependentUpon>TimeTaskControl.xaml</DependentUpon>
     </Compile>

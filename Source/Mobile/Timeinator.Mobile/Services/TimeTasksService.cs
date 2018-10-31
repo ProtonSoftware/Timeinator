@@ -13,7 +13,7 @@ namespace Timeinator.Mobile
         /// Loads saved tasks from the database and passes it in the manager
         /// </summary>
         /// <returns>True, if any task was found, false otherwise</returns>
-        public bool LoadCurrentTasks()
+        public bool LoadStoredTasks()
         {
             // Get every task in the database
             var dbTasks = DI.TimeTasksRepository.GetSavedTasksForToday();
@@ -37,6 +37,15 @@ namespace Timeinator.Mobile
 
             // Otherwise, no tasks were saved
             return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tasks"></param>
+        public void ConveyTasksToManager(List<TimeTaskContext> tasks)
+        {
+            throw new System.NotImplementedException();
         }
 
         /// <summary>
