@@ -38,24 +38,9 @@ namespace Timeinator.Mobile
             AddNewTaskCommand = new RelayCommand(() => DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
 
             // Load saved tasks in database to the manager
-            var taskFound = DI.TimeTasksService.LoadCurrentTasks();
-
-            // If any tasks were found
-            if (taskFound)
-                // Load them to this page
-                LoadTaskList();
+            DI.TimeTasksService.LoadStoredTasks();
         }
 
         #endregion
-
-        /// <summary>
-        /// Loads saved tasks from the <see cref="TimeTasksManager"/>
-        /// </summary>
-        public void LoadTaskList()
-        {
-            // Get tasks from a manager
-            foreach (var task in DI.TimeTasksManager.TaskContexts)
-                TaskItems.Add(DI.TimeTasksMapper.Map(task));
-        }
     }
 }

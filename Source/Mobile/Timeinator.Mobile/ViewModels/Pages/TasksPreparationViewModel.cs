@@ -20,11 +20,6 @@ namespace Timeinator.Mobile
 
         #region Commands
 
-        /// <summary>
-        /// The command to show a modal to add new task to the list
-        /// </summary>
-        public ICommand AddNewTaskCommand { get; private set; }
-
         #endregion
 
         #region Constructor
@@ -34,19 +29,13 @@ namespace Timeinator.Mobile
         /// </summary>
         public TasksPreparationViewModel()
         {
-            // Create commands
-            AddNewTaskCommand = new RelayCommand(() => DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
-
-            // Load saved tasks in database to the manager
-            var taskFound = DI.TimeTasksService.LoadCurrentTasks();
-
-            // If any tasks were found
-            if (taskFound)
-                // Load them to this page
-                LoadTaskList();
+            // Load tasks from the manager to this page
+            LoadTaskList();
         }
 
         #endregion
+
+        #region Private Helpers
 
         /// <summary>
         /// Loads saved tasks from the <see cref="TimeTasksManager"/>
@@ -55,7 +44,10 @@ namespace Timeinator.Mobile
         {
             // Get tasks from a manager
             foreach (var task in DI.TimeTasksManager.TaskContexts)
+                // Add each of them mapped as viewmodel to our collection
                 TaskItems.Add(DI.TimeTasksMapper.Map(task));
         }
+
+        #endregion
     }
 }
