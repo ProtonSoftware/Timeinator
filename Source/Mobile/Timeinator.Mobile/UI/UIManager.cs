@@ -44,5 +44,10 @@ namespace Timeinator.Mobile
         /// Hides the menu on demand
         /// </summary>
         public void HideMenu() => (App.Current.MainPage as PageHost).IsPresented = false;
+
+        public void DisplayPopupMessage()
+        {
+            (App.Current.MainPage as PageHost).DisplayAlert("Title", "Message", "Cancel");
+        }
     }
 }

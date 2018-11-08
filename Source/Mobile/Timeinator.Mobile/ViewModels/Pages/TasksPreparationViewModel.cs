@@ -42,10 +42,7 @@ namespace Timeinator.Mobile
         /// </summary>
         public void LoadTaskList()
         {
-            // Get tasks from a manager
-            foreach (var task in DI.TimeTasksManager.TaskContexts)
-                // Add each of them mapped as viewmodel to our collection
-                TaskItems.Add(DI.TimeTasksMapper.Map(task));
+            // TODO: logic
         }
 
         #endregion

@@ -40,7 +40,7 @@ namespace Timeinator.Mobile
         public void ChangePageWithoutLogin()
         {
             // Simply change the page
-            DI.Application.GoToPage(ApplicationPage.Tasks);
+            DI.Application.GoToPage(ApplicationPage.TasksList);
         }
 
         #endregion

@@ -7,7 +7,7 @@ namespace Timeinator.Mobile
     /// </summary>
     public interface ITimeTasksService
     {
-        bool LoadStoredTasks();
+        List<TimeTaskContext> LoadStoredTasks();
         void ConveyTasksToManager(List<TimeTaskContext> tasks);
 
         void SaveNewTask(TimeTaskContext context);

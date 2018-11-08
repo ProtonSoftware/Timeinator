@@ -39,13 +39,17 @@ namespace Timeinator.Mobile
         /// </summary>
         public SessionPageViewModel()
         {
+            // Create commands
             BreakCommand = new RelayCommand(() => DI.UserTimeHandler.StopTask());
             StopCommand = new RelayCommand(() => DI.UserTimeHandler.EndTask());
-            //ExtendCommand = new RelayCommand(() => DI.UserTimeHandler.ExtendTask());
             ResumeCommand = new RelayCommand(() => DI.UserTimeHandler.ResumeTask());
+            //ExtendCommand = new RelayCommand(() => DI.UserTimeHandler.ExtendTask());
+
             LoadTaskList();
-            List<TimeTaskContext> cxts = new List<TimeTaskContext>();
-            //start usertimehandler only if not started
+
+            var cxts = new List<TimeTaskContext>();
+
+            // Start UserTimeHandler only if has not started yet
             if (DI.UserTimeHandler.SessionTasks.Count <= 0)
             {
                 foreach (var task in TaskItems)
@@ -61,8 +65,8 @@ namespace Timeinator.Mobile
         /// </summary>
         public void LoadTaskList()
         {
-            // Get tasks from a manager
-            foreach (var task in DI.TimeTasksManager.TaskContexts)
+            // TODO: Do the logic so its done differently
+            foreach (var task in DI.TimeTasksManager.GetCalculatedTasksListForSpecifiedTime(new System.TimeSpan(6, 0, 0)))
                 TaskItems.Add(DI.TimeTasksMapper.Map(task));
         }
     }

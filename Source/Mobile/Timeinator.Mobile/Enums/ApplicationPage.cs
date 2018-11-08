@@ -11,9 +11,19 @@
         Login,
 
         /// <summary>
-        /// Main tasks page
+        /// Main tasks list page
         /// </summary>
-        Tasks,
+        TasksList,
+
+        /// <summary>
+        /// Tasks preparation page where session is calculated
+        /// </summary>
+        TasksPreparation,
+
+        /// <summary>
+        /// Tasks session page
+        /// </summary>
+        TasksSession,
 
         /// <summary>
         /// Settings page

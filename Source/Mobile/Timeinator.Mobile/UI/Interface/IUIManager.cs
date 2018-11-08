@@ -13,5 +13,7 @@ namespace Timeinator.Mobile
         Task HideRecentModalFromCurrentNavigation();
 
         void HideMenu();
+
+        void DisplayPopupMessage();
     }
 }

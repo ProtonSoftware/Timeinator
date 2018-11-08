@@ -12,14 +12,14 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Loads saved tasks from the database and passes it in the manager
         /// </summary>
-        /// <returns>True, if any task was found, false otherwise</returns>
-        public bool LoadStoredTasks()
+        /// <returns>A list of found tasks mapped as context</returns>
+        public List<TimeTaskContext> LoadStoredTasks()
         {
+            // Prepare a list to return
+            var taskContexts = new List<TimeTaskContext>();
+
             // Get every task in the database
             var dbTasks = DI.TimeTasksRepository.GetSavedTasksForToday();
-
-            // Clear current manager list to begin with
-            DI.TimeTasksManager.TaskContexts = new List<TimeTaskContext>();
 
             // For each of them...
             foreach (var entity in dbTasks)
@@ -27,25 +27,22 @@ namespace Timeinator.Mobile
                 // Map it as a context
                 var context = DI.TimeTasksMapper.Map(entity);
 
-                // Add it to the manager
-                DI.TimeTasksManager.AddTask(context);
+                // Add it to the list
+                taskContexts.Add(context);
             }
 
-            // If we successfully loaded some tasks to the manager
-            if (DI.TimeTasksManager.TaskContexts.Count > 0)
-                return true;
-
-            // Otherwise, no tasks were saved
-            return false;
+            // Return every found task
+            return taskContexts;
         }
 
         /// <summary>
-        /// 
+        /// Sets up the manager and transfers specified tasks
         /// </summary>
-        /// <param name="tasks"></param>
+        /// <param name="tasks">The task that user wants to have in the session</param>
         public void ConveyTasksToManager(List<TimeTaskContext> tasks)
         {
-            throw new System.NotImplementedException();
+            // Add the list to the manager
+            DI.TimeTasksManager.UploadTasksList(tasks);
         }
 
         /// <summary>
@@ -59,9 +56,6 @@ namespace Timeinator.Mobile
 
             // Save it into database
             DI.TimeTasksRepository.SaveTask(entity);
-
-            // TODO: Make it different way - manager should be "refreshed" and load every task
-            DI.TimeTasksManager.AddTask(context);
         }
 
         #endregion
