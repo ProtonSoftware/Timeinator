@@ -72,7 +72,7 @@ namespace Timeinator.Mobile
             var tmp = GetConstant(target, true);
             var priors = SumPriorities(tmp);
             for (var i = 0; i < tmp.Count; i++)
-                tmp[i].AssignedTime = new TimeSpan((long)(avt.Ticks * (GetRealPriority(tmp[i]) / priors)));
+                tmp[i].AssignedTime = TimeSpan.FromMinutes((int)Math.Ceiling(new TimeSpan((long)(avt.Ticks * (GetRealPriority(tmp[i]) / priors))).TotalMinutes));
             return tmp.Concat(GetConstant(target)).ToList();
         }
 

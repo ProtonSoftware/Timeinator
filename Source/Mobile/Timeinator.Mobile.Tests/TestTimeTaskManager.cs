@@ -20,7 +20,7 @@ namespace Timeinator.Mobile.Tests
         #endregion
 
         [Fact]
-        public void TimeTaskManager_ShouldAssignTimeToProvidedTasks()
+        public void TimeTaskManager_TimeAssigning1()
         {
             // Arrange
             var manager = GetCurrentManager();
@@ -30,45 +30,109 @@ namespace Timeinator.Mobile.Tests
                 new TimeTaskContext
                 {
                     Name = "NAME1",
-                    Priority = Priority.Two
+                    Priority = Priority.Two,
+                    OrderId = 0
                 },
                 new TimeTaskContext
                 {
                     Name = "NAME2",
-                    Priority = Priority.Two
+                    Priority = Priority.Two,
+                    OrderId = 1
                 },
                 new TimeTaskContext
                 {
                     Name = "NAME3",
-                    Priority = Priority.Three
+                    Priority = Priority.Three,
+                    OrderId = 2
                 },
             };
 
             // Act
             manager.UploadTasksList(tasksList);
-            var firstReturnedList = manager.GetCalculatedTasksListForSpecifiedTime(new TimeSpan(6, 0, 0));
-            var secondReturnedList = manager.GetCalculatedTasksListForSpecifiedTime(new TimeSpan(0, 1, 0));
-
-            tasksList.RemoveAt(1);
-            manager.UploadTasksList(tasksList);
-            var thirdReturnedList = manager.GetCalculatedTasksListForSpecifiedTime(new TimeSpan(6, 0, 0));
+            var firstReturnedList = manager.GetCalculatedTasksListForSpecifiedTime(new TimeSpan(7, 0, 0));
 
             // Assert
             Assert.True(firstReturnedList.Count == 3);
+
+            // slices 7 hours
+            Assert.Equal(firstReturnedList[0].AssignedTime, new TimeSpan(2, 0, 0));
+            Assert.Equal(firstReturnedList[1].AssignedTime, new TimeSpan(2, 0, 0));
+            Assert.Equal(firstReturnedList[2].AssignedTime, new TimeSpan(3, 0, 0));
+        }
+
+        [Fact]
+        public void TimeTaskManager_TimeAssigning2()
+        {
+            // Arrange
+            var manager = GetCurrentManager();
+
+            var tasksList = new List<TimeTaskContext>
+            {
+                new TimeTaskContext
+                {
+                    Name = "NAME1",
+                    Priority = Priority.Two,
+                    OrderId = 0
+                },
+                new TimeTaskContext
+                {
+                    Name = "NAME2",
+                    Priority = Priority.Two,
+                    OrderId = 1
+                },
+                new TimeTaskContext
+                {
+                    Name = "NAME3",
+                    Priority = Priority.Three,
+                    OrderId = 2
+                },
+            };
+
+            // Act
+            manager.UploadTasksList(tasksList);
+            var secondReturnedList = manager.GetCalculatedTasksListForSpecifiedTime(new TimeSpan(0, 49, 0));
+
+            // Assert
             Assert.True(secondReturnedList.Count == 3);
+
+            // 49 minutes
+            Assert.Equal(secondReturnedList[0].AssignedTime, new TimeSpan(0, 14, 0));
+            Assert.Equal(secondReturnedList[1].AssignedTime, new TimeSpan(0, 14, 0));
+            Assert.Equal(secondReturnedList[2].AssignedTime, new TimeSpan(0, 21, 0));
+        }
+
+        [Fact]
+        public void TimeTaskManager_TimeAssigning3()
+        {
+            // Arrange
+            var manager = GetCurrentManager();
+
+            var tasksList = new List<TimeTaskContext>
+            {
+                new TimeTaskContext
+                {
+                    Name = "NAME1",
+                    Priority = Priority.Two,
+                    OrderId = 0
+                },
+                new TimeTaskContext
+                {
+                    Name = "NAME3",
+                    Priority = Priority.Three,
+                    OrderId = 2
+                },
+            };
+
+            // Act
+            manager.UploadTasksList(tasksList);
+            var thirdReturnedList = manager.GetCalculatedTasksListForSpecifiedTime(new TimeSpan(2, 30, 0));
+
+            // Assert
             Assert.True(thirdReturnedList.Count == 2);
 
-            // TODO: Calculate exact values and put it here, 1h 40min etc is a placeholder
-            Assert.Equal(firstReturnedList[0].AssignedTime, new TimeSpan(1, 40, 0));
-            Assert.Equal(firstReturnedList[1].AssignedTime, new TimeSpan(1, 40, 0));
-            Assert.Equal(firstReturnedList[2].AssignedTime, new TimeSpan(2, 40, 0));
-
-            Assert.Equal(secondReturnedList[0].AssignedTime, new TimeSpan(0, 0, 15));
-            Assert.Equal(secondReturnedList[1].AssignedTime, new TimeSpan(0, 0, 15));
-            Assert.Equal(secondReturnedList[2].AssignedTime, new TimeSpan(0, 0, 30));
-
-            Assert.Equal(thirdReturnedList[0].AssignedTime, new TimeSpan(2, 30, 0));
-            Assert.Equal(thirdReturnedList[1].AssignedTime, new TimeSpan(3, 30, 0));
+            // 2 hours 30 minutes
+            Assert.Equal(thirdReturnedList[0].AssignedTime, new TimeSpan(1, 0, 0));
+            Assert.Equal(thirdReturnedList[1].AssignedTime, new TimeSpan(1, 30, 0));
         }
     }
 }
