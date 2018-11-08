@@ -11,36 +11,22 @@ namespace Timeinator.Mobile
     {
         #region Private Members
 
-        private List<TimeTaskContext> mTaskContexts = new List<TimeTaskContext>();
-
         private TimeSpan mAvailableTime;
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
-        /// Current tasks that user defined, this stores newest data about tasks
+        /// Current tasks that user defined
         /// </summary>
-        public List<TimeTaskContext> TaskContexts
-        {
-            get => mTaskContexts;
-            set
-            {
-                mTaskContexts = value;
-                RefreshContexts();
-            }
-        }
+        private List<TimeTaskContext> TaskContexts { get; set; }
 
         /// <summary>
         /// Time when user was ready and declared free time, a moment when user clicked READY
         /// </summary>
-        public DateTime ReadyTime { get; set; }
+        private DateTime ReadyTime { get; set; }
 
         /// <summary>
         /// Remaining free time since user clicked READY
         /// </summary>
-        public TimeSpan AvailableTime
+        private TimeSpan AvailableTime
         {
             get => mAvailableTime - (DateTime.Now - ReadyTime);
             set => mAvailableTime = value;
@@ -56,8 +42,7 @@ namespace Timeinator.Mobile
         /// <param name="contexts">The tasks to upload</param>
         public void UploadTasksList(List<TimeTaskContext> contexts)
         {
-            // TODO: Maciej
-            throw new NotImplementedException();
+            TaskContexts = contexts;
         }
 
         /// <summary>
@@ -67,56 +52,28 @@ namespace Timeinator.Mobile
         /// <returns>The list of tasks with calculated time</returns>
         public List<TimeTaskContext> GetCalculatedTasksListForSpecifiedTime(TimeSpan userTime)
         {
-            // TODO: Maciej
-            throw new NotImplementedException();
+            AvailableTime = userTime;
+            ReadyTime = DateTime.Now;
+            TaskContexts = CalcAssignedTimes(GetEnabled(TaskContexts)).Concat(GetEnabled(TaskContexts, true)).ToList();
+            return TaskContexts.OrderBy(x => x.OrderId).ToList();
         }
 
         #endregion
 
         #region Private Methods
 
-        private void AddTask(TimeTaskContext timeTask)
-        {
-            TaskContexts.Add(timeTask);
-            RefreshContexts();
-        }
-
-        private void RemoveTask(TimeTaskContext timeTask)
-        {
-            TaskContexts.Remove(timeTask);
-            RefreshContexts();
-        }
-
-        /// <summary>
-        /// Initialize time managing - user is ready, sets new amount of free time and calculates times for each task
-        /// </summary>
-        private void UserReady(TimeSpan freetime)
-        {
-            AvailableTime = freetime;
-            ReadyTime = DateTime.Now;
-            mTaskContexts = CalcAssignedTimes(GetEnabled(TaskContexts)).Concat(GetEnabled(TaskContexts, true)).ToList();
-        }
-
         /// <summary>
         /// Recalculates AssignedTime in TimeTasks loaded to target TimeTasks
         /// </summary>
+        /// <returns>Ready list</returns>
         private List<TimeTaskContext> CalcAssignedTimes(List<TimeTaskContext> target)
         {
-            TimeSpan avt = AvailableTime - SumTimes(GetConstant(target));
-            List<TimeTaskContext> tmp = GetConstant(target, true);
-            double priors = SumPriorities(tmp);
-            for (int i = 0; i < tmp.Count; i++)
+            var avt = AvailableTime - SumTimes(GetConstant(target));
+            var tmp = GetConstant(target, true);
+            var priors = SumPriorities(tmp);
+            for (var i = 0; i < tmp.Count; i++)
                 tmp[i].AssignedTime = new TimeSpan((long)(avt.Ticks * (GetRealPriority(tmp[i]) / priors)));
             return tmp.Concat(GetConstant(target)).ToList();
-        }
-
-        /// <summary>
-        /// Refreshes TaskContexts assigning them a new OrderId
-        /// </summary>
-        private void RefreshContexts()
-        {
-            mTaskContexts = ReorderTasks(TaskContexts);
-            mTaskContexts = mTaskContexts.OrderBy(x => x.OrderId).ToList();
         }
 
         /// <summary>
@@ -144,52 +101,20 @@ namespace Timeinator.Mobile
         /// </summary>
         private double GetRealPriority(TimeTaskContext tc) => (int)tc.Priority * (1.0 - tc.Progress);
 
-        /// <summary>
-        /// Sets order in tasks basing on importance and priority
-        /// </summary>
-        /// <param name="target">Tasks to sort</param>
-        private List<TimeTaskContext> ReorderTasks(List<TimeTaskContext> target)
-        {
-            target = new List<TimeTaskContext>(target);
-            int uplim = target.Count;
-            List<TimeTaskContext> final = new List<TimeTaskContext>();
-            for (int g = 0; g < uplim; g++) // g - new OrderId
-            {
-                TimeTaskContext top;
-                List<TimeTaskContext> tmp = GetImportant(target);
-                top = GetHighestPriority(tmp.Count > 0 ? tmp : target);
-                top.OrderId = g;
-                final.Add(top);
-                target.Remove(top);
-            }
-            return final;
-        }
-
         private double SumPriorities(List<TimeTaskContext> l)
         {
             double s = 0;
-            foreach (TimeTaskContext c in l)
+            foreach (var c in l)
                 s += GetRealPriority(c);
             return s;
         }
 
         private TimeSpan SumTimes(List<TimeTaskContext> l)
         {
-            TimeSpan res = new TimeSpan(0);
-            foreach (TimeTaskContext c in l)
+            var res = new TimeSpan(0);
+            foreach (var c in l)
                 res += c.AssignedTime;
             return res;
-        }
-
-        private TimeTaskContext GetHighestPriority(List<TimeTaskContext> l)
-        {
-            TimeTaskContext context = null;
-            foreach (TimeTaskContext c in l)
-            {
-                if (context == null || context.Priority < c.Priority)
-                    context = c;
-            }
-            return context;
         }
 
         #endregion
