@@ -16,7 +16,12 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-        <ScrollView>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ScrollView Grid.ColumnSpan="2">
 
             <local:ItemsControl ItemsSource="{Binding TaskItems}">
 
@@ -34,15 +39,9 @@
 
         </ScrollView>
 
-        <StackLayout Grid.Row="1">
+        <TimePicker Grid.Row="1" Grid.Column="0" Time="{Binding UserTime}" />
 
-            <TimePicker Time="{Binding UserTime}" />
-            
-            <Button Text="GOTOW"
-                Command="{Binding UserReadyCommand}"
-                Grid.Row="1" />
-
-        </StackLayout>
+        <Button Grid.Row="1" Grid.Column="1" Text="GOTOW" Command="{Binding UserReadyCommand}" />
 
     </Grid>
 

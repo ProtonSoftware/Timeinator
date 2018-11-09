@@ -20,7 +20,7 @@ namespace Timeinator.Mobile.Tests
         #endregion
 
         [Fact]
-        public void UserTimeHandler()
+        public void UserTimeHandler_ShouldStartHandler()
         {
             // Arrange
             var handler = GetCurrentHandler();
@@ -54,7 +54,7 @@ namespace Timeinator.Mobile.Tests
             handler.StartTimeHandler(tasksList);
      
             // Assert
-            Assert.True(3 == 3);
+            Assert.True(handler.TaskTimer.Enabled);
         }
     }
 }
