@@ -19,13 +19,12 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Holds current task state
         /// </summary>
-        public bool Paused { get { return !DI.UserTimeHandler.TaskTimer.Enabled; } }
+        public bool Paused => !DI.UserTimeHandler.TaskTimer.Enabled;
 
         #endregion
 
         #region Commands
 
-        public ICommand BreakCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
         public ICommand ExtendCommand { get; private set; }
         public ICommand ResumeCommand { get; private set; }
@@ -40,22 +39,11 @@ namespace Timeinator.Mobile
         public SessionPageViewModel()
         {
             // Create commands
-            BreakCommand = new RelayCommand(() => DI.UserTimeHandler.StopTask());
-            StopCommand = new RelayCommand(() => DI.UserTimeHandler.EndTask());
+            StopCommand = new RelayCommand(() => DI.UserTimeHandler.StopTask());
             ResumeCommand = new RelayCommand(() => DI.UserTimeHandler.ResumeTask());
-            //ExtendCommand = new RelayCommand(() => DI.UserTimeHandler.ExtendTask());
+            ExtendCommand = new RelayCommand(() => DI.UserTimeHandler.ExtendTask());
 
             LoadTaskList();
-
-            var cxts = new List<TimeTaskContext>();
-
-            // Start UserTimeHandler only if has not started yet
-            if (DI.UserTimeHandler.SessionTasks.Count <= 0)
-            {
-                foreach (var task in TaskItems)
-                    cxts.Add(DI.TimeTasksMapper.ReverseMap(task));
-                DI.UserTimeHandler.StartTimeHandler(cxts);
-            }
         }
 
         #endregion
@@ -65,9 +53,8 @@ namespace Timeinator.Mobile
         /// </summary>
         public void LoadTaskList()
         {
-            // TODO: Do the logic so its done differently
-            foreach (var task in DI.TimeTasksManager.GetCalculatedTasksListForSpecifiedTime(new System.TimeSpan(6, 0, 0)))
-                TaskItems.Add(DI.TimeTasksMapper.Map(task));
+            foreach (var e in DI.UserTimeHandler.SessionTasks)
+                TaskItems.Add(DI.TimeTasksMapper.Map(e));
         }
     }
 }

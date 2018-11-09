@@ -10,5 +10,6 @@ namespace Timeinator.Mobile
         void StartTask();
         void StopTask();
         void ResumeTask();
+        void ExtendTask();
     }
 }
