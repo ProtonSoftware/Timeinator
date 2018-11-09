@@ -48,8 +48,8 @@ namespace Timeinator.Mobile.Tests
             };
 
             // Act
-            manager.UploadTasksList(tasksList);
-            var firstReturnedList = manager.GetCalculatedTasksListForSpecifiedTime(new TimeSpan(7, 0, 0));
+            manager.UploadTasksList(tasksList, new TimeSpan(7, 0, 0));
+            var firstReturnedList = manager.GetCalculatedTasksListForSpecifiedTime();
 
             // Assert
             Assert.True(firstReturnedList.Count == 3);
@@ -89,8 +89,8 @@ namespace Timeinator.Mobile.Tests
             };
 
             // Act
-            manager.UploadTasksList(tasksList);
-            var secondReturnedList = manager.GetCalculatedTasksListForSpecifiedTime(new TimeSpan(0, 49, 0));
+            manager.UploadTasksList(tasksList, new TimeSpan(0, 49, 0));
+            var secondReturnedList = manager.GetCalculatedTasksListForSpecifiedTime();
 
             // Assert
             Assert.True(secondReturnedList.Count == 3);
@@ -124,8 +124,8 @@ namespace Timeinator.Mobile.Tests
             };
 
             // Act
-            manager.UploadTasksList(tasksList);
-            var thirdReturnedList = manager.GetCalculatedTasksListForSpecifiedTime(new TimeSpan(2, 30, 0));
+            manager.UploadTasksList(tasksList, new TimeSpan(2, 30, 0));
+            var thirdReturnedList = manager.GetCalculatedTasksListForSpecifiedTime();
 
             // Assert
             Assert.True(thirdReturnedList.Count == 2);

@@ -7,7 +7,7 @@ namespace Timeinator.Mobile
     /// <summary>
     /// Manager that handles time within one user session
     /// </summary>
-    public class UserTimeHandler
+    public class UserTimeHandler : IUserTimeHandler
     {
         /// <summary>
         /// List of tasks for one session
@@ -56,12 +56,14 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Stops the task
+        /// Stops the task and removes if completed
         /// </summary>
         public void StopTask()
         {
             TaskTimer.Enabled = false;
             SaveProgress();
+            if (CurrentTask.Progress >= 1)
+                SessionTasks.Remove(CurrentTask);
         }
 
         /// <summary>
@@ -75,21 +77,11 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public void EndTask()
-        {
-            TaskTimer.Enabled = false;
-            SaveProgress();
-            SessionTasks.Remove(CurrentTask);
-        }
-
-        /// <summary>
         /// Method used by StopTask and EndTask to save progress of the task
         /// </summary>
         private void SaveProgress()
         {
-            TimeSpan timePassed = CurrentTime.Subtract(CurrentTaskStartTime);
+            var timePassed = CurrentTime.Subtract(CurrentTaskStartTime);
             CurrentTask.Progress += timePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
         }
 
