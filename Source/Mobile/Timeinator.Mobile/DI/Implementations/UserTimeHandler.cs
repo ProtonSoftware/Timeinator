@@ -77,7 +77,15 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Method used by StopTask and EndTask to save progress of the task
+        /// Changes task to a constant time specified by user and recalculates times
+        /// </summary>
+        public void ExtendTask()
+        {
+            //TODO: Michał napraw to żeby przedłużało czas zadania i przeliczało managerem od nowa
+        }
+
+        /// <summary>
+        /// Method used to save progress of the task
         /// </summary>
         private void SaveProgress()
         {

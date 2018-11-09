@@ -13,9 +13,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ScrollView Grid.Row="0" Grid.ColumnSpan="3">
+        <ScrollView Grid.Row="0" Grid.ColumnSpan="2">
             
             <local:ItemsControl ItemsSource="{Binding TaskItems}">
 
@@ -33,13 +32,11 @@
 
         </ScrollView>
 
-        <Button IsVisible="{Binding Paused,Converter={local:BooleanInversionConverter}}" Grid.Column="0" Grid.Row="1" Text="PRZERWA" Command="{Binding BreakCommand}" />
+        <Button IsVisible="{Binding Paused,Converter={local:BooleanInversionConverter}}" Grid.Column="0" Grid.Row="1" Text="STOP" Command="{Binding StopCommand}" />
 
         <Button IsVisible="{Binding Paused}" Grid.Column="0" Grid.Row="1" Text="WZNÓW" Command="{Binding ResumeCommand}" />
 
         <Button Grid.Column="1" Grid.Row="1" Text="PRZEDŁUŻ" Command="{Binding ExtendCommand}" />
-
-        <Button Grid.Column="2" Grid.Row="1" Text="ZAKOŃCZ" Command="{Binding StopCommand}" />
 
     </Grid>
 </local:BasePage>
