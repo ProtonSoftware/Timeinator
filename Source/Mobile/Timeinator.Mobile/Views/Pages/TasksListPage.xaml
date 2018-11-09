@@ -2,8 +2,12 @@
 <local:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Timeinator.Mobile"
-             x:Class="Timeinator.Mobile.TasksPreparationPage"
+             x:Class="Timeinator.Mobile.TasksListPage"
              Title="{Binding Title}">
+
+    <local:BasePage.ToolbarItems>
+        <ToolbarItem Name="+" Command="{Binding AddNewTaskCommand}" />
+    </local:BasePage.ToolbarItems>
 
     <Grid>
 
@@ -16,6 +20,10 @@
 
             <local:ItemsControl ItemsSource="{Binding TaskItems}">
 
+                <local:ItemsControl.PlaceholderText>
+                    Brak zadań na dzisiaj - aby je dodać, kliknij ikonkę + u góry
+                </local:ItemsControl.PlaceholderText>
+
                 <local:ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <local:TimeTaskControl />
@@ -26,9 +34,15 @@
 
         </ScrollView>
 
-        <Button Text="START ZADAN"
-                Command="{Binding StartTasksCommand}"
+        <StackLayout Grid.Row="1">
+
+            <TimePicker Time="{Binding UserTime}" />
+            
+            <Button Text="GOTOW"
+                Command="{Binding UserReadyCommand}"
                 Grid.Row="1" />
+
+        </StackLayout>
 
     </Grid>
 

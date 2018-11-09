@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Timeinator.Mobile
 {
@@ -38,11 +39,22 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Sets up the manager and transfers specified tasks
         /// </summary>
-        /// <param name="tasks">The task that user wants to have in the session</param>
-        public void ConveyTasksToManager(List<TimeTaskContext> tasks)
+        /// <param name="tasks">The tasks that user wants to have in the session</param>
+        /// <param name="userTime">The time user has declared to calculate</param>
+        public void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime)
         {
-            // Add the list to the manager
-            DI.TimeTasksManager.UploadTasksList(tasks);
+            // Add the list to the manager with provided time
+            DI.TimeTasksManager.UploadTasksList(tasks, userTime);
+        }
+
+        /// <summary>
+        /// Sets up the time handler and starts new session
+        /// </summary>
+        /// <param name="tasks">The tasks that user wants to have in the session</param>
+        public void ConveyTasksToTimeHandler(List<TimeTaskContext> tasks)
+        {
+            // Add the list to the time handler and start it
+            DI.UserTimeHandler.StartTimeHandler(tasks);
         }
 
         /// <summary>

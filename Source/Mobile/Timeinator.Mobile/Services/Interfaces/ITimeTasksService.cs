@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Timeinator.Mobile
 {
@@ -8,7 +9,8 @@ namespace Timeinator.Mobile
     public interface ITimeTasksService
     {
         List<TimeTaskContext> LoadStoredTasks();
-        void ConveyTasksToManager(List<TimeTaskContext> tasks);
+        void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime);
+        void ConveyTasksToTimeHandler(List<TimeTaskContext> tasks);
 
         void SaveNewTask(TimeTaskContext context);
     }
