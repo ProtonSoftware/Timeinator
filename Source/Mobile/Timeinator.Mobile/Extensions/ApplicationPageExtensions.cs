@@ -22,7 +22,7 @@ namespace Timeinator.Mobile
                     return new LoginPage(viewModel as LoginViewModel);
 
                 case ApplicationPage.TasksList:
-                    return new TasksPage(viewModel as TasksPageViewModel);
+                    return new TasksPage(viewModel as TasksListPageViewModel);
 
                 case ApplicationPage.Settings:
                     return new SettingsPage(viewModel as SettingsViewModel);

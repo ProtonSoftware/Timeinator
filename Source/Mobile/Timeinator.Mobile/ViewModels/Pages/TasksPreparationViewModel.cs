@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -20,6 +21,11 @@ namespace Timeinator.Mobile
 
         #region Commands
 
+        /// <summary>
+        /// The command to start new tasks session
+        /// </summary>
+        public ICommand StartTasksCommand { get; private set; }
+
         #endregion
 
         #region Constructor
@@ -29,8 +35,32 @@ namespace Timeinator.Mobile
         /// </summary>
         public TasksPreparationViewModel()
         {
+            // Create commands
+            StartTasksCommand = new RelayCommand(StartTaskSession);
+
             // Load tasks from the manager to this page
             LoadTaskList();
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Starts new session out of current tasks
+        /// </summary>
+        private void StartTaskSession()
+        {
+            // Convert our collection to suitable list of contexts
+            var taskContexts = new List<TimeTaskContext>();
+            foreach (var task in TaskItems)
+                taskContexts.Add(DI.TimeTasksMapper.ReverseMap(task));
+
+            // Pass it to the time handler to start new session
+            DI.TimeTasksService.ConveyTasksToTimeHandler(taskContexts);
+
+            // Change the page afterwards
+            DI.Application.GoToPage(ApplicationPage.TasksSession);
         }
 
         #endregion
@@ -42,7 +72,12 @@ namespace Timeinator.Mobile
         /// </summary>
         public void LoadTaskList()
         {
-            // TODO: logic
+            // Calculate selected tasks and get the contexts
+            var contexts = DI.TimeTasksManager.GetCalculatedTasksListForSpecifiedTime();
+
+            // Map each one as suitable view model
+            foreach (var task in contexts)
+                TaskItems.Add(DI.TimeTasksMapper.Map(task));
         }
 
         #endregion
