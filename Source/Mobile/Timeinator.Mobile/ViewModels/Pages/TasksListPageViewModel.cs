@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -7,7 +8,7 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for main tasks page
     /// </summary>
-    public class TasksPageViewModel : BaseViewModel
+    public class TasksListPageViewModel : BaseViewModel
     {
         #region Public Properties
 
@@ -15,6 +16,11 @@ namespace Timeinator.Mobile
         /// The list of time tasks for current session to show in this page
         /// </summary>
         public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<TimeTaskViewModel>();
+
+        /// <summary>
+        /// The time that user has declared to calculate tasks for
+        /// </summary>
+        public TimeSpan UserTime { get; set; }
 
         #endregion
 
@@ -37,7 +43,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksPageViewModel()
+        public TasksListPageViewModel()
         {
             // Create commands
             AddNewTaskCommand = new RelayCommand(() => DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
@@ -66,8 +72,8 @@ namespace Timeinator.Mobile
             foreach (var task in TaskItems)
                 taskContexts.Add(DI.TimeTasksMapper.ReverseMap(task));
 
-            // Pass it to the service so it handles it to the manager
-            DI.TimeTasksService.ConveyTasksToManager(taskContexts);
+            // Pass it to the service so it handles it to the manager, with user free time
+            DI.TimeTasksService.ConveyTasksToManager(taskContexts, UserTime);
 
             // Change the page
             DI.Application.GoToPage(ApplicationPage.TasksPreparation);
