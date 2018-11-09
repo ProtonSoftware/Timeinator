@@ -29,10 +29,11 @@ namespace Timeinator.Mobile
             {
                 // Create TimeTask entity to TimeTaskContext map
                 config.CreateMap<TimeTask, TimeTaskContext>()
-                      // And a reverse of that
-                      .ReverseMap();
+                        // And a reverse of that
+                        .ReverseMap();
                 // Create TimeTaskContext to TimeTaskViewModel map
-                config.CreateMap<TimeTaskContext, TimeTaskViewModel>();
+                config.CreateMap<TimeTaskContext, TimeTaskViewModel>()
+                        .ReverseMap();
             })
             // And create it afterwards
             .CreateMapper();
