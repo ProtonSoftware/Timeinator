@@ -22,13 +22,19 @@ namespace Timeinator.Mobile
                     return new LoginPage(viewModel as LoginViewModel);
 
                 case ApplicationPage.TasksList:
-                    return new TasksPage(viewModel as TasksListPageViewModel);
+                    return new TasksListPage(viewModel as TasksListPageViewModel);
 
                 case ApplicationPage.Settings:
                     return new SettingsPage(viewModel as SettingsViewModel);
 
                 case ApplicationPage.About:
                     return new AboutPage(viewModel as AboutPageViewModel);
+
+                case ApplicationPage.TasksPreparation:
+                    return new TasksPreparationPage(viewModel as TasksPreparationViewModel);
+
+                case ApplicationPage.TasksSession:
+                    return new SessionPage(viewModel as SessionPageViewModel);
 
                 // If no page was found, return initial one
                 default:

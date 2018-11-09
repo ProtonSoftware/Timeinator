@@ -13,6 +13,11 @@ namespace Timeinator.Mobile
         public string Name { get; set; }
 
         /// <summary>
+        /// Unique ordinal number of the task
+        /// </summary>
+        public int OrderId { get; set; }
+
+        /// <summary>
         /// The description of this task
         /// </summary>
         public string Description { get; set; }

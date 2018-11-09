@@ -50,6 +50,7 @@ namespace Timeinator.Mobile
         public void StartTask()
         {
             CurrentTaskStartTime = CurrentTime;
+            // TODO: Michał, leci exception tutaj https://i.imgur.com/LN95nY8.png (nie twoja wina, ale mozesz zrobic jakies)
             TaskTimer.Interval = CurrentTask.AssignedTime.TotalMilliseconds;
             TaskTimer.Elapsed += (sender, e) => TimesUp.Invoke();
             TaskTimer.Enabled = true;
