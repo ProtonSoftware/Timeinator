@@ -9,15 +9,6 @@ namespace Timeinator.Mobile
     /// </summary>
     public class AddNewTimeTaskViewModel
     {
-        #region Private Members
-
-        /// <summary>
-        /// The raw value of priority slider as a double
-        /// </summary>
-        private double mSliderRawValue;
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>
@@ -41,13 +32,9 @@ namespace Timeinator.Mobile
         public bool TaskImportance { get; set; }
 
         /// <summary>
-        /// The priority (1-5 values) of a task that is being created
+        /// The value of priority slider (1-5 values) that will be converted to priority on the task being created
         /// </summary>
-        public int TaskPriority
-        {
-            get => (int)Math.Round(mSliderRawValue);
-            set => mSliderRawValue = value;
-        }
+        public double TaskPrioritySliderValue { get; set; } = 1f;
 
         #endregion
 
@@ -91,7 +78,7 @@ namespace Timeinator.Mobile
                 Name = TaskName,
                 Description = TaskDescription,
                 IsImportant = TaskImportance,
-                Priority = (Priority)TaskPriority,
+                Priority = (Priority)TaskPrioritySliderValue,
                 Progress = 0
             };
 
