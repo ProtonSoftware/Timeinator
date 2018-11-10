@@ -53,8 +53,9 @@ namespace Timeinator.Mobile
         /// </summary>
         public void LoadTaskList()
         {
+            /* TODO
             foreach (var e in DI.UserTimeHandler.SessionTasks)
-                TaskItems.Add(DI.TimeTasksMapper.Map(e));
+                TaskItems.Add(DI.TimeTasksMapper.Map(e)); */
         }
     }
 }
