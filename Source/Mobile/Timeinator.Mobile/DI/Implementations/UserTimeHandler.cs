@@ -45,6 +45,15 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
+        /// Function serving correct Session Tasks
+        /// </summary>
+        public List<TimeTaskContext> DownloadSession()
+        {
+            //TO DO: make sure tasks are correctly served
+            return SessionTasks;
+        }
+
+        /// <summary>
         /// Starts the task
         /// </summary>
         public void StartTask()

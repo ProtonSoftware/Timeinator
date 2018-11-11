@@ -7,6 +7,7 @@ namespace Timeinator.Mobile
     public interface IUserTimeHandler
     {
         void StartTimeHandler(List<TimeTaskContext> sessionTasks);
+        List<TimeTaskContext> DownloadSession();
         void StartTask();
         void StopTask();
         void ResumeTask();
