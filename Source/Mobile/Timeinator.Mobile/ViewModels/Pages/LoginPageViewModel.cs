@@ -5,7 +5,7 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for initial login page
     /// </summary>
-    public class LoginViewModel : BaseViewModel
+    public class LoginPageViewModel : BaseViewModel
     {
         #region Commands
 
@@ -21,7 +21,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Default constructor
         /// </summary>
-        public LoginViewModel()
+        public LoginPageViewModel()
         {
             // Create commands
             EnterWithoutLoginCommand = new RelayCommand(ChangePageWithoutLogin);

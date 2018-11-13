@@ -19,26 +19,26 @@ namespace Timeinator.Mobile
             switch (page)
             {
                 case ApplicationPage.Login:
-                    return new LoginPage(viewModel as LoginViewModel);
+                    return new LoginPage(viewModel as LoginPageViewModel);
 
                 case ApplicationPage.TasksList:
                     return new TasksListPage(viewModel as TasksListPageViewModel);
 
                 case ApplicationPage.Settings:
-                    return new SettingsPage(viewModel as SettingsViewModel);
+                    return new SettingsPage(viewModel as SettingsPageViewModel);
 
                 case ApplicationPage.About:
                     return new AboutPage(viewModel as AboutPageViewModel);
 
                 case ApplicationPage.TasksPreparation:
-                    return new TasksPreparationPage(viewModel as TasksPreparationViewModel);
+                    return new TasksPreparationPage(viewModel as TasksPreparationPageViewModel);
 
                 case ApplicationPage.TasksSession:
-                    return new SessionPage(viewModel as SessionPageViewModel);
+                    return new SessionPage(viewModel as TasksSessionPageViewModel);
 
                 // If no page was found, return initial one
                 default:
-                    return new LoginPage(viewModel as LoginViewModel);
+                    return new LoginPage(viewModel as LoginPageViewModel);
             }
         }
     }

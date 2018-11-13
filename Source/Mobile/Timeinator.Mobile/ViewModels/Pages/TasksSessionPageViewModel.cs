@@ -8,7 +8,7 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for tasks session page
     /// </summary>
-    public class SessionPageViewModel : BaseViewModel
+    public class TasksSessionPageViewModel : BaseViewModel
     {
         #region PublicProperties
 
@@ -36,7 +36,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Default constructor
         /// </summary>
-        public SessionPageViewModel()
+        public TasksSessionPageViewModel()
         {
             // Create commands
             StopCommand = new RelayCommand(() => DI.UserTimeHandler.StopTask());
