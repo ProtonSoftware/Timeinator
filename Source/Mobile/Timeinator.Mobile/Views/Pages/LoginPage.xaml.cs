@@ -16,19 +16,19 @@ namespace Timeinator.Mobile
             InitializeComponent();
 
             // Set brand-new view model
-            BindingContext = new LoginViewModel();
+            BindingContext = new LoginPageViewModel();
         }
 
         /// <summary>
         /// Constructor with additional view model to setup for this page
         /// </summary>
-        public LoginPage(LoginViewModel viewModel)
+        public LoginPage(LoginPageViewModel viewModel)
         {
             // Do default things
             InitializeComponent();
 
             // Set specified view model
-            BindingContext = viewModel ?? new LoginViewModel();
+            BindingContext = viewModel ?? new LoginPageViewModel();
         }
 
         #endregion
