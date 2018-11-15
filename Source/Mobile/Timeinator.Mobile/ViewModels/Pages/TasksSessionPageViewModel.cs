@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -20,6 +21,10 @@ namespace Timeinator.Mobile
         /// Holds current task state
         /// </summary>
         public bool Paused => !DI.UserTimeHandler.TaskTimer.Enabled;
+        /// <summary>
+        /// Remaining time from handler
+        /// </summary>
+        public string TimeRemaining => (TimeSpan.FromMilliseconds(DI.UserTimeHandler.TaskTimer.Interval)-DI.UserTimeHandler.TimePassed).ToString();
 
         #endregion
 
