@@ -12,7 +12,10 @@
                WidthRequest="300"
                BackgroundColor="White">
 
-            <Label Text="Settings page" />
+            <StackLayout>
+                <Label Text="Settings" />
+                <Label Text="" />
+            </StackLayout>
 
         </Frame>
 
