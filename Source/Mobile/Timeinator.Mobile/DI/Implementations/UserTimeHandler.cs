@@ -40,6 +40,7 @@ namespace Timeinator.Mobile
         /// <param name="sessionTasks"></param>
         public void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
+            TaskTimer.Elapsed += (sender, e) => TimesUp.Invoke();
             SessionTasks = sessionTasks;
             StartTask();
         }
@@ -59,12 +60,45 @@ namespace Timeinator.Mobile
         public void StartTask()
         {
             CurrentTaskStartTime = CurrentTime;
-            // TODO: Michał, leci exception tutaj https://i.imgur.com/LN95nY8.png (nie twoja wina, ale mozesz zrobic jakies)
-            TaskTimer.Interval = CurrentTask.AssignedTime.TotalMilliseconds;
-            TaskTimer.Elapsed += (sender, e) => TimesUp.Invoke();
-            TaskTimer.Enabled = true;
+
+            var CurrentTaskAssignedMilliseconds = CurrentTask.AssignedTime.TotalMilliseconds;
+            if (CurrentTaskAssignedMilliseconds > 0)
+            { 
+                TaskTimer.Interval = CurrentTaskAssignedMilliseconds;
+                TaskTimer.Enabled = true;
+            }
+
+            else
+            {
+                SessionTasks.Remove(CurrentTask);
+            }
+
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="response"> True if user wants to start a new task, False if they want to take a break </param>
+        public void IfStartUserResponse(bool response)
+        {
+            if (response == true)
+            {
+                StartTask();
+            }
+            else
+            {
+
+            }
+        }
+
+        public void FinishedTaskUserResponse(bool response)
+        {
+            if (response == false)
+            {
+                SessionTasks.Remove(CurrentTask);
+            }
+        }
+        
         /// <summary>
         /// Stops the task and removes if completed
         /// </summary>
@@ -87,11 +121,13 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Changes task to a constant time specified by user and recalculates times
+        /// Activated if task completed ahead of schedule
         /// </summary>
-        public void ExtendTask()
+        public void FinishTask()
         {
-            //TODO: Michał napraw to żeby przedłużało czas zadania i przeliczało managerem od nowa
+            TaskTimer.Enabled = false;
+            CurrentTask.Progress = 1;
+            SessionTasks.Remove(CurrentTask);
         }
 
         /// <summary>
@@ -101,11 +137,6 @@ namespace Timeinator.Mobile
         {
             var timePassed = CurrentTime.Subtract(CurrentTaskStartTime);
             CurrentTask.Progress += timePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
-        }
-
-        public void Reset()
-        {
-            //TODO(if necessary)
         }
     }
 }
