@@ -1,4 +1,5 @@
 ﻿using System;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile
 {
@@ -16,6 +17,11 @@ namespace Timeinator.Mobile
         /// Unique ordinal number of the task
         /// </summary>
         public int OrderId { get; set; }
+
+        /// <summary>
+        /// Shows priority of the task
+        /// </summary>
+        public Priority Priority { get; set; }
 
         /// <summary>
         /// The description of this task
