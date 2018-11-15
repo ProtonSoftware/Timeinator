@@ -40,10 +40,14 @@ namespace Timeinator.Mobile
         /// Uploads provided list of tasks to this manager (overrides previous one)
         /// </summary>
         /// <param name="contexts">The tasks to upload</param>
-        public void UploadTasksList(List<TimeTaskContext> contexts, TimeSpan userTime)
+        public void UploadTasksList(List<TimeTaskContext> contexts, TimeSpan userTime = default(TimeSpan))
         {
+            if (TaskContexts == null)
+            {
+                ReadyTime = DateTime.Now;
+                AvailableTime = userTime;
+            }
             TaskContexts = contexts;
-            AvailableTime = userTime;
         }
 
         /// <summary>
@@ -53,7 +57,6 @@ namespace Timeinator.Mobile
         /// <returns>The list of tasks with calculated time</returns>
         public List<TimeTaskContext> GetCalculatedTasksListForSpecifiedTime()
         {
-            ReadyTime = DateTime.Now;
             TaskContexts = CalcAssignedTimes(GetEnabled(TaskContexts)).Concat(GetEnabled(TaskContexts, true)).ToList();
             return TaskContexts.OrderBy(x => x.OrderId).ToList();
         }

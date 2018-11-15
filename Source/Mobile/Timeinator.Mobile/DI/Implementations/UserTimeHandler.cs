@@ -30,6 +30,10 @@ namespace Timeinator.Mobile
         /// </summary>
         public Timer TaskTimer { get; set; } = new Timer();
         /// <summary>
+        /// Returns time that passed from the beginning
+        /// </summary>
+        public TimeSpan TimePassed => CurrentTime.Subtract(CurrentTaskStartTime);
+        /// <summary>
         /// Event called when time for task elapsed
         /// </summary>
         public event Action TimesUp;
@@ -120,6 +124,11 @@ namespace Timeinator.Mobile
             TaskTimer.Enabled = true;
         }
 
+        public void FinishTask()
+        {
+
+        }
+
         /// <summary>
         /// Activated if task completed ahead of schedule
         /// </summary>
@@ -135,8 +144,7 @@ namespace Timeinator.Mobile
         /// </summary>
         private void SaveProgress()
         {
-            var timePassed = CurrentTime.Subtract(CurrentTaskStartTime);
-            CurrentTask.Progress += timePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
+            CurrentTask.Progress += TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
         }
     }
 }
