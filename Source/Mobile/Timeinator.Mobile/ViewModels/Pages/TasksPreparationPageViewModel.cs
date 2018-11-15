@@ -8,7 +8,7 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for main tasks page
     /// </summary>
-    public class TasksPreparationViewModel : BaseViewModel
+    public class TasksPreparationPageViewModel : BaseViewModel
     {
         #region Public Properties
 
@@ -33,7 +33,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksPreparationViewModel()
+        public TasksPreparationPageViewModel()
         {
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);

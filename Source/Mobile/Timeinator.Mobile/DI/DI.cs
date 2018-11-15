@@ -26,7 +26,7 @@ namespace Timeinator.Mobile
         public static ITimeTasksService TimeTasksService => Framework.Service<ITimeTasksService>();
 
         /// <summary>
-        /// A shortcut to access the <see cref="TimeTasksManager"/>
+        /// A shortcut to access the current implementation of <see cref="ITimeTasksManager"/>
         /// </summary>
         public static ITimeTasksManager TimeTasksManager => Framework.Service<ITimeTasksManager>();
 
@@ -41,9 +41,9 @@ namespace Timeinator.Mobile
         public static IUIManager UI => Framework.Service<IUIManager>();
 
         /// <summary>
-        /// A shortcut to access the <see cref="UserTimeHandler"/>
+        /// A shortcut to access the current implementation of <see cref="IUserTimeHandler"/>
         /// </summary>
-        public static UserTimeHandler UserTimeHandler => Framework.Service<UserTimeHandler>();
+        public static IUserTimeHandler UserTimeHandler => Framework.Service<IUserTimeHandler>();
         #endregion
 
         #region Public Methods
