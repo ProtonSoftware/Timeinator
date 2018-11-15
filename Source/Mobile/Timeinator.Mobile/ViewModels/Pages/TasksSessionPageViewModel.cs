@@ -26,8 +26,8 @@ namespace Timeinator.Mobile
         #region Commands
 
         public ICommand StopCommand { get; private set; }
-        public ICommand ExtendCommand { get; private set; }
         public ICommand ResumeCommand { get; private set; }
+        public ICommand FinishCommand { get; private set; }
 
         #endregion
 
@@ -41,12 +41,18 @@ namespace Timeinator.Mobile
             // Create commands
             StopCommand = new RelayCommand(() => DI.UserTimeHandler.StopTask());
             ResumeCommand = new RelayCommand(() => DI.UserTimeHandler.ResumeTask());
-            ExtendCommand = new RelayCommand(() => DI.UserTimeHandler.ExtendTask());
+            FinishCommand = new RelayCommand(() => DI.UserTimeHandler.FinishTask());
+            DI.UserTimeHandler.TimesUp += UserTimeHandler_TimesUp;
 
             LoadTaskList();
         }
 
         #endregion
+
+        private void UserTimeHandler_TimesUp()
+        {
+            DI.UI.DisplayPopupMessage();
+        }
 
         /// <summary>
         /// Loads saved tasks from the <see cref="TimeTasksManager"/>

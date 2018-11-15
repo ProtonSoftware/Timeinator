@@ -36,7 +36,7 @@
 
         <Button IsVisible="{Binding Paused}" Grid.Column="0" Grid.Row="1" Text="WZNÓW" Command="{Binding ResumeCommand}" />
 
-        <Button Grid.Column="1" Grid.Row="1" Text="PRZEDŁUŻ" Command="{Binding ExtendCommand}" />
+        <Button Grid.Column="1" Grid.Row="1" Text="KONIEC" Command="{Binding FinishCommand}" />
 
     </Grid>
 </local:BasePage>
