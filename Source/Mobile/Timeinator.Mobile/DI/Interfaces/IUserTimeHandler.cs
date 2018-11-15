@@ -8,6 +8,7 @@ namespace Timeinator.Mobile
     public interface IUserTimeHandler
     {
         Timer TaskTimer { get; set; }
+        TimeSpan TimePassed { get; }
 
         void StartTimeHandler(List<TimeTaskContext> sessionTasks);
         List<TimeTaskContext> DownloadSession();
