@@ -57,7 +57,7 @@ namespace Timeinator.Mobile
         /// <returns>The list of tasks with calculated time</returns>
         public List<TimeTaskContext> GetCalculatedTasksListForSpecifiedTime()
         {
-            TaskContexts = CalcAssignedTimes(GetEnabled(TaskContexts)).Concat(GetEnabled(TaskContexts, true)).ToList();
+            TaskContexts = CalcAssignedTimes(TaskContexts).ToList();
             return TaskContexts.OrderBy(x => x.OrderId).ToList();
         }
 
@@ -83,11 +83,6 @@ namespace Timeinator.Mobile
         /// Returns only important tasks from provided TimeTasks
         /// </summary>
         private List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts, bool inverse = false) => contexts.FindAll(x => inverse ? !x.IsImportant : x.IsImportant);
-
-        /// <summary>
-        /// Returns only enabled tasks from provided TimeTasks
-        /// </summary>
-        private List<TimeTaskContext> GetEnabled(List<TimeTaskContext> contexts, bool inverse = false) => contexts.FindAll(x => inverse ? x.IsDisabled : !x.IsDisabled);
 
         /// <summary>
         /// Returns only constant time tasks from provided TimeTasks
