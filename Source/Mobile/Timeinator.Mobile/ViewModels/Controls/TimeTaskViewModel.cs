@@ -39,6 +39,11 @@ namespace Timeinator.Mobile
         public bool IsImportant { get; set; }
 
         /// <summary>
+        /// Shows if task is intended to be done in the next session
+        /// </summary>
+        public bool IsEnabled { get; set; } = true;
+
+        /// <summary>
         /// Current progress of this task
         /// </summary>
         public double Progress { get; set; }

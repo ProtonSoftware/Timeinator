@@ -95,6 +95,10 @@ namespace Timeinator.Mobile
             }
         }
 
+        /// <summary>
+        /// Catches user response after asking whether task is finished
+        /// </summary>
+        /// <param name="response"></param>
         public void FinishedTaskUserResponse(bool response)
         {
             if (response == false)
@@ -122,11 +126,6 @@ namespace Timeinator.Mobile
             CurrentTaskStartTime = CurrentTime;
             TaskTimer.Interval = (1 - CurrentTask.Progress) * CurrentTask.AssignedTime.TotalMilliseconds;
             TaskTimer.Enabled = true;
-        }
-
-        public void FinishTask()
-        {
-
         }
 
         /// <summary>
