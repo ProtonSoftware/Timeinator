@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Timers;
 using System.Windows.Input;
 
 namespace Timeinator.Mobile
@@ -18,6 +19,10 @@ namespace Timeinator.Mobile
         /// </summary>
         public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<TimeTaskViewModel>();
         /// <summary>
+        /// Returns ViewModel of current task
+        /// </summary>
+        public TimeTaskViewModel CurrentTask => TaskItems[0] ?? null;
+        /// <summary>
         /// Holds current task state
         /// </summary>
         public bool Paused => !DI.UserTimeHandler.TaskTimer.Enabled;
@@ -25,6 +30,18 @@ namespace Timeinator.Mobile
         /// Remaining time from handler
         /// </summary>
         public string TimeRemaining => (TimeSpan.FromMilliseconds(DI.UserTimeHandler.TaskTimer.Interval)-DI.UserTimeHandler.TimePassed).ToString();
+        /// <summary>
+        /// Progress of current task
+        /// </summary>
+        public double TaskProgress => CurrentTask!=null ? CurrentTask.Progress : 0;
+        /// <summary>
+        /// Timer refreshing stopwatch
+        /// </summary>
+        public Timer BreakTimer { get; set; } = new Timer();
+        /// <summary>
+        /// Break started time - time when user paused task
+        /// </summary>
+        public DateTime BreakStart { get; set; }
 
         #endregion
 
@@ -57,6 +74,13 @@ namespace Timeinator.Mobile
         private void UserTimeHandler_TimesUp()
         {
             DI.UI.DisplayPopupMessage();
+            OutOfTasks();
+        }
+
+        private void OutOfTasks()
+        {
+            if (TaskItems.Count <= 0)
+                DI.Application.GoToPage(ApplicationPage.TasksList);
         }
 
         /// <summary>

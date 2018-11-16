@@ -2,6 +2,7 @@
 <local:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Timeinator.Mobile"
+             xmlns:progressRing="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
              x:Class="Timeinator.Mobile.SessionPage"
              Title="{Binding Title}">
 
@@ -10,6 +11,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="5*" />
+                <RowDefinition Height="2*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -35,17 +37,19 @@
 
             </ScrollView>
 
-            <Button Grid.Column="0" Grid.Row="1" Text="STOP" Command="{Binding StopCommand}" />
-            <Button Grid.Column="1" Grid.Row="1" Text="KONIEC" Command="{Binding FinishCommand}" />
+            <progressRing:ProgressRing Grid.Row="2" RingThickness="25" Progress="{Binding TaskProgress}" />
+            <Button Grid.Column="0" Grid.Row="3" Text="STOP" Command="{Binding StopCommand}" />
+            <Button Grid.Column="1" Grid.Row="3" Text="KONIEC" Command="{Binding FinishCommand}" />
         </Grid>
 
         <Grid IsVisible="{Binding Paused}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="5*" />
+                <RowDefinition Height="7*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Text="Task paused!" />
+            <Label Grid.Row="1" Text="0:00:00" FontSize="Large" />
             <Button Grid.Row="2" Text="WZNÓW" Command="{Binding ResumeCommand}" />
         </Grid>
     </Grid>
