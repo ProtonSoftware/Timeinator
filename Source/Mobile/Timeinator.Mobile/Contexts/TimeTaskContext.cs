@@ -39,11 +39,6 @@ namespace Timeinator.Mobile
         public double Progress { get; set; }
 
         /// <summary>
-        /// Sets particular task as temporary invisible for <see cref="TimeTasksManager"/>
-        /// </summary>
-        public bool IsDisabled { get; set; }
-
-        /// <summary>
         /// Stores time assigned to the task
         /// </summary>
         public TimeSpan AssignedTime { get; set; }
