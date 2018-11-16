@@ -6,39 +6,47 @@
              Title="{Binding Title}">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="4*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding }" />
-        <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
-            
-            <local:ItemsControl ItemsSource="{Binding TaskItems}">
+        <Grid IsVisible="{Binding Paused,Converter={local:BooleanInversionConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding TimeRemaining}" />
+            <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
 
-                <local:ItemsControl.PlaceholderText>
-                    Nie masz aktywnego zadania
-                </local:ItemsControl.PlaceholderText>
+                <local:ItemsControl ItemsSource="{Binding TaskItems}">
 
-                <local:ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:SessionControl />
-                    </DataTemplate>
-                </local:ItemsControl.ItemTemplate>
+                    <local:ItemsControl.PlaceholderText>
+                        Nie masz aktywnego zadania
+                    </local:ItemsControl.PlaceholderText>
 
-            </local:ItemsControl>
+                    <local:ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:SessionControl />
+                        </DataTemplate>
+                    </local:ItemsControl.ItemTemplate>
 
-        </ScrollView>
+                </local:ItemsControl>
 
-        <Button IsVisible="{Binding Paused,Converter={local:BooleanInversionConverter}}" Grid.Column="0" Grid.Row="1" Text="STOP" Command="{Binding StopCommand}" />
+            </ScrollView>
 
-        <Button IsVisible="{Binding Paused}" Grid.Column="0" Grid.Row="1" Text="WZNÓW" Command="{Binding ResumeCommand}" />
+            <Button Grid.Column="0" Grid.Row="1" Text="STOP" Command="{Binding StopCommand}" />
+            <Button Grid.Column="1" Grid.Row="1" Text="KONIEC" Command="{Binding FinishCommand}" />
+        </Grid>
 
-        <Button Grid.Column="1" Grid.Row="1" Text="KONIEC" Command="{Binding FinishCommand}" />
-
+        <Grid IsVisible="{Binding Paused}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Task paused!" />
+            <Button Grid.Row="2" Text="WZNÓW" Command="{Binding ResumeCommand}" />
+        </Grid>
     </Grid>
 </local:BasePage>
