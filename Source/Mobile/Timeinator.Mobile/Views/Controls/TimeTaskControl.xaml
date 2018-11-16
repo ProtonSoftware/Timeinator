@@ -14,7 +14,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <controls:Checkbox Checked="True" 
+            <controls:Checkbox Checked="{Binding IsEnabled}" 
                                CheckboxBackgroundColor="Green" 
                                TickColor="White" />
 

@@ -70,7 +70,19 @@ namespace Timeinator.Mobile
             // Convert our collection to suitable list of contexts
             var taskContexts = new List<TimeTaskContext>();
             foreach (var task in TaskItems)
-                taskContexts.Add(DI.TimeTasksMapper.ReverseMap(task));
+            {
+                if (task.IsEnabled)
+                {
+                    taskContexts.Add(DI.TimeTasksMapper.ReverseMap(task));
+                }
+            }
+
+            //Check if list contains any elements
+            if (taskContexts.Count == 0)
+            {
+                DI.UI.DisplayPopupMessage();
+                return;
+            }
 
             // Pass it to the service so it handles it to the manager, with user free time
             DI.TimeTasksService.ConveyTasksToManager(taskContexts, UserTime);
