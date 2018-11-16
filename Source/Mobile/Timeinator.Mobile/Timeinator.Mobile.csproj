@@ -33,6 +33,9 @@
     <Compile Update="Views\Controls\SessionControl.xaml.cs">
       <DependentUpon>SessionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Controls\CalculatedTimeTaskControl.xaml.cs">
+      <DependentUpon>CalculatedTimeTaskControl.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Controls\TimeTaskControl.xaml.cs">
       <DependentUpon>TimeTaskControl.xaml</DependentUpon>
     </Compile>

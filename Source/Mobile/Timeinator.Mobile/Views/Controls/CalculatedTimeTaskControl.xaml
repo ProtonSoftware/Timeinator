@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Timeinator.Mobile"
+             xmlns:controls="clr-namespace:Messier16.Forms.Controls;assembly=Messier16.Forms.Controls"
+             x:Class="Timeinator.Mobile.CalculatedTimeTaskControl">
+
+    <Frame>
+
+        <Grid>
+
+            <StackLayout Orientation="Vertical">
+
+                <Label Text="{Binding Name}" />
+
+                <Label Text="{Binding Description}" />
+
+                <Label Text="{Binding Tag, StringFormat='#{0}'}" />
+
+                <Label Text="{Binding AssignedTime}" />
+
+            </StackLayout>
+            
+        </Grid>
+
+    </Frame>
+
+</ContentView>

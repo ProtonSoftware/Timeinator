@@ -3307,7 +3307,6 @@ namespace Timeinator.Mobile.Droid
 			global::ProgressRingControl.Forms.Plugin.Android.Resource.String.appbar_scrolling_view_behavior = global::Timeinator.Mobile.Droid.Resource.String.appbar_scrolling_view_behavior;
 			global::ProgressRingControl.Forms.Plugin.Android.Resource.String.bottom_sheet_behavior = global::Timeinator.Mobile.Droid.Resource.String.bottom_sheet_behavior;
 			global::ProgressRingControl.Forms.Plugin.Android.Resource.String.character_counter_pattern = global::Timeinator.Mobile.Droid.Resource.String.character_counter_pattern;
-			global::ProgressRingControl.Forms.Plugin.Android.Resource.String.library_name = global::Timeinator.Mobile.Droid.Resource.String.library_name;
 			global::ProgressRingControl.Forms.Plugin.Android.Resource.String.mr_button_content_description = global::Timeinator.Mobile.Droid.Resource.String.mr_button_content_description;
 			global::ProgressRingControl.Forms.Plugin.Android.Resource.String.mr_cast_button_connected = global::Timeinator.Mobile.Droid.Resource.String.mr_cast_button_connected;
 			global::ProgressRingControl.Forms.Plugin.Android.Resource.String.mr_cast_button_connecting = global::Timeinator.Mobile.Droid.Resource.String.mr_cast_button_connecting;
@@ -8217,11 +8216,11 @@ namespace Timeinator.Mobile.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f0a003e
-			public const int ApplicationName = 2131361854;
-			
 			// aapt resource value: 0x7f0a003d
-			public const int Hello = 2131361853;
+			public const int ApplicationName = 2131361853;
+			
+			// aapt resource value: 0x7f0a003c
+			public const int Hello = 2131361852;
 			
 			// aapt resource value: 0x7f0a0015
 			public const int abc_action_bar_home_description = 2131361813;
@@ -8318,9 +8317,6 @@ namespace Timeinator.Mobile.Droid
 			
 			// aapt resource value: 0x7f0a0035
 			public const int character_counter_pattern = 2131361845;
-			
-			// aapt resource value: 0x7f0a003c
-			public const int library_name = 2131361852;
 			
 			// aapt resource value: 0x7f0a0000
 			public const int mr_button_content_description = 2131361792;
