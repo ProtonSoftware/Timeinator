@@ -71,10 +71,9 @@ namespace Timeinator.Mobile
             var taskContexts = new List<TimeTaskContext>();
             foreach (var task in TaskItems)
             {
+                // Only add enabled tasks for this session
                 if (task.IsEnabled)
-                {
                     taskContexts.Add(DI.TimeTasksMapper.ReverseMap(task));
-                }
             }
 
             // If user has picked nothing...

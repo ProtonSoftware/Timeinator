@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Timeinator.Mobile.DataAccess;
 
 namespace Timeinator.Mobile
 {
@@ -68,6 +69,33 @@ namespace Timeinator.Mobile
 
             // Save it into database
             DI.TimeTasksRepository.SaveTask(entity);
+        }
+
+        /// <summary>
+        /// Removes finished tasks from the database
+        /// Ommits "immortal" tasks
+        /// </summary>
+        public void RemoveFinishedTasks(List<TimeTaskContext> contexts)
+        {
+            // Prepare a list of task entities to remove
+            var taskEntities = new List<TimeTask>();
+
+            // For each of provided tasks...
+            foreach (var task in contexts)
+            {
+                // Immortal tasks won't be removed
+                if (task.IsImmortal)
+                    continue;
+
+                // Reverse map the context as entity
+                var entity = DI.TimeTasksMapper.ReverseMap(task);
+
+                // Add it to the list
+                taskEntities.Add(entity);
+            }
+
+            // Send collected entities to the repository to remove
+            DI.TimeTasksRepository.RemoveTasks(taskEntities);
         }
 
         #endregion
