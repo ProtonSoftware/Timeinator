@@ -14,9 +14,17 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <controls:Checkbox Checked="{Binding IsEnabled}" 
+            <OnPlatform x:TypeArguments="View">
+                <On Platform="Android">
+                    <controls:Checkbox Checked="{Binding IsEnabled}" 
                                CheckboxBackgroundColor="Green" 
                                TickColor="White" />
+                </On>
+                <On Platform="WPF">
+                    <Switch IsToggled="{Binding IsEnabled}"
+                             />
+                </On>
+            </OnPlatform>
 
             <StackLayout Orientation="Vertical"
                          Grid.Column="1">
@@ -26,8 +34,6 @@
                 <Label Text="{Binding Description}" />
 
                 <Label Text="{Binding Tag, StringFormat='#{0}'}" />
-
-                <Label Text="{Binding AssignedTime}" />
 
             </StackLayout>
             

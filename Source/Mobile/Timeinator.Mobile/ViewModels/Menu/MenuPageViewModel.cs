@@ -5,7 +5,7 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for side menu page
     /// </summary>
-    public class MenuPageViewModel : BaseViewModel
+    public class MenuPageViewModel : BasePageViewModel
     {
         #region Public Properties
 

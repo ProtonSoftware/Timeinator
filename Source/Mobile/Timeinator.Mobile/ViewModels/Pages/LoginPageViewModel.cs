@@ -5,7 +5,7 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for initial login page
     /// </summary>
-    public class LoginPageViewModel : BaseViewModel
+    public class LoginPageViewModel : BasePageViewModel
     {
         #region Commands
 

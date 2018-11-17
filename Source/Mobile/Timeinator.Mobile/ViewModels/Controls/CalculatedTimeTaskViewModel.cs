@@ -4,9 +4,9 @@ using Timeinator.Core;
 namespace Timeinator.Mobile
 {
     /// <summary>
-    /// The view model for time task control
+    /// The view model for calculated time task control (shown right before session starts)
     /// </summary>
-    public class TimeTaskViewModel : BaseViewModel
+    public class CalculatedTimeTaskViewModel : BaseViewModel
     {
         /// <summary>
         /// The name of this task
@@ -39,9 +39,9 @@ namespace Timeinator.Mobile
         public bool IsImportant { get; set; }
 
         /// <summary>
-        /// Shows if task is intended to be done in the next session
+        /// Current progress of this task
         /// </summary>
-        public bool IsEnabled { get; set; } = true;
+        public double Progress { get; set; }
 
         /// <summary>
         /// The time assigned for this specific task

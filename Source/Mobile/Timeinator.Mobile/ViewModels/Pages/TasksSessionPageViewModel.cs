@@ -9,9 +9,9 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for tasks session page
     /// </summary>
-    public class TasksSessionPageViewModel : BaseViewModel
+    public class TasksSessionPageViewModel : BasePageViewModel
     {
-        #region PublicProperties
+        #region Public Properties
 
         /// <summary>
         /// The list of time tasks for current session to show in this page
@@ -54,9 +54,31 @@ namespace Timeinator.Mobile
 
         #endregion
 
+        /// <summary>
+        /// Fired when the current task has run out of time 
+        /// </summary>
         private void UserTimeHandler_TimesUp()
         {
-            DI.UI.DisplayPopupMessage();
+            var popupViewModel = new PopupMessageViewModel
+                (
+                    "Skończył się czas", 
+                    "Skończył się czas/task, co chcesz teraz zrobić?", 
+                    "Nastepny task", 
+                    "Nie, przerwa bo nie daje rady"
+                );
+
+            var userResponse = DI.UI.DisplayPopupMessageAsync(popupViewModel);
+
+            // TODO: Maciek
+            if (userResponse.Result)
+            {
+                // User wants next tasks
+            }
+            else
+            {
+                // User wants a break
+            }
+
         }
 
         /// <summary>

@@ -8,14 +8,14 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for main tasks page
     /// </summary>
-    public class TasksPreparationPageViewModel : BaseViewModel
+    public class TasksPreparationPageViewModel : BasePageViewModel
     {
         #region Public Properties
 
         /// <summary>
         /// The list of time tasks for current session to show in this page
         /// </summary>
-        public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<TimeTaskViewModel>();
+        public ObservableCollection<CalculatedTimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<CalculatedTimeTaskViewModel>();
 
         #endregion
 
@@ -77,7 +77,7 @@ namespace Timeinator.Mobile
 
             // Map each one as suitable view model
             foreach (var task in contexts)
-                TaskItems.Add(DI.TimeTasksMapper.Map(task));
+                TaskItems.Add(DI.TimeTasksMapper.MapCal(task));
         }
 
         #endregion

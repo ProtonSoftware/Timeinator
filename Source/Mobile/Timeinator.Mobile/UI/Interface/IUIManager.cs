@@ -14,6 +14,6 @@ namespace Timeinator.Mobile
 
         void HideMenu();
 
-        void DisplayPopupMessage();
+        Task<bool> DisplayPopupMessageAsync(PopupMessageViewModel viewmodel);
     }
 }
