@@ -30,6 +30,9 @@
             <Label Text="Czy wazne" />
             <Switch IsToggled="{Binding TaskImportance}" />
 
+            <Label Text="Czy niezniszczalny" />
+            <Switch IsToggled="{Binding TaskImmortality}" />
+
             <Label Text="Priorytet" />
             <Slider Maximum="5" 
                     Minimum="1"

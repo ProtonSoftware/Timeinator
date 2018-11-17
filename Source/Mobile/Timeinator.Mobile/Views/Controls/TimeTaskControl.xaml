@@ -6,7 +6,7 @@
              x:Class="Timeinator.Mobile.TimeTaskControl">
 
     <!-- "kolorowanie" kiedy isImportant jeszcze nie działa! -->
-    <Frame BackgroundColor="{Binding IsImportant, Converter='{local:ImportanceToBackgroundColorConverter}'}">
+    <Frame BackgroundColor="{Binding IsImportant, Converter={local:ImportanceToBackgroundColorConverter}}">
 
         <Grid>
             

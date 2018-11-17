@@ -49,6 +49,12 @@ namespace Timeinator.Mobile
         public bool HasConstantTime { get; set; }
 
         /// <summary>
+        /// Indicates if this task should still be saved after its done
+        /// Set to false if it should be removed after completion
+        /// </summary>
+        public bool IsImmortal { get; set; }
+
+        /// <summary>
         /// Indicates whether task has started
         /// </summary>
         public bool HasStarted => Progress > 0;

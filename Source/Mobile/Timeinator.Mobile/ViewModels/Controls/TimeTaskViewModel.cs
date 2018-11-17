@@ -47,5 +47,11 @@ namespace Timeinator.Mobile
         /// The time assigned for this specific task
         /// </summary>
         public TimeSpan AssignedTime { get; set; }
+
+        /// <summary>
+        /// Indicates if this task should still be saved after its done
+        /// Set to false if it should be removed after completion
+        /// </summary>
+        public bool IsImmortal { get; set; }
     }
 }

@@ -37,6 +37,11 @@ namespace Timeinator.Mobile
         public bool TaskImportance { get; set; }
 
         /// <summary>
+        /// Indicates if new task should be still saved even after its done
+        /// </summary>
+        public bool TaskImmortality { get; set; }
+
+        /// <summary>
         /// The value of priority slider (1-5 values) that will be converted to priority on the task being created
         /// </summary>
         public double TaskPrioritySliderValue { get; set; } = 1f;
@@ -74,8 +79,13 @@ namespace Timeinator.Mobile
         {
             // Check if we have everything we need for new task to create
             if (!ValidateUserInput())
-                // TODO: Display message to the user
+            {
+                // Display message to the user
+                DI.UI.DisplayPopupMessageAsync(new PopupMessageViewModel("Niepoprawne dane", "Podane informacje o tasku nie spełniają wymagań."));
+
+                // Stay at this page so user can correct his mistakes
                 return;
+            }
 
             // Data is correct, create new context out of it
             var newTask = new TimeTaskContext
@@ -86,6 +96,7 @@ namespace Timeinator.Mobile
                 AssignedTime = TaskConstantTime,
                 HasConstantTime = TaskConstantTime != default(TimeSpan),
                 IsImportant = TaskImportance,
+                IsImmortal = TaskImmortality,
                 Priority = (Priority)TaskPrioritySliderValue,
                 Progress = 0
             };
