@@ -3,7 +3,7 @@
     /// <summary>
     /// The view model for application's settings page
     /// </summary>
-    public class SettingsPageViewModel : BaseViewModel
+    public class SettingsPageViewModel : BasePageViewModel
     {
     }
 }

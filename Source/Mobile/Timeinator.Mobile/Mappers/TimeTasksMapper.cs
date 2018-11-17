@@ -29,11 +29,16 @@ namespace Timeinator.Mobile
             {
                 // Create TimeTask entity to TimeTaskContext map
                 config.CreateMap<TimeTask, TimeTaskContext>()
-                        // And a reverse of that
-                        .ReverseMap();
+                      // And the other way around
+                      .ReverseMap();
                 // Create TimeTaskContext to TimeTaskViewModel map
                 config.CreateMap<TimeTaskContext, TimeTaskViewModel>()
-                        .ReverseMap();
+                      // And the other way around        
+                      .ReverseMap();
+                // Create TimeTaskContext to CalculatedTimeTaskViewModel map
+                config.CreateMap<TimeTaskContext, CalculatedTimeTaskViewModel>()
+                      // And the other way around
+                      .ReverseMap();
             })
             // And create it afterwards
             .CreateMapper();
@@ -58,6 +63,13 @@ namespace Timeinator.Mobile
         public TimeTaskViewModel Map(TimeTaskContext context) => mMapper.Map<TimeTaskViewModel>(context);
 
         /// <summary>
+        /// Maps a <see cref="TimeTaskContext"/> to a <see cref="CalculatedTimeTaskViewModel"/> object
+        /// </summary>
+        /// <param name="context">The <see cref="TimeTaskContext"/> to map</param>
+        /// <returns><see cref="CalculatedTimeTaskViewModel"/></returns>
+        public CalculatedTimeTaskViewModel MapCal(TimeTaskContext context) => mMapper.Map<CalculatedTimeTaskViewModel>(context);
+
+        /// <summary>
         /// Maps a <see cref="TimeTaskContext"/> to a <see cref="TimeTask"/> object
         /// </summary>
         /// <param name="context">The <see cref="TimeTaskContext"/> to map</param>
@@ -70,6 +82,13 @@ namespace Timeinator.Mobile
         /// <param name="viewmodel">The <see cref="TimeTaskViewModel"/> to map</param>
         /// <returns><see cref="TimeTaskContext"/></returns>
         public TimeTaskContext ReverseMap(TimeTaskViewModel viewmodel) => mMapper.Map<TimeTaskContext>(viewmodel);
+
+        /// <summary>
+        /// Maps a <see cref="CalculatedTimeTaskViewModel"/> to a <see cref="TimeTaskContext"/> object
+        /// </summary>
+        /// <param name="viewmodel">The <see cref="CalculatedTimeTaskViewModel"/> to map</param>
+        /// <returns><see cref="TimeTaskContext"/></returns>
+        public TimeTaskContext ReverseMap(CalculatedTimeTaskViewModel viewmodel) => mMapper.Map<TimeTaskContext>(viewmodel);
 
         #endregion
     }

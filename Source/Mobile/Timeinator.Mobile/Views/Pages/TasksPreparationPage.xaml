@@ -18,7 +18,7 @@
 
                 <local:ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:TimeTaskControl />
+                        <local:CalculatedTimeTaskControl />
                     </DataTemplate>
                 </local:ItemsControl.ItemTemplate>
 

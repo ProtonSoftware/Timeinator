@@ -8,7 +8,7 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for main tasks page
     /// </summary>
-    public class TasksListPageViewModel : BaseViewModel
+    public class TasksListPageViewModel : BasePageViewModel
     {
         #region Public Properties
 
@@ -77,10 +77,13 @@ namespace Timeinator.Mobile
                 }
             }
 
-            //Check if list contains any elements
+            // If user has picked nothing...
             if (taskContexts.Count == 0)
             {
-                DI.UI.DisplayPopupMessage();
+                // Show him an error
+                DI.UI.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Nie wybrałes żadnego taska!"));
+
+                // Don't do any further actions with no tasks
                 return;
             }
 

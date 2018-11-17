@@ -2,7 +2,6 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Timeinator.Mobile"
-             xmlns:controls="clr-namespace:Messier16.Forms.Controls;assembly=Messier16.Forms.Controls"
              x:Class="Timeinator.Mobile.CalculatedTimeTaskControl">
 
     <Frame>

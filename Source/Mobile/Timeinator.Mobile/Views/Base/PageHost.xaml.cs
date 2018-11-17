@@ -66,7 +66,7 @@ namespace Timeinator.Mobile
             var newPage = (ApplicationPage)newValue;
 
             // Get current view model to set on that page
-            var viewModel = (BaseViewModel)bindable.GetValue(CurrentPageViewModelProperty);
+            var viewModel = (BasePageViewModel)bindable.GetValue(CurrentPageViewModelProperty);
 
             // Hide the menu
             DI.UI.HideMenu();
@@ -88,7 +88,7 @@ namespace Timeinator.Mobile
         private static async void CurrentPageViewModelPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
             // Get new value
-            var newViewModel = (BaseViewModel)newValue;
+            var newViewModel = (BasePageViewModel)newValue;
 
             // Get current page
             var currentPage = (ApplicationPage)bindable.GetValue(CurrentPageProperty);
