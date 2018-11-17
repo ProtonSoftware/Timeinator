@@ -17,6 +17,16 @@
             <Label Text="Tag" />
             <Entry Text="{Binding TaskTag}" />
 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Text="Czas staly"/>
+                <TimePicker Grid.Column="1" Time="{Binding TaskConstantTime}"/>
+            </Grid>
+
             <Label Text="Czy wazne" />
             <Switch IsToggled="{Binding TaskImportance}" />
 

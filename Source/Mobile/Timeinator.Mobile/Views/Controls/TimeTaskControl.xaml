@@ -5,7 +5,8 @@
              xmlns:controls="clr-namespace:Messier16.Forms.Controls;assembly=Messier16.Forms.Controls"
              x:Class="Timeinator.Mobile.TimeTaskControl">
 
-    <Frame>
+    <!-- "kolorowanie" kiedy isImportant jeszcze nie działa! -->
+    <Frame BackgroundColor="{Binding IsImportant, Converter='{local:ImportanceToBackgroundColorConverter}'}">
 
         <Grid>
             
