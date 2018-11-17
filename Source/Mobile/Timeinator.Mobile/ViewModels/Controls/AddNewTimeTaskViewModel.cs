@@ -27,6 +27,11 @@ namespace Timeinator.Mobile
         public string TaskTag { get; set; }
 
         /// <summary>
+        /// Constant unit of time defined by user
+        /// </summary>
+        public TimeSpan TaskConstantTime { get; set; }
+
+        /// <summary>
         /// Indicates if new task should have important flag
         /// </summary>
         public bool TaskImportance { get; set; }
@@ -77,6 +82,9 @@ namespace Timeinator.Mobile
             {
                 Name = TaskName,
                 Description = TaskDescription,
+                Tag = TaskTag,
+                AssignedTime = TaskConstantTime,
+                HasConstantTime = TaskConstantTime != default(TimeSpan),
                 IsImportant = TaskImportance,
                 Priority = (Priority)TaskPrioritySliderValue,
                 Progress = 0
