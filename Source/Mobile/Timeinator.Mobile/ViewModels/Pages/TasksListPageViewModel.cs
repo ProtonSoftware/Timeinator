@@ -8,7 +8,7 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for main tasks page
     /// </summary>
-    public class TasksListPageViewModel : BaseViewModel
+    public class TasksListPageViewModel : BasePageViewModel
     {
         #region Public Properties
 
@@ -70,7 +70,21 @@ namespace Timeinator.Mobile
             // Convert our collection to suitable list of contexts
             var taskContexts = new List<TimeTaskContext>();
             foreach (var task in TaskItems)
-                taskContexts.Add(DI.TimeTasksMapper.ReverseMap(task));
+            {
+                // Only add enabled tasks for this session
+                if (task.IsEnabled)
+                    taskContexts.Add(DI.TimeTasksMapper.ReverseMap(task));
+            }
+
+            // If user has picked nothing...
+            if (taskContexts.Count == 0)
+            {
+                // Show him an error
+                DI.UI.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Nie wybrałes żadnego taska!"));
+
+                // Don't do any further actions with no tasks
+                return;
+            }
 
             // Pass it to the service so it handles it to the manager, with user free time
             DI.TimeTasksService.ConveyTasksToManager(taskContexts, UserTime);

@@ -6,7 +6,7 @@
              Title="{Binding Title}">
 
     <local:BasePage.ToolbarItems>
-        <ToolbarItem Name="+" Command="{Binding AddNewTaskCommand}" />
+        <ToolbarItem Icon="ic_plus" Command="{Binding AddNewTaskCommand}" />
     </local:BasePage.ToolbarItems>
 
     <Grid>

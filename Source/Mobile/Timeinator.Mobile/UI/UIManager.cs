@@ -45,9 +45,29 @@ namespace Timeinator.Mobile
         /// </summary>
         public void HideMenu() => (App.Current.MainPage as PageHost).IsPresented = false;
 
-        public void DisplayPopupMessage()
+        /// <summary>
+        /// Shows the popup to the user based on provided informations
+        /// </summary>
+        /// <param name="viewmodel">The provided properties of this popup to show</param>
+        /// <returns>If the popup takes user response, true when user accepts and false when not
+        ///          In case popup doesnt take any response from the user, always returns true when popup was shown succesfully</returns>
+        public async Task<bool> DisplayPopupMessageAsync(PopupMessageViewModel viewmodel)
         {
-            (App.Current.MainPage as PageHost).DisplayAlert("Title", "Message", "Cancel");
+            // If we dont want to get any user response...
+            if (string.IsNullOrEmpty(viewmodel.AcceptButtonText))
+            {
+                // Just show the message with provided informations
+                await (App.Current.MainPage as PageHost).DisplayAlert(viewmodel.Title, viewmodel.Message, viewmodel.CancelButtonText);
+
+                // Return success afterwards
+                return true;
+            }
+
+            // Otherwise, show response popup
+            var response = await (App.Current.MainPage as PageHost).DisplayAlert(viewmodel.Title, viewmodel.Message, viewmodel.AcceptButtonText, viewmodel.CancelButtonText);
+
+            // And return user's response
+            return response;
         }
     }
 }

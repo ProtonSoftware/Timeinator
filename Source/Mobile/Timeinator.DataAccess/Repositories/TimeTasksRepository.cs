@@ -57,6 +57,19 @@ namespace Timeinator.Mobile.DataAccess
             SaveChanges();
         }
 
+        /// <summary>
+        /// Removes specified tasks from the database
+        /// </summary>
+        /// <param name="entities">The tasks to remove</param>
+        public void RemoveTasks(List<TimeTask> entities)
+        {
+            // Remove the list from database
+            DbSet.RemoveRange(entities);
+
+            // Save changes made
+            SaveChanges();
+        }
+
         #endregion
     }
 }

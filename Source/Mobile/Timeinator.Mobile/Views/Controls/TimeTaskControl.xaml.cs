@@ -18,5 +18,20 @@ namespace Timeinator.Mobile
         }
 
         #endregion
+
+        /// <summary>
+        /// Fired when this control is tapped by a user
+        /// </summary>
+        private void TapGestureRecognizer_Tapped(object sender, System.EventArgs e)
+        {
+            // If buttons are hidden...
+            if (ButtonContainer.Opacity == 0)
+                // Animate them
+                ButtonContainer.FadeTo(1);
+            // Otherwise...
+            else
+                // Hide them
+                ButtonContainer.FadeTo(0);
+        }
     }
 }

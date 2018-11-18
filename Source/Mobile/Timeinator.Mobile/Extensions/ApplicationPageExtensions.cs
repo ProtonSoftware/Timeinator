@@ -13,7 +13,7 @@ namespace Timeinator.Mobile
         /// <param name="page">The page as enum</param>
         /// <param name="viewModel">The view model to set initially on page (if provided)</param>
         /// <returns>The page as actual view</returns>
-        public static Page ToApplicationPage(this ApplicationPage page, BaseViewModel viewModel = null)
+        public static Page ToApplicationPage(this ApplicationPage page, BasePageViewModel viewModel = null)
         {
             // Based on provided page...
             switch (page)
