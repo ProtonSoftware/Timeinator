@@ -13,9 +13,9 @@ namespace Timeinator.Mobile
         {
             var importance = (bool)value;
 
-            if(importance)
+            if (importance)
             {
-                return Color.Red;
+                return Color.LightPink;
             }
             else
             {

@@ -14,7 +14,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// The name of a task that is being created
         /// </summary>
-        public string TaskName { get; set; }
+        public string TaskName { get; set; } = string.Empty;
 
         /// <summary>
         /// The description of a task that is being created
