@@ -21,7 +21,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Returns ViewModel of current task
         /// </summary>
-        public TimeTaskViewModel CurrentTask => TaskItems[0] ?? null;
+        public TimeTaskViewModel CurrentTask => TaskItems.ElementAt(0) ?? null;
         /// <summary>
         /// Holds current task state
         /// </summary>
@@ -35,13 +35,17 @@ namespace Timeinator.Mobile
         /// </summary>
         public double TaskProgress => CurrentTask!=null ? CurrentTask.Progress : 0;
         /// <summary>
-        /// Timer refreshing stopwatch
+        /// Timer refreshing break stopwatch
         /// </summary>
-        public Timer BreakTimer { get; set; } = new Timer();
+        public Timer BreakTimer { get; set; } = new Timer(1000);
         /// <summary>
         /// Break started time - time when user paused task
         /// </summary>
         public DateTime BreakStart { get; set; }
+        /// <summary>
+        /// Current break length in a timespan
+        /// </summary>
+        public TimeSpan BreakDuration { get; set; }
 
         #endregion
 
@@ -61,15 +65,28 @@ namespace Timeinator.Mobile
         public TasksSessionPageViewModel()
         {
             // Create commands
-            StopCommand = new RelayCommand(() => DI.UserTimeHandler.StopTask());
-            ResumeCommand = new RelayCommand(() => DI.UserTimeHandler.ResumeTask());
-            FinishCommand = new RelayCommand(() => DI.UserTimeHandler.FinishTask());
+            StopCommand = new RelayCommand(() => { DI.UserTimeHandler.StopTask(); SetupStopwatch(); });
+            ResumeCommand = new RelayCommand(() => { DI.UserTimeHandler.ResumeTask(); SetupStopwatch(); });
+            FinishCommand = new RelayCommand(() => { DI.UserTimeHandler.FinishTask(); SetupStopwatch(); OutOfTasks(); });
             DI.UserTimeHandler.TimesUp += UserTimeHandler_TimesUp;
+            BreakTimer.Elapsed += ((object s, ElapsedEventArgs e) => BreakDuration = (DateTime.Now - BreakStart));
 
             LoadTaskList();
         }
 
         #endregion
+
+        /// <summary>
+        /// Nicely switches stopwatch refreshing
+        /// </summary>
+        private void SetupStopwatch()
+        {
+            BreakStart = DateTime.Now;
+            if (Paused)
+                BreakTimer.Start();
+            else
+                BreakTimer.Stop();
+        }
 
         /// <summary>
         /// Fired when the current task has run out of time 
@@ -79,23 +96,34 @@ namespace Timeinator.Mobile
             var popupViewModel = new PopupMessageViewModel
                 (
                     "Skończył się czas", 
-                    "Skończył się czas/task, co chcesz teraz zrobić?", 
-                    "Nastepny task", 
-                    "Nie, przerwa bo nie daje rady"
+                    "Skończył się czas na zadanie, co chcesz teraz zrobić?", 
+                    "Następne zadanie", 
+                    "Nie, chcę przerwę"
                 );
-
             var userResponse = DI.UI.DisplayPopupMessageAsync(popupViewModel);
 
-            // TODO: Maciek
-            if (userResponse.Result)
+            DI.UserTimeHandler.StartTask();
+            OutOfTasks();
+            if (!userResponse.Result)
+                StopCommand.Execute(null);
+        }
+        
+        /// <summary>
+        /// Checks if to exit to main page
+        /// </summary>
+        private void OutOfTasks()
+        {
+            var tmp = new List<TimeTaskContext>();
+            foreach (var t in TaskItems)
+                tmp.Add(DI.TimeTasksMapper.ReverseMap(t));
+            DI.TimeTasksService.RemoveFinishedTasks(tmp);
+            if (CurrentTask != null && CurrentTask.Progress >= 1)
+                TaskItems.Remove(CurrentTask);
+            if (TaskItems.Count <= 0)
             {
-                // User wants next tasks
+                BreakTimer.Stop();
+                DI.Application.GoToPage(ApplicationPage.TasksList);
             }
-            else
-            {
-                // User wants a break
-            }
-
         }
 
         /// <summary>
@@ -103,6 +131,7 @@ namespace Timeinator.Mobile
         /// </summary>
         public void LoadTaskList()
         {
+            TaskItems.Clear();
             foreach (var e in DI.UserTimeHandler.DownloadSession())
                 TaskItems.Add(DI.TimeTasksMapper.Map(e));
         }

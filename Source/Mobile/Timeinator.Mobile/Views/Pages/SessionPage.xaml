@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding TimeRemaining}" />
+            <Label HorizontalTextAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding TimeRemaining}" />
             <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
 
                 <local:ItemsControl ItemsSource="{Binding TaskItems}">
@@ -37,9 +37,10 @@
 
             </ScrollView>
 
-            <progressRing:ProgressRing Grid.Row="2" RingThickness="25" Progress="{Binding TaskProgress}" />
+            <progressRing:ProgressRing Grid.Row="2" Grid.ColumnSpan="2" RingThickness="10" Progress="{Binding TaskProgress}" />
             <Button Grid.Column="0" Grid.Row="3" Text="STOP" Command="{Binding StopCommand}" />
             <Button Grid.Column="1" Grid.Row="3" Text="KONIEC" Command="{Binding FinishCommand}" />
+            <Label Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding TaskProgress, StringFormat=&quot;0.0 '%&quot;}" />
         </Grid>
 
         <Grid IsVisible="{Binding Paused}">
@@ -48,8 +49,8 @@
                 <RowDefinition Height="7*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Text="Task paused!" />
-            <Label Grid.Row="1" Text="0:00:00" FontSize="Large" />
+            <Label HorizontalTextAlignment="Center" Grid.Row="0" Text="Zadanie przerwane" />
+            <Label HorizontalTextAlignment="Center" Grid.Row="1" Text="{Binding BreakDuration,StringFormat=&quot;h':'m':'s&quot;}" FontSize="Large" />
             <Button Grid.Row="2" Text="WZNÓW" Command="{Binding ResumeCommand}" />
         </Grid>
     </Grid>
