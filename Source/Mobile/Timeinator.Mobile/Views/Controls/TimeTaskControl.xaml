@@ -5,7 +5,11 @@
              xmlns:controls="clr-namespace:Messier16.Forms.Controls;assembly=Messier16.Forms.Controls"
              x:Class="Timeinator.Mobile.TimeTaskControl">
 
-    <Frame>
+    <Frame BackgroundColor="{Binding IsImportant, Converter={local:ImportanceToBackgroundColorConverter}}">
+
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+        </Frame.GestureRecognizers>
 
         <Grid>
             
@@ -14,9 +18,20 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <controls:Checkbox Checked="True" 
+            <OnPlatform x:TypeArguments="View">
+                <On Platform="Android">
+                    <!-- TODO: Implementacja wlasnego checkboxa ktory bedzie multiplatformowy -->
+                    <controls:Checkbox Checked="{Binding IsEnabled}" 
                                CheckboxBackgroundColor="Green" 
                                TickColor="White" />
+                </On>
+                <!-- Visual uznaje jako blad - kompiluje sie normalnie, just ignore 
+                     TODO: Usunac i zostawic tylko android jak juz skonczymy testy aplikacji i wpf nie bedzie potrzebny -->
+                <On Platform="WPF">
+                    <Switch IsToggled="{Binding IsEnabled}"
+                             />
+                </On>
+            </OnPlatform>
 
             <StackLayout Orientation="Vertical"
                          Grid.Column="1">
@@ -27,10 +42,19 @@
 
                 <Label Text="{Binding Tag, StringFormat='#{0}'}" />
 
-                <Label Text="{Binding AssignedTime}" />
+            </StackLayout>
+
+            <StackLayout Opacity="0"
+                         Grid.Column="1"
+                         x:Name="ButtonContainer"
+                         HorizontalOptions="End">
+
+                <Button Text="E" />
+
+                <Button Text="U" />
 
             </StackLayout>
-            
+
         </Grid>
 
     </Frame>

@@ -1,5 +1,4 @@
-﻿using System;
-using Timeinator.Core;
+﻿using Timeinator.Core;
 
 namespace Timeinator.Mobile.DataAccess
 {
@@ -37,5 +36,11 @@ namespace Timeinator.Mobile.DataAccess
         /// Tag set by user that helps finding the task
         /// </summary>
         public string Tag { get; set; }
+
+        /// <summary>
+        /// Indicates if this task should still be saved after its done
+        /// Set to false if it should be removed after completion
+        /// </summary>
+        public bool IsImmortal { get; set; }
     }
 }

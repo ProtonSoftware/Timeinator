@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 
 namespace Timeinator.Mobile
@@ -13,26 +14,32 @@ namespace Timeinator.Mobile
         /// List of tasks for one session
         /// </summary>
         public List<TimeTaskContext> SessionTasks { get; set; }
+
         /// <summary>
         /// Stores current time
         /// </summary>
         public DateTime CurrentTime => DateTime.Now;
+
         /// <summary>
         /// Stores start time of the task
         /// </summary>
         public DateTime CurrentTaskStartTime { get; set; }
+
         /// <summary>
         /// Stores current task - first from the list (by default) 
         /// </summary>
-        public TimeTaskContext CurrentTask => SessionTasks[0] ?? null;
+        public TimeTaskContext CurrentTask => SessionTasks.ElementAt(0);
+
         /// <summary>
         /// Timer used in all of tasks sessions
         /// </summary>
         public Timer TaskTimer { get; set; } = new Timer();
+
         /// <summary>
         /// Returns time that passed from the beginning
         /// </summary>
         public TimeSpan TimePassed => CurrentTime.Subtract(CurrentTaskStartTime);
+
         /// <summary>
         /// Event called when time for task elapsed
         /// </summary>
@@ -95,6 +102,10 @@ namespace Timeinator.Mobile
             }
         }
 
+        /// <summary>
+        /// Catches user response after asking whether task is finished
+        /// </summary>
+        /// <param name="response"></param>
         public void FinishedTaskUserResponse(bool response)
         {
             if (response == false)
@@ -122,11 +133,6 @@ namespace Timeinator.Mobile
             CurrentTaskStartTime = CurrentTime;
             TaskTimer.Interval = (1 - CurrentTask.Progress) * CurrentTask.AssignedTime.TotalMilliseconds;
             TaskTimer.Enabled = true;
-        }
-
-        public void FinishTask()
-        {
-
         }
 
         /// <summary>
