@@ -28,7 +28,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Stores current task - first from the list (by default) 
         /// </summary>
-        public TimeTaskContext CurrentTask => SessionTasks.ElementAt(0);
+        public TimeTaskContext CurrentTask => SessionTasks.ElementAt(0) ?? null;
 
         /// <summary>
         /// Timer used in all of tasks sessions
@@ -78,7 +78,6 @@ namespace Timeinator.Mobile
                 TaskTimer.Interval = CurrentTaskAssignedMilliseconds;
                 TaskTimer.Enabled = true;
             }
-
             else
             {
                 SessionTasks.Remove(CurrentTask);

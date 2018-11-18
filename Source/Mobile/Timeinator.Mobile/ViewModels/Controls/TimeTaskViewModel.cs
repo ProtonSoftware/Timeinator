@@ -22,6 +22,11 @@ namespace Timeinator.Mobile
         /// Shows priority of the task
         /// </summary>
         public Priority Priority { get; set; }
+        
+        /// <summary>
+        /// Shows progress of the task
+        /// </summary>
+        public double Progress { get; set; }
 
         /// <summary>
         /// The description of this task
