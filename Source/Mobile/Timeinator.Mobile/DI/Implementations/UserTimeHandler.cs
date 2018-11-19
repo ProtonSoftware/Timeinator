@@ -28,7 +28,13 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Stores current task - first from the list (by default) 
         /// </summary>
-        public TimeTaskContext CurrentTask => SessionTasks.ElementAt(0) ?? null;
+        public TimeTaskContext CurrentTask {
+            get
+            {
+                try { return SessionTasks.ElementAt(0); }
+                catch { return null; }
+            }
+        }
 
         /// <summary>
         /// Timer used in all of tasks sessions
@@ -76,10 +82,11 @@ namespace Timeinator.Mobile
             if (CurrentTaskAssignedMilliseconds > 0)
             { 
                 TaskTimer.Interval = CurrentTaskAssignedMilliseconds;
-                TaskTimer.Enabled = true;
+                TaskTimer.Start();
             }
             else
             {
+                //TO DO : shall call TimeTaskService???
                 SessionTasks.Remove(CurrentTask);
             }
 
@@ -118,7 +125,7 @@ namespace Timeinator.Mobile
         /// </summary>
         public void StopTask()
         {
-            TaskTimer.Enabled = false;
+            TaskTimer.Stop();
             SaveProgress();
             if (CurrentTask.Progress >= 1)
                 SessionTasks.Remove(CurrentTask);
@@ -131,7 +138,7 @@ namespace Timeinator.Mobile
         {
             CurrentTaskStartTime = CurrentTime;
             TaskTimer.Interval = (1 - CurrentTask.Progress) * CurrentTask.AssignedTime.TotalMilliseconds;
-            TaskTimer.Enabled = true;
+            TaskTimer.Start();
         }
 
         /// <summary>
@@ -139,8 +146,9 @@ namespace Timeinator.Mobile
         /// </summary>
         public void FinishTask()
         {
-            TaskTimer.Enabled = false;
+            TaskTimer.Stop();
             CurrentTask.Progress = 1;
+            SaveProgress();
             SessionTasks.Remove(CurrentTask);
         }
 
@@ -149,7 +157,7 @@ namespace Timeinator.Mobile
         /// </summary>
         private void SaveProgress()
         {
-            CurrentTask.Progress += TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
+            CurrentTask.Progress = TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
         }
     }
 }
