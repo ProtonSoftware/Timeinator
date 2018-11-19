@@ -39,7 +39,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Progress of current task
         /// </summary>
-        public double TaskProgress => CurrentTask!=null ? CurrentTask.Progress*100 : 0;
+        public double TaskProgress { get; set; }
         /// <summary>
         /// Timer refreshing UI every sec
         /// </summary>
@@ -81,6 +81,7 @@ namespace Timeinator.Mobile
             RealTimer.Elapsed += RealTimer_Elapsed;  
 
             LoadTaskList();
+            RealTimer.Start();
         }
 
         #endregion
@@ -110,10 +111,6 @@ namespace Timeinator.Mobile
         private void SetupStopwatch()
         {
             BreakStart = DateTime.Now;
-            if (Paused)
-                RealTimer.Start();
-            else
-                RealTimer.Stop();
         }
 
         /// <summary>
@@ -167,7 +164,11 @@ namespace Timeinator.Mobile
         /// </summary>
         private void UpdateProgress()
         {
-            CurrentTask.Progress = DI.UserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
+            if (CurrentTask != null)
+            {
+                CurrentTask.Progress = DI.UserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
+                TaskProgress = CurrentTask.Progress * 100;
+            }
         }
 
         /// <summary>
