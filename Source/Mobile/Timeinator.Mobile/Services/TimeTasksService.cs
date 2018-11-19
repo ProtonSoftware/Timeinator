@@ -75,6 +75,29 @@ namespace Timeinator.Mobile
         /// Removes finished tasks from the database
         /// Ommits "immortal" tasks
         /// </summary>
+        public void RemoveFinishedTasks(TimeTaskContext context)
+        {
+            // Prepare a list of task entities to remove
+            var taskEntities = new List<TimeTask>();
+
+            // Immortal tasks won't be removed
+            if (context.IsImmortal)
+                return;
+
+            // Reverse map the context as entity
+            var entity = DI.TimeTasksMapper.ReverseMap(context);
+
+            // Add it to the list
+            taskEntities.Add(entity);
+
+            // Send collected entities to the repository to remove
+            DI.TimeTasksRepository.RemoveTasks(taskEntities);
+        }
+
+        /// <summary>
+        /// Removes finished tasks from the database
+        /// Ommits "immortal" tasks
+        /// </summary>
         public void RemoveFinishedTasks(List<TimeTaskContext> contexts)
         {
             // Prepare a list of task entities to remove

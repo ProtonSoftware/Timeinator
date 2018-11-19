@@ -14,5 +14,6 @@ namespace Timeinator.Mobile
 
         void SaveNewTask(TimeTaskContext context);
         void RemoveFinishedTasks(List<TimeTaskContext> contexts);
+        void RemoveFinishedTasks(TimeTaskContext context);
     }
 }
