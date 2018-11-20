@@ -119,7 +119,7 @@ namespace Timeinator.Mobile
         private bool ValidateUserInput()
         {
             // If task's name is too short
-            if (TaskName.Length < 4)
+            if (TaskName.Length < 1)
                 // Show an error
                 return false;
 
