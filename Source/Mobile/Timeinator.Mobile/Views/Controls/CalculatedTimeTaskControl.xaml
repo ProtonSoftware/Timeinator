@@ -16,7 +16,7 @@
 
                 <Label Text="{Binding Tag, StringFormat='#{0}'}" />
 
-                <Label Text="{Binding AssignedTime}" />
+                <Label Text="{Binding AssignedTime,StringFormat='Czas: {0}'}" />
 
             </StackLayout>
             
