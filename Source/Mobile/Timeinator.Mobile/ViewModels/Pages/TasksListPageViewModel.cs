@@ -32,6 +32,11 @@ namespace Timeinator.Mobile
         public ICommand AddNewTaskCommand { get; private set; }
 
         /// <summary>
+        /// The command to delete specified task as a parameter
+        /// </summary>
+        public ICommand DeleteTaskCommand { get; private set; }
+
+        /// <summary>
         /// The command to fire when user is ready and wants to begin new session with selected tasks
         /// </summary>
         public ICommand UserReadyCommand { get; private set; }
@@ -47,6 +52,7 @@ namespace Timeinator.Mobile
         {
             // Create commands
             AddNewTaskCommand = new RelayCommand(() => DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
+            DeleteTaskCommand = new RelayCommand(() => DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
             UserReadyCommand = new RelayCommand(UserReady);
 
             // Load saved tasks in database
