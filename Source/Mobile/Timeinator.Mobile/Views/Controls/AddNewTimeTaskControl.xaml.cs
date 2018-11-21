@@ -29,6 +29,9 @@ namespace Timeinator.Mobile
 
             // Set specified view model
             BindingContext = viewModel ?? new AddNewTimeTaskViewModel();
+
+            // View model was provided, so we are editing task instead of adding new one
+            ConfirmButton.Text = "Potwierdź zmiany";
         }
 
         #endregion

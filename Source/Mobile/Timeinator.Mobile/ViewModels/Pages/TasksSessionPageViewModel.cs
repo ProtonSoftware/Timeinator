@@ -153,7 +153,7 @@ namespace Timeinator.Mobile
         {
             if (CurrentTask != null && CurrentTask.Progress >= 1)
             {
-                DI.TimeTasksService.RemoveFinishedTasks(DI.TimeTasksMapper.ReverseMap(CurrentTask));
+                DI.TimeTasksService.RemoveFinishedTasks(new List<TimeTaskContext> { DI.TimeTasksMapper.ReverseMap(CurrentTask) });
                 TaskItems.Remove(CurrentTask);
             }
             if (TaskItems.Count <= 0)

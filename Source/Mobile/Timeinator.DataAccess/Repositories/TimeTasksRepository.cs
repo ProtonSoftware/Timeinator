@@ -43,7 +43,7 @@ namespace Timeinator.Mobile.DataAccess
 
             return result.ToList();
         }
-        
+
         /// <summary>
         /// Saves specified task entity to the database
         /// </summary>
@@ -58,11 +58,14 @@ namespace Timeinator.Mobile.DataAccess
         }
 
         /// <summary>
-        /// Removes specified tasks from the database
+        /// Removes specified tasks from the database by provided ids
         /// </summary>
-        /// <param name="entities">The tasks to remove</param>
-        public void RemoveTasks(List<TimeTask> entities)
+        /// <param name="ids">The ids of tasks to remove</param>
+        public void RemoveTasks(List<int> ids)
         {
+            // Get list of every entity associated with provided ids
+            var entities = DbSet.Where(x => ids.Contains(x.Id));
+
             // Remove the list from database
             DbSet.RemoveRange(entities);
 

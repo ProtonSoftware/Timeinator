@@ -32,6 +32,11 @@ namespace Timeinator.Mobile
         public ICommand AddNewTaskCommand { get; private set; }
 
         /// <summary>
+        /// The command to edit specified task as a parameter
+        /// </summary>
+        public ICommand EditTaskCommand { get; private set; }
+
+        /// <summary>
         /// The command to delete specified task as a parameter
         /// </summary>
         public ICommand DeleteTaskCommand { get; private set; }
@@ -52,7 +57,8 @@ namespace Timeinator.Mobile
         {
             // Create commands
             AddNewTaskCommand = new RelayCommand(() => DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
-            DeleteTaskCommand = new RelayCommand(() => DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
+            EditTaskCommand = new RelayParameterizedCommand(EditTask);
+            DeleteTaskCommand = new RelayParameterizedCommand(DeleteTask);
             UserReadyCommand = new RelayCommand(UserReady);
 
             // Load saved tasks in database
@@ -67,6 +73,41 @@ namespace Timeinator.Mobile
         #endregion
 
         #region Command Methods
+
+        /// <summary>
+        /// Shows a page where specified task can be edited
+        /// </summary>
+        /// <param name="param">The task to edit</param>
+        private void EditTask(object param)
+        {
+            // Get the task view model
+            var taskVM = (TimeTaskViewModel)param;
+
+            // Create edit page's view model based on that
+            var pageVM = new AddNewTimeTaskViewModel
+            {
+                TaskName = taskVM.Name,
+                TaskDescription = taskVM.Description,
+                TaskTag = taskVM.Tag,
+                TaskConstantTime = taskVM.AssignedTime,
+                TaskImmortality = taskVM.IsImmortal,
+                TaskPrioritySliderValue = (double)taskVM.Priority,
+                TaskImportance = taskVM.IsImportant
+            };
+
+            // Show the page with filled info
+            DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl(pageVM));
+        }
+
+        /// <summary>
+        /// Deletes the specified task from the list and request database deletion
+        /// </summary>
+        /// <param name="param">The id of the task to delete</param>
+        private void DeleteTask(object param)
+        {
+            // Get the task's id
+            var taskId = (int)param;
+        }
 
         /// <summary>
         /// Fired when user wants to start new session with selected tasks

@@ -39,7 +39,8 @@
                     Value="{Binding TaskPrioritySliderValue}" />
 
             <Button Text="Dodaj"
-                        Command="{Binding AddTaskCommand}" />
+                    x:Name="ConfirmButton"
+                    Command="{Binding AddTaskCommand}" />
 
         </StackLayout>
 
