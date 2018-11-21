@@ -46,6 +46,11 @@ namespace Timeinator.Mobile
         /// </summary>
         public double TaskPrioritySliderValue { get; set; } = 1f;
 
+        /// <summary>
+        /// Indicates if we are editing existing task or adding a new one
+        /// </summary>
+        public bool IsEditingMode { get; set; }
+
         #endregion
 
         #region Commands
@@ -100,6 +105,8 @@ namespace Timeinator.Mobile
                 Priority = (Priority)TaskPrioritySliderValue,
                 Progress = 0
             };
+
+            // TODO: Logic with Editing mode
 
             // Pass it to the service to handle it
             DI.TimeTasksService.SaveNewTask(newTask);

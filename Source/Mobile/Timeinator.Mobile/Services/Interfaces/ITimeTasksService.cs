@@ -13,7 +13,7 @@ namespace Timeinator.Mobile
         void ConveyTasksToTimeHandler(List<TimeTaskContext> tasks);
 
         void SaveNewTask(TimeTaskContext context);
+        void RemoveTask(TimeTaskContext context);
         void RemoveFinishedTasks(List<TimeTaskContext> contexts);
-        void RemoveFinishedTasks(TimeTaskContext context);
     }
 }

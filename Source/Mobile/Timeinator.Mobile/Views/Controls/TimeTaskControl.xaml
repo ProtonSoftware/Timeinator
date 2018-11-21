@@ -50,9 +50,13 @@
                          x:Name="ButtonContainer"
                          HorizontalOptions="End">
 
-                <Button Text="E" />
+                <Button Text="E"
+                        Command="{Binding Source={x:Reference this}, Path=ParentContext.EditTaskCommand}" 
+                        CommandParameter="{Binding}" />
 
-                <Button Text="U" Command="{Binding Source={x:Reference this}, Path=ParentContext.DeleteTaskCommand}" />
+                <Button Text="U" 
+                        Command="{Binding Source={x:Reference this}, Path=ParentContext.DeleteTaskCommand}" 
+                        CommandParameter="{Binding Id}" />
 
             </StackLayout>
 
