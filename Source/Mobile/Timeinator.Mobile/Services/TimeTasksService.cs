@@ -62,7 +62,7 @@ namespace Timeinator.Mobile
         /// Saves new task to the database and adds it to the application's task list
         /// </summary>
         /// <param name="context">The context of a task to add</param>
-        public void SaveNewTask(TimeTaskContext context)
+        public void SaveTask(TimeTaskContext context)
         {
             // Map it to the entity
             var entity = DI.TimeTasksMapper.ReverseMap(context);
@@ -72,26 +72,16 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Removes finished tasks from the database
-        /// Ommits "immortal" tasks
+        /// Removes single specified task from the database
         /// </summary>
-        public void RemoveFinishedTasks(TimeTaskContext context)
+        /// <param name="context">The task to delete</param>
+        public void RemoveTask(TimeTaskContext context)
         {
-            // Prepare a list of task entities to remove
-            var taskEntities = new List<TimeTask>();
+            // Prepare an one element list with provided task's id
+            var list = new List<int> { context.Id };
 
-            // Immortal tasks won't be removed
-            if (context.IsImmortal)
-                return;
-
-            // Reverse map the context as entity
-            var entity = DI.TimeTasksMapper.ReverseMap(context);
-
-            // Add it to the list
-            taskEntities.Add(entity);
-
-            // Send collected entities to the repository to remove
-            DI.TimeTasksRepository.RemoveTasks(taskEntities);
+            // Send it to the repository to delete this task
+            DI.TimeTasksRepository.RemoveTasks(list);
         }
 
         /// <summary>
@@ -100,8 +90,8 @@ namespace Timeinator.Mobile
         /// </summary>
         public void RemoveFinishedTasks(List<TimeTaskContext> contexts)
         {
-            // Prepare a list of task entities to remove
-            var taskEntities = new List<TimeTask>();
+            // Prepare a list of task ids to remove
+            var taskIds = new List<int>();
 
             // For each of provided tasks...
             foreach (var task in contexts)
@@ -110,15 +100,12 @@ namespace Timeinator.Mobile
                 if (task.IsImmortal)
                     continue;
 
-                // Reverse map the context as entity
-                var entity = DI.TimeTasksMapper.ReverseMap(task);
-
-                // Add it to the list
-                taskEntities.Add(entity);
+                // Add the id to the list
+                taskIds.Add(task.Id);
             }
 
-            // Send collected entities to the repository to remove
-            DI.TimeTasksRepository.RemoveTasks(taskEntities);
+            // Send collected ids to the repository to remove associated tasks
+            DI.TimeTasksRepository.RemoveTasks(taskIds);
         }
 
         #endregion

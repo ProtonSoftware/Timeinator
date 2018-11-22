@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Timeinator.Mobile
 {
@@ -77,7 +79,7 @@ namespace Timeinator.Mobile
                 Resume(); });
             FinishCommand = new RelayCommand(() => { DI.UserTimeHandler.FinishTask();
                 Finish(); });
-            DI.UserTimeHandler.TimesUp += UserTimeHandler_TimesUp;
+            DI.UserTimeHandler.TimesUp += () => Device.BeginInvokeOnMainThread(async () => await UserTimeHandler_TimesUpAsync());
             RealTimer.Elapsed += RealTimer_Elapsed;  
 
             LoadTaskList();
@@ -120,25 +122,27 @@ namespace Timeinator.Mobile
         {
             BreakDuration = DateTime.Now - BreakStart;
             UpdateProgress();
+            OnPropertyChanged(nameof(Paused));
+            OnPropertyChanged(nameof(TimeRemaining));
         }
 
         /// <summary>
         /// Fired when the current task has run out of time 
         /// </summary>
-        private void UserTimeHandler_TimesUp()
+        private async Task UserTimeHandler_TimesUpAsync()
         {
             var popupViewModel = new PopupMessageViewModel
                 (
                     "Skończył się czas", 
-                    "Skończył się czas na zadanie, co chcesz teraz zrobić?", 
+                    "Skończył się czas na zadanie, co chcesz teraz zrobić?",
                     "Następne zadanie", 
                     "Nie, chcę przerwę"
                 );
-            var userResponse = DI.UI.DisplayPopupMessageAsync(popupViewModel);
+            var userResponse = await DI.UI.DisplayPopupMessageAsync(popupViewModel);
 
             DI.UserTimeHandler.StartTask();
             OutOfTasks();
-            if (!userResponse.Result)
+            if (!userResponse)
                 StopCommand.Execute(null);
         }
         
@@ -149,7 +153,7 @@ namespace Timeinator.Mobile
         {
             if (CurrentTask != null && CurrentTask.Progress >= 1)
             {
-                DI.TimeTasksService.RemoveFinishedTasks(DI.TimeTasksMapper.ReverseMap(CurrentTask));
+                DI.TimeTasksService.RemoveFinishedTasks(new List<TimeTaskContext> { DI.TimeTasksMapper.ReverseMap(CurrentTask) });
                 TaskItems.Remove(CurrentTask);
             }
             if (TaskItems.Count <= 0)
@@ -167,7 +171,7 @@ namespace Timeinator.Mobile
             if (CurrentTask != null)
             {
                 CurrentTask.Progress = DI.UserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
-                TaskProgress = CurrentTask.Progress * 100;
+                TaskProgress = CurrentTask.Progress;
             }
         }
 

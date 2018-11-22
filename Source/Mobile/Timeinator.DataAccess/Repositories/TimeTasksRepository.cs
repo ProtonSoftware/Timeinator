@@ -39,30 +39,52 @@ namespace Timeinator.Mobile.DataAccess
         /// <returns>List of time task entities</returns>
         public List<TimeTask> GetSavedTasksForToday()
         {
+            // TODO: Logic when we are going for date tasks, for now - get literaly everything
             var result = DbSet.Where(x => x.Id > 0);
 
             return result.ToList();
         }
-        
+
         /// <summary>
         /// Saves specified task entity to the database
         /// </summary>
         /// <param name="entity">Task entity</param>
         public void SaveTask(TimeTask entity)
         {
-            // Add entity to the database
-            DbSet.Add(entity);
+            // Get whats in database already
+            var dbEntity = DbSet.Where(x => x.Id == entity.Id).FirstOrDefault();
 
-            // Save it
+            // If there is no task with same Id
+            if (dbEntity == null)
+                // Add new entity to the database
+                DbSet.Add(entity);
+
+            // Otherwise...
+            else
+            {
+                // Set every property for new values
+                dbEntity.Name = entity.Name;
+                dbEntity.Description = entity.Description;
+                dbEntity.IsImmortal = entity.IsImmortal;
+                dbEntity.IsImportant = entity.IsImportant;
+                dbEntity.Priority = entity.Priority;
+                dbEntity.Progress = entity.Progress;
+                dbEntity.Tag = entity.Tag;
+            }
+
+            // Save the changes we made
             SaveChanges();
         }
 
         /// <summary>
-        /// Removes specified tasks from the database
+        /// Removes specified tasks from the database by provided ids
         /// </summary>
-        /// <param name="entities">The tasks to remove</param>
-        public void RemoveTasks(List<TimeTask> entities)
+        /// <param name="ids">The ids of tasks to remove</param>
+        public void RemoveTasks(List<int> ids)
         {
+            // Get list of every entity associated with provided ids
+            var entities = DbSet.Where(x => ids.Contains(x.Id));
+
             // Remove the list from database
             DbSet.RemoveRange(entities);
 

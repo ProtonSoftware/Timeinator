@@ -15,8 +15,8 @@ namespace Timeinator.Mobile
         /// </summary>
         public ApplicationPage CurrentPage
         {
-            get { return (ApplicationPage)GetValue(CurrentPageProperty); }
-            set { SetValue(CurrentPageProperty, value); }
+            get => (ApplicationPage)GetValue(CurrentPageProperty);
+            set => SetValue(CurrentPageProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for CurrentPage.  This enables animation, styling, binding, etc...
@@ -28,8 +28,8 @@ namespace Timeinator.Mobile
         /// </summary>
         public BaseViewModel CurrentPageViewModel
         {
-            get { return (BaseViewModel)GetValue(CurrentPageViewModelProperty); }
-            set { SetValue(CurrentPageViewModelProperty, value); }
+            get => (BaseViewModel)GetValue(CurrentPageViewModelProperty);
+            set => SetValue(CurrentPageViewModelProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for CurrentPageViewModel.  This enables animation, styling, binding, etc...
