@@ -62,7 +62,7 @@ namespace Timeinator.Mobile
         /// Saves new task to the database and adds it to the application's task list
         /// </summary>
         /// <param name="context">The context of a task to add</param>
-        public void SaveNewTask(TimeTaskContext context)
+        public void SaveTask(TimeTaskContext context)
         {
             // Map it to the entity
             var entity = DI.TimeTasksMapper.ReverseMap(context);

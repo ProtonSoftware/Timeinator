@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Timeinator.Mobile
 {
@@ -58,7 +60,7 @@ namespace Timeinator.Mobile
             // Create commands
             AddNewTaskCommand = new RelayCommand(() => DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
             EditTaskCommand = new RelayParameterizedCommand(EditTask);
-            DeleteTaskCommand = new RelayParameterizedCommand(DeleteTask);
+            DeleteTaskCommand = new RelayParameterizedCommand((param) => Device.BeginInvokeOnMainThread(async () => await DeleteTaskAsync(param)));
             UserReadyCommand = new RelayCommand(UserReady);
 
             // Load saved tasks in database
@@ -81,11 +83,12 @@ namespace Timeinator.Mobile
         private void EditTask(object param)
         {
             // Get the task view model
-            var taskVM = (TimeTaskViewModel)param;
+            var taskVM = param as TimeTaskViewModel;
 
             // Create edit page's view model based on that
             var pageVM = new AddNewTimeTaskViewModel
             {
+                TaskId = taskVM.Id,
                 TaskName = taskVM.Name,
                 TaskDescription = taskVM.Description,
                 TaskTag = taskVM.Tag,
@@ -102,11 +105,26 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Deletes the specified task from the list and request database deletion
         /// </summary>
-        /// <param name="param">The id of the task to delete</param>
-        private void DeleteTask(object param)
+        /// <param name="param">The task to delete</param>
+        private async Task DeleteTaskAsync(object param)
         {
-            // Get the task's id
-            var taskId = (int)param;
+            // Get the task view model
+            var taskVM = param as TimeTaskViewModel;
+
+            // Ask the user if he is certain
+            var popupViewModel = new PopupMessageViewModel
+                (
+                    "Usuwanie zadania",
+                    "Czy na pewno chcesz usunąc zadanie: " + taskVM.Name + "?",
+                    "Tak",
+                    "Nie"
+                );
+            var userResponse = await DI.UI.DisplayPopupMessageAsync(popupViewModel);
+
+            // If he agreed...
+            if (userResponse)
+                // Delete the task
+                DI.TimeTasksService.RemoveTask(DI.TimeTasksMapper.ReverseMap(taskVM));
         }
 
         /// <summary>

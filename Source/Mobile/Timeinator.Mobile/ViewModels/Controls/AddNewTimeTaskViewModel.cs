@@ -47,9 +47,9 @@ namespace Timeinator.Mobile
         public double TaskPrioritySliderValue { get; set; } = 1f;
 
         /// <summary>
-        /// Indicates if we are editing existing task or adding a new one
+        /// The id of a task, only set if we are editing existing one
         /// </summary>
-        public bool IsEditingMode { get; set; }
+        public int TaskId { get; set; }
 
         #endregion
 
@@ -95,6 +95,7 @@ namespace Timeinator.Mobile
             // Data is correct, create new context out of it
             var newTask = new TimeTaskContext
             {
+                Id = TaskId,
                 Name = TaskName,
                 Description = TaskDescription,
                 Tag = TaskTag,
@@ -106,10 +107,8 @@ namespace Timeinator.Mobile
                 Progress = 0
             };
 
-            // TODO: Logic with Editing mode
-
             // Pass it to the service to handle it
-            DI.TimeTasksService.SaveNewTask(newTask);
+            DI.TimeTasksService.SaveTask(newTask);
 
             // Close this page
             DI.UI.HideRecentModalFromCurrentNavigation();

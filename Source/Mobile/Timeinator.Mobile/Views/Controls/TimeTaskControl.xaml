@@ -56,7 +56,7 @@
 
                 <Button Text="U" 
                         Command="{Binding Source={x:Reference this}, Path=ParentContext.DeleteTaskCommand}" 
-                        CommandParameter="{Binding Id}" />
+                        CommandParameter="{Binding}" />
 
             </StackLayout>
 
