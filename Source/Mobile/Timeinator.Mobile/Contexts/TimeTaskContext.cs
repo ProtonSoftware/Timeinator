@@ -9,6 +9,11 @@ namespace Timeinator.Mobile
     public class TimeTaskContext
     {
         /// <summary>
+        /// Unique id number of the task
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Unique ordinal number of the task
         /// </summary>
         public int OrderId { get; set; }

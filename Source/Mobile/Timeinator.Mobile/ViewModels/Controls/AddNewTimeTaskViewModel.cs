@@ -46,6 +46,11 @@ namespace Timeinator.Mobile
         /// </summary>
         public double TaskPrioritySliderValue { get; set; } = 1f;
 
+        /// <summary>
+        /// The id of a task, only set if we are editing existing one
+        /// </summary>
+        public int TaskId { get; set; }
+
         #endregion
 
         #region Commands
@@ -90,6 +95,7 @@ namespace Timeinator.Mobile
             // Data is correct, create new context out of it
             var newTask = new TimeTaskContext
             {
+                Id = TaskId,
                 Name = TaskName,
                 Description = TaskDescription,
                 Tag = TaskTag,
@@ -102,7 +108,7 @@ namespace Timeinator.Mobile
             };
 
             // Pass it to the service to handle it
-            DI.TimeTasksService.SaveNewTask(newTask);
+            DI.TimeTasksService.SaveTask(newTask);
 
             // Close this page
             DI.UI.HideRecentModalFromCurrentNavigation();
@@ -119,7 +125,7 @@ namespace Timeinator.Mobile
         private bool ValidateUserInput()
         {
             // If task's name is too short
-            if (TaskName.Length < 4)
+            if (TaskName.Length < 1)
                 // Show an error
                 return false;
 

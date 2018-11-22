@@ -9,6 +9,11 @@ namespace Timeinator.Mobile
     public class TimeTaskViewModel : BaseViewModel
     {
         /// <summary>
+        /// Unique id number of the task
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// The name of this task
         /// </summary>
         public string Name { get; set; }

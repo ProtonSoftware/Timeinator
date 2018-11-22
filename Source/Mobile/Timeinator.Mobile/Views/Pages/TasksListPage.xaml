@@ -23,7 +23,7 @@
 
         <ScrollView Grid.ColumnSpan="2">
 
-            <local:ItemsControl ItemsSource="{Binding TaskItems}">
+            <local:ItemsControl x:Name="TaskListContainer" ItemsSource="{Binding TaskItems}">
 
                 <local:ItemsControl.PlaceholderText>
                     Brak zadań na dzisiaj - aby je dodać, kliknij ikonkę + u góry
@@ -31,7 +31,8 @@
 
                 <local:ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:TimeTaskControl />
+                        <local:TimeTaskControl ParentContext="{Binding Source={x:Reference TaskListContainer},
+                                                                       Path=BindingContext}" />
                     </DataTemplate>
                 </local:ItemsControl.ItemTemplate>
 

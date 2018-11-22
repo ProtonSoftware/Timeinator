@@ -12,9 +12,9 @@
 
             <Label Text="{Binding Description}" />
 
-            <Label Text="{Binding AssignedTime,StringFormat='Czas: {0}'}" />
-
             <Label Text="{Binding Tag,StringFormat='#{0}'}" FontSize="Small" />
+
+            <Label Text="{Binding AssignedTime,StringFormat='Czas: {0}'}" />
 
         </StackLayout>
 
