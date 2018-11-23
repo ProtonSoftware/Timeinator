@@ -71,39 +71,19 @@ namespace Timeinator.Mobile
         /// <returns>Ready list</returns>
         private List<TimeTaskContext> CalcAssignedTimes(List<TimeTaskContext> target)
         {
-            var avt = AvailableTime - SumTimes(GetConstant(target));
-            var tmp = GetConstant(target, true);
+            var avt = AvailableTime - SumTimes(TaskListHelpers.GetConstant(target));
+            var tmp = TaskListHelpers.GetConstant(target, true);
             var priors = SumPriorities(tmp);
             for (var i = 0; i < tmp.Count; i++)
-                tmp[i].AssignedTime = TimeSpan.FromMinutes((int)Math.Ceiling(new TimeSpan((long)(avt.Ticks * (GetRealPriority(tmp[i]) / priors))).TotalMinutes));
-            return tmp.Concat(GetConstant(target)).ToList();
+                tmp[i].AssignedTime = TimeSpan.FromSeconds((int)Math.Ceiling(new TimeSpan((long)(avt.Ticks * (GetRealPriority(tmp[i]) / priors))).TotalSeconds));
+            return tmp.Concat(TaskListHelpers.GetConstant(target)).ToList();
         }
-
-        /// <summary>
-        /// Returns only important tasks from provided TimeTasks
-        /// </summary>
-        private List<TimeTaskContext> GetImportant(List<TimeTaskContext> contexts, bool inverse = false) => contexts.FindAll(x => inverse ? !x.IsImportant : x.IsImportant);
-
-        /// <summary>
-        /// Returns only constant time tasks from provided TimeTasks
-        /// </summary>
-        private List<TimeTaskContext> GetConstant(List<TimeTaskContext> contexts, bool inverse = false) => contexts.FindAll(x => inverse ? !x.HasConstantTime : x.HasConstantTime);
-
-        /// <summary>
-        /// Returns only not finished tasks from provided TimeTasks
-        /// </summary>
-        private List<TimeTaskContext> GetNotReady(List<TimeTaskContext> contexts, bool inverse = false) => contexts.FindAll(x => inverse ? !(x.Progress < 1) : (x.Progress < 1));
-
-        /// <summary>
-        /// Returns priority taking progress into account
-        /// </summary>
-        private double GetRealPriority(TimeTaskContext tc) => (int)tc.Priority * (1.0 - tc.Progress);
 
         private double SumPriorities(List<TimeTaskContext> l)
         {
             double s = 0;
             foreach (var c in l)
-                s += GetRealPriority(c);
+                s += TaskListHelpers.GetRealPriority(c);
             return s;
         }
 
