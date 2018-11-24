@@ -16,6 +16,11 @@ namespace Timeinator.Mobile.DataAccess
         /// </summary>
         public DbSet<TimeTask> TimeTasks { get; set; }
 
+        /// <summary>
+        /// The table for saved application's settings
+        /// </summary>
+        public DbSet<Setting> Settings { get; set; }
+
         #endregion
 
         #region Database Configuration
@@ -30,7 +35,7 @@ namespace Timeinator.Mobile.DataAccess
             base.OnConfiguring(optionsBuilder);
 
             // Configure the builder to save database locally on mobile device
-            optionsBuilder.UseSqlite($"Filename={Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "database.sqlite")}");
+            optionsBuilder.UseSqlite($"Filename={Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "timeinatorDB.sqlite")}");
         }
 
         #endregion

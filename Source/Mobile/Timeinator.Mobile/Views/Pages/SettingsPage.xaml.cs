@@ -17,6 +17,8 @@ namespace Timeinator.Mobile
 
             // Set brand-new view model
             BindingContext = new SettingsPageViewModel();
+
+
         }
 
         /// <summary>

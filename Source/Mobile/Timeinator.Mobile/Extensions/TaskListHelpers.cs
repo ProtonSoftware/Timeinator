@@ -25,5 +25,9 @@ namespace Timeinator.Mobile
         /// Returns priority taking progress into account
         /// </summary>
         public static double GetRealPriority(TimeTaskContext tc) => (int)tc.Priority * (1.0 - tc.Progress);
+
+        //typ funkcji ktora przypiszesz do eventu
+        //public static event EventHandler RefreshUITasks = delegate { };
+
     }
 }
