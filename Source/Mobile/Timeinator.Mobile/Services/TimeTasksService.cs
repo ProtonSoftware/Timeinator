@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Timeinator.Mobile.DataAccess;
 
 namespace Timeinator.Mobile
@@ -19,6 +20,7 @@ namespace Timeinator.Mobile
         {
             // Prepare a list to return
             var taskContexts = new List<TimeTaskContext>();
+
 
             // Get every task in the database
             var dbTasks = DI.TimeTasksRepository.GetSavedTasksForToday();
@@ -45,7 +47,7 @@ namespace Timeinator.Mobile
         public void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime)
         {
             // Add the list to the manager with provided time
-            DI.TimeTasksManager.UploadTasksList(tasks, userTime);
+            DI.TimeTasksManager.UploadTasksList(SetTaskOrder(tasks), userTime);
         }
 
         /// <summary>
@@ -106,6 +108,34 @@ namespace Timeinator.Mobile
 
             // Send collected ids to the repository to remove associated tasks
             DI.TimeTasksRepository.RemoveTasks(taskIds);
+        }
+
+        #endregion
+
+        #region Private
+
+        /// <summary>
+        /// Sets first time OrderId to offer user basic order
+        /// </summary>
+        /// <returns>Task list with correct OrderId</returns>
+        private List<TimeTaskContext> SetTaskOrder(List<TimeTaskContext> rawContexts)
+        {
+            List<TimeTaskContext> rawImportant = TaskListHelpers.GetImportant(rawContexts),
+                rawSimple = TaskListHelpers.GetImportant(rawContexts, true);
+            rawImportant.OrderBy(x => x.Priority);
+            rawSimple.OrderBy(x => x.Priority);
+            var oid = 0;
+            for (var i = 0; i < rawImportant.Count; i++)
+            {
+                rawImportant[i].OrderId = oid;
+                oid++;
+            }
+            for (var i = 0; i < rawSimple.Count; i++)
+            {
+                rawSimple[i].OrderId = oid;
+                oid++;
+            }
+            return rawImportant.Concat(rawSimple).ToList();
         }
 
         #endregion

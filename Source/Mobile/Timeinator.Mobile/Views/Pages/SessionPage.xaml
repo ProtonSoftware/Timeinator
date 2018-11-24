@@ -37,7 +37,7 @@
 
             </ScrollView>
 
-            <progressRing:ProgressRing Grid.Row="2" Grid.ColumnSpan="2" RingThickness="10" Progress="{Binding TaskProgress}" />
+            <progressRing:ProgressRing RingProgressColor="#00f000" Grid.Row="2" Grid.ColumnSpan="2" RingThickness="10" Progress="{Binding TaskProgress}" />
             <Label FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding TaskProgress,Converter={local:DoubleToPercentConverter},StringFormat='{0:0.} %'}" />
             <Button Grid.Column="0" Grid.Row="3" Text="STOP" Command="{Binding StopCommand}" />
             <Button Grid.Column="1" Grid.Row="3" Text="KONIEC" Command="{Binding FinishCommand}" />

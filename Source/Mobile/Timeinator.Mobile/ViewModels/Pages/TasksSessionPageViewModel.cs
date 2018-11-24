@@ -73,12 +73,9 @@ namespace Timeinator.Mobile
         public TasksSessionPageViewModel()
         {
             // Create commands
-            StopCommand = new RelayCommand(() => { DI.UserTimeHandler.StopTask();
-                Stop(); });
-            ResumeCommand = new RelayCommand(() => { DI.UserTimeHandler.ResumeTask();
-                Resume(); });
-            FinishCommand = new RelayCommand(() => { DI.UserTimeHandler.FinishTask();
-                Finish(); });
+            StopCommand = new RelayCommand(Stop);
+            ResumeCommand = new RelayCommand(Resume);
+            FinishCommand = new RelayCommand(async () => await FinishAsync());
             DI.UserTimeHandler.TimesUp += () => Device.BeginInvokeOnMainThread(async () => await UserTimeHandler_TimesUpAsync());
             RealTimer.Elapsed += RealTimer_Elapsed;  
 
@@ -90,21 +87,36 @@ namespace Timeinator.Mobile
 
         private void Stop()
         {
+            DI.UserTimeHandler.StopTask();
             SetupStopwatch();
             UpdateProgress();
         }
 
         private void Resume()
         {
+            DI.UserTimeHandler.ResumeTask();
             SetupStopwatch();
             UpdateProgress();
         }
 
-        private void Finish()
+        private async Task FinishAsync()
         {
-            SetupStopwatch();
-            OutOfTasks();
-            UpdateProgress();
+            var popupViewModel = new PopupMessageViewModel
+                (
+                    "Koniec zadania", 
+                    "Na pewno chcesz zakończyć zadanie?",
+                    "Tak", 
+                    "Nie"
+                );
+            var userResponse = await DI.UI.DisplayPopupMessageAsync(popupViewModel);
+
+            if (userResponse)
+            {
+                DI.UserTimeHandler.FinishTask();
+                CurrentTask.Progress = 1;
+                SetupStopwatch();
+                ContinueUserTasks();
+            }
         }
 
         /// <summary>
@@ -124,6 +136,7 @@ namespace Timeinator.Mobile
             UpdateProgress();
             OnPropertyChanged(nameof(Paused));
             OnPropertyChanged(nameof(TimeRemaining));
+            OnPropertyChanged(nameof(TaskItems));
         }
 
         /// <summary>
@@ -140,21 +153,22 @@ namespace Timeinator.Mobile
                 );
             var userResponse = await DI.UI.DisplayPopupMessageAsync(popupViewModel);
 
-            DI.UserTimeHandler.StartTask();
-            OutOfTasks();
+            UpdateProgress();
+            ContinueUserTasks();
             if (!userResponse)
                 StopCommand.Execute(null);
         }
         
         /// <summary>
-        /// Checks if to exit to main page
+        /// Checks if to exit to main page or start next task
         /// </summary>
-        private void OutOfTasks()
+        private void ContinueUserTasks()
         {
             if (CurrentTask != null && CurrentTask.Progress >= 1)
             {
                 DI.TimeTasksService.RemoveFinishedTasks(new List<TimeTaskContext> { DI.TimeTasksMapper.ReverseMap(CurrentTask) });
                 TaskItems.Remove(CurrentTask);
+                DI.UserTimeHandler.StartTask();
             }
             if (TaskItems.Count <= 0)
             {
