@@ -46,12 +46,16 @@
         <Grid IsVisible="{Binding Paused}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="7*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="6*" />
+                <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Label FontSize="Large" HorizontalTextAlignment="Center" Grid.Row="0" Text="Zadanie przerwane" />
             <Label FontSize="Large" HorizontalTextAlignment="Center" Grid.Row="1" Text="{Binding BreakDuration,StringFormat=\{0:hh\\:mm\\:ss\}}" />
-            <Button Grid.Row="2" Text="WZNÓW" Command="{Binding ResumeCommand}" />
+            <local:SessionControl BindingContext="{Binding CurrentTask}" Grid.Row="2" />
+            <Label FontSize="Medium" HorizontalTextAlignment="Center" Grid.Row="3" Text="{Binding BreakTaskTime,StringFormat='Pozostały czas zadania \{0:hh\\:mm\\:ss\}'}" />
+            <Button Grid.Row="4" Text="WZNÓW" Command="{Binding ResumeCommand}" />
         </Grid>
     </Grid>
 </local:BasePage>

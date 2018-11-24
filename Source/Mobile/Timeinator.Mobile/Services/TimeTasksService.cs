@@ -122,8 +122,8 @@ namespace Timeinator.Mobile
         {
             List<TimeTaskContext> rawImportant = TaskListHelpers.GetImportant(rawContexts),
                 rawSimple = TaskListHelpers.GetImportant(rawContexts, true);
-            rawImportant.OrderBy(x => x.Priority);
-            rawSimple.OrderBy(x => x.Priority);
+            rawImportant = rawImportant.OrderBy(x => x.Priority).Reverse().ToList();
+            rawSimple = rawSimple.OrderBy(x => x.Priority).Reverse().ToList();
             var oid = 0;
             for (var i = 0; i < rawImportant.Count; i++)
             {
