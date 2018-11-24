@@ -69,5 +69,10 @@ namespace Timeinator.Mobile
             // And return user's response
             return response;
         }
+
+        public void ChangeLanguage(string langCode)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
