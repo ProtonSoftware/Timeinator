@@ -14,7 +14,7 @@
 
             <StackLayout>
                 <Label Text="Settings" />
-                <Label Text="" />
+                <Label Text="Highest priority first/last" />
             </StackLayout>
 
         </Frame>

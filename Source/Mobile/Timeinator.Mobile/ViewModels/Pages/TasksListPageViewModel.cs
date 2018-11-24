@@ -20,6 +20,11 @@ namespace Timeinator.Mobile
         public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<TimeTaskViewModel>();
 
         /// <summary>
+        /// The list of every tag that are associated with current list of tags
+        /// </summary>
+        public ObservableCollection<string> TaskTags { get; set; } = new ObservableCollection<string>();
+
+        /// <summary>
         /// The time that user has declared to calculate tasks for
         /// </summary>
         public TimeSpan UserTime { get; set; }
@@ -70,6 +75,9 @@ namespace Timeinator.Mobile
             foreach (var task in tasks)
                 // Add it to the page's collection as view model
                 TaskItems.Add(DI.TimeTasksMapper.Map(task));
+
+            // Get every tag to display in the view
+            GetEveryTaskTags();
         }
 
         #endregion
@@ -156,6 +164,28 @@ namespace Timeinator.Mobile
 
             // Change the page
             DI.Application.GoToPage(ApplicationPage.TasksPreparation);
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Looks up in every task for its tag and lists them as strings
+        /// </summary>
+        private void GetEveryTaskTags()
+        {
+            // For every task in the list
+            foreach (var task in TaskItems)
+            {
+                // Get it's tag
+                var tag = task.Tag;
+
+                // If its not in the list
+                if (tag != null && !TaskTags.Contains(tag))
+                    // Add it
+                    TaskTags.Add(tag);
+            }
         }
 
         #endregion
