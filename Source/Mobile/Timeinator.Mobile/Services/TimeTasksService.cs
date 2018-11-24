@@ -13,6 +13,26 @@ namespace Timeinator.Mobile
         #region Interface Implementation
 
         /// <summary>
+        /// Switches orderId of given context
+        /// </summary>
+        /// <param name="contexts">Current list of contexts</param>
+        /// <param name="swap">Context to change order of</param>
+        /// <param name="newid">New position of swap context</param>
+        /// <returns>Reordered list</returns>
+        public List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid)
+        {
+            contexts.Find(x => x == swap).OrderId = newid;
+            contexts = contexts.OrderBy(x => x.OrderId).ToList();
+            var orig = contexts.FindIndex(x => x.OrderId == newid);
+            for (var i = orig; i < contexts.Count; i++)
+            {
+                if (contexts[i] != swap)
+                    contexts[i].OrderId++;
+            }
+            return contexts;
+        }
+
+        /// <summary>
         /// Loads saved tasks from the database and passes it in the manager
         /// </summary>
         /// <returns>A list of found tasks mapped as context</returns>

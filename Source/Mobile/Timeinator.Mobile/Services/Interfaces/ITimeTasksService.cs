@@ -8,6 +8,7 @@ namespace Timeinator.Mobile
     /// </summary>
     public interface ITimeTasksService
     {
+        List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid);
         List<TimeTaskContext> LoadStoredTasks();
         void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime);
         void ConveyTasksToTimeHandler(List<TimeTaskContext> tasks);

@@ -31,8 +31,6 @@ namespace Timeinator.Mobile
 
         #endregion
 
-        
-
         #region Commands
 
         /// <summary>
