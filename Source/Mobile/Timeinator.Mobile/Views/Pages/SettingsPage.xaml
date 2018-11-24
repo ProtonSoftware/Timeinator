@@ -5,21 +5,19 @@
              x:Class="Timeinator.Mobile.SettingsPage"
              Title="{Binding Title}">
 
-    <Grid>
-
-        <Frame VerticalOptions="Center"
-               HorizontalOptions="Center"
-               WidthRequest="300"
-               BackgroundColor="White">
-
-            <StackLayout>
-                <Label Text="Settings" />
-                <Label Text="" />
-            </StackLayout>
-
-        </Frame>
-
-    </Grid>
+    <TableView Intent="Settings" Margin="10">
+        <TableRoot>
+            <TableSection Title="Zadania">
+                <SwitchCell Text="Zadania z najwyższym priorytetem jako pierwsze"
+                            On="{Binding HighestPrioritySetAsFirst}"/>
+            </TableSection>
+            <TableSection Title="Inne">
+                <SwitchCell Text="Zmień jezyk" />
+                <SwitchCell Text="Ciemny motyw"
+                            On="{Binding IsDarkModeOn}" />
+            </TableSection>
+        </TableRoot>
+    </TableView>
 
 
 </local:BasePage>
