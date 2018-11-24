@@ -47,6 +47,11 @@ namespace Timeinator.Mobile
         public TimeSpan TimePassed => CurrentTime.Subtract(CurrentTaskStartTime);
 
         /// <summary>
+        /// Stores time that passed before pausing task
+        /// </summary>
+        public TimeSpan RecentTimePassed { get; set; }
+
+        /// <summary>
         /// Event called when time for task elapsed
         /// </summary>
         public event Action TimesUp;
@@ -67,7 +72,6 @@ namespace Timeinator.Mobile
         /// </summary>
         public List<TimeTaskContext> DownloadSession()
         {
-            //TO DO: make sure tasks are correctly served
             return SessionTasks;
         }
 
@@ -80,46 +84,18 @@ namespace Timeinator.Mobile
 
             var CurrentTaskAssignedMilliseconds = CurrentTask.AssignedTime.TotalMilliseconds;
             if (CurrentTaskAssignedMilliseconds > 0)
-            { 
+            {
+                RecentTimePassed = new TimeSpan(0);
                 TaskTimer.Interval = CurrentTaskAssignedMilliseconds;
                 TaskTimer.Start();
             }
             else
             {
-                //TO DO : shall call TimeTaskService???
                 SessionTasks.Remove(CurrentTask);
             }
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="response"> True if user wants to start a new task, False if they want to take a break </param>
-        public void IfStartUserResponse(bool response)
-        {
-            if (response == true)
-            {
-                StartTask();
-            }
-            else
-            {
-
-            }
-        }
-
-        /// <summary>
-        /// Catches user response after asking whether task is finished
-        /// </summary>
-        /// <param name="response"></param>
-        public void FinishedTaskUserResponse(bool response)
-        {
-            if (response == false)
-            {
-                SessionTasks.Remove(CurrentTask);
-            }
-        }
-        
         /// <summary>
         /// Stops the task and removes if completed
         /// </summary>
@@ -128,7 +104,7 @@ namespace Timeinator.Mobile
             TaskTimer.Stop();
             SaveProgress();
             if (CurrentTask.Progress >= 1)
-                SessionTasks.Remove(CurrentTask);
+                FinishTask();
         }
 
         /// <summary>
@@ -157,7 +133,8 @@ namespace Timeinator.Mobile
         /// </summary>
         private void SaveProgress()
         {
-            CurrentTask.Progress = TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
+            CurrentTask.Progress = (RecentTimePassed.TotalMilliseconds + TimePassed.TotalMilliseconds) / CurrentTask.AssignedTime.TotalMilliseconds;
+            RecentTimePassed += new TimeSpan(TimePassed.Ticks);
         }
     }
 }

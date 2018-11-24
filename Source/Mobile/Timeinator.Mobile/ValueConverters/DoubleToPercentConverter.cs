@@ -11,7 +11,7 @@ namespace Timeinator.Mobile
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (double)value * 100;
+            return Math.Ceiling((double)value * 100);
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

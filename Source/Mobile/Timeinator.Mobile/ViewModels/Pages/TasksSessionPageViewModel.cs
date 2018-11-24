@@ -39,6 +39,10 @@ namespace Timeinator.Mobile
         /// </summary>
         public TimeSpan TimeRemaining => TimeSpan.FromMilliseconds(DI.UserTimeHandler.TaskTimer.Interval) - DI.UserTimeHandler.TimePassed;
         /// <summary>
+        /// Remaining time from handler
+        /// </summary>
+        public TimeSpan BreakTaskTime { get; set; }
+        /// <summary>
         /// Progress of current task
         /// </summary>
         public double TaskProgress { get; set; }
@@ -54,6 +58,10 @@ namespace Timeinator.Mobile
         /// Current break length in a timespan
         /// </summary>
         public TimeSpan BreakDuration { get; set; }
+        /// <summary>
+        /// Time that task progressed before pausing
+        /// </summary>
+        public TimeSpan RecentProgress { get; set; } = new TimeSpan(0);
 
         #endregion
 
@@ -83,20 +91,31 @@ namespace Timeinator.Mobile
             RealTimer.Start();
         }
 
+        ~TasksSessionPageViewModel()
+        {
+            RealTimer.Dispose();
+            DI.UserTimeHandler.TaskTimer.Stop();
+        }
+
         #endregion
 
         private void Stop()
         {
             DI.UserTimeHandler.StopTask();
-            SetupStopwatch();
-            UpdateProgress();
+            ClickStandardAction();
         }
 
         private void Resume()
         {
             DI.UserTimeHandler.ResumeTask();
-            SetupStopwatch();
+            ClickStandardAction();
+        }
+
+        private void ClickStandardAction()
+        {
             UpdateProgress();
+            SetupBreakStopwatch();
+            OnPropertyChanged(nameof(CurrentTask));
         }
 
         private async Task FinishAsync()
@@ -114,17 +133,22 @@ namespace Timeinator.Mobile
             {
                 DI.UserTimeHandler.FinishTask();
                 CurrentTask.Progress = 1;
-                SetupStopwatch();
                 ContinueUserTasks();
+                SetupBreakStopwatch();
             }
         }
 
         /// <summary>
         /// Nicely switches stopwatch refreshing
         /// </summary>
-        private void SetupStopwatch()
+        private void SetupBreakStopwatch()
         {
-            BreakStart = DateTime.Now;
+            if (Paused)
+            {
+                BreakStart = DateTime.Now;
+                RecentProgress += new TimeSpan(DI.UserTimeHandler.TimePassed.Ticks);
+                BreakTaskTime = new TimeSpan(TimeRemaining.Ticks);
+            }
         }
 
         /// <summary>
@@ -132,7 +156,8 @@ namespace Timeinator.Mobile
         /// </summary>
         private void RealTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            BreakDuration = DateTime.Now - BreakStart;
+            if (Paused)
+                BreakDuration = DateTime.Now - BreakStart;
             UpdateProgress();
             OnPropertyChanged(nameof(Paused));
             OnPropertyChanged(nameof(TimeRemaining));
@@ -169,6 +194,7 @@ namespace Timeinator.Mobile
                 DI.TimeTasksService.RemoveFinishedTasks(new List<TimeTaskContext> { DI.TimeTasksMapper.ReverseMap(CurrentTask) });
                 TaskItems.Remove(CurrentTask);
                 DI.UserTimeHandler.StartTask();
+                RecentProgress = new TimeSpan(0);
             }
             if (TaskItems.Count <= 0)
             {
@@ -184,7 +210,9 @@ namespace Timeinator.Mobile
         {
             if (CurrentTask != null)
             {
-                CurrentTask.Progress = DI.UserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
+                CurrentTask.Progress = (RecentProgress.TotalMilliseconds + DI.UserTimeHandler.TimePassed.TotalMilliseconds) / CurrentTask.AssignedTime.TotalMilliseconds;
+                if (CurrentTask.Progress > 1)
+                    CurrentTask.Progress = 1;
                 TaskProgress = CurrentTask.Progress;
             }
         }
