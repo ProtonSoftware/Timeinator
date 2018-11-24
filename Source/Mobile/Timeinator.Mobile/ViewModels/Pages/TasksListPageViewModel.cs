@@ -182,7 +182,7 @@ namespace Timeinator.Mobile
                 var tag = task.Tag;
 
                 // If its not in the list
-                if (!TaskTags.Contains(tag))
+                if (tag != null && !TaskTags.Contains(tag))
                     // Add it
                     TaskTags.Add(tag);
             }
