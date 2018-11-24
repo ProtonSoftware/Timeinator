@@ -15,5 +15,7 @@ namespace Timeinator.Mobile
         void HideMenu();
 
         Task<bool> DisplayPopupMessageAsync(PopupMessageViewModel viewmodel);
+
+        void ChangeLanguage(string langCode);
     }
 }

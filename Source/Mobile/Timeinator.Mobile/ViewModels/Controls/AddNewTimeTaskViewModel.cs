@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using Timeinator.Core;
 
@@ -7,7 +8,7 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for new time task popup
     /// </summary>
-    public class AddNewTimeTaskViewModel
+    public class AddNewTimeTaskViewModel : BaseViewModel
     {
         #region Public Properties
 
@@ -112,6 +113,8 @@ namespace Timeinator.Mobile
 
             // Close this page
             DI.UI.HideRecentModalFromCurrentNavigation();
+
+            //TaskListHelpers.RefreshUITasks?.Invoke();
         }
 
         #endregion

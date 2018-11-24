@@ -31,6 +31,8 @@ namespace Timeinator.Mobile
 
         #endregion
 
+        
+
         #region Commands
 
         /// <summary>
@@ -68,13 +70,9 @@ namespace Timeinator.Mobile
             DeleteTaskCommand = new RelayParameterizedCommand((param) => Device.BeginInvokeOnMainThread(async () => await DeleteTaskAsync(param)));
             UserReadyCommand = new RelayCommand(UserReady);
 
-            // Load saved tasks in database
-            var tasks = DI.TimeTasksService.LoadStoredTasks();
+            //TaskListHelpers.RefreshUITasks += ReloadTasks;
 
-            // For each of them...
-            foreach (var task in tasks)
-                // Add it to the page's collection as view model
-                TaskItems.Add(DI.TimeTasksMapper.Map(task));
+            ReloadTasks();
 
             // Get every tag to display in the view
             GetEveryTaskTags();
@@ -171,7 +169,7 @@ namespace Timeinator.Mobile
         #region Private Helpers
 
         /// <summary>
-        /// Looks up in every task for its tag and lists them as strings
+        /// Looks up in every task for it's tag and lists them as strings
         /// </summary>
         private void GetEveryTaskTags()
         {
@@ -186,6 +184,20 @@ namespace Timeinator.Mobile
                     // Add it
                     TaskTags.Add(tag);
             }
+        }
+
+        public void ReloadTasks()
+        {
+            TaskItems = new ObservableCollection<TimeTaskViewModel>();
+
+            // Load saved tasks in database
+            var tasks = DI.TimeTasksService.LoadStoredTasks();
+
+            // For each of them...
+            foreach (var task in tasks)
+                // Add it to the page's collection as view model
+                TaskItems.Add(DI.TimeTasksMapper.Map(task));
+
         }
 
         #endregion
