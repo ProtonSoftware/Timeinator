@@ -15,6 +15,6 @@ namespace Timeinator.Mobile.DataAccess
         /// <summary>
         /// The value of this setting as object
         /// </summary>
-        public object Value { get; set; }
+        public string Value { get; set; }
     }
 }
