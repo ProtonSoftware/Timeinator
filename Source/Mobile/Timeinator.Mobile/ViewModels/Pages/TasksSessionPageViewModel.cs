@@ -115,9 +115,26 @@ namespace Timeinator.Mobile
         {
             UpdateProgress();
             SetupBreakStopwatch();
-            OnPropertyChanged(nameof(CurrentTask));
+            OnPropertyChanged(nameof(TaskItems));
         }
 
+        /// <summary>
+        /// Switches break params controlling stopwatch and progress buffer
+        /// </summary>
+        private void SetupBreakStopwatch()
+        {
+            if (Paused)
+            {
+                BreakStart = DateTime.Now;
+                RecentProgress += new TimeSpan(DI.UserTimeHandler.TimePassed.Ticks);
+                BreakTaskTime = new TimeSpan(TimeRemaining.Ticks);
+                OnPropertyChanged(nameof(CurrentTask));
+            }
+        }
+
+        /// <summary>
+        /// Prompts dialog whether to remove current task and does it
+        /// </summary>
         private async Task FinishAsync()
         {
             var popupViewModel = new PopupMessageViewModel
@@ -134,20 +151,6 @@ namespace Timeinator.Mobile
                 DI.UserTimeHandler.FinishTask();
                 CurrentTask.Progress = 1;
                 ContinueUserTasks();
-                SetupBreakStopwatch();
-            }
-        }
-
-        /// <summary>
-        /// Nicely switches stopwatch refreshing
-        /// </summary>
-        private void SetupBreakStopwatch()
-        {
-            if (Paused)
-            {
-                BreakStart = DateTime.Now;
-                RecentProgress += new TimeSpan(DI.UserTimeHandler.TimePassed.Ticks);
-                BreakTaskTime = new TimeSpan(TimeRemaining.Ticks);
             }
         }
 
@@ -161,7 +164,6 @@ namespace Timeinator.Mobile
             UpdateProgress();
             OnPropertyChanged(nameof(Paused));
             OnPropertyChanged(nameof(TimeRemaining));
-            OnPropertyChanged(nameof(TaskItems));
         }
 
         /// <summary>
@@ -178,7 +180,9 @@ namespace Timeinator.Mobile
                 );
             var userResponse = await DI.UI.DisplayPopupMessageAsync(popupViewModel);
 
+            DI.UserTimeHandler.FinishTask();
             UpdateProgress();
+            CurrentTask.Progress = 1;
             ContinueUserTasks();
             if (!userResponse)
                 StopCommand.Execute(null);
@@ -193,8 +197,8 @@ namespace Timeinator.Mobile
             {
                 DI.TimeTasksService.RemoveFinishedTasks(new List<TimeTaskContext> { DI.TimeTasksMapper.ReverseMap(CurrentTask) });
                 TaskItems.Remove(CurrentTask);
-                DI.UserTimeHandler.StartTask();
                 RecentProgress = new TimeSpan(0);
+                DI.UserTimeHandler.StartTask();
             }
             if (TaskItems.Count <= 0)
             {
@@ -208,13 +212,12 @@ namespace Timeinator.Mobile
         /// </summary>
         private void UpdateProgress()
         {
-            if (CurrentTask != null)
-            {
-                CurrentTask.Progress = (RecentProgress.TotalMilliseconds + DI.UserTimeHandler.TimePassed.TotalMilliseconds) / CurrentTask.AssignedTime.TotalMilliseconds;
-                if (CurrentTask.Progress > 1)
-                    CurrentTask.Progress = 1;
-                TaskProgress = CurrentTask.Progress;
-            }
+            if (CurrentTask == null)
+                return;
+            CurrentTask.Progress = (RecentProgress.TotalMilliseconds + DI.UserTimeHandler.TimePassed.TotalMilliseconds) / CurrentTask.AssignedTime.TotalMilliseconds;
+            if (CurrentTask.Progress > 1)
+                CurrentTask.Progress = 1;
+            TaskProgress = CurrentTask.Progress;
         }
 
         /// <summary>

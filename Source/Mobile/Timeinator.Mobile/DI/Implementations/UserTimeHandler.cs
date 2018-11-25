@@ -62,8 +62,11 @@ namespace Timeinator.Mobile
         /// <param name="sessionTasks"></param>
         public void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
+            TaskTimer.Dispose();
+            TaskTimer = new Timer();
             TaskTimer.Elapsed += (sender, e) => TimesUp.Invoke();
-            SessionTasks = sessionTasks;
+            SessionTasks = new List<TimeTaskContext>(sessionTasks);
+            CurrentTaskStartTime = CurrentTime;
             StartTask();
         }
 
@@ -76,11 +79,13 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Starts the task
+        /// Starts next task
         /// </summary>
         public void StartTask()
         {
-            CurrentTaskStartTime = CurrentTime;
+            TaskTimer.Stop();
+            if (CurrentTask == null)
+                return;
 
             var CurrentTaskAssignedMilliseconds = CurrentTask.AssignedTime.TotalMilliseconds;
             if (CurrentTaskAssignedMilliseconds > 0)
@@ -88,20 +93,20 @@ namespace Timeinator.Mobile
                 RecentTimePassed = new TimeSpan(0);
                 TaskTimer.Interval = CurrentTaskAssignedMilliseconds;
                 TaskTimer.Start();
+                CurrentTaskStartTime = CurrentTime;
             }
             else
-            {
                 SessionTasks.Remove(CurrentTask);
-            }
-
         }
 
         /// <summary>
-        /// Stops the task and removes if completed
+        /// Stops the task and removes it if completed
         /// </summary>
         public void StopTask()
         {
             TaskTimer.Stop();
+            if (CurrentTask == null)
+                return;
             SaveProgress();
             if (CurrentTask.Progress >= 1)
                 FinishTask();
@@ -112,24 +117,27 @@ namespace Timeinator.Mobile
         /// </summary>
         public void ResumeTask()
         {
+            if (CurrentTask == null)
+                return;
             CurrentTaskStartTime = CurrentTime;
             TaskTimer.Interval = (1 - CurrentTask.Progress) * CurrentTask.AssignedTime.TotalMilliseconds;
             TaskTimer.Start();
         }
 
         /// <summary>
-        /// Activated if task completed ahead of schedule
+        /// Stops the timer and removes current task
         /// </summary>
         public void FinishTask()
         {
+            if (CurrentTask == null)
+                return;
             TaskTimer.Stop();
             CurrentTask.Progress = 1;
-            SaveProgress();
             SessionTasks.Remove(CurrentTask);
         }
 
         /// <summary>
-        /// Method used to save progress of the task
+        /// Method used to save progress of the task when it gets paused
         /// </summary>
         private void SaveProgress()
         {
