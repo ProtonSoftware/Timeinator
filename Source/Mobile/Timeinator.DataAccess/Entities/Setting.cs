@@ -13,7 +13,7 @@ namespace Timeinator.Mobile.DataAccess
         public string Name { get; set; }
 
         /// <summary>
-        /// The value of this setting as object
+        /// The value of this setting as string
         /// </summary>
         public string Value { get; set; }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Input;
 using Timeinator.Core;
 
@@ -114,7 +113,8 @@ namespace Timeinator.Mobile
             // Close this page
             DI.UI.HideRecentModalFromCurrentNavigation();
 
-            //TaskListHelpers.RefreshUITasks?.Invoke();
+            // Refresh UI list so it gets new task
+            TaskListHelpers.RaiseRefreshEvent();
         }
 
         #endregion
