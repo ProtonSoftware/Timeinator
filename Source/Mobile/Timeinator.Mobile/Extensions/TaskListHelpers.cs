@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Timeinator.Mobile
 {
-    public static class TaskListHelpers
+    public class TaskListHelpers
     {
         /// <summary>
         /// Returns only important tasks from provided TimeTasks
@@ -26,8 +26,8 @@ namespace Timeinator.Mobile
         /// </summary>
         public static double GetRealPriority(TimeTaskContext tc) => (int)tc.Priority * (1.0 - tc.Progress);
 
-        //typ funkcji ktora przypiszesz do eventu
-        //public static event EventHandler RefreshUITasks = delegate { };
+        public static event Action RefreshUITasks;
 
+        public static void RaiseRefreshEvent() => RefreshUITasks.Invoke();
     }
 }

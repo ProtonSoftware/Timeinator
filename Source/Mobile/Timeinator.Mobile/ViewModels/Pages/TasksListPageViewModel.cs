@@ -68,7 +68,7 @@ namespace Timeinator.Mobile
             DeleteTaskCommand = new RelayParameterizedCommand((param) => Device.BeginInvokeOnMainThread(async () => await DeleteTaskAsync(param)));
             UserReadyCommand = new RelayCommand(UserReady);
 
-            //TaskListHelpers.RefreshUITasks += ReloadTasks;
+            TaskListHelpers.RefreshUITasks += ReloadTasks;
 
             ReloadTasks();
 
@@ -127,8 +127,13 @@ namespace Timeinator.Mobile
 
             // If he agreed...
             if (userResponse)
+            {
                 // Delete the task
                 DI.TimeTasksService.RemoveTask(DI.TimeTasksMapper.ReverseMap(taskVM));
+
+                // Refresh the list
+                TaskListHelpers.RaiseRefreshEvent();
+            }
         }
 
         /// <summary>
