@@ -10,20 +10,11 @@ namespace Timeinator.Mobile.Tests
     /// </summary>
     public class TestUserTimeHandler
     {
-        #region Setup
-
-        /// <summary>
-        /// Gets us current <see cref="UserTimeHandler"/> implementation as interface for testing
-        /// </summary>
-        private IUserTimeHandler GetCurrentHandler() => new UserTimeHandler();
-
-        #endregion
-
         [Fact]
         public void UserTimeHandler_ShouldStartHandler()
         {
             // Arrange
-            var handler = GetCurrentHandler();
+            var handler = new UserTimeHandler();
 
             var tasksList = new List<TimeTaskContext>
             {
@@ -61,7 +52,7 @@ namespace Timeinator.Mobile.Tests
         public void UserTimeHandler_ShouldStopTask()
         {
             // Arrange
-            var handler = GetCurrentHandler();
+            var handler = new UserTimeHandler();
 
             var tasksList = new List<TimeTaskContext>
             {
@@ -100,7 +91,7 @@ namespace Timeinator.Mobile.Tests
         public void UserTimeHandler_ShouldResumeTask()
         {
             // Arrange
-            var handler = GetCurrentHandler();
+            var handler = new UserTimeHandler();
 
             var tasksList = new List<TimeTaskContext>
             {

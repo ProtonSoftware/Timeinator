@@ -6,24 +6,15 @@ using Xunit;
 namespace Timeinator.Mobile.Tests
 {
     /// <summary>
-    /// The tests for <see cref="TimeTaskManager"/> class
+    /// The tests for <see cref="TimeTasksManager"/> class
     /// </summary>
-    public class TestTimeTaskManager
+    public class TestTimeTasksManager
     {
-        #region Setup
-
-        /// <summary>
-        /// Gets us current <see cref="TimeTasksManager"/> implementation as interface for testing
-        /// </summary>
-        private ITimeTasksManager GetCurrentManager() => new TimeTasksManager();
-
-        #endregion
-
         [Fact]
-        public void TimeTaskManager_TimeAssigning1()
+        public void TimeTaskManager_ShouldAssignTime1()
         {
             // Arrange
-            var manager = GetCurrentManager();
+            var manager = new TimeTasksManager();
 
             var tasksList = new List<TimeTaskContext>
             {
@@ -61,10 +52,10 @@ namespace Timeinator.Mobile.Tests
         }
 
         [Fact]
-        public void TimeTaskManager_TimeAssigning2()
+        public void TimeTaskManager_ShouldAssignTime2()
         {
             // Arrange
-            var manager = GetCurrentManager();
+            var manager = new TimeTasksManager();
 
             var tasksList = new List<TimeTaskContext>
             {
@@ -102,10 +93,10 @@ namespace Timeinator.Mobile.Tests
         }
 
         [Fact]
-        public void TimeTaskManager_TimeAssigning3()
+        public void TimeTaskManager_ShouldAssignTime3()
         {
             // Arrange
-            var manager = GetCurrentManager();
+            var manager = new TimeTasksManager();
 
             var tasksList = new List<TimeTaskContext>
             {

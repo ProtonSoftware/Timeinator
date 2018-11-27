@@ -4,10 +4,12 @@ using Xamarin.Forms;
 namespace Timeinator.Mobile
 {
     /// <summary>
-    /// Manages all the UI stuff in this application
+    /// Test class that implements <see cref="IUIManager"/>
     /// </summary>
     public class TestUIManager : IUIManager
     {
+        #region Base UI Implementation
+
         /// <summary>
         /// Shows specified page on top of the current navigation page
         /// </summary>
@@ -45,30 +47,12 @@ namespace Timeinator.Mobile
         /// </summary>
         public void HideMenu() => (App.Current.MainPage as PageHost).IsPresented = false;
 
-        /// <summary>
-        /// Shows the popup to the user based on provided informations
-        /// </summary>
-        /// <param name="viewmodel">The provided properties of this popup to show</param>
-        /// <returns>If the popup takes user response, true when user accepts and false when not
-        ///          In case popup doesnt take any response from the user, always returns true when popup was shown succesfully</returns>
+        #endregion
+
+        #region Testing Implementations
+
         public async Task<bool> DisplayPopupMessageAsync(PopupMessageViewModel viewmodel)
         {
-            /*
-            // If we dont want to get any user response...
-            if (string.IsNullOrEmpty(viewmodel.AcceptButtonText))
-            {
-                // Just show the message with provided informations
-                await (App.Current.MainPage as PageHost).DisplayAlert(viewmodel.Title, viewmodel.Message, viewmodel.CancelButtonText);
-
-                // Return success afterwards
-                return true;
-            }
-
-            // Otherwise, show response popup
-            var response = await (App.Current.MainPage as PageHost).DisplayAlert(viewmodel.Title, viewmodel.Message, viewmodel.AcceptButtonText, viewmodel.CancelButtonText);
-            */
-
-            // And return user's response
             return await Task.Run(() => false);
         }
 
@@ -76,5 +60,7 @@ namespace Timeinator.Mobile
         {
             throw new System.NotImplementedException();
         }
+
+        #endregion
     }
 }
