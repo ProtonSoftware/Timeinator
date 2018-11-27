@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms.Xaml;
+﻿using Dna;
+using Xamarin.Forms.Xaml;
 
 namespace Timeinator.Mobile
 {
@@ -16,7 +17,7 @@ namespace Timeinator.Mobile
             InitializeComponent();
 
             // Set brand-new view model
-            BindingContext = new TasksListPageViewModel();
+            BindingContext = DI.GetInjectedPageViewModel<TasksListPageViewModel>();
         }
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace Timeinator.Mobile
             InitializeComponent();
 
             // Set specified view model
-            BindingContext = viewModel ?? new TasksListPageViewModel();
+            BindingContext = viewModel ?? DI.GetInjectedPageViewModel<TasksListPageViewModel>();
         }
 
         #endregion

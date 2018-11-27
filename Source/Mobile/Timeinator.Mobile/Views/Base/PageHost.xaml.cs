@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Dna;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -8,6 +8,16 @@ namespace Timeinator.Mobile
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PageHost : MasterDetailPage
     {
+        #region Private Members
+
+        /// <summary>
+        /// Injected UIManager from the DI
+        /// We do it manually because this is view-specific and don't need unit testing
+        /// </summary> 
+        private static readonly IUIManager UIManager = Framework.Service<IUIManager>();
+
+        #endregion
+
         #region Bindable Properties
 
         /// <summary>
@@ -21,7 +31,7 @@ namespace Timeinator.Mobile
 
         // Using a DependencyProperty as the backing store for CurrentPage.  This enables animation, styling, binding, etc...
         public static readonly BindableProperty CurrentPageProperty =
-            BindableProperty.Create(nameof(CurrentPage), typeof(ApplicationPage), typeof(PageHost), ApplicationPage.Login, propertyChanged: CurrentPagePropertyChanged);
+            BindableProperty.Create(nameof(CurrentPage), typeof(ApplicationPage), typeof(PageHost), ApplicationPage.Login, propertyChanged: CurrentPagePropertyChangedAsync);
 
         /// <summary>
         /// The current view model to set on the page
@@ -34,7 +44,7 @@ namespace Timeinator.Mobile
 
         // Using a DependencyProperty as the backing store for CurrentPageViewModel.  This enables animation, styling, binding, etc...
         public static readonly BindableProperty CurrentPageViewModelProperty =
-            BindableProperty.Create(nameof(CurrentPageViewModel), typeof(BaseViewModel), typeof(PageHost), null, propertyChanged: CurrentPageViewModelPropertyChanged);
+            BindableProperty.Create(nameof(CurrentPageViewModel), typeof(BaseViewModel), typeof(PageHost), null, propertyChanged: CurrentPageViewModelPropertyChangedAsync);
 
         #endregion
 
@@ -60,7 +70,7 @@ namespace Timeinator.Mobile
         /// <param name="bindable">This page host as an object</param>
         /// <param name="oldValue">Old value of current page</param>
         /// <param name="newValue">New value of current page</param>
-        private static async void CurrentPagePropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        private static async void CurrentPagePropertyChangedAsync(BindableObject bindable, object oldValue, object newValue)
         {
             // Get new page value
             var newPage = (ApplicationPage)newValue;
@@ -69,7 +79,7 @@ namespace Timeinator.Mobile
             var viewModel = (BasePageViewModel)bindable.GetValue(CurrentPageViewModelProperty);
 
             // Hide the menu
-            DI.UI.HideMenu();
+            UIManager.HideMenu();
 
             // Android is stupidly optimized, wait a bit
             if (Device.RuntimePlatform == Device.Android)
@@ -85,7 +95,7 @@ namespace Timeinator.Mobile
         /// <param name="bindable">This page host as an object</param>
         /// <param name="oldValue">Old value of current view model</param>
         /// <param name="newValue">New value of current view model</param>
-        private static async void CurrentPageViewModelPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        private static async void CurrentPageViewModelPropertyChangedAsync(BindableObject bindable, object oldValue, object newValue)
         {
             // Get new value
             var newViewModel = (BasePageViewModel)newValue;
@@ -94,7 +104,7 @@ namespace Timeinator.Mobile
             var currentPage = (ApplicationPage)bindable.GetValue(CurrentPageProperty);
 
             // Hide the menu
-            DI.UI.HideMenu();
+            UIManager.HideMenu();
 
             // Android is stupidly optimized, wait a bit
             if (Device.RuntimePlatform == Device.Android)

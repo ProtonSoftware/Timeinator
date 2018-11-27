@@ -7,6 +7,8 @@
     {
         #region Private Members
 
+        private readonly IUIManager mUIManager;
+
         /// <summary>
         /// Index of the language used in this application
         /// 0 - Polish
@@ -49,12 +51,12 @@
                 switch (mLanguageIndex)
                 {
                     case 1:
-                        DI.UI.ChangeLanguage("en-US");
+                        mUIManager.ChangeLanguage("en-US");
                         break;
 
                     // 0 or any not found index is default - Polish language
                     default:
-                        DI.UI.ChangeLanguage("pl-PL");
+                        mUIManager.ChangeLanguage("pl-PL");
                         break;
                 }
             }
@@ -69,6 +71,19 @@
         /// If set to true, tasks with highest priority will be the first ones
         /// </summary>
         public bool HighestPrioritySetAsFirst { get; set; } = true;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public SettingsPageViewModel(IUIManager uiManager)
+        {
+            // Get injected DI services
+            mUIManager = uiManager;
+        }
 
         #endregion
     }

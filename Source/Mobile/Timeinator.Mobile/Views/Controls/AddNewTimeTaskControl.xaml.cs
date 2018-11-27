@@ -16,7 +16,7 @@ namespace Timeinator.Mobile
             InitializeComponent();
 
             // Set brand-new view model
-            BindingContext = new AddNewTimeTaskViewModel();
+            BindingContext = DI.GetInjectedPageViewModel<AddNewTimeTaskViewModel>();
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Timeinator.Mobile
             InitializeComponent();
 
             // Set specified view model
-            BindingContext = viewModel ?? new AddNewTimeTaskViewModel();
+            BindingContext = viewModel ?? DI.GetInjectedPageViewModel<AddNewTimeTaskViewModel>();
 
             // View model was provided, so we are editing task instead of adding new one
             ConfirmButton.Text = "Potwierdź zmiany";
