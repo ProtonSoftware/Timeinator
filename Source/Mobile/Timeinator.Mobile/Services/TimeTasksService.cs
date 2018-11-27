@@ -10,6 +10,31 @@ namespace Timeinator.Mobile
     /// </summary>
     public class TimeTasksService : ITimeTasksService
     {
+        #region Private Members
+
+        private readonly TimeTasksMapper mTimeTasksMapper;
+        private readonly ITimeTasksManager mTimeTasksManager;
+        private readonly ITimeTasksRepository mTimeTasksRepository;
+        private readonly IUserTimeHandler mUserTimeHandler;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public TimeTasksService(ITimeTasksManager timeTasksManager, ITimeTasksRepository timeTasksRepository, IUserTimeHandler userTimeHandler, TimeTasksMapper tasksMapper)
+        {
+            // Get injected DI services
+            mTimeTasksManager = timeTasksManager;
+            mTimeTasksRepository = timeTasksRepository;
+            mUserTimeHandler = userTimeHandler;
+            mTimeTasksMapper = tasksMapper;
+        }
+
+        #endregion
+
         #region Interface Implementation
 
         /// <summary>
@@ -43,13 +68,13 @@ namespace Timeinator.Mobile
 
 
             // Get every task in the database
-            var dbTasks = DI.TimeTasksRepository.GetSavedTasksForToday();
+            var dbTasks = mTimeTasksRepository.GetSavedTasksForToday();
 
             // For each of them...
             foreach (var entity in dbTasks)
             {
                 // Map it as a context
-                var context = DI.TimeTasksMapper.Map(entity);
+                var context = mTimeTasksMapper.Map(entity);
 
                 // Add it to the list
                 taskContexts.Add(context);
@@ -67,7 +92,7 @@ namespace Timeinator.Mobile
         public void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime)
         {
             // Add the list to the manager with provided time
-            DI.TimeTasksManager.UploadTasksList(SetTaskOrder(tasks), userTime);
+            mTimeTasksManager.UploadTasksList(SetTaskOrder(tasks), userTime);
         }
 
         /// <summary>
@@ -77,7 +102,7 @@ namespace Timeinator.Mobile
         public void ConveyTasksToTimeHandler(List<TimeTaskContext> tasks)
         {
             // Add the list to the time handler and start it
-            DI.UserTimeHandler.StartTimeHandler(tasks);
+            mUserTimeHandler.StartTimeHandler(tasks);
         }
 
         /// <summary>
@@ -87,10 +112,10 @@ namespace Timeinator.Mobile
         public void SaveTask(TimeTaskContext context)
         {
             // Map it to the entity
-            var entity = DI.TimeTasksMapper.ReverseMap(context);
+            var entity = mTimeTasksMapper.ReverseMap(context);
 
             // Save it into database
-            DI.TimeTasksRepository.SaveTask(entity);
+            mTimeTasksRepository.SaveTask(entity);
         }
 
         /// <summary>
@@ -103,7 +128,7 @@ namespace Timeinator.Mobile
             var list = new List<int> { context.Id };
 
             // Send it to the repository to delete this task
-            DI.TimeTasksRepository.RemoveTasks(list);
+            mTimeTasksRepository.RemoveTasks(list);
         }
 
         /// <summary>
@@ -127,12 +152,12 @@ namespace Timeinator.Mobile
             }
 
             // Send collected ids to the repository to remove associated tasks
-            DI.TimeTasksRepository.RemoveTasks(taskIds);
+            mTimeTasksRepository.RemoveTasks(taskIds);
         }
 
         #endregion
 
-        #region Private
+        #region Private Helpers
 
         /// <summary>
         /// Sets first time OrderId to offer user basic order

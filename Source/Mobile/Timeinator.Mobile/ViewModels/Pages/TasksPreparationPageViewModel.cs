@@ -10,6 +10,14 @@ namespace Timeinator.Mobile
     /// </summary>
     public class TasksPreparationPageViewModel : BasePageViewModel
     {
+        #region Private Members
+
+        private readonly TimeTasksMapper mTimeTasksMapper;
+        private readonly ITimeTasksService mTimeTasksService;
+        private readonly ITimeTasksManager mTimeTasksManager;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -33,10 +41,15 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksPreparationPageViewModel()
+        public TasksPreparationPageViewModel(ITimeTasksService timeTasksService, ITimeTasksManager timeTasksManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);
+
+            // Get injected DI services
+            mTimeTasksService = timeTasksService;
+            mTimeTasksMapper = tasksMapper;
+            mTimeTasksManager = timeTasksManager;
 
             // Load tasks from the manager to this page
             LoadTaskList();
@@ -54,10 +67,10 @@ namespace Timeinator.Mobile
             // Convert our collection to suitable list of contexts
             var taskContexts = new List<TimeTaskContext>();
             foreach (var task in TaskItems)
-                taskContexts.Add(DI.TimeTasksMapper.ReverseMap(task));
+                taskContexts.Add(mTimeTasksMapper.ReverseMap(task));
 
             // Pass it to the time handler to start new session
-            DI.TimeTasksService.ConveyTasksToTimeHandler(taskContexts);
+            mTimeTasksService.ConveyTasksToTimeHandler(taskContexts);
 
             // Change the page afterwards
             DI.Application.GoToPage(ApplicationPage.TasksSession);
@@ -73,11 +86,11 @@ namespace Timeinator.Mobile
         public void LoadTaskList()
         {
             // Calculate selected tasks and get the contexts
-            var contexts = DI.TimeTasksManager.GetCalculatedTasksListForSpecifiedTime();
+            var contexts = mTimeTasksManager.GetCalculatedTasksListForSpecifiedTime();
 
             // Map each one as suitable view model
             foreach (var task in contexts)
-                TaskItems.Add(DI.TimeTasksMapper.MapCal(task));
+                TaskItems.Add(mTimeTasksMapper.MapCal(task));
         }
 
         #endregion

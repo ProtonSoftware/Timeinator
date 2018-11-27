@@ -25,6 +25,13 @@ namespace Timeinator.Mobile
             construction.Services.AddSingleton<IUIManager, UIManager>();
             construction.Services.AddSingleton<IUserTimeHandler, UserTimeHandler>();
 
+            // Inject dependiencies into every page's view model
+            construction.Services.AddTransient<TasksListPageViewModel>();
+            construction.Services.AddTransient<TasksPreparationPageViewModel>();
+            construction.Services.AddTransient<TasksSessionPageViewModel>();
+            construction.Services.AddTransient<SettingsPageViewModel>();
+            construction.Services.AddTransient<AddNewTimeTaskViewModel>();
+
             // Return the construction for chaining
             return construction;
         }

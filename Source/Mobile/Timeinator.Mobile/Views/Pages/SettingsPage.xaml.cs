@@ -16,9 +16,7 @@ namespace Timeinator.Mobile
             InitializeComponent();
 
             // Set brand-new view model
-            BindingContext = new SettingsPageViewModel();
-
-
+            BindingContext = DI.GetInjectedPageViewModel<SettingsPageViewModel>();
         }
 
         /// <summary>
@@ -30,7 +28,7 @@ namespace Timeinator.Mobile
             InitializeComponent();
 
             // Set specified view model
-            BindingContext = viewModel ?? new SettingsPageViewModel();
+            BindingContext = viewModel ?? DI.GetInjectedPageViewModel<SettingsPageViewModel>();
         }
 
         #endregion

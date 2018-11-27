@@ -1,5 +1,4 @@
 ﻿using Dna;
-using Timeinator.Mobile.DataAccess;
 
 namespace Timeinator.Mobile
 {
@@ -16,34 +15,16 @@ namespace Timeinator.Mobile
         public static ApplicationViewModel Application => Framework.Service<ApplicationViewModel>();
 
         /// <summary>
-        /// A shortcut to access the current implementation of <see cref="ITimeTasksRepository"/>
+        /// A shortcut to access the <see cref="SettingsPageViewModel"/>
         /// </summary>
-        public static ITimeTasksRepository TimeTasksRepository => Framework.Service<ITimeTasksRepository>();
+        public static SettingsPageViewModel Settings => Framework.Service<SettingsPageViewModel>();
 
         /// <summary>
-        /// A shortcut to access the current implementation of <see cref="ITimeTasksService"/>
+        /// A shortcut to get appropriate view model for page with injected dependiencies by DI
         /// </summary>
-        public static ITimeTasksService TimeTasksService => Framework.Service<ITimeTasksService>();
+        /// <typeparam name="T">Any view model that inherites <see cref="BasePageViewModel"/></typeparam>
+        public static T GetInjectedPageViewModel<T>() where T : BasePageViewModel => Framework.Service<T>();
 
-        /// <summary>
-        /// A shortcut to access the current implementation of <see cref="ITimeTasksManager"/>
-        /// </summary>
-        public static ITimeTasksManager TimeTasksManager => Framework.Service<ITimeTasksManager>();
-
-        /// <summary>
-        /// A shortcut to access the <see cref="TimeTasksMapper"/>
-        /// </summary>
-        public static TimeTasksMapper TimeTasksMapper => Framework.Service<TimeTasksMapper>();
-
-        /// <summary>
-        /// A shortcut to access the <see cref="UIManager"/>
-        /// </summary>
-        public static IUIManager UI => Framework.Service<IUIManager>();
-
-        /// <summary>
-        /// A shortcut to access the current implementation of <see cref="IUserTimeHandler"/>
-        /// </summary>
-        public static IUserTimeHandler UserTimeHandler => Framework.Service<IUserTimeHandler>();
         #endregion
 
         #region Public Methods

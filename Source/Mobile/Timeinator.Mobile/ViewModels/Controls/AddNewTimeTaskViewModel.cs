@@ -7,8 +7,16 @@ namespace Timeinator.Mobile
     /// <summary>
     /// The view model for new time task popup
     /// </summary>
-    public class AddNewTimeTaskViewModel : BaseViewModel
+    public class AddNewTimeTaskViewModel : BasePageViewModel
     {
+        #region Private Members
+
+        private readonly TimeTasksMapper mTimeTasksMapper;
+        private readonly ITimeTasksService mTimeTasksService;
+        private readonly IUIManager mUIManager;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -67,10 +75,15 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AddNewTimeTaskViewModel()
+        public AddNewTimeTaskViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
             AddTaskCommand = new RelayCommand(AddNewTask);
+
+            // Get injected DI services
+            mTimeTasksService = timeTasksService;
+            mTimeTasksMapper = tasksMapper;
+            mUIManager = uiManager;
         }
 
         #endregion
@@ -86,7 +99,7 @@ namespace Timeinator.Mobile
             if (!ValidateUserInput())
             {
                 // Display message to the user
-                DI.UI.DisplayPopupMessageAsync(new PopupMessageViewModel("Niepoprawne dane", "Podane informacje o tasku nie spełniają wymagań."));
+                mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Niepoprawne dane", "Podane informacje o tasku nie spełniają wymagań."));
 
                 // Stay at this page so user can correct his mistakes
                 return;
@@ -108,10 +121,10 @@ namespace Timeinator.Mobile
             };
 
             // Pass it to the service to handle it
-            DI.TimeTasksService.SaveTask(newTask);
+            mTimeTasksService.SaveTask(newTask);
 
             // Close this page
-            DI.UI.HideRecentModalFromCurrentNavigation();
+            mUIManager.HideRecentModalFromCurrentNavigation();
 
             // Refresh UI list so it gets new task
             TaskListHelpers.RaiseRefreshEvent();

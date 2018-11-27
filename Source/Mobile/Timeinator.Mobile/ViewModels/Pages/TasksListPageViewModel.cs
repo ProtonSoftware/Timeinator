@@ -12,6 +12,14 @@ namespace Timeinator.Mobile
     /// </summary>
     public class TasksListPageViewModel : BasePageViewModel
     {
+        #region Private Members
+
+        private readonly TimeTasksMapper mTimeTasksMapper;
+        private readonly ITimeTasksService mTimeTasksService;
+        private readonly IUIManager mUIManager;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -60,19 +68,24 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksListPageViewModel()
+        public TasksListPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
-            AddNewTaskCommand = new RelayCommand(() => DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
+            AddNewTaskCommand = new RelayCommand(() => mUIManager.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
             EditTaskCommand = new RelayParameterizedCommand(EditTask);
             DeleteTaskCommand = new RelayParameterizedCommand((param) => Device.BeginInvokeOnMainThread(async () => await DeleteTaskAsync(param)));
             UserReadyCommand = new RelayCommand(UserReady);
+
+            // Get injected DI services
+            mTimeTasksService = timeTasksService;
+            mTimeTasksMapper = tasksMapper;
+            mUIManager = uiManager;
 
             TaskListHelpers.RefreshUITasks += ReloadTasks;
 
             ReloadTasks();
 
-            // Get every tag to display in the view
+            // Get every unique tag to display in the view
             GetEveryTaskTags();
         }
 
@@ -90,20 +103,18 @@ namespace Timeinator.Mobile
             var taskVM = param as TimeTaskViewModel;
 
             // Create edit page's view model based on that
-            var pageVM = new AddNewTimeTaskViewModel
-            {
-                TaskId = taskVM.Id,
-                TaskName = taskVM.Name,
-                TaskDescription = taskVM.Description,
-                TaskTag = taskVM.Tag,
-                TaskConstantTime = taskVM.AssignedTime,
-                TaskImmortality = taskVM.IsImmortal,
-                TaskPrioritySliderValue = (double)taskVM.Priority,
-                TaskImportance = taskVM.IsImportant
-            };
+            var pageVM = DI.GetInjectedPageViewModel<AddNewTimeTaskViewModel>();
+            pageVM.TaskId = taskVM.Id;
+            pageVM.TaskName = taskVM.Name;
+            pageVM.TaskDescription = taskVM.Description;
+            pageVM.TaskTag = taskVM.Tag;
+            pageVM.TaskConstantTime = taskVM.AssignedTime;
+            pageVM.TaskImmortality = taskVM.IsImmortal;
+            pageVM.TaskPrioritySliderValue = (double)taskVM.Priority;
+            pageVM.TaskImportance = taskVM.IsImportant;
 
             // Show the page with filled info
-            DI.UI.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl(pageVM));
+            mUIManager.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl(pageVM));
         }
 
         /// <summary>
@@ -123,13 +134,13 @@ namespace Timeinator.Mobile
                     "Tak",
                     "Nie"
                 );
-            var userResponse = await DI.UI.DisplayPopupMessageAsync(popupViewModel);
+            var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
 
             // If he agreed...
             if (userResponse)
             {
                 // Delete the task
-                DI.TimeTasksService.RemoveTask(DI.TimeTasksMapper.ReverseMap(taskVM));
+                mTimeTasksService.RemoveTask(mTimeTasksMapper.ReverseMap(taskVM));
 
                 // Refresh the list
                 TaskListHelpers.RaiseRefreshEvent();
@@ -147,21 +158,21 @@ namespace Timeinator.Mobile
             {
                 // Only add enabled tasks for this session
                 if (task.IsEnabled)
-                    taskContexts.Add(DI.TimeTasksMapper.ReverseMap(task));
+                    taskContexts.Add(mTimeTasksMapper.ReverseMap(task));
             }
 
             // If user has picked nothing...
             if (taskContexts.Count == 0)
             {
                 // Show him an error
-                DI.UI.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Nie wybrałes żadnego taska!"));
+                mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Nie wybrałes żadnego taska!"));
 
                 // Don't do any further actions with no tasks
                 return;
             }
 
             // Pass it to the service so it handles it to the manager, with user free time
-            DI.TimeTasksService.ConveyTasksToManager(taskContexts, UserTime);
+            mTimeTasksService.ConveyTasksToManager(taskContexts, UserTime);
 
             // Change the page
             DI.Application.GoToPage(ApplicationPage.TasksPreparation);
@@ -194,12 +205,12 @@ namespace Timeinator.Mobile
             TaskItems = new ObservableCollection<TimeTaskViewModel>();
 
             // Load saved tasks in database
-            var tasks = DI.TimeTasksService.LoadStoredTasks();
+            var tasks = mTimeTasksService.LoadStoredTasks();
 
             // For each of them...
             foreach (var task in tasks)
                 // Add it to the page's collection as view model
-                TaskItems.Add(DI.TimeTasksMapper.Map(task));
+                TaskItems.Add(mTimeTasksMapper.Map(task));
 
         }
 
