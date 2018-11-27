@@ -6,21 +6,16 @@ using Xunit;
 namespace Timeinator.Mobile.Tests
 {
     /// <summary>
-    /// The tests for <see cref="TasksSessionPageViewModel"/> class
+    /// The tests for <see cref="TasksSessionPageViewModel"/>
     /// </summary>
-    public class TestSessionPage
+    public class TestTaskSessionPageViewModel
     {
         #region Setup
-
-        /// <summary>
-        /// Gets us current <see cref="UserTimeHandler"/> implementation as interface for testing
-        /// </summary>
-        private TasksSessionPageViewModel GetPageViewModel() => new TasksSessionPageViewModel();
 
         #endregion
 
         [Fact]
-        public void SessionPage_Should()
+        public void TaskSessionPageViewModel_Should()
         {
             // Arrange
             //var pageviewmodel = GetPageViewModel();

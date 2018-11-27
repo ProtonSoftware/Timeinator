@@ -18,12 +18,14 @@ namespace Timeinator.Mobile
         {
             // Bind to a single instance of specified models
             construction.Services.AddSingleton<ApplicationViewModel>();
-            construction.Services.AddSingleton<ITimeTasksRepository, TimeTasksRepository>();
-            construction.Services.AddSingleton<ITimeTasksService, TimeTasksService>();
-            construction.Services.AddSingleton<ITimeTasksManager, TimeTasksManager>();
             construction.Services.AddSingleton<TimeTasksMapper>();
             construction.Services.AddSingleton<IUIManager, UIManager>();
-            construction.Services.AddSingleton<IUserTimeHandler, UserTimeHandler>();
+            construction.Services.AddSingleton<ITimeTasksRepository, TimeTasksRepository>();
+
+            // Bind to a scoped instance of specified models
+            construction.Services.AddScoped<ITimeTasksService, TimeTasksService>();
+            construction.Services.AddScoped<ITimeTasksManager, TimeTasksManager>();
+            construction.Services.AddScoped<IUserTimeHandler, UserTimeHandler>();
 
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<TasksListPageViewModel>();

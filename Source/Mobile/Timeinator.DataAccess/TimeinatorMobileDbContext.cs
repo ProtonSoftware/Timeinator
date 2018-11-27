@@ -31,12 +31,17 @@ namespace Timeinator.Mobile.DataAccess
         /// <param name="optionsBuilder">Default options builder</param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Do default things
-            base.OnConfiguring(optionsBuilder);
+            // Do default things that base class requires
+            BaseOnConfiguring(optionsBuilder);
 
             // Configure the builder to save database locally on mobile device
             optionsBuilder.UseSqlite($"Filename={Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "timeinatorDB.sqlite")}");
         }
+
+        /// <summary>
+        /// Base OnConfiguring method kept as a reference for contexts that will inherit current one (used in test context for unit testing)
+        /// </summary>
+        protected void BaseOnConfiguring(DbContextOptionsBuilder optionsBuilder) => base.OnConfiguring(optionsBuilder);
 
         #endregion
     }
