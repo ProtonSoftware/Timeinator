@@ -18,6 +18,7 @@ namespace Timeinator.Mobile
         {
             // Bind to a single instance of specified models
             construction.Services.AddSingleton<ApplicationViewModel>();
+            construction.Services.AddSingleton<SettingsPageViewModel>();
             construction.Services.AddSingleton<TimeTasksMapper>();
             construction.Services.AddSingleton<IUIManager, UIManager>();
             construction.Services.AddSingleton<ITimeTasksRepository, TimeTasksRepository>();
@@ -33,7 +34,6 @@ namespace Timeinator.Mobile
             construction.Services.AddTransient<TasksPreparationPageViewModel>();
             construction.Services.AddTransient<TasksSessionPageViewModel>();
             construction.Services.AddTransient<LoginPageViewModel>();
-            construction.Services.AddTransient<SettingsPageViewModel>();
             construction.Services.AddTransient<AddNewTimeTaskViewModel>();
 
             // Return the construction for chaining
