@@ -165,8 +165,8 @@ namespace Timeinator.Mobile
         /// <returns>Task list with correct OrderId</returns>
         private List<TimeTaskContext> SetTaskOrder(List<TimeTaskContext> rawContexts)
         {
-            List<TimeTaskContext> rawImportant = TaskListHelpers.GetImportant(rawContexts),
-                rawSimple = TaskListHelpers.GetImportant(rawContexts, true);
+            List<TimeTaskContext> rawImportant = rawContexts.GetImportant(),
+                rawSimple = rawContexts.GetImportant(true);
             rawImportant = rawImportant.OrderBy(x => x.Priority).Reverse().ToList();
             rawSimple = rawSimple.OrderBy(x => x.Priority).Reverse().ToList();
             var oid = 0;
