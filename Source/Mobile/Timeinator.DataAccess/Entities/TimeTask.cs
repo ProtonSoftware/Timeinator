@@ -1,4 +1,5 @@
-﻿using Timeinator.Core;
+﻿using System;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile.DataAccess
 {
@@ -42,5 +43,15 @@ namespace Timeinator.Mobile.DataAccess
         /// Set to false if it should be removed after completion
         /// </summary>
         public bool IsImmortal { get; set; }
+
+        /// <summary>
+        /// The date when this task was created and added to the database
+        /// </summary>
+        public DateTime CreationDate { get; set; }
+
+        /// <summary>
+        /// The date that this task will show up in the list
+        /// </summary>
+        public DateTime TargetStartDate { get; set; }
     }
 }

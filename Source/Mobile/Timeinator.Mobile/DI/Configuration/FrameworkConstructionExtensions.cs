@@ -58,9 +58,7 @@ namespace Timeinator.Mobile
             {
                 // Get the db service
                 var db = scope.ServiceProvider.GetRequiredService<TimeinatorMobileDbContext>();
-                // Make sure its created properly
-                db.Database.EnsureCreated();
-                // Do migrations
+                // Make sure its created properly and do migrations
                 db.Database.Migrate();
             }
 
