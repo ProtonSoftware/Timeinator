@@ -8,9 +8,14 @@ namespace Timeinator.Mobile.DataAccess
     public class Setting : BaseObject<int>
     {
         /// <summary>
-        /// Name of the setting property
+        /// The name of this setting property
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The type of this setting such as bool/int/string etc. as string
+        /// </summary>
+        public string Type { get; set; }
 
         /// <summary>
         /// The value of this setting as string

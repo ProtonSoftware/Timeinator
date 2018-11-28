@@ -40,9 +40,9 @@ namespace Timeinator.Mobile.DataAccess
         public List<TimeTask> GetSavedTasksForToday()
         {
             // TODO: Logic when we are going for date tasks, for now - get literaly everything
-            var result = DbSet.Where(x => x.Id > 0);
+            var result = DbSet.ToList();
 
-            return result.ToList();
+            return result;
         }
 
         /// <summary>
