@@ -42,7 +42,7 @@ namespace Timeinator.Mobile
         /// <param name="contexts">The tasks to upload</param>
         public void UploadTasksList(List<TimeTaskContext> contexts, TimeSpan userTime = default(TimeSpan))
         {
-            if (TaskContexts == null)
+            if (userTime != default(TimeSpan))
             {
                 ReadyTime = DateTime.Now;
                 AvailableTime = userTime;
@@ -71,19 +71,19 @@ namespace Timeinator.Mobile
         /// <returns>Ready list</returns>
         private List<TimeTaskContext> CalcAssignedTimes(List<TimeTaskContext> target)
         {
-            var avt = AvailableTime - SumTimes(TaskListHelpers.GetConstant(target));
-            var tmp = TaskListHelpers.GetConstant(target, true);
+            var avt = AvailableTime - SumTimes(target.GetConstant());
+            var tmp = target.GetConstant(true);
             var priors = SumPriorities(tmp);
             for (var i = 0; i < tmp.Count; i++)
-                tmp[i].AssignedTime = TimeSpan.FromSeconds((int)Math.Ceiling(new TimeSpan((long)(avt.Ticks * (TaskListHelpers.GetRealPriority(tmp[i]) / priors))).TotalSeconds));
-            return tmp.Concat(TaskListHelpers.GetConstant(target)).ToList();
+                tmp[i].AssignedTime = TimeSpan.FromSeconds((int)Math.Ceiling(new TimeSpan((long)(avt.Ticks * (tmp[i].GetRealPriority() / priors))).TotalSeconds));
+            return tmp.Concat(target.GetConstant()).ToList();
         }
 
         private double SumPriorities(List<TimeTaskContext> l)
         {
             double s = 0;
             foreach (var c in l)
-                s += TaskListHelpers.GetRealPriority(c);
+                s += c.GetRealPriority();
             return s;
         }
 

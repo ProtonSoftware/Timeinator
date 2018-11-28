@@ -11,7 +11,7 @@ namespace Timeinator.Mobile
     public static class FrameworkConstructionExtensions
     {
         /// <summary>
-        /// Injects the view models needed for Pogodeo mobile application
+        /// Injects the view models needed for Timeinator mobile application
         /// </summary>
         /// <param name="construction">Framework's construction</param>
         public static FrameworkConstruction AddTimeinatorViewModels(this FrameworkConstruction construction)
@@ -39,7 +39,7 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Injects the database for Pogodeo mobile application
+        /// Injects the database for Pogodeo Timeinator application
         /// </summary>
         /// <param name="construction">Framework's construction</param>
         public static FrameworkConstruction AddDbContext(this FrameworkConstruction construction)
