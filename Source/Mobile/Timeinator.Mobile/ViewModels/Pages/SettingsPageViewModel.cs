@@ -1,4 +1,9 @@
-﻿namespace Timeinator.Mobile
+﻿using System;
+using System.ComponentModel;
+using Timeinator.Core;
+using Timeinator.Mobile.DataAccess;
+
+namespace Timeinator.Mobile
 {
     /// <summary>
     /// The view model for application's settings page
@@ -8,6 +13,7 @@
         #region Private Members
 
         private readonly IUIManager mUIManager;
+        private readonly ISettingsRepository mSettingsRepository;
 
         /// <summary>
         /// Index of the language used in this application
@@ -79,10 +85,68 @@
         /// <summary>
         /// Default constructor
         /// </summary>
-        public SettingsPageViewModel(IUIManager uiManager)
+        public SettingsPageViewModel(IUIManager uiManager, ISettingsRepository settingsRepository)
         {
             // Get injected DI services
             mUIManager = uiManager;
+            mSettingsRepository = settingsRepository;
+
+            // Load initial settings configuration from database
+            InitializeSettings();
+
+            // Hook to property changed event, so everytime settings are being changed, we save it to the database
+            PropertyChanged += SettingValueChanged;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Initializes this view model state with values that are currently saved in the database
+        /// </summary>
+        private void InitializeSettings()
+        {
+            // Get every setting from database
+            var settingList = mSettingsRepository.GetAllSettings();
+
+            // For each one...
+            foreach (var setting in settingList)
+            {
+                try
+                {
+                    // Save its value to appropriate property
+                    this[setting.Name] = Convert.ChangeType(setting.Value, setting.Type);
+                }
+                // If something fails, that means the setting in database is broken
+                // Therefore, default value of a property will be used and future changes will repair database failures
+                // So no need to do anything after catching the exception
+                catch { }
+            }
+        }
+
+        /// <summary>
+        /// Fired everytime any of this view model's properties get changed
+        /// </summary>
+        private void SettingValueChanged(object sender, PropertyChangedEventArgs e)
+        {
+            // Get changed property's name
+            var propertyName = e.PropertyName;
+
+            // Get its type and value based on that
+            var propertyValue = this[propertyName];
+            var propertyType = this[propertyName].GetType();
+
+            // Create new property info
+            var propertyInfo = new SettingsPropertyInfo
+            {
+                Name = propertyName,
+                Type = propertyType,
+                Value = propertyValue
+            };
+
+            // Save it to the database
+            mSettingsRepository.SaveSetting(propertyInfo);
         }
 
         #endregion

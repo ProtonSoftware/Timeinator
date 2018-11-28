@@ -21,6 +21,7 @@ namespace Timeinator.Mobile
             construction.Services.AddSingleton<TimeTasksMapper>();
             construction.Services.AddSingleton<IUIManager, UIManager>();
             construction.Services.AddSingleton<ITimeTasksRepository, TimeTasksRepository>();
+            construction.Services.AddSingleton<ISettingsRepository, SettingsRepository>();
 
             // Bind to a scoped instance of specified models
             construction.Services.AddScoped<ITimeTasksService, TimeTasksService>();
@@ -31,6 +32,7 @@ namespace Timeinator.Mobile
             construction.Services.AddTransient<TasksListPageViewModel>();
             construction.Services.AddTransient<TasksPreparationPageViewModel>();
             construction.Services.AddTransient<TasksSessionPageViewModel>();
+            construction.Services.AddTransient<LoginPageViewModel>();
             construction.Services.AddTransient<SettingsPageViewModel>();
             construction.Services.AddTransient<AddNewTimeTaskViewModel>();
 
