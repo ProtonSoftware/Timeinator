@@ -10,6 +10,7 @@ namespace Timeinator.Mobile
     /// </summary>
     public class UserTimeHandler : IUserTimeHandler
     {
+        #region Public properties
         /// <summary>
         /// List of tasks for one session
         /// </summary>
@@ -55,18 +56,34 @@ namespace Timeinator.Mobile
         /// Event called when time for task elapsed
         /// </summary>
         public event Action TimesUp;
+        #endregion
 
+        #region Interface implementation
         /// <summary>
-        /// Loads list of tasks to TimeHandler and starts the first one
+        /// Resets handler and loads list of tasks to TimeHandler and starts the first one
         /// </summary>
-        /// <param name="sessionTasks"></param>
+        /// <param name="sessionTasks">Session tasks sorted by OrderId</param>
         public void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
             TaskTimer.Dispose();
-            TaskTimer = new Timer();
+            TaskTimer = new Timer
+            {
+                AutoReset = false
+            };
             TaskTimer.Elapsed += (sender, e) => TimesUp.Invoke();
             SessionTasks = new List<TimeTaskContext>(sessionTasks);
             CurrentTaskStartTime = CurrentTime;
+            StartTask();
+        }
+
+        /// <summary>
+        /// Updates session on runtime
+        /// </summary>
+        /// <param name="sessionTasks">Session tasks sorted by OrderId</param>
+        public void UpdateSession(List<TimeTaskContext> sessionTasks)
+        {
+            TaskTimer.Stop();
+            SessionTasks = new List<TimeTaskContext>(sessionTasks);
             StartTask();
         }
 
@@ -92,8 +109,8 @@ namespace Timeinator.Mobile
             {
                 RecentTimePassed = new TimeSpan(0);
                 TaskTimer.Interval = CurrentTaskAssignedMilliseconds;
-                TaskTimer.Start();
                 CurrentTaskStartTime = CurrentTime;
+                TaskTimer.Start();
             }
             else
                 SessionTasks.Remove(CurrentTask);
@@ -135,7 +152,9 @@ namespace Timeinator.Mobile
             CurrentTask.Progress = 1;
             SessionTasks.Remove(CurrentTask);
         }
+        #endregion
 
+        #region Private helpers
         /// <summary>
         /// Method used to save progress of the task when it gets paused
         /// </summary>
@@ -144,5 +163,6 @@ namespace Timeinator.Mobile
             CurrentTask.Progress = (RecentTimePassed.TotalMilliseconds + TimePassed.TotalMilliseconds) / CurrentTask.AssignedTime.TotalMilliseconds;
             RecentTimePassed += new TimeSpan(TimePassed.Ticks);
         }
+        #endregion
     }
 }

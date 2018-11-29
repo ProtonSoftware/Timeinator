@@ -10,7 +10,8 @@ namespace Timeinator.Mobile
     {
         List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid);
         List<TimeTaskContext> LoadStoredTasks();
-        void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime);
+        void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime = default(TimeSpan));
+        List<TimeTaskContext> GetCalculatedTasksFromManager();
         void ConveyTasksToTimeHandler(List<TimeTaskContext> tasks);
 
         void SaveTask(TimeTaskContext context);

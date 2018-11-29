@@ -49,7 +49,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Remaining time from handler
         /// </summary>
-        public TimeSpan TimeRemaining => TimeSpan.FromMilliseconds(mUserTimeHandler.TaskTimer.Interval) - mUserTimeHandler.TimePassed;
+        public TimeSpan TimeRemaining => CurrentTask.AssignedTime - mUserTimeHandler.TimePassed;
 
         /// <summary>
         /// Remaining time from handler
@@ -154,6 +154,14 @@ namespace Timeinator.Mobile
                 RecentProgress += new TimeSpan(mUserTimeHandler.TimePassed.Ticks);
                 BreakTaskTime = new TimeSpan(TimeRemaining.Ticks);
                 OnPropertyChanged(nameof(CurrentTask));
+            }
+            else //break is over -> refresh task times
+            {
+                mTimeTasksService.ConveyTasksToManager(mTimeTasksMapper.ListReverseMap(TaskItems.ToList()));
+                TaskItems.Clear();
+                var tmp = mTimeTasksService.GetCalculatedTasksFromManager().OrderBy(x => x.OrderId).ToList();
+                mUserTimeHandler.UpdateSession(tmp);
+                TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tmp));
             }
         }
 

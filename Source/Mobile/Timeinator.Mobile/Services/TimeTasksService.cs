@@ -89,10 +89,19 @@ namespace Timeinator.Mobile
         /// </summary>
         /// <param name="tasks">The tasks that user wants to have in the session</param>
         /// <param name="userTime">The time user has declared to calculate</param>
-        public void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime)
+        public void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime = default(TimeSpan))
         {
             // Add the list to the manager with provided time
             mTimeTasksManager.UploadTasksList(SetTaskOrder(tasks), userTime);
+        }
+
+        /// <summary>
+        /// Retrieves tasks with recalculated times
+        /// </summary>
+        /// <returns>List of ready time tasks</returns>
+        public List<TimeTaskContext> GetCalculatedTasksFromManager()
+        {
+            return mTimeTasksManager.GetCalculatedTasksListForSpecifiedTime();
         }
 
         /// <summary>
@@ -167,8 +176,17 @@ namespace Timeinator.Mobile
         {
             List<TimeTaskContext> rawImportant = rawContexts.GetImportant(),
                 rawSimple = rawContexts.GetImportant(true);
-            rawImportant = rawImportant.OrderBy(x => x.Priority).Reverse().ToList();
-            rawSimple = rawSimple.OrderBy(x => x.Priority).Reverse().ToList();
+            if (DI.Settings.HighestPrioritySetAsFirst)
+            {
+                rawImportant = rawImportant.OrderBy(x => x.Priority).Reverse().ToList();
+                rawSimple = rawSimple.OrderBy(x => x.Priority).Reverse().ToList();
+            }
+            else
+            {
+                rawImportant = rawImportant.OrderBy(x => x.Priority).ToList();
+                rawSimple = rawSimple.OrderBy(x => x.Priority).ToList();
+            }
+
             var oid = 0;
             for (var i = 0; i < rawImportant.Count; i++)
             {

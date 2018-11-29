@@ -14,7 +14,6 @@ namespace Timeinator.Mobile
 
         private readonly TimeTasksMapper mTimeTasksMapper;
         private readonly ITimeTasksService mTimeTasksService;
-        private readonly ITimeTasksManager mTimeTasksManager;
 
         #endregion
 
@@ -49,7 +48,6 @@ namespace Timeinator.Mobile
             // Get injected DI services
             mTimeTasksService = timeTasksService;
             mTimeTasksMapper = tasksMapper;
-            mTimeTasksManager = timeTasksManager;
 
             // Load tasks from the manager to this page
             LoadTaskList();
@@ -86,7 +84,7 @@ namespace Timeinator.Mobile
         public void LoadTaskList()
         {
             // Calculate selected tasks and get the contexts
-            var contexts = mTimeTasksManager.GetCalculatedTasksListForSpecifiedTime();
+            var contexts = mTimeTasksService.GetCalculatedTasksFromManager();
 
             // Map each one as suitable view model
             foreach (var task in contexts)
