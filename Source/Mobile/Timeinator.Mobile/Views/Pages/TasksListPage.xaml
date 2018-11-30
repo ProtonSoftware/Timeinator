@@ -13,6 +13,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="70" />
+            <RowDefinition Height="20" />
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
@@ -31,7 +32,22 @@
             </ScrollView>             
         </Grid>
 
-        <ScrollView Grid.Row="1" Grid.ColumnSpan="2">
+        <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+            <Switch />
+            <Label Text="Zaznacz wszystkie" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+            <Label Text="Sortuj według:" />
+            <Picker SelectedIndex="{Binding SortIndex}">
+                <Picker.Items>
+                    <x:String>Alfabetycznie</x:String>
+                    <x:String>Po dacie</x:String>
+                </Picker.Items>
+            </Picker>
+        </StackLayout>
+
+        <ScrollView Grid.Row="2" Grid.ColumnSpan="2">
 
             <local:ItemsControl x:Name="TaskListContainer" ItemsSource="{Binding TaskItems}">
 
@@ -50,9 +66,9 @@
 
         </ScrollView>
 
-        <TimePicker Grid.Row="2" Grid.Column="0" Time="{Binding UserTime}" />
+        <TimePicker Grid.Row="3" Grid.Column="0" Time="{Binding UserTime}" />
 
-        <Button Grid.Row="2" Grid.Column="1" Text="GOTOW" Command="{Binding UserReadyCommand}" />
+        <Button Grid.Row="3" Grid.Column="1" Text="GOTOW" Command="{Binding UserReadyCommand}" />
 
     </Grid>
 

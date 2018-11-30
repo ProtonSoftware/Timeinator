@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace Timeinator.Mobile
@@ -17,6 +18,11 @@ namespace Timeinator.Mobile
         private readonly TimeTasksMapper mTimeTasksMapper;
         private readonly ITimeTasksService mTimeTasksService;
         private readonly IUIManager mUIManager;
+
+        /// <summary>
+        /// A value of selected index in sorting combobox
+        /// </summary>
+        private int mSortIndex = 10;
 
         #endregion
 
@@ -36,6 +42,28 @@ namespace Timeinator.Mobile
         /// The time that user has declared to calculate tasks for
         /// </summary>
         public TimeSpan UserTime { get; set; }
+
+        /// <summary>
+        /// The index choosen in sorting combobox
+        /// </summary>
+        public int SortIndex
+        {
+            get => mSortIndex;
+            set
+            {
+                mSortIndex = value;
+
+                switch (mSortIndex)
+                {
+                    case 0:
+                        TaskItems = new ObservableCollection<TimeTaskViewModel>(TaskItems.OrderBy(x => x.Name));
+                        break;
+                    case 1:
+                        TaskItems = new ObservableCollection<TimeTaskViewModel>(TaskItems.OrderBy(x => x.CreationDate));
+                        break;
+                }
+            }
+        }
 
         #endregion
 
@@ -84,6 +112,9 @@ namespace Timeinator.Mobile
             TaskListHelpers.RefreshUITasks += ReloadTasks;
 
             ReloadTasks();
+
+            // Initially, we want to sort tasks alphabetically by default
+            SortIndex = 0;
 
             // Get every unique tag to display in the view
             GetEveryTaskTags();
@@ -210,18 +241,16 @@ namespace Timeinator.Mobile
             }
         }
 
+        /// <summary>
+        /// Reloads main task list with whatever sits in database currently
+        /// </summary>
         public void ReloadTasks()
         {
-            TaskItems = new ObservableCollection<TimeTaskViewModel>();
-
             // Load saved tasks in database
             var tasks = mTimeTasksService.LoadStoredTasks();
 
-            // For each of them...
-            foreach (var task in tasks)
-                // Add it to the page's collection as view model
-                TaskItems.Add(mTimeTasksMapper.Map(task));
-
+            // Add them to the list as suitable view models
+            TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tasks));
         }
 
         #endregion

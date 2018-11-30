@@ -15,31 +15,10 @@ namespace Timeinator.Mobile.Tests
         {
             // Arrange
             var handler = new UserTimeHandler();
-
-            var tasksList = new List<TimeTaskContext>
-            {
-                new TimeTaskContext
-                {
-                    Name = "NAME1",
-                    Priority = Priority.Two,
-                    OrderId = 0,
-                    AssignedTime = new TimeSpan(1, 0, 0)
-                },
-                new TimeTaskContext
-                {
-                    Name = "NAME2",
-                    Priority = Priority.Two,
-                    OrderId = 1,
-                    AssignedTime = new TimeSpan(1, 0, 0)
-                },
-                new TimeTaskContext
-                {
-                    Name = "NAME3",
-                    Priority = Priority.Three,
-                    OrderId = 2,
-                    AssignedTime = new TimeSpan(1, 30, 0)
-                },
-            };
+            var tasksList = TestTaskListProvider.GetMockTimeTaskContexts(1);
+            tasksList[0].AssignedTime = new TimeSpan(1, 0, 0);
+            tasksList[1].AssignedTime = new TimeSpan(1, 0, 0);
+            tasksList[2].AssignedTime = new TimeSpan(1, 30, 0);
 
             // Act
             handler.StartTimeHandler(tasksList);
@@ -53,31 +32,10 @@ namespace Timeinator.Mobile.Tests
         {
             // Arrange
             var handler = new UserTimeHandler();
-
-            var tasksList = new List<TimeTaskContext>
-            {
-                new TimeTaskContext
-                {
-                    Name = "NAME1",
-                    Priority = Priority.Two,
-                    OrderId = 0,
-                    AssignedTime = new TimeSpan(1, 0, 0)
-                },
-                new TimeTaskContext
-                {
-                    Name = "NAME2",
-                    Priority = Priority.Two,
-                    OrderId = 1,
-                    AssignedTime = new TimeSpan(1, 0, 0)
-                },
-                new TimeTaskContext
-                {
-                    Name = "NAME3",
-                    Priority = Priority.Three,
-                    OrderId = 2,
-                    AssignedTime = new TimeSpan(1, 30, 0)
-                },
-            };
+            var tasksList = TestTaskListProvider.GetMockTimeTaskContexts(1);
+            tasksList[0].AssignedTime = new TimeSpan(1, 0, 0);
+            tasksList[1].AssignedTime = new TimeSpan(1, 0, 0);
+            tasksList[2].AssignedTime = new TimeSpan(1, 30, 0);
 
             // Act
             handler.StartTimeHandler(tasksList);
@@ -92,31 +50,10 @@ namespace Timeinator.Mobile.Tests
         {
             // Arrange
             var handler = new UserTimeHandler();
-
-            var tasksList = new List<TimeTaskContext>
-            {
-                new TimeTaskContext
-                {
-                    Name = "NAME1",
-                    Priority = Priority.Two,
-                    OrderId = 0,
-                    AssignedTime = new TimeSpan(1, 0, 0)
-                },
-                new TimeTaskContext
-                {
-                    Name = "NAME2",
-                    Priority = Priority.Two,
-                    OrderId = 1,
-                    AssignedTime = new TimeSpan(1, 0, 0)
-                },
-                new TimeTaskContext
-                {
-                    Name = "NAME3",
-                    Priority = Priority.Three,
-                    OrderId = 2,
-                    AssignedTime = new TimeSpan(1, 30, 0)
-                },
-            };
+            var tasksList = TestTaskListProvider.GetMockTimeTaskContexts(1);
+            tasksList[0].AssignedTime = new TimeSpan(1, 0, 0);
+            tasksList[1].AssignedTime = new TimeSpan(1, 0, 0);
+            tasksList[2].AssignedTime = new TimeSpan(1, 30, 0);
 
             // Act
             handler.StartTimeHandler(tasksList);

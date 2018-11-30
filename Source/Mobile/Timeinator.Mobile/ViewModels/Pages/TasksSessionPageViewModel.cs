@@ -91,7 +91,7 @@ namespace Timeinator.Mobile
 
         #endregion
 
-        #region Constructor
+        #region Constructor 
 
         /// <summary>
         /// Default constructor
@@ -158,7 +158,6 @@ namespace Timeinator.Mobile
             else //break is over -> refresh task times
             {
                 mTimeTasksService.ConveyTasksToManager(mTimeTasksMapper.ListReverseMap(TaskItems.ToList()));
-                TaskItems.Clear();
                 var tmp = mTimeTasksService.GetCalculatedTasksFromManager().OrderBy(x => x.OrderId).ToList();
                 mUserTimeHandler.UpdateSession(tmp);
                 TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tmp));
@@ -258,9 +257,8 @@ namespace Timeinator.Mobile
         /// </summary>
         public void LoadTaskList()
         {
-            TaskItems.Clear();
-            foreach (var task in mUserTimeHandler.DownloadSession())
-                TaskItems.Add(mTimeTasksMapper.Map(task));
+            var tasks = mUserTimeHandler.DownloadSession();
+            TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tasks));
         }
     }
 }

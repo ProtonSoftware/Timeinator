@@ -13,7 +13,7 @@ namespace Timeinator.Mobile.Tests
     public class TestTimeTasksService : BaseDatabaseTests
     {
         [Fact]
-        public void TimeTaskService_ShouldAssignTime1()
+        public void TimeTaskService_ShouldSaveAndLoadFromDatabase()
         {
             // Arrange
             var manager = new TimeTasksManager();
@@ -22,25 +22,7 @@ namespace Timeinator.Mobile.Tests
             var mapper = new TimeTasksMapper();
 
             var service = new TimeTasksService(manager, repository, handler, mapper);
-
-            var tasksList = new List<TimeTaskContext>
-            {
-                new TimeTaskContext
-                {
-                    Name = "NAME1",
-                    Priority = Priority.Two,
-                },
-                new TimeTaskContext
-                {
-                    Name = "NAME2",
-                    Priority = Priority.Two,
-                },
-                new TimeTaskContext
-                {
-                    Name = "NAME3",
-                    Priority = Priority.Three,
-                },
-            };
+            var tasksList = TestTaskListProvider.GetMockTimeTaskContexts(1);
 
             // Act
             repository.SaveTask(mapper.ReverseMap(tasksList[0]));
