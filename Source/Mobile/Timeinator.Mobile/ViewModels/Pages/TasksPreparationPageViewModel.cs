@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Timeinator.Mobile
@@ -63,9 +64,7 @@ namespace Timeinator.Mobile
         private void StartTaskSession()
         {
             // Convert our collection to suitable list of contexts
-            var taskContexts = new List<TimeTaskContext>();
-            foreach (var task in TaskItems)
-                taskContexts.Add(mTimeTasksMapper.ReverseMap(task));
+            var taskContexts = mTimeTasksMapper.ListReverseMap(TaskItems.ToList());
 
             // Pass it to the time handler to start new session
             mTimeTasksService.ConveyTasksToTimeHandler(taskContexts);
@@ -86,9 +85,8 @@ namespace Timeinator.Mobile
             // Calculate selected tasks and get the contexts
             var contexts = mTimeTasksService.GetCalculatedTasksFromManager();
 
-            // Map each one as suitable view model
-            foreach (var task in contexts)
-                TaskItems.Add(mTimeTasksMapper.MapCal(task));
+            // Map the list as suitable view models
+            TaskItems = new ObservableCollection<CalculatedTimeTaskViewModel>(mTimeTasksMapper.ListMapCal(contexts));
         }
 
         #endregion

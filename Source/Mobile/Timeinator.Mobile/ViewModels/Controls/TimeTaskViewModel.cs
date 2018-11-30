@@ -63,5 +63,10 @@ namespace Timeinator.Mobile
         /// Set to false if it should be removed after completion
         /// </summary>
         public bool IsImmortal { get; set; }
+
+        /// <summary>
+        /// The date when this task was initially created
+        /// </summary>
+        public DateTime CreationDate { get; set; }
     }
 }
