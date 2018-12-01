@@ -25,7 +25,7 @@ namespace Timeinator.Mobile.Tests
             var firstReturnedList = manager.GetCalculatedTasksListForSpecifiedTime();
 
             // Assert
-            Assert.True(firstReturnedList.Count == 3);
+            Assert.True(firstReturnedList.Count == tasksList.Count);
 
             // 7 hours
             Assert.Equal(firstReturnedList[0].AssignedTime, new TimeSpan(2, 0, 0));
@@ -48,7 +48,7 @@ namespace Timeinator.Mobile.Tests
             var secondReturnedList = manager.GetCalculatedTasksListForSpecifiedTime();
 
             // Assert
-            Assert.True(secondReturnedList.Count == 3);
+            Assert.True(secondReturnedList.Count == tasksList.Count);
 
             // 49 minutes
             Assert.Equal(secondReturnedList[0].AssignedTime, new TimeSpan(0, 14, 0));
@@ -71,7 +71,7 @@ namespace Timeinator.Mobile.Tests
             var thirdReturnedList = manager.GetCalculatedTasksListForSpecifiedTime();
 
             // Assert
-            Assert.True(thirdReturnedList.Count == 2);
+            Assert.True(thirdReturnedList.Count == tasksList.Count);
 
             // 2 hours 30 minutes
             Assert.Equal(thirdReturnedList[0].AssignedTime, new TimeSpan(1, 0, 0));
@@ -93,7 +93,7 @@ namespace Timeinator.Mobile.Tests
             var fourthReturnedList = manager.GetCalculatedTasksListForSpecifiedTime();
 
             // Assert
-            Assert.True(fourthReturnedList.Count == 8);
+            Assert.True(fourthReturnedList.Count == tasksList.Count);
 
             // 2 hours
             Assert.Equal(fourthReturnedList[0].AssignedTime, new TimeSpan(0, 5, 43));
@@ -122,12 +122,89 @@ namespace Timeinator.Mobile.Tests
             var fifthReturnedList = manager.GetCalculatedTasksListForSpecifiedTime();
 
             // Assert
-            Assert.True(fifthReturnedList.Count == 3);
+            Assert.True(fifthReturnedList.Count == tasksList.Count);
 
             // 3 minutes
             Assert.Equal(fifthReturnedList[0].AssignedTime, new TimeSpan(0, 1, 0));
             Assert.Equal(fifthReturnedList[1].AssignedTime, new TimeSpan(0, 1, 0));
             Assert.Equal(fifthReturnedList[2].AssignedTime, new TimeSpan(0, 1, 0));
+        }
+
+        /// <summary>
+        /// Simple test with assigning time with one task constant time
+        /// </summary>
+        [Fact]
+        public void TimeTaskManager_ShouldAssignTime6()
+        {
+            // Arrange
+            var manager = new TimeTasksManager();
+            var tasksList = TestTaskListProvider.GetMockTimeTaskContexts(6);
+
+            // Act
+            manager.UploadTasksList(tasksList, new TimeSpan(1, 0, 0));
+            var firstReturnedList = manager.GetCalculatedTasksListForSpecifiedTime();
+
+            // Assert
+            Assert.True(firstReturnedList.Count == tasksList.Count);
+
+            // 1 hour
+            Assert.Equal(firstReturnedList[0].AssignedTime, new TimeSpan(0, 11, 15));
+            Assert.Equal(firstReturnedList[1].AssignedTime, new TimeSpan(0, 15, 0));
+            Assert.Equal(firstReturnedList[2].AssignedTime, new TimeSpan(0, 33, 45));
+        }
+
+        /// <summary>
+        /// Advanced test with assigning time with mutliple tasks having assigned constant time already
+        /// </summary>
+        [Fact]
+        public void TimeTaskManager_ShouldAssignTime7()
+        {
+            // Arrange
+            var manager = new TimeTasksManager();
+            var tasksList = TestTaskListProvider.GetMockTimeTaskContexts(7);
+
+            // Act
+            manager.UploadTasksList(tasksList, new TimeSpan(2, 30, 0));
+            var firstReturnedList = manager.GetCalculatedTasksListForSpecifiedTime();
+
+            // Assert
+            Assert.True(firstReturnedList.Count == tasksList.Count);
+
+            // 2 hours 30 mins
+            Assert.Equal(firstReturnedList[0].AssignedTime, new TimeSpan(0, 15, 0));
+            Assert.Equal(firstReturnedList[1].AssignedTime, new TimeSpan(0, 30, 0));
+            Assert.Equal(firstReturnedList[2].AssignedTime, new TimeSpan(0, 50, 0));
+            Assert.Equal(firstReturnedList[3].AssignedTime, new TimeSpan(0, 3, 0));
+            Assert.Equal(firstReturnedList[4].AssignedTime, new TimeSpan(0, 40, 0));
+            Assert.Equal(firstReturnedList[5].AssignedTime, new TimeSpan(0, 12, 0));
+        }
+
+        /// <summary>
+        /// Test with constant times that utilizes minimum time assignment
+        /// Provided time is not enough to properly distribute, so every task should have absolute minimum
+        /// (Those with constants should remain unchanged though)
+        /// </summary>
+        [Fact]
+        public void TimeTaskManager_ShouldAssignTime8()
+        {
+            // Arrange
+            var manager = new TimeTasksManager();
+            var tasksList = TestTaskListProvider.GetMockTimeTaskContexts(7);
+
+            // Act
+            manager.UploadTasksList(tasksList, new TimeSpan(1, 0, 0));
+            var firstReturnedList = manager.GetCalculatedTasksListForSpecifiedTime();
+
+            // Assert
+            Assert.True(firstReturnedList.Count == tasksList.Count);
+
+            // 1 hour
+            Assert.Equal(firstReturnedList[0].AssignedTime, new TimeSpan(0, 1, 0));
+            Assert.Equal(firstReturnedList[1].AssignedTime, new TimeSpan(0, 30, 0));
+            Assert.Equal(firstReturnedList[2].AssignedTime, new TimeSpan(0, 50, 0));
+            Assert.Equal(firstReturnedList[3].AssignedTime, new TimeSpan(0, 1, 0));
+            Assert.Equal(firstReturnedList[4].AssignedTime, new TimeSpan(0, 40, 0));
+            Assert.Equal(firstReturnedList[5].AssignedTime, new TimeSpan(0, 1, 0));
         }
     }
 }
