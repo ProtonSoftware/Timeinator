@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
@@ -79,7 +80,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Time that task progressed before pausing
         /// </summary>
-        public TimeSpan RecentProgress { get; set; } = new TimeSpan(0);
+        public double RecentProgress { get; set; } = 0;
 
         #endregion
 
@@ -151,14 +152,14 @@ namespace Timeinator.Mobile
             if (Paused)
             {
                 BreakStart = DateTime.Now;
-                RecentProgress += new TimeSpan(mUserTimeHandler.TimePassed.Ticks);
+                RecentProgress += mUserTimeHandler.TimePassed.Ticks / CurrentTask.AssignedTime.Ticks;
                 BreakTaskTime = new TimeSpan(TimeRemaining.Ticks);
                 OnPropertyChanged(nameof(CurrentTask));
             }
             else //break is over -> refresh task times
             {
                 mTimeTasksService.ConveyTasksToManager(mTimeTasksMapper.ListReverseMap(TaskItems.ToList()));
-                var tmp = mTimeTasksService.GetCalculatedTasksFromManager().OrderBy(x => x.OrderId).ToList();
+                var tmp = mTimeTasksService.GetCalculatedTasksFromManager();
                 mUserTimeHandler.UpdateSession(tmp);
                 TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tmp));
             }
@@ -229,7 +230,7 @@ namespace Timeinator.Mobile
             {
                 mTimeTasksService.RemoveFinishedTasks(new List<TimeTaskContext> { mTimeTasksMapper.ReverseMap(CurrentTask) });
                 TaskItems.Remove(CurrentTask);
-                RecentProgress = new TimeSpan(0);
+                RecentProgress = 0;
                 mUserTimeHandler.StartTask();
             }
             if (TaskItems.Count <= 0)
@@ -246,7 +247,7 @@ namespace Timeinator.Mobile
         {
             if (CurrentTask == null)
                 return;
-            CurrentTask.Progress = (RecentProgress.TotalMilliseconds + mUserTimeHandler.TimePassed.TotalMilliseconds) / CurrentTask.AssignedTime.TotalMilliseconds;
+            CurrentTask.Progress = RecentProgress + (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
             if (CurrentTask.Progress > 1)
                 CurrentTask.Progress = 1;
             TaskProgress = CurrentTask.Progress;
