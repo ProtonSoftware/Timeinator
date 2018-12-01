@@ -89,10 +89,21 @@ namespace Timeinator.Mobile
         /// </summary>
         /// <param name="tasks">The tasks that user wants to have in the session</param>
         /// <param name="userTime">The time user has declared to calculate</param>
-        public void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime = default(TimeSpan))
+        public void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime)
         {
             // Add the list to the manager with provided time
             mTimeTasksManager.UploadTasksList(SetTaskOrder(tasks), userTime);
+        }
+
+        /// <summary>
+        /// Sets up the manager and transfers specified tasks
+        /// </summary>
+        /// <param name="tasks">The tasks that user wants to have in the session</param>
+        /// <param name="userTime">The time user has declared to calculate</param>
+        public void ConveyTasksToManager(List<TimeTaskContext> tasks)
+        {
+            // Add the list to the manager with provided time
+            mTimeTasksManager.UploadTasksList(tasks, default(TimeSpan));
         }
 
         /// <summary>

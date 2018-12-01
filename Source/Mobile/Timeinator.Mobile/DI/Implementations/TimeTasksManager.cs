@@ -54,7 +54,7 @@ namespace Timeinator.Mobile
         /// Calculates assigned time for every task in the manager based on provided user free time
         /// </summary>
         /// <param name="userTime">User's free time</param>
-        /// <returns>The list of tasks with calculated time</returns>
+        /// <returns>Ordered list of tasks with calculated time</returns>
         public List<TimeTaskContext> GetCalculatedTasksListForSpecifiedTime()
         {
             TaskContexts = CalcAssignedTimes(TaskContexts).ToList();

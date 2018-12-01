@@ -50,7 +50,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Stores time that passed before pausing task
         /// </summary>
-        public TimeSpan RecentTimePassed { get; set; }
+        public double RecentTimePassed { get; set; }
 
         /// <summary>
         /// Event called when time for task elapsed
@@ -107,7 +107,7 @@ namespace Timeinator.Mobile
             var CurrentTaskAssignedMilliseconds = CurrentTask.AssignedTime.TotalMilliseconds;
             if (CurrentTaskAssignedMilliseconds > 0)
             {
-                RecentTimePassed = new TimeSpan(0);
+                RecentTimePassed = 0;
                 TaskTimer.Interval = CurrentTaskAssignedMilliseconds;
                 CurrentTaskStartTime = CurrentTime;
                 TaskTimer.Start();
@@ -160,8 +160,8 @@ namespace Timeinator.Mobile
         /// </summary>
         private void SaveProgress()
         {
-            CurrentTask.Progress = (RecentTimePassed.TotalMilliseconds + TimePassed.TotalMilliseconds) / CurrentTask.AssignedTime.TotalMilliseconds;
-            RecentTimePassed += new TimeSpan(TimePassed.Ticks);
+            CurrentTask.Progress = RecentTimePassed + (TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
+            RecentTimePassed += TimePassed.Ticks / CurrentTask.AssignedTime.Ticks;
         }
         #endregion
     }
