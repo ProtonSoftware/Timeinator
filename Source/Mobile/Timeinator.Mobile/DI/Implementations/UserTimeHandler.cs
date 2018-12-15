@@ -48,9 +48,9 @@ namespace Timeinator.Mobile
         public TimeSpan TimePassed => CurrentTime.Subtract(CurrentTaskStartTime);
 
         /// <summary>
-        /// Stores time that passed before pausing task
+        /// Stores progress that passed before pausing task
         /// </summary>
-        public double RecentTimePassed { get; set; }
+        public double RecentProgress { get; set; }
 
         /// <summary>
         /// Event called when time for task elapsed
@@ -77,13 +77,24 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Updates session on runtime
+        /// Recalculate assigned times on current session
         /// </summary>
-        /// <param name="sessionTasks">Session tasks sorted by OrderId</param>
-        public void UpdateSession(List<TimeTaskContext> sessionTasks)
+        public void RefreshTasksState(ITimeTasksService mTimeTasksService)
         {
+            mTimeTasksService.ConveyTasksToManager(SessionTasks);
+            SessionTasks = mTimeTasksService.GetCalculatedTasksFromManager();
+        }
+
+        /// <summary>
+        /// Pushes tasks forward on stack if CurrentTask is finished
+        /// </summary>
+        public void RemoveAndContinueTasks(ITimeTasksService mTimeTasksService)
+        {
+            if (CurrentTask == null || CurrentTask.Progress < 1)
+                return;
             TaskTimer.Stop();
-            SessionTasks = new List<TimeTaskContext>(sessionTasks);
+            mTimeTasksService.RemoveFinishedTasks(new List<TimeTaskContext> { CurrentTask });
+            SessionTasks.Remove(CurrentTask);
             StartTask();
         }
 
@@ -103,11 +114,10 @@ namespace Timeinator.Mobile
             TaskTimer.Stop();
             if (CurrentTask == null)
                 return;
-
             var CurrentTaskAssignedMilliseconds = CurrentTask.AssignedTime.TotalMilliseconds;
             if (CurrentTaskAssignedMilliseconds > 0)
             {
-                RecentTimePassed = 0;
+                RecentProgress = 0;
                 TaskTimer.Interval = CurrentTaskAssignedMilliseconds;
                 CurrentTaskStartTime = CurrentTime;
                 TaskTimer.Start();
@@ -117,7 +127,7 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Stops the task and removes it if completed
+        /// Stops the task and saves its progress
         /// </summary>
         public void StopTask()
         {
@@ -125,8 +135,6 @@ namespace Timeinator.Mobile
             if (CurrentTask == null)
                 return;
             SaveProgress();
-            if (CurrentTask.Progress >= 1)
-                FinishTask();
         }
 
         /// <summary>
@@ -138,11 +146,12 @@ namespace Timeinator.Mobile
                 return;
             CurrentTaskStartTime = CurrentTime;
             TaskTimer.Interval = (1 - CurrentTask.Progress) * CurrentTask.AssignedTime.TotalMilliseconds;
+            SaveProgress();
             TaskTimer.Start();
         }
 
         /// <summary>
-        /// Stops the timer and removes current task
+        /// Stops the timer and sets Current Task progress as finished
         /// </summary>
         public void FinishTask()
         {
@@ -150,7 +159,6 @@ namespace Timeinator.Mobile
                 return;
             TaskTimer.Stop();
             CurrentTask.Progress = 1;
-            SessionTasks.Remove(CurrentTask);
         }
         #endregion
 
@@ -160,8 +168,8 @@ namespace Timeinator.Mobile
         /// </summary>
         private void SaveProgress()
         {
-            CurrentTask.Progress = RecentTimePassed + (TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
-            RecentTimePassed += TimePassed.Ticks / CurrentTask.AssignedTime.Ticks;
+            CurrentTask.Progress = RecentProgress + (TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
+            RecentProgress += TimePassed.Ticks / CurrentTask.AssignedTime.Ticks;
         }
         #endregion
     }
