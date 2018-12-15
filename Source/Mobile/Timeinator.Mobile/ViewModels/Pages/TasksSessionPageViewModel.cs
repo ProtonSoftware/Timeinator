@@ -77,11 +77,6 @@ namespace Timeinator.Mobile
         /// </summary>
         public TimeSpan BreakDuration { get; set; }
 
-        /// <summary>
-        /// Time that task progressed before pausing
-        /// </summary>
-        public double RecentProgress { get; set; } = 0;
-
         #endregion
 
         #region Commands
@@ -152,16 +147,13 @@ namespace Timeinator.Mobile
             if (Paused)
             {
                 BreakStart = DateTime.Now;
-                RecentProgress += mUserTimeHandler.TimePassed.Ticks / CurrentTask.AssignedTime.Ticks;
                 BreakTaskTime = new TimeSpan(TimeRemaining.Ticks);
                 OnPropertyChanged(nameof(CurrentTask));
             }
-            else //break is over -> refresh task times
+            else
             {
-                mTimeTasksService.ConveyTasksToManager(mTimeTasksMapper.ListReverseMap(TaskItems.ToList()));
-                var tmp = mTimeTasksService.GetCalculatedTasksFromManager();
-                mUserTimeHandler.UpdateSession(tmp);
-                TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tmp));
+                mUserTimeHandler.RefreshTasksState(mTimeTasksService);
+                LoadTaskList();
             }
         }
 
@@ -178,12 +170,12 @@ namespace Timeinator.Mobile
                     "Nie"
                 );
             var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
-
             if (userResponse)
             {
                 mUserTimeHandler.FinishTask();
-                CurrentTask.Progress = 1;
                 ContinueUserTasks();
+                mUserTimeHandler.RefreshTasksState(mTimeTasksService);
+                LoadTaskList();
             }
         }
 
@@ -196,7 +188,8 @@ namespace Timeinator.Mobile
                 BreakDuration = DateTime.Now - BreakStart;
             UpdateProgress();
             OnPropertyChanged(nameof(Paused));
-            OnPropertyChanged(nameof(TimeRemaining));
+            if (CurrentTask != null)
+                OnPropertyChanged(nameof(TimeRemaining));
         }
 
         /// <summary>
@@ -212,10 +205,8 @@ namespace Timeinator.Mobile
                     "Nie, chcę przerwę"
                 );
             var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
-
             mUserTimeHandler.FinishTask();
-            UpdateProgress();
-            CurrentTask.Progress = 1;
+            TaskProgress = 1;
             ContinueUserTasks();
             if (!userResponse)
                 StopCommand.Execute(null);
@@ -226,13 +217,8 @@ namespace Timeinator.Mobile
         /// </summary>
         private void ContinueUserTasks()
         {
-            if (CurrentTask != null && CurrentTask.Progress >= 1)
-            {
-                mTimeTasksService.RemoveFinishedTasks(new List<TimeTaskContext> { mTimeTasksMapper.ReverseMap(CurrentTask) });
-                TaskItems.Remove(CurrentTask);
-                RecentProgress = 0;
-                mUserTimeHandler.StartTask();
-            }
+            mUserTimeHandler.RemoveAndContinueTasks(mTimeTasksService);
+            LoadTaskList();
             if (TaskItems.Count <= 0)
             {
                 RealTimer.Stop();
@@ -247,7 +233,7 @@ namespace Timeinator.Mobile
         {
             if (CurrentTask == null)
                 return;
-            CurrentTask.Progress = RecentProgress + (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
+            CurrentTask.Progress = mUserTimeHandler.RecentProgress + (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
             if (CurrentTask.Progress > 1)
                 CurrentTask.Progress = 1;
             TaskProgress = CurrentTask.Progress;

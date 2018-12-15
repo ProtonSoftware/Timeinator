@@ -9,10 +9,12 @@ namespace Timeinator.Mobile
     {
         Timer TaskTimer { get; set; }
         TimeSpan TimePassed { get; }
+        double RecentProgress { get; set; }
 
         void StartTimeHandler(List<TimeTaskContext> sessionTasks);
         List<TimeTaskContext> DownloadSession();
-        void UpdateSession(List<TimeTaskContext> sessionTasks);
+        void RefreshTasksState(ITimeTasksService mTimeTasksService);
+        void RemoveAndContinueTasks(ITimeTasksService mTimeTasksService);
         void StartTask();
         void StopTask();
         void ResumeTask();
