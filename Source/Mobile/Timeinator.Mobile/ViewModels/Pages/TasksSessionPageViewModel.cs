@@ -146,6 +146,8 @@ namespace Timeinator.Mobile
         {
             if (Paused)
             {
+                if (CurrentTask == null)
+                    return;
                 BreakStart = DateTime.Now;
                 BreakTaskTime = new TimeSpan(TimeRemaining.Ticks);
                 OnPropertyChanged(nameof(CurrentTask));
@@ -233,10 +235,9 @@ namespace Timeinator.Mobile
         {
             if (CurrentTask == null)
                 return;
-            CurrentTask.Progress = mUserTimeHandler.RecentProgress + (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
-            if (CurrentTask.Progress > 1)
-                CurrentTask.Progress = 1;
-            TaskProgress = CurrentTask.Progress;
+            TaskProgress = mUserTimeHandler.RecentProgress + (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
+            if (TaskProgress > 1)
+                TaskProgress = 1;
         }
 
         /// <summary>
