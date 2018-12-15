@@ -146,7 +146,6 @@ namespace Timeinator.Mobile
                 return;
             CurrentTaskStartTime = CurrentTime;
             TaskTimer.Interval = (1 - CurrentTask.Progress) * CurrentTask.AssignedTime.TotalMilliseconds;
-            SaveProgress();
             TaskTimer.Start();
         }
 
@@ -169,7 +168,7 @@ namespace Timeinator.Mobile
         private void SaveProgress()
         {
             CurrentTask.Progress = RecentProgress + (TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
-            RecentProgress += TimePassed.Ticks / CurrentTask.AssignedTime.Ticks;
+            RecentProgress += TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
         }
         #endregion
     }
