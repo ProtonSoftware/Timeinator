@@ -15,6 +15,7 @@ namespace Timeinator.Mobile
         List<TimeTaskContext> DownloadSession();
         void RefreshTasksState(ITimeTasksService mTimeTasksService);
         void RemoveAndContinueTasks(ITimeTasksService mTimeTasksService);
+        TimeSpan TimeLossValue();
         void StartTask();
         void StopTask();
         void ResumeTask();

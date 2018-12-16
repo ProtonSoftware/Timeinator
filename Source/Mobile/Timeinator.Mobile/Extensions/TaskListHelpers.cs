@@ -26,6 +26,28 @@ namespace Timeinator.Mobile
         /// </summary>
         public static double GetRealPriority(this TimeTaskContext tc) => (int)tc.Priority * (1.0 - tc.Progress);
 
+        /// <summary>
+        /// Sums priorities of every element
+        /// </summary>
+        public static double SumPriorities(this List<TimeTaskContext> l)
+        {
+            double s = 0;
+            foreach (var c in l)
+                s += c.GetRealPriority();
+            return s;
+        }
+
+        /// <summary>
+        /// Sums Assigned Times of every element
+        /// </summary>
+        public static TimeSpan SumTimes(this List<TimeTaskContext> l)
+        {
+            var res = new TimeSpan(0);
+            foreach (var c in l)
+                res += c.AssignedTime;
+            return res;
+        }
+
         public static event Action RefreshUITasks;
 
         public static void RaiseRefreshEvent() => RefreshUITasks.Invoke();

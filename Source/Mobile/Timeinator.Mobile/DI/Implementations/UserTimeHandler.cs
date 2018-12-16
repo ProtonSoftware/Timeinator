@@ -107,6 +107,16 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
+        /// Gets CurrentTask time loss every second of Break
+        /// </summary>
+        public TimeSpan TimeLossValue()
+        {
+            if (CurrentTask == null)
+                return default(TimeSpan);
+            return TimeSpan.FromSeconds((int)CurrentTask.Priority / SessionTasks.SumPriorities());
+        }
+
+        /// <summary>
         /// Starts next task
         /// </summary>
         public void StartTask()
@@ -171,8 +181,9 @@ namespace Timeinator.Mobile
         /// </summary>
         private void SaveProgress()
         {
-            CurrentTask.Progress = TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
-            RecentProgress += CurrentTask.Progress;
+            var step = TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
+            CurrentTask.Progress = RecentProgress + (1.0 - RecentProgress) * step;
+            RecentProgress += step;
         }
         #endregion
     }
