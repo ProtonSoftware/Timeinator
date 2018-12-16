@@ -22,6 +22,16 @@ namespace Timeinator.Mobile
         private readonly IUserTimeHandler mUserTimeHandler;
         private readonly IUIManager mUIManager;
 
+        /// <summary>
+        /// Stores time loss of CurrentTask
+        /// </summary>
+        private TimeSpan mCurrentTimeLoss;
+
+        /// <summary>
+        /// Stores remaining time of Current Task when paused
+        /// </summary>
+        private TimeSpan mRemainingTaskTime;
+
         #endregion
 
         #region Public Properties
@@ -59,7 +69,12 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Remaining time from handler
+        /// Time lost since break start
+        /// </summary>
+        public TimeSpan CurrentTimeLoss => TimeSpan.FromSeconds(BreakDuration.TotalSeconds * mCurrentTimeLoss.TotalSeconds);
+
+        /// <summary>
+        /// Remaining task time displayed on break
         /// </summary>
         public TimeSpan BreakTaskTime { get; set; }
 
@@ -148,7 +163,7 @@ namespace Timeinator.Mobile
                 if (CurrentTask == null)
                     return;
                 BreakStart = DateTime.Now;
-                BreakTaskTime = new TimeSpan(TimeRemaining.Ticks);
+                mRemainingTaskTime = new TimeSpan(TimeRemaining.Ticks);
                 OnPropertyChanged(nameof(CurrentTask));
             }
             OnPropertyChanged(nameof(TaskItems));
@@ -160,11 +175,16 @@ namespace Timeinator.Mobile
         private void RealTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (Paused)
+            {
                 BreakDuration = DateTime.Now - BreakStart;
-            UpdateProgressBar();
-            OnPropertyChanged(nameof(Paused));
-            if (CurrentTask != null)
+                BreakTaskTime = mRemainingTaskTime - CurrentTimeLoss;
+            }
+            else
+            {
+                UpdateProgressBar();
                 OnPropertyChanged(nameof(TimeRemaining));
+            }
+            OnPropertyChanged(nameof(Paused));
         }
 
         /// <summary>
@@ -224,12 +244,13 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Loads saved tasks from the <see cref="UserTimeHandler"/>
+        /// Loads tasks from the <see cref="UserTimeHandler"/>
         /// </summary>
         public void LoadTaskList()
         {
             var tasks = mUserTimeHandler.DownloadSession();
             TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tasks));
+            mCurrentTimeLoss = mUserTimeHandler.TimeLossValue();
         }
 
         /// <summary>

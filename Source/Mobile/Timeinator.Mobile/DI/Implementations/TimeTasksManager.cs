@@ -71,28 +71,12 @@ namespace Timeinator.Mobile
         /// <returns>Ready list</returns>
         private List<TimeTaskContext> CalcAssignedTimes(List<TimeTaskContext> target)
         {
-            var avt = AvailableTime - SumTimes(target.GetConstant());
+            var avt = AvailableTime - target.GetConstant().SumTimes();
             var tmp = target.GetConstant(true);
-            var priors = SumPriorities(tmp);
+            var priors = tmp.SumPriorities();
             for (var i = 0; i < tmp.Count; i++)
                 tmp[i].AssignedTime = TimeSpan.FromSeconds((int)Math.Ceiling(new TimeSpan((long)(avt.Ticks * (tmp[i].GetRealPriority() / priors))).TotalSeconds));
             return tmp.Concat(target.GetConstant()).ToList();
-        }
-
-        private double SumPriorities(List<TimeTaskContext> l)
-        {
-            double s = 0;
-            foreach (var c in l)
-                s += c.GetRealPriority();
-            return s;
-        }
-
-        private TimeSpan SumTimes(List<TimeTaskContext> l)
-        {
-            var res = new TimeSpan(0);
-            foreach (var c in l)
-                res += c.AssignedTime;
-            return res;
         }
 
         #endregion
