@@ -77,6 +77,14 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
+        /// Function serving correct Session Tasks
+        /// </summary>
+        public List<TimeTaskContext> DownloadSession()
+        {
+            return SessionTasks;
+        }
+
+        /// <summary>
         /// Recalculate assigned times on current session
         /// </summary>
         public void RefreshTasksState(ITimeTasksService mTimeTasksService)
@@ -96,14 +104,6 @@ namespace Timeinator.Mobile
             mTimeTasksService.RemoveFinishedTasks(new List<TimeTaskContext> { CurrentTask });
             SessionTasks.Remove(CurrentTask);
             StartTask();
-        }
-
-        /// <summary>
-        /// Function serving correct Session Tasks
-        /// </summary>
-        public List<TimeTaskContext> DownloadSession()
-        {
-            return SessionTasks;
         }
 
         /// <summary>
@@ -145,8 +145,12 @@ namespace Timeinator.Mobile
             if (CurrentTask == null)
                 return;
             CurrentTaskStartTime = CurrentTime;
-            TaskTimer.Interval = (1 - CurrentTask.Progress) * CurrentTask.AssignedTime.TotalMilliseconds;
-            TaskTimer.Start();
+            var assignedms = CurrentTask.AssignedTime.TotalMilliseconds;
+            if (assignedms > 0)
+            {
+                TaskTimer.Interval = CurrentTask.AssignedTime.TotalMilliseconds;
+                TaskTimer.Start();
+            }
         }
 
         /// <summary>
@@ -167,8 +171,8 @@ namespace Timeinator.Mobile
         /// </summary>
         private void SaveProgress()
         {
-            CurrentTask.Progress = RecentProgress + (TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
-            RecentProgress += TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
+            CurrentTask.Progress = TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
+            RecentProgress += CurrentTask.Progress;
         }
         #endregion
     }

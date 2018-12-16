@@ -50,7 +50,13 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Remaining time from handler
         /// </summary>
-        public TimeSpan TimeRemaining => CurrentTask.AssignedTime - mUserTimeHandler.TimePassed;
+        public TimeSpan TimeRemaining {
+            get
+            {
+                try { return CurrentTask.AssignedTime - mUserTimeHandler.TimePassed; }
+                catch { return default(TimeSpan); }
+            }
+        }
 
         /// <summary>
         /// Remaining time from handler
@@ -128,22 +134,15 @@ namespace Timeinator.Mobile
 
         private void Resume()
         {
+            mUserTimeHandler.RefreshTasksState(mTimeTasksService);
             mUserTimeHandler.ResumeTask();
+            LoadTaskList();
             ClickStandardAction();
         }
 
         private void ClickStandardAction()
         {
-            UpdateProgress();
-            SetupBreakStopwatch();
-            OnPropertyChanged(nameof(TaskItems));
-        }
-
-        /// <summary>
-        /// Switches break params controlling stopwatch and progress buffer
-        /// </summary>
-        private void SetupBreakStopwatch()
-        {
+            UpdateProgressBar();
             if (Paused)
             {
                 if (CurrentTask == null)
@@ -152,11 +151,20 @@ namespace Timeinator.Mobile
                 BreakTaskTime = new TimeSpan(TimeRemaining.Ticks);
                 OnPropertyChanged(nameof(CurrentTask));
             }
-            else
-            {
-                mUserTimeHandler.RefreshTasksState(mTimeTasksService);
-                LoadTaskList();
-            }
+            OnPropertyChanged(nameof(TaskItems));
+        }
+
+        /// <summary>
+        /// Refreshes properties for UI
+        /// </summary>
+        private void RealTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (Paused)
+                BreakDuration = DateTime.Now - BreakStart;
+            UpdateProgressBar();
+            OnPropertyChanged(nameof(Paused));
+            if (CurrentTask != null)
+                OnPropertyChanged(nameof(TimeRemaining));
         }
 
         /// <summary>
@@ -182,19 +190,6 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Refreshes properties for UI
-        /// </summary>
-        private void RealTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            if (Paused)
-                BreakDuration = DateTime.Now - BreakStart;
-            UpdateProgress();
-            OnPropertyChanged(nameof(Paused));
-            if (CurrentTask != null)
-                OnPropertyChanged(nameof(TimeRemaining));
-        }
-
-        /// <summary>
         /// Fired when the current task has run out of time 
         /// </summary>
         private async Task UserTimeHandler_TimesUpAsync()
@@ -210,7 +205,7 @@ namespace Timeinator.Mobile
             mUserTimeHandler.FinishTask();
             TaskProgress = 1;
             ContinueUserTasks();
-            if (!userResponse)
+            if (!userResponse && CurrentTask!=null)
                 StopCommand.Execute(null);
         }
         
@@ -229,24 +224,25 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Updates progress on current task
-        /// </summary>
-        private void UpdateProgress()
-        {
-            if (CurrentTask == null)
-                return;
-            TaskProgress = mUserTimeHandler.RecentProgress + (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
-            if (TaskProgress > 1)
-                TaskProgress = 1;
-        }
-
-        /// <summary>
         /// Loads saved tasks from the <see cref="UserTimeHandler"/>
         /// </summary>
         public void LoadTaskList()
         {
             var tasks = mUserTimeHandler.DownloadSession();
             TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tasks));
+        }
+
+        /// <summary>
+        /// Updates progress on current task
+        /// </summary>
+        private void UpdateProgressBar()
+        {
+            if (CurrentTask == null)
+                return;
+            var recent = mUserTimeHandler.RecentProgress;
+            TaskProgress = recent + (1.0 - recent) * (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
+            if (TaskProgress > 1)
+                TaskProgress = 1;
         }
     }
 }
