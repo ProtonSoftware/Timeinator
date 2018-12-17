@@ -39,7 +39,7 @@
 
             <progressRing:ProgressRing RingProgressColor="#00f000" Grid.Row="2" Grid.ColumnSpan="2" RingThickness="10" Progress="{Binding TaskProgress}" />
             <Label FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding TaskProgress,Converter={local:DoubleToPercentConverter},StringFormat='{0:0.} %'}" />
-            <Button Grid.Column="0" Grid.Row="3" Text="STOP" Command="{Binding StopCommand}" />
+            <Button Grid.Column="0" Grid.Row="3" Text="PAUZA" Command="{Binding StopCommand}" />
             <Button Grid.Column="1" Grid.Row="3" Text="KONIEC" Command="{Binding FinishCommand}" />
         </Grid>
 
@@ -54,7 +54,7 @@
             <Label FontSize="Large" HorizontalTextAlignment="Center" Grid.Row="0" Text="Zadanie przerwane" />
             <Label FontSize="Large" HorizontalTextAlignment="Center" Grid.Row="1" Text="{Binding BreakDuration,StringFormat=\{0:hh\\:mm\\:ss\}}" />
             <local:SessionControl BindingContext="{Binding CurrentTask}" Grid.Row="2" />
-            <Label FontSize="Medium" HorizontalTextAlignment="Center" Grid.Row="3" Text="{Binding BreakTaskTime,StringFormat='Pozostały czas zadania \{0:hh\\:mm\\:ss\}'}" />
+            <Label FontSize="Medium" HorizontalTextAlignment="Center" Grid.Row="3" Text="{Binding BreakTaskTime,StringFormat='Szacowany pozostały czas zadania \{0:hh\\:mm\\:ss\}'}" />
             <Button Grid.Row="4" Text="WZNÓW" Command="{Binding ResumeCommand}" />
         </Grid>
     </Grid>
