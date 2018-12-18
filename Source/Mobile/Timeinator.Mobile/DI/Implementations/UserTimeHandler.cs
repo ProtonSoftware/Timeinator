@@ -10,7 +10,8 @@ namespace Timeinator.Mobile
     /// </summary>
     public class UserTimeHandler : IUserTimeHandler
     {
-        #region Public properties
+        #region Public Properties
+
         /// <summary>
         /// List of tasks for one session
         /// </summary>
@@ -56,9 +57,11 @@ namespace Timeinator.Mobile
         /// Event called when time for task elapsed
         /// </summary>
         public event Action TimesUp;
+
         #endregion
 
-        #region Interface implementation
+        #region Interface Implementation
+
         /// <summary>
         /// Resets handler and loads list of tasks to TimeHandler and starts the first one
         /// </summary>
@@ -152,9 +155,11 @@ namespace Timeinator.Mobile
             CurrentTask.Progress = 1;
             SessionTasks.Remove(CurrentTask);
         }
+
         #endregion
 
-        #region Private helpers
+        #region Private Helpers
+
         /// <summary>
         /// Method used to save progress of the task when it gets paused
         /// </summary>
@@ -163,6 +168,7 @@ namespace Timeinator.Mobile
             CurrentTask.Progress = (RecentTimePassed.TotalMilliseconds + TimePassed.TotalMilliseconds) / CurrentTask.AssignedTime.TotalMilliseconds;
             RecentTimePassed += new TimeSpan(TimePassed.Ticks);
         }
+
         #endregion
     }
 }
