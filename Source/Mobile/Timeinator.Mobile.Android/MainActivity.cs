@@ -23,8 +23,22 @@ namespace Timeinator.Mobile.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
 
+            // Add NotificationHandler implementation to DI
             Dna.Framework.Construction.Services.AddSingleton<INotificationHandler, NotificationHandler>();
             Dna.Framework.Construction.Build();
+
+            // Read app start parameters and execute them (origin Notification)
+            var aid = Intent.GetIntExtra("AID", -1);
+            var nid = Intent.GetIntExtra("NID", -1);
+            if (nid >= 0 && aid >= 0)
+            {
+                switch (aid)
+                {
+                    case (int)NotificationAction.GoToSession:
+                        DI.Application.GoToPage(ApplicationPage.TasksSession);
+                        break;
+                }
+            }
         }
     }
 }
