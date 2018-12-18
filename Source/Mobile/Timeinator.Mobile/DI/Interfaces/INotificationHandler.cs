@@ -6,8 +6,8 @@ namespace Timeinator.Mobile
 {
     public interface INotificationHandler
     {
-        void UploadTasksList(List<TimeTaskContext> contexts, TimeSpan userTime);
-
-        List<TimeTaskContext> GetCalculatedTasksListForSpecifiedTime();
+        void Notify();
+        void BuildNotification(NotificationType type, string title, string content, NotificationAction action, object extra = null);
+        void CreateNotificationChannel();
     }
 }
