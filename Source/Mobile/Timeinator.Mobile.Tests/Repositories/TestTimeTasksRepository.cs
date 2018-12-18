@@ -10,21 +10,17 @@ namespace Timeinator.Mobile.Tests
     /// <summary>
     /// The tests for <see cref="TimeTasksService"/>
     /// </summary>
-    public class TestTimeTasksService : BaseDatabaseTests
+    public class TestTimeTasksRepository : BaseDatabaseTests
     {
         /// <summary>
-        /// Simple test that saves tasks in the database and calls service to load them properly
+        /// Simple test that saves tasks in the database and tries to load them
         /// </summary>
         [Fact]
-        public void TimeTaskService_ShouldSaveAndLoadFromDatabase()
+        public void TestTimeTasksRepository_ShouldSaveAndLoadFromDatabase()
         {
             // Arrange
-            var manager = new TimeTasksManager();
             var repository = new TimeTasksRepository(DatabaseContext);
-            var handler = new UserTimeHandler();
             var mapper = new TimeTasksMapper();
-
-            var service = new TimeTasksService(manager, repository, handler, mapper);
             var tasksList = TestTaskListProvider.GetMockTimeTaskContexts(1);
 
             // Act
@@ -32,7 +28,7 @@ namespace Timeinator.Mobile.Tests
             repository.SaveTask(mapper.ReverseMap(tasksList[1]));
             repository.SaveTask(mapper.ReverseMap(tasksList[2]));
 
-            var returnedList = service.LoadStoredTasks();
+            var returnedList = repository.GetSavedTasksForToday();
 
             // Assert
             Assert.True(returnedList.Count == tasksList.Count);
@@ -41,44 +37,14 @@ namespace Timeinator.Mobile.Tests
         }
 
         /// <summary>
-        /// Simple test that makes calls to the manager using service
-        /// </summary>
-        [Fact]
-        public void TimeTaskService_ShouldHandleManagerCalls()
-        {
-            // Arrange
-            var manager = new TimeTasksManager();
-            var repository = new TimeTasksRepository(DatabaseContext);
-            var handler = new UserTimeHandler();
-            var mapper = new TimeTasksMapper();
-
-            var service = new TimeTasksService(manager, repository, handler, mapper);
-            var tasksList = TestTaskListProvider.GetMockTimeTaskContexts(2);
-
-            // Act
-            service.ConveyTasksToManager(tasksList, new TimeSpan(0, 49, 0));
-            var returnedList = service.GetCalculatedTasksFromManager();
-
-            // Assert
-            Assert.True(returnedList.Count == tasksList.Count);
-            Assert.Equal(returnedList[0].AssignedTime, new TimeSpan(0, 14, 0));
-            Assert.Equal(returnedList[1].AssignedTime, new TimeSpan(0, 14, 0));
-            Assert.Equal(returnedList[2].AssignedTime, new TimeSpan(0, 21, 0));
-        }
-
-        /// <summary>
         /// Simple test that removes specified task from the database via service
         /// </summary>
         [Fact]
-        public void TimeTaskService_ShouldRemoveTask()
+        public void TestTimeTasksRepository_ShouldRemoveTask()
         {
             // Arrange
-            var manager = new TimeTasksManager();
             var repository = new TimeTasksRepository(DatabaseContext);
-            var handler = new UserTimeHandler();
             var mapper = new TimeTasksMapper();
-
-            var service = new TimeTasksService(manager, repository, handler, mapper);
             var tasksList = TestTaskListProvider.GetMockTimeTaskContexts(1);
             var task = tasksList[1];
 
@@ -87,9 +53,9 @@ namespace Timeinator.Mobile.Tests
             repository.SaveTask(mapper.ReverseMap(tasksList[1]));
             repository.SaveTask(mapper.ReverseMap(tasksList[2]));
 
-            service.RemoveTask(task);
+            repository.RemoveTasks(new List<int> { task.Id } );
 
-            var returnedList = service.LoadStoredTasks();
+            var returnedList = repository.GetSavedTasksForToday();
 
             // Assert
             Assert.True(returnedList.Count == tasksList.Count - 1);
