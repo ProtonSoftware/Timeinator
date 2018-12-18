@@ -37,6 +37,12 @@ namespace Timeinator.Mobile.Droid
                     case (int)NotificationAction.GoToSession:
                         DI.Application.GoToPage(ApplicationPage.TasksSession);
                         break;
+                    case (int)NotificationAction.NextSessionTask:
+                        DI.Application.GoToPage(ApplicationPage.TasksSession);
+                        break;
+                    case (int)NotificationAction.PauseSession:
+                        DI.Application.GoToPage(ApplicationPage.TasksSession);
+                        break;
                 }
             }
         }
