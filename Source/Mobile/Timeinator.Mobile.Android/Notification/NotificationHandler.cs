@@ -29,14 +29,14 @@ namespace Timeinator.Mobile.Droid
             //var intent = new Intent(this, typeof(MainActivity));
             //const int pendingIntentId = 0;
             //var pendingIntent = PendingIntent.GetActivity(this, pendingIntentId, intent, PendingIntentFlags.OneShot);
-            var builder = new Android.Support.V4.App.NotificationCompat.Builder(this, CHANNEL_ID)
+            var builder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context, CHANNEL_ID)
                             //.SetContentIntent(pendingIntent)
                             .SetContentTitle(title)
                             .SetDefaults((int)NotificationDefaults.All)
                             .SetSmallIcon(Resource.Drawable.notification_template_icon_bg)
                             .SetContentText(content);
             //var notificationManager = Android.Support.V4.App.NotificationManagerCompat.From(this);
-            var notificationManager = GetSystemService(Context.NotificationService) as NotificationManager;
+            var notificationManager = Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
             notificationManager.Notify(NOTIFICATION_ID, builder.Build());
         }
 
@@ -51,7 +51,7 @@ namespace Timeinator.Mobile.Droid
                 Description = channelDescription,
                 LockscreenVisibility = NotificationVisibility.Public
             };
-            var notificationManager = (NotificationManager)GetSystemService(NotificationService);
+            var notificationManager = (NotificationManager)Application.Context.GetSystemService(Context.NotificationService);
             notificationManager.CreateNotificationChannel(channel);
         }
     }
