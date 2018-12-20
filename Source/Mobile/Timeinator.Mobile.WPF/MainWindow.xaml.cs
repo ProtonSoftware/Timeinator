@@ -1,5 +1,6 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Platform.WPF;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Timeinator.Mobile.WPF
 {
@@ -14,6 +15,9 @@ namespace Timeinator.Mobile.WPF
 
             Forms.Init();
             LoadApplication(new Timeinator.Mobile.App());
+
+            Dna.Framework.Construction.Services.AddSingleton<INotificationHandler, EmptyNotificationHandler>();
+            Dna.Framework.Construction.Build();
         }
     }
 }

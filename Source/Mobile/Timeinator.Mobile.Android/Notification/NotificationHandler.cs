@@ -18,6 +18,7 @@ namespace Timeinator.Mobile.Droid
         #region Private Memebers
 
         private static readonly int NOTIFICATION_ID = 3030;
+        private static readonly int ICON = Resource.Mipmap.logo;
         private static readonly string CHANNEL_ID = "session_notification";
         private Android.Support.V4.App.NotificationCompat.Builder mNotificationBuilder;
         private NotificationType mType;
@@ -46,13 +47,13 @@ namespace Timeinator.Mobile.Droid
         /// <summary>
         /// Builds notification which can be notified and updated
         /// </summary>
-        public void BuildNotification(int ic, string title, string content, NotificationType type, NotificationAction action)
+        public void BuildNotification(string title, string content, NotificationType type, NotificationAction action)
         {
             mType = type;
             var builder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context, CHANNEL_ID)
                             .SetContentIntent(GetPendingIndent(action))
                             .SetDefaults((int)NotificationDefaults.All)
-                            .SetSmallIcon(ic)
+                            .SetSmallIcon(ICON)
                             .SetContentTitle(title)
                             .SetContentText(content);
             if (type == NotificationType.Progress)
@@ -88,11 +89,11 @@ namespace Timeinator.Mobile.Droid
         /// <summary>
         /// Change Notification's parameters
         /// </summary>
-        public void UpdateNotification(int ic, string title, NotificationAction option)
+        public void UpdateNotification(string title, NotificationAction option)
         {
             if (mNotificationBuilder == null)
                 return;
-            mNotificationBuilder.AddAction(ic, title, GetPendingIndent(option));
+            mNotificationBuilder.AddAction(Resource.Drawable.navigation_empty_icon, title, GetPendingIndent(option));
         }
 
         /// <summary>
