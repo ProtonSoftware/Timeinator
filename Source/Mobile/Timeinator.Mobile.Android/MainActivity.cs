@@ -16,6 +16,9 @@ namespace Timeinator.Mobile.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            var aid = Intent.GetIntExtra("AID", -1);
+            var nid = Intent.GetIntExtra("NID", -1);
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -28,8 +31,6 @@ namespace Timeinator.Mobile.Droid
             Dna.Framework.Construction.Build();
 
             // Read app start parameters and execute them (origin Notification)
-            var aid = Intent.GetIntExtra("AID", -1);
-            var nid = Intent.GetIntExtra("NID", -1);
             if (nid >= 0 && aid >= 0)
             {
                 switch (aid)

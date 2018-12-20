@@ -21,12 +21,16 @@ namespace Timeinator.Mobile.Droid
         private static readonly int ICON = Resource.Mipmap.logo;
         private static readonly string CHANNEL_ID = "session_notification";
         private Android.Support.V4.App.NotificationCompat.Builder mNotificationBuilder;
-        private NotificationType mType;
         private NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
 
         #endregion
 
         #region Interface implementation
+
+        /// <summary>
+        /// Type of the notificitaion
+        /// </summary>
+        public NotificationType Type { get; private set; }
 
         /// <summary>
         /// Shows last built Notification
@@ -48,7 +52,7 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public void BuildNotification(string title, string content, NotificationType type, NotificationAction action)
         {
-            mType = type;
+            Type = type;
             var builder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context, CHANNEL_ID)
                             .SetContentIntent(GetPendingIndent(action))
                             .SetSmallIcon(ICON)
@@ -59,12 +63,15 @@ namespace Timeinator.Mobile.Droid
             else if (type == NotificationType.Prompt)
             {
                 builder.SetCategory(Notification.CategoryTransport);
-                builder.SetDefaults((int)NotificationDefaults.All);
+                if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
+                    builder.SetDefaults((int)NotificationDefaults.All);
+                //builder.SetSound(); for API 26
             }
             else
             {
                 builder.SetCategory(Notification.CategoryService);
-                builder.SetDefaults((int)NotificationDefaults.All);
+                if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
+                    builder.SetDefaults((int)NotificationDefaults.All);
             }
             mNotificationBuilder = builder;
         }
@@ -78,7 +85,6 @@ namespace Timeinator.Mobile.Droid
                 return;
             mNotificationBuilder.SetContentTitle(title);
             mNotificationBuilder.SetContentText(content);
-            Notify();
         }
 
         /// <summary>
@@ -88,8 +94,7 @@ namespace Timeinator.Mobile.Droid
         {
             if (mNotificationBuilder == null)
                 return;
-            mNotificationBuilder.SetProgress(100, progress, true);
-            Notify();
+            mNotificationBuilder.SetProgress(100, progress, false);
         }
 
         /// <summary>
@@ -99,8 +104,7 @@ namespace Timeinator.Mobile.Droid
         {
             if (mNotificationBuilder == null)
                 return;
-            mNotificationBuilder.AddAction(Resource.Drawable.navigation_empty_icon, title, GetPendingIndent(option));
-            Notify();
+            mNotificationBuilder.AddAction(Resource.Drawable.abc_btn_radio_material, title, GetPendingIndent(option));
         }
 
         /// <summary>

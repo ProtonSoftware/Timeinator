@@ -6,6 +6,7 @@ namespace Timeinator.Mobile
 {
     public interface INotificationHandler
     {
+        NotificationType Type { get; }
         void Notify();
         void Cancel();
         void BuildNotification(string title, string content, NotificationType type, NotificationAction action);
