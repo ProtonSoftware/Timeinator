@@ -131,8 +131,7 @@ namespace Timeinator.Mobile
 
             LoadTaskList();
             mNotificationHandler.CreateNotificationChannel();
-            NotifProgress();
-            mNotificationHandler.UpdateNotification(0);
+            mNotificationHandler.BuildNotification("Current task", "Progress", NotificationType.Progress, NotificationAction.GoToSession);
             RealTimer.Start();
         }
 
@@ -168,14 +167,11 @@ namespace Timeinator.Mobile
                     mNotificationHandler.Cancel();
                     return;
                 }
-                NotifMsg();
-                mNotificationHandler.UpdateNotification("Timeinator", "Task paused");
+                NotifyMessage();
                 BreakStart = DateTime.Now;
                 mRemainingTaskTime = new TimeSpan(TimeRemaining.Ticks);
                 OnPropertyChanged(nameof(CurrentTask));
             }
-            else
-                NotifProgress();
             UpdateProgressBar();
             OnPropertyChanged(nameof(TaskItems));
         }
@@ -193,6 +189,7 @@ namespace Timeinator.Mobile
             else
             {
                 UpdateProgressBar();
+                NotifyProgress();
                 OnPropertyChanged(nameof(TimeRemaining));
             }
             OnPropertyChanged(nameof(Paused));
@@ -225,7 +222,7 @@ namespace Timeinator.Mobile
         /// </summary>
         private async Task UserTimeHandler_TimesUpAsync()
         {
-            NotifPrompt();
+            NotifyPrompt();
             var popupViewModel = new PopupMessageViewModel
                 (
                     "Skończył się czas", 
@@ -251,6 +248,7 @@ namespace Timeinator.Mobile
             if (TaskItems.Count <= 0)
             {
                 RealTimer.Stop();
+                mUserTimeHandler.TaskTimer.Stop();
                 DI.Application.GoToPage(ApplicationPage.TasksList);
             }
         }
@@ -276,27 +274,31 @@ namespace Timeinator.Mobile
             TaskProgress = recent + (1.0 - recent) * (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
             if (TaskProgress > 1)
                 TaskProgress = 1;
-            if (!Paused)
-                mNotificationHandler.UpdateNotification((int)(TaskProgress*100));
         }
 
-        private void NotifMsg()
+        private void NotifyProgress()
         {
-            mNotificationHandler.BuildNotification("Timeinator", "Session is running", NotificationType.Message, NotificationAction.GoToSession);
+            if (mNotificationHandler.Type != NotificationType.Progress)
+                mNotificationHandler.BuildNotification("Current task", "Progress", NotificationType.Progress, NotificationAction.GoToSession);
+            mNotificationHandler.UpdateNotification((int)(TaskProgress * 100));
             mNotificationHandler.Notify();
         }
 
-        private void NotifProgress()
+        private void NotifyPrompt()
         {
-            mNotificationHandler.BuildNotification("Timeinator", "Current task progress", NotificationType.Progress, NotificationAction.GoToSession);
+            if (mNotificationHandler.Type != NotificationType.Prompt)
+            {
+                mNotificationHandler.BuildNotification("Current task", "Finished", NotificationType.Prompt, NotificationAction.GoToSession);
+                mNotificationHandler.UpdateNotification("Next task", NotificationAction.NextSessionTask);
+                mNotificationHandler.UpdateNotification("Pause", NotificationAction.PauseSession);
+            }
             mNotificationHandler.Notify();
         }
 
-        private void NotifPrompt()
+        private void NotifyMessage()
         {
-            mNotificationHandler.BuildNotification("Timeinator", "Task is over", NotificationType.Prompt, NotificationAction.GoToSession);
-            mNotificationHandler.UpdateNotification("Next task", NotificationAction.NextSessionTask);
-            mNotificationHandler.UpdateNotification("Pause", NotificationAction.PauseSession);
+            if (mNotificationHandler.Type != NotificationType.Message)
+                mNotificationHandler.BuildNotification("Current task", "Paused", NotificationType.Message, NotificationAction.GoToSession);
             mNotificationHandler.Notify();
         }
     }

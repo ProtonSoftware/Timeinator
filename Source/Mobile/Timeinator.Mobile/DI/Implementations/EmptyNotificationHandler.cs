@@ -12,48 +12,26 @@ namespace Timeinator.Mobile
     {
         #region Interface implementation
 
-        /// <summary>
-        /// Shows last built Notification
-        /// </summary>
+        public NotificationType Type { get; private set; }
         public void Notify()
         {
         }
-
         public void Cancel()
         {
         }
-
-        /// <summary>
-        /// Builds notification which can be notified and updated
-        /// </summary>
         public void BuildNotification(string title, string content, NotificationType type, NotificationAction action)
         {
+            Type = type;
         }
-
-        /// <summary>
-        /// Change Notification's parameters
-        /// </summary>
         public void UpdateNotification(string title, string content)
         {
         }
-
-        /// <summary>
-        /// Change Notification's parameters
-        /// </summary>
         public void UpdateNotification(int progress)
         {
         }
-
-        /// <summary>
-        /// Change Notification's parameters
-        /// </summary>
         public void UpdateNotification(string title, NotificationAction option)
         {
         }
-
-        /// <summary>
-        /// Creates standard Timeinator notification channel
-        /// </summary>
         public void CreateNotificationChannel()
         {
         }
