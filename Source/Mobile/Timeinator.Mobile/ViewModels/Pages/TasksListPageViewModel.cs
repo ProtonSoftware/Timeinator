@@ -196,7 +196,7 @@ namespace Timeinator.Mobile
             // If user has picked nothing...
             if (taskContexts.Count == 0)
             {
-                // Show him an error
+                // Show user an error
                 mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Nie wybrałes żadnego taska!"));
 
                 // Don't do any further actions
@@ -204,9 +204,9 @@ namespace Timeinator.Mobile
             }
 
             // If user has not enough time to do all the tasks
-            if (UserTime.Minutes < taskContexts.Count)
+            if (UserTime.TotalMinutes - taskContexts.GetConstant().SumTimes().TotalMinutes < taskContexts.GetConstant(true).SumPriorities())
             {
-                // Show him an error
+                // Show user an error
                 mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Wybrany czas jest niewystarczający, by zacząc sesję!"));
 
                 // Don't do any further actions

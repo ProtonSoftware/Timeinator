@@ -139,6 +139,7 @@ namespace Timeinator.Mobile
         ~TasksSessionPageViewModel()
         {
             RealTimer.Dispose();
+            mNotificationHandler.Cancel();
             mUserTimeHandler.TaskTimer.Stop();
         }
 
@@ -160,7 +161,6 @@ namespace Timeinator.Mobile
 
         private void ClickStandardAction()
         {
-            UpdateProgressBar();
             if (Paused)
             {
                 if (CurrentTask == null)
@@ -176,6 +176,7 @@ namespace Timeinator.Mobile
             }
             else
                 NotifProgress();
+            UpdateProgressBar();
             OnPropertyChanged(nameof(TaskItems));
         }
 
@@ -282,14 +283,12 @@ namespace Timeinator.Mobile
         private void NotifMsg()
         {
             mNotificationHandler.BuildNotification("Timeinator", "Session is running", NotificationType.Message, NotificationAction.GoToSession);
-            mNotificationHandler.Cancel();
             mNotificationHandler.Notify();
         }
 
         private void NotifProgress()
         {
             mNotificationHandler.BuildNotification("Timeinator", "Current task progress", NotificationType.Progress, NotificationAction.GoToSession);
-            mNotificationHandler.Cancel();
             mNotificationHandler.Notify();
         }
 
@@ -298,7 +297,6 @@ namespace Timeinator.Mobile
             mNotificationHandler.BuildNotification("Timeinator", "Task is over", NotificationType.Prompt, NotificationAction.GoToSession);
             mNotificationHandler.UpdateNotification("Next task", NotificationAction.NextSessionTask);
             mNotificationHandler.UpdateNotification("Pause", NotificationAction.PauseSession);
-            mNotificationHandler.Cancel();
             mNotificationHandler.Notify();
         }
     }
