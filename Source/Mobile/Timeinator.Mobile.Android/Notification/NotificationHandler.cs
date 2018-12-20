@@ -51,16 +51,21 @@ namespace Timeinator.Mobile.Droid
             mType = type;
             var builder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context, CHANNEL_ID)
                             .SetContentIntent(GetPendingIndent(action))
-                            .SetDefaults((int)NotificationDefaults.All)
                             .SetSmallIcon(ICON)
                             .SetContentTitle(title)
                             .SetContentText(content);
             if (type == NotificationType.Progress)
                 builder.SetCategory(Notification.CategoryProgress);
             else if (type == NotificationType.Prompt)
+            {
                 builder.SetCategory(Notification.CategoryTransport);
+                builder.SetDefaults((int)NotificationDefaults.All);
+            }
             else
+            {
                 builder.SetCategory(Notification.CategoryService);
+                builder.SetDefaults((int)NotificationDefaults.All);
+            }
             mNotificationBuilder = builder;
         }
 
