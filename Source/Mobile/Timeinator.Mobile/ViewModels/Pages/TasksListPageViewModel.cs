@@ -118,6 +118,7 @@ namespace Timeinator.Mobile
 
             // Get every unique tag to display in the view
             GetEveryTaskTags();
+            
         }
 
         #endregion
