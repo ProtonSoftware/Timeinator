@@ -37,10 +37,10 @@ namespace Timeinator.Mobile.Droid
                     case (int)NotificationAction.GoToSession:
                         DI.Application.GoToPage(ApplicationPage.TasksSession);
                         break;
-                    case (int)NotificationAction.NextSessionTask:
+                    case (int)NotificationAction.NextSessionTask://NOT IMPLEMENTED
                         DI.Application.GoToPage(ApplicationPage.TasksSession);
                         break;
-                    case (int)NotificationAction.PauseSession:
+                    case (int)NotificationAction.PauseSession://NOT IMPLEMENTED
                         DI.Application.GoToPage(ApplicationPage.TasksSession);
                         break;
                 }

@@ -24,7 +24,6 @@ namespace Timeinator.Mobile.Droid
         private NotificationType mType;
         private NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
 
-
         #endregion
 
         #region Interface implementation
@@ -36,7 +35,7 @@ namespace Timeinator.Mobile.Droid
         {
             if (mNotificationBuilder == null)
                 return;
-             NManager.Notify(NOTIFICATION_ID, mNotificationBuilder.Build());
+            NManager.Notify(NOTIFICATION_ID, mNotificationBuilder.Build());
         }
 
         public void Cancel()
@@ -74,6 +73,7 @@ namespace Timeinator.Mobile.Droid
                 return;
             mNotificationBuilder.SetContentTitle(title);
             mNotificationBuilder.SetContentText(content);
+            Notify();
         }
 
         /// <summary>
@@ -84,6 +84,7 @@ namespace Timeinator.Mobile.Droid
             if (mNotificationBuilder == null)
                 return;
             mNotificationBuilder.SetProgress(100, progress, true);
+            Notify();
         }
 
         /// <summary>
@@ -94,6 +95,7 @@ namespace Timeinator.Mobile.Droid
             if (mNotificationBuilder == null)
                 return;
             mNotificationBuilder.AddAction(Resource.Drawable.navigation_empty_icon, title, GetPendingIndent(option));
+            Notify();
         }
 
         /// <summary>
