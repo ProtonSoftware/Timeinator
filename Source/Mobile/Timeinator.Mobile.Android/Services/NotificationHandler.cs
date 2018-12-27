@@ -42,6 +42,9 @@ namespace Timeinator.Mobile.Droid
             NManager.Notify(NOTIFICATION_ID, mNotificationBuilder.Build());
         }
 
+        /// <summary>
+        /// Removes notification
+        /// </summary>
         public void Cancel()
         {
             NManager.Cancel(NOTIFICATION_ID);
