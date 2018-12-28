@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Timers;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace Timeinator.Mobile.Droid
 {
-    public class TasksServiceHandler : ITasksServiceHandler
+    public class AndroidTimeHandler : UserTimeHandler
     {
         #region Private members
 
@@ -22,15 +22,20 @@ namespace Timeinator.Mobile.Droid
 
         #region Interface implementation
 
-        public void NewTask(int assignedTime)
+        public override void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
-            mCurrentTaskSvc = new TaskIntentService(assignedTime);
-            mCurrentTaskSvc.StartForegroundService(new Intent());
+            TaskTimer = new Timer
+            {
+                AutoReset = false
+            };
+            SessionTasks = new List<TimeTaskContext>(sessionTasks);
+            CurrentTaskStartTime = CurrentTime;
+            StartTask();
         }
 
-        public void StopTask()
+        public override void StartTask()
         {
-            mCurrentTaskSvc.StopSelf();
+            base.StartTask();
         }
 
         #endregion
