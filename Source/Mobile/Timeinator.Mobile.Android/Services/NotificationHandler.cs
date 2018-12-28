@@ -65,14 +65,12 @@ namespace Timeinator.Mobile.Droid
                 builder.SetCategory(Notification.CategoryProgress);
             else if (type == NotificationType.Prompt)
             {
-                builder.SetCategory(Notification.CategoryTransport);
                 if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
                     builder.SetDefaults((int)NotificationDefaults.All);
                 //builder.SetSound(); for API 26
             }
             else
             {
-                builder.SetCategory(Notification.CategoryService);
                 if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
                     builder.SetDefaults((int)NotificationDefaults.All);
             }
@@ -136,7 +134,7 @@ namespace Timeinator.Mobile.Droid
         private PendingIntent GetPendingIndent(NotificationAction action)
         {
             var intent = new Intent(Application.Context, typeof(MainActivity));
-            intent.PutExtra("AID", (int)action);
+            intent.SetAction(IntentActions.FromEnum(action));
             intent.PutExtra("NID", NOTIFICATION_ID);
             intent.AddFlags(ActivityFlags.ClearTop);
             var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);

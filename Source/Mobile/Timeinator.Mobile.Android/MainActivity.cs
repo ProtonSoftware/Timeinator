@@ -16,12 +16,13 @@ namespace Timeinator.Mobile.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            var aid = Intent.GetIntExtra("AID", -1);
-            var nid = Intent.GetIntExtra("NID", -1);
+            if (Intent.Action == IntentActions.ACTION_NOTHING)
+                return; // exit activity since no action was requested
 
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            // Is this correct if MainActivity is launched again over the old one???
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
@@ -31,20 +32,10 @@ namespace Timeinator.Mobile.Droid
             Dna.Framework.Construction.Build();
 
             // Read app start parameters and execute them (origin Notification)
-            if (nid >= 0 && aid >= 0)
+            if (Intent.Action == IntentActions.ACTION_GOSESSION)
             {
-                switch (aid)
-                {
-                    case (int)NotificationAction.GoToSession:
-                        DI.Application.GoToPage(ApplicationPage.TasksSession);
-                        break;
-                    case (int)NotificationAction.NextSessionTask://NOT IMPLEMENTED
-                        DI.Application.GoToPage(ApplicationPage.TasksSession);
-                        break;
-                    case (int)NotificationAction.PauseSession://NOT IMPLEMENTED
-                        DI.Application.GoToPage(ApplicationPage.TasksSession);
-                        break;
-                }
+                // Make sure that app correctly loads all data
+                DI.Application.GoToPage(ApplicationPage.TasksSession);
             }
         }
     }

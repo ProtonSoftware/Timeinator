@@ -18,11 +18,6 @@ namespace Timeinator.Mobile
         public List<TimeTaskContext> SessionTasks { get; set; }
 
         /// <summary>
-        /// Stores current time
-        /// </summary>
-        public DateTime CurrentTime => DateTime.Now;
-
-        /// <summary>
         /// Stores start time of the task
         /// </summary>
         public DateTime CurrentTaskStartTime { get; set; }
@@ -37,11 +32,6 @@ namespace Timeinator.Mobile
                 catch { return null; }
             }
         }
-
-        /// <summary>
-        /// Timer used in all of tasks sessions
-        /// </summary>
-        public Timer TaskTimer { get; set; } = new Timer();
 
         /// <summary>
         /// Returns time that passed from the beginning
@@ -66,7 +56,7 @@ namespace Timeinator.Mobile
         /// Resets handler and loads list of tasks to TimeHandler and starts the first one
         /// </summary>
         /// <param name="sessionTasks">Session tasks sorted by OrderId</param>
-        public void StartTimeHandler(List<TimeTaskContext> sessionTasks)
+        public virtual void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
             TaskTimer.Dispose();
             TaskTimer = new Timer
@@ -82,7 +72,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Function serving correct Session Tasks
         /// </summary>
-        public List<TimeTaskContext> DownloadSession()
+        public virtual List<TimeTaskContext> DownloadSession()
         {
             return SessionTasks;
         }
@@ -99,7 +89,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Pushes tasks forward on stack if CurrentTask is finished
         /// </summary>
-        public void RemoveAndContinueTasks(ITimeTasksService mTimeTasksService)
+        public virtual void RemoveAndContinueTasks(ITimeTasksService mTimeTasksService)
         {
             if (CurrentTask == null || CurrentTask.Progress < 1)
                 return;
@@ -112,7 +102,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Gets CurrentTask time loss every second of Break
         /// </summary>
-        public TimeSpan TimeLossValue()
+        public virtual TimeSpan TimeLossValue()
         {
             if (CurrentTask == null)
                 return default(TimeSpan);
@@ -120,9 +110,14 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
+        /// Checks state of TaskTimer
+        /// </summary>
+        public virtual bool TimerStateRunning() => TaskTimer.Enabled;
+
+        /// <summary>
         /// Starts next task
         /// </summary>
-        public void StartTask()
+        public virtual void StartTask()
         {
             TaskTimer.Stop();
             if (CurrentTask == null)
@@ -142,7 +137,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Stops the task and saves its progress
         /// </summary>
-        public void StopTask()
+        public virtual void StopTask()
         {
             TaskTimer.Stop();
             if (CurrentTask == null)
@@ -153,7 +148,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Resumes the task basing on progress of the task
         /// </summary>
-        public void ResumeTask()
+        public virtual void ResumeTask()
         {
             if (CurrentTask == null)
                 return;
@@ -169,7 +164,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Stops the timer and sets Current Task progress as finished
         /// </summary>
-        public void FinishTask()
+        public virtual void FinishTask()
         {
             if (CurrentTask == null)
                 return;
@@ -182,9 +177,19 @@ namespace Timeinator.Mobile
         #region Private Helpers
 
         /// <summary>
+        /// Timer used in all of tasks sessions
+        /// </summary>
+        protected Timer TaskTimer { get; set; } = new Timer();
+
+        /// <summary>
+        /// Stores current time
+        /// </summary>
+        protected DateTime CurrentTime => DateTime.Now;
+
+        /// <summary>
         /// Method used to save progress of the task when it gets paused
         /// </summary>
-        private void SaveProgress()
+        protected virtual void SaveProgress()
         {
             var step = TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
             CurrentTask.Progress = RecentProgress + (1.0 - RecentProgress) * step;

@@ -23,6 +23,11 @@
         /// <summary>
         /// Asks for next task in session
         /// </summary>
-        NextSessionTask
+        NextSessionTask,
+
+        /// <summary>
+        /// Resumes paused session
+        /// </summary>
+        ResumeSession
     }
 }

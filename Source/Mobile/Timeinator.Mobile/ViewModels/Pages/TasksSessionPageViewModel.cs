@@ -54,7 +54,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Holds current task state
         /// </summary>
-        public bool Paused => !mUserTimeHandler.TaskTimer.Enabled;
+        public bool Paused => !mUserTimeHandler.TimerStateRunning();
 
         /// <summary>
         /// Remaining time from handler
@@ -133,13 +133,6 @@ namespace Timeinator.Mobile
             mNotificationHandler.CreateNotificationChannel();
             mNotificationHandler.BuildNotification("Current task", "Progress", NotificationType.Progress, NotificationAction.GoToSession);
             RealTimer.Start();
-        }
-
-        ~TasksSessionPageViewModel()
-        {
-            RealTimer.Dispose();
-            mNotificationHandler.Cancel();
-            mUserTimeHandler.TaskTimer.Stop();
         }
 
         #endregion
@@ -248,7 +241,7 @@ namespace Timeinator.Mobile
             if (TaskItems.Count <= 0)
             {
                 RealTimer.Stop();
-                mUserTimeHandler.TaskTimer.Stop();
+                mNotificationHandler.Cancel();
                 DI.Application.GoToPage(ApplicationPage.TasksList);
             }
         }
