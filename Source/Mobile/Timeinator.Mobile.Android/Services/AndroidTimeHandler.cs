@@ -12,6 +12,9 @@ using Android.Widget;
 
 namespace Timeinator.Mobile.Droid
 {
+    /// <summary>
+    /// Manager to handle one session - Android extension
+    /// </summary>
     public class AndroidTimeHandler : UserTimeHandler
     {
         #region Private members
@@ -33,7 +36,7 @@ namespace Timeinator.Mobile.Droid
         {
             base.StartTask();
             mCurrentTaskSvc.TaskServiceStop();
-            mCurrentTaskSvc = new TaskIntentService(CurrentTask.AssignedTime);
+            mCurrentTaskSvc = new TaskIntentService(this);
         }
 
         #endregion
