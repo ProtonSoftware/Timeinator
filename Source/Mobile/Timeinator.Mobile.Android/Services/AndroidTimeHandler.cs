@@ -19,24 +19,48 @@ namespace Timeinator.Mobile.Droid
     {
         #region Private members
 
-        private TaskIntentService mCurrentTaskSvc;
+        private readonly ITimeTasksService mTimeTasksService;
 
         #endregion
 
+        public AndroidTimeHandler(ITimeTasksService timeTasksService)
+        {
+            mTimeTasksService = timeTasksService;
+        }
+
         #region Interface implementation
+
+        public override bool TimerStateRunning()
+        {
+            return mCurrentTaskSvc.IsRunning();
+        }
 
         public override void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
             base.StartTimeHandler(sessionTasks);
             TaskTimer.Dispose();
             TaskTimer = new Timer { AutoReset = false };
+            if (mCurrentTaskSvc != null)
+                mCurrentTaskSvc.TaskServiceStop();
+            mCurrentTaskSvc = new TaskIntentService(this, mTimeTasksService);
         }
 
         public override void StartTask()
         {
             base.StartTask();
+            mCurrentTaskSvc.TaskServiceStart(CurrentTask.AssignedTime);
+        }
+
+        public override void StopTask()
+        {
+            base.StopTask();
             mCurrentTaskSvc.TaskServiceStop();
-            mCurrentTaskSvc = new TaskIntentService(this);
+        }
+
+        public override void ResumeTask()
+        {
+            base.ResumeTask();
+            mCurrentTaskSvc.TaskServiceStart(CurrentTask.AssignedTime);
         }
 
         #endregion
