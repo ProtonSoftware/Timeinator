@@ -20,19 +20,15 @@ namespace Timeinator.Mobile.Droid
         #region Private members
 
         private readonly ITimeTasksService mTimeTasksService;
+        private TaskIntentService CurrentTaskSvc { get; set; }
 
         #endregion
-
-        public AndroidTimeHandler(ITimeTasksService timeTasksService)
-        {
-            mTimeTasksService = timeTasksService;
-        }
 
         #region Interface implementation
 
         public override bool TimerStateRunning()
         {
-            return mCurrentTaskSvc.IsRunning();
+            return CurrentTaskSvc.IsRunning();
         }
 
         public override void StartTimeHandler(List<TimeTaskContext> sessionTasks)
@@ -40,28 +36,28 @@ namespace Timeinator.Mobile.Droid
             base.StartTimeHandler(sessionTasks);
             TaskTimer.Dispose();
             TaskTimer = new Timer { AutoReset = false };
-            Application.Context.BindService();
-            if (mCurrentTaskSvc != null)
-                mCurrentTaskSvc.TaskServiceStop();
-            mCurrentTaskSvc = new TaskIntentService(this, mTimeTasksService);
+            //Application.Context.BindService();
+            CurrentTaskSvc = new TaskIntentService();
         }
 
         public override void StartTask()
         {
             base.StartTask();
-            mCurrentTaskSvc.TaskServiceStart(CurrentTask.AssignedTime);
+            CurrentTaskSvc.StartForegroundService(new Intent(CurrentTaskSvc, typeof(TaskIntentService)));
+            CurrentTaskSvc.StartForeground(TaskIntentService.NOTIFICATION_ID, CurrentTaskSvc.GetNotification());
         }
 
         public override void StopTask()
         {
             base.StopTask();
-            mCurrentTaskSvc.TaskServiceStop();
+            CurrentTaskSvc.StopSelf();
         }
 
         public override void ResumeTask()
         {
             base.ResumeTask();
-            mCurrentTaskSvc.TaskServiceStart(CurrentTask.AssignedTime);
+            CurrentTaskSvc.StartForegroundService(new Intent(CurrentTaskSvc, typeof(TaskIntentService)));
+            CurrentTaskSvc.StartForeground(TaskIntentService.NOTIFICATION_ID, CurrentTaskSvc.GetNotification());
         }
 
         #endregion

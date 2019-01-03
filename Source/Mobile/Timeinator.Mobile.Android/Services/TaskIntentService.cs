@@ -21,9 +21,9 @@ namespace Timeinator.Mobile.Droid
         #region Private members
 
         private readonly IUserTimeHandler mAndroidTimeHandler;
+        private readonly ITimeTasksService mTimeTasksService;
         private static TaskIntentService Instance = null;
 
-        private static readonly int NOTIFICATION_ID = 3333;
         private static Timer TaskTimer = new Timer();
         private DateTime TaskStart { get; set; }
         private TimeSpan TaskTime { get; set; }
@@ -47,6 +47,7 @@ namespace Timeinator.Mobile.Droid
 
         #region Public methods
 
+        public static readonly int NOTIFICATION_ID = 3333;
         public IBinder Binder { get; private set; }
 
         public override void OnCreate()
@@ -71,14 +72,16 @@ namespace Timeinator.Mobile.Droid
         {
             if (intent.Action == IntentActions.ACTION_NEXTTASK)
             {
-                //mAndroidTimeHandler.FinishTask();
-                //mAndroidTimeHandler.RemoveAndContinueTasks(mTimeTasksService);
+                mAndroidTimeHandler.FinishTask();
+                mAndroidTimeHandler.RemoveAndContinueTasks(mTimeTasksService);
             }
             else if (intent.Action == IntentActions.ACTION_PAUSETASK)
             {
+                mAndroidTimeHandler.StopTask();
             }
             else if (intent.Action == IntentActions.ACTION_RESUMETASK)
             {
+                mAndroidTimeHandler.ResumeTask();
             }
             Binder = new TaskServiceBinder(this);
             return Binder;
