@@ -57,7 +57,7 @@ namespace Timeinator.Mobile.Droid
         {
             Type = type;
             var builder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context, CHANNEL_ID)
-                            .SetContentIntent(TaskIntentService.GetPendingIndent(action, NOTIFICATION_ID))
+                            .SetContentIntent(GetPendingIndent(action))
                             .SetSmallIcon(ICON)
                             .SetContentTitle(title)
                             .SetContentText(content);
@@ -105,7 +105,7 @@ namespace Timeinator.Mobile.Droid
         {
             if (NotificationBuilder == null)
                 return;
-            NotificationBuilder.AddAction(Resource.Drawable.abc_btn_radio_material, title, TaskIntentService.GetPendingIndent(option, NOTIFICATION_ID));
+            NotificationBuilder.AddAction(Resource.Drawable.abc_btn_radio_material, title, GetPendingIndent(option));
         }
 
         /// <summary>
@@ -130,6 +130,16 @@ namespace Timeinator.Mobile.Droid
         #endregion
 
         #region Private Helpers
+
+        private PendingIntent GetPendingIndent(NotificationAction action)
+        {
+            var intent = new Intent(Application.Context, typeof(ActionActivity));
+            intent.SetAction(IntentActions.FromEnum(action));
+            intent.PutExtra("NID", NOTIFICATION_ID);
+            intent.AddFlags(ActivityFlags.ClearTop);
+            var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
+            return pendingIntent;
+        }
 
         private Bitmap DecodeResource(int r) => BitmapFactory.DecodeResource(Application.Context.Resources, r);
 

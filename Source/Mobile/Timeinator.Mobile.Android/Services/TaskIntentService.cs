@@ -16,7 +16,7 @@ namespace Timeinator.Mobile.Droid
     /// Service to handle session in the background
     /// </summary>
     [Service]
-    public class TaskIntentService : IntentService
+    public class TaskIntentService : Service
     {
         #region Private members
 
@@ -29,15 +29,35 @@ namespace Timeinator.Mobile.Droid
         private double RecentProgress { get; set; }
         private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
 
-        private readonly IUserTimeHandler mAndroidTimeHandler;
-
         #endregion
 
         #region Constructor
 
-        public TaskIntentService(IUserTimeHandler userTimeHandler) : base("TaskIntentService")
+        public TaskIntentService()
         {
-            mAndroidTimeHandler = userTimeHandler;
+        }
+
+        public class TaskServiceBinder : Binder
+        {
+            public TaskServiceBinder(TaskIntentService service)
+            {
+                Service = service;
+            }
+
+            public TaskIntentService Service { get; private set; }
+        }
+
+        #endregion
+
+        #region Public methods
+
+        public IBinder Binder { get; private set; }
+
+        /// <summary>
+        /// Stop Android TaskService Timer
+        /// </summary>
+        public void TaskServiceStop()
+        {
         }
 
         public override void OnCreate()
@@ -46,30 +66,34 @@ namespace Timeinator.Mobile.Droid
             Instance = this;
         }
 
+        [return: GeneratedEnum]
+        public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
+        {
+            return base.OnStartCommand(intent, flags, startId);
+        }
+
         public override void OnDestroy()
         {
             base.OnDestroy();
             Instance = null;
         }
 
-        #endregion
-
-        /// <summary>
-        /// Handle Task and operations
-        /// </summary>
-        protected override void OnHandleIntent(Intent intent)
+        public override IBinder OnBind(Intent intent)
         {
             if (intent.Action == IntentActions.ACTION_NEXTTASK)
             {
-                return;
+                //mAndroidTimeHandler.FinishTask();
+                //mAndroidTimeHandler.RemoveAndContinueTasks(mTimeTasksService);
             }
             else if (intent.Action == IntentActions.ACTION_PAUSETASK)
-                return;
+            {
+            }
             else if (intent.Action == IntentActions.ACTION_RESUMETASK)
-                return;
+            {
+            }
+            Binder = new TaskServiceBinder(this);
+            return Binder;
         }
-
-        #region Public methods
 
         /// <summary>
         /// Current Notification to notify by Service
@@ -78,8 +102,13 @@ namespace Timeinator.Mobile.Droid
         {
             if (NotificationBuilder == null)
             {
+                var intent = new Intent(Application.Context, typeof(ActionActivity));
+                intent.SetAction(IntentActions.FromEnum(NotificationAction.GoToSession));
+                intent.PutExtra("NID", NOTIFICATION_ID);
+                intent.AddFlags(ActivityFlags.ClearTop);
+                var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
                 NotificationBuilder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context)
-                                .SetContentIntent(GetPendingIndent(NotificationAction.GoToSession, NOTIFICATION_ID))
+                                .SetContentIntent(pendingIntent)
                                 .SetSmallIcon(Resource.Mipmap.logo);
             }
             var progress = (int)(100 * (RecentProgress + (1.0 - RecentProgress) * (DateTime.Now.Subtract(TaskStart).TotalMilliseconds / TaskTime.TotalMilliseconds)));
@@ -91,28 +120,6 @@ namespace Timeinator.Mobile.Droid
         }
 
         /// <summary>
-        /// Start Android TaskService with Notification
-        /// </summary>
-        public void TaskServiceStart(TimeSpan assignedTime, double recentProgress = 0)
-        {
-            TaskTime = assignedTime;
-            TaskStart = DateTime.Now;
-            RecentProgress = recentProgress;
-            var intent = new Intent(this, typeof(TaskIntentService));
-            intent.PutExtra("TaskTime", TaskTime.Ticks);
-            StartForegroundService(intent);
-            StartForeground(NOTIFICATION_ID, GetNotification());
-        }
-
-        /// <summary>
-        /// Stop Android TaskService
-        /// </summary>
-        public void TaskServiceStop()
-        {
-            StopSelf();
-        }
-
-        /// <summary>
         /// Checks if instance is created
         /// </summary>
         public bool IsRunning()
@@ -121,15 +128,5 @@ namespace Timeinator.Mobile.Droid
         }
 
         #endregion
-
-        public static PendingIntent GetPendingIndent(NotificationAction action, int nid)
-        {
-            var intent = new Intent(Application.Context, typeof(ActionActivity));
-            intent.SetAction(IntentActions.FromEnum(action));
-            intent.PutExtra("NID", nid);
-            intent.AddFlags(ActivityFlags.ClearTop);
-            var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
-            return pendingIntent;
-        }
     }
 }
