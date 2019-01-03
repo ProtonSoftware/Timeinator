@@ -40,6 +40,7 @@ namespace Timeinator.Mobile.Droid
             base.StartTimeHandler(sessionTasks);
             TaskTimer.Dispose();
             TaskTimer = new Timer { AutoReset = false };
+            Application.Context.BindService();
             if (mCurrentTaskSvc != null)
                 mCurrentTaskSvc.TaskServiceStop();
             mCurrentTaskSvc = new TaskIntentService(this, mTimeTasksService);

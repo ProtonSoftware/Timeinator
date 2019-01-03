@@ -79,11 +79,13 @@
     <Compile Include="ActionActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Services\IntentActions.cs" />
-    <Compile Include="Services\NotificationHandler.cs" />
+    <Compile Include="DIExtensions\NotificationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Services\TaskIntentService.cs" />
-    <Compile Include="Services\AndroidTimeHandler.cs" />
+    <Compile Include="DIExtensions\AndroidTimeHandler.cs" />
+    <Compile Include="Services\TaskServiceBinder.cs" />
+    <Compile Include="Services\TaskServiceConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Fonts\MaterialIcons\MaterialIcons-Regular.ttf" />
