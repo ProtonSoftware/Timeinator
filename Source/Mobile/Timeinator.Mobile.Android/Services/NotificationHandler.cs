@@ -20,7 +20,7 @@ namespace Timeinator.Mobile.Droid
         private static readonly int NOTIFICATION_ID = 3030;
         private static readonly int ICON = Resource.Mipmap.logo;
         private static readonly string CHANNEL_ID = "session_notification";
-        private Android.Support.V4.App.NotificationCompat.Builder mNotificationBuilder;
+        private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
         private NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
 
         #endregion
@@ -37,9 +37,9 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public void Notify()
         {
-            if (mNotificationBuilder == null)
+            if (NotificationBuilder == null)
                 return;
-            NManager.Notify(NOTIFICATION_ID, mNotificationBuilder.Build());
+            NManager.Notify(NOTIFICATION_ID, NotificationBuilder.Build());
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Timeinator.Mobile.Droid
         {
             Type = type;
             var builder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context, CHANNEL_ID)
-                            .SetContentIntent(GetPendingIndent(action))
+                            .SetContentIntent(GetPendingIndent(action, NOTIFICATION_ID))
                             .SetSmallIcon(ICON)
                             .SetContentTitle(title)
                             .SetContentText(content);
@@ -74,7 +74,7 @@ namespace Timeinator.Mobile.Droid
                 if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
                     builder.SetDefaults((int)NotificationDefaults.All);
             }
-            mNotificationBuilder = builder;
+            NotificationBuilder = builder;
         }
 
         /// <summary>
@@ -82,10 +82,10 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public void UpdateNotification(string title, string content)
         {
-            if (mNotificationBuilder == null)
+            if (NotificationBuilder == null)
                 return;
-            mNotificationBuilder.SetContentTitle(title);
-            mNotificationBuilder.SetContentText(content);
+            NotificationBuilder.SetContentTitle(title);
+            NotificationBuilder.SetContentText(content);
         }
 
         /// <summary>
@@ -93,9 +93,9 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public void UpdateNotification(int progress)
         {
-            if (mNotificationBuilder == null)
+            if (NotificationBuilder == null)
                 return;
-            mNotificationBuilder.SetProgress(100, progress, false);
+            NotificationBuilder.SetProgress(100, progress, false);
         }
 
         /// <summary>
@@ -103,9 +103,9 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public void UpdateNotification(string title, NotificationAction option)
         {
-            if (mNotificationBuilder == null)
+            if (NotificationBuilder == null)
                 return;
-            mNotificationBuilder.AddAction(Resource.Drawable.abc_btn_radio_material, title, GetPendingIndent(option));
+            NotificationBuilder.AddAction(Resource.Drawable.abc_btn_radio_material, title, GetPendingIndent(option, NOTIFICATION_ID));
         }
 
         /// <summary>
@@ -129,17 +129,17 @@ namespace Timeinator.Mobile.Droid
 
         #endregion
 
-        #region Private Helpers
-
-        private PendingIntent GetPendingIndent(NotificationAction action)
+        public static PendingIntent GetPendingIndent(NotificationAction action, int nid)
         {
             var intent = new Intent(Application.Context, typeof(MainActivity));
             intent.SetAction(IntentActions.FromEnum(action));
-            intent.PutExtra("NID", NOTIFICATION_ID);
+            intent.PutExtra("NID", nid);
             intent.AddFlags(ActivityFlags.ClearTop);
             var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
             return pendingIntent;
         }
+
+        #region Private Helpers
 
         private Bitmap DecodeResource(int r) => BitmapFactory.DecodeResource(Application.Context.Resources, r);
 
