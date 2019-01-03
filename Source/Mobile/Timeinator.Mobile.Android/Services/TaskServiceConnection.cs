@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace Timeinator.Mobile.Droid
 {
-    public class TaskServiceConnection : IServiceConnection
+    public class TaskServiceConnection : Java.Lang.Object, IServiceConnection
     {
         public TaskServiceConnection()
         {
@@ -22,13 +22,6 @@ namespace Timeinator.Mobile.Droid
 
         public bool IsConnected { get; private set; }
         public TaskServiceBinder Binder { get; private set; }
-
-        public IntPtr Handle => throw new NotImplementedException();
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
 
         public void OnServiceConnected(ComponentName name, IBinder service)
         {

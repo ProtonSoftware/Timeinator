@@ -13,7 +13,7 @@ using Java.Util;
 namespace Timeinator.Mobile.Droid
 {
     /// <summary>
-    /// Service to handle session in the background
+    /// Service handling session in the background
     /// </summary>
     [Service]
     public class TaskIntentService : Service
@@ -38,18 +38,16 @@ namespace Timeinator.Mobile.Droid
         {
         }
 
+        public TaskIntentService(IUserTimeHandler androidTimeHandler)
+        {
+            mAndroidTimeHandler = androidTimeHandler;
+        }
+
         #endregion
 
         #region Public methods
 
         public IBinder Binder { get; private set; }
-
-        /// <summary>
-        /// Stop Android TaskService Timer
-        /// </summary>
-        public void TaskServiceStop()
-        {
-        }
 
         public override void OnCreate()
         {
