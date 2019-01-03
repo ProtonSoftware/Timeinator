@@ -20,6 +20,7 @@ namespace Timeinator.Mobile.Droid
     {
         #region Private members
 
+        private readonly IUserTimeHandler mAndroidTimeHandler;
         private static TaskIntentService Instance = null;
 
         private static readonly int NOTIFICATION_ID = 3333;
@@ -35,16 +36,6 @@ namespace Timeinator.Mobile.Droid
 
         public TaskIntentService()
         {
-        }
-
-        public class TaskServiceBinder : Binder
-        {
-            public TaskServiceBinder(TaskIntentService service)
-            {
-                Service = service;
-            }
-
-            public TaskIntentService Service { get; private set; }
         }
 
         #endregion
@@ -69,7 +60,7 @@ namespace Timeinator.Mobile.Droid
         [return: GeneratedEnum]
         public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
         {
-            return base.OnStartCommand(intent, flags, startId);
+            return StartCommandResult.Sticky;
         }
 
         public override void OnDestroy()
