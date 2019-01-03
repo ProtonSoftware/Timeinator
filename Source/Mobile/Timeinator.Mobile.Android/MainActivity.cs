@@ -33,7 +33,7 @@ namespace Timeinator.Mobile.Droid
             // Dna.Framework.Construction.Services.AddSingleton<IUserTimeHandler, AndroidTimeHandler>();
             Dna.Framework.Construction.Build();
 
-            // Read app start parameters and execute them (origin Notification)
+            // Read intent parameters and execute them
             if (Intent.Action == IntentActions.ACTION_GOSESSION)
             {
                 // Make sure that app correctly loads all data

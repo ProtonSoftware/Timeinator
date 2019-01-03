@@ -12,6 +12,9 @@ using Java.Util;
 
 namespace Timeinator.Mobile.Droid
 {
+    /// <summary>
+    /// Service to handle session in the background
+    /// </summary>
     [Service]
     public class TaskIntentService : IntentService
     {
@@ -26,12 +29,15 @@ namespace Timeinator.Mobile.Droid
         private double RecentProgress { get; set; }
         private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
 
+        private readonly IUserTimeHandler mAndroidTimeHandler;
+
         #endregion
 
         #region Constructor
 
-        public TaskIntentService() : base("TaskIntentService")
+        public TaskIntentService(IUserTimeHandler userTimeHandler) : base("TaskIntentService")
         {
+            mAndroidTimeHandler = userTimeHandler;
         }
 
         public override void OnCreate()
@@ -48,11 +54,22 @@ namespace Timeinator.Mobile.Droid
 
         #endregion
 
+        /// <summary>
+        /// Handle Task and operations
+        /// </summary>
         protected override void OnHandleIntent(Intent intent)
         {
             if (intent.Action == IntentActions.ACTION_NEXTTASK)
+            {
+                return;
+            }
+            else if (intent.Action == IntentActions.ACTION_PAUSETASK)
+                return;
+            else if (intent.Action == IntentActions.ACTION_RESUMETASK)
                 return;
         }
+
+        #region Public methods
 
         /// <summary>
         /// Current Notification to notify by Service
@@ -62,7 +79,7 @@ namespace Timeinator.Mobile.Droid
             if (NotificationBuilder == null)
             {
                 NotificationBuilder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context)
-                                .SetContentIntent(NotificationHandler.GetPendingIndent(NotificationAction.GoToSession, NOTIFICATION_ID))
+                                .SetContentIntent(GetPendingIndent(NotificationAction.GoToSession, NOTIFICATION_ID))
                                 .SetSmallIcon(Resource.Mipmap.logo);
             }
             var progress = (int)(100 * (RecentProgress + (1.0 - RecentProgress) * (DateTime.Now.Subtract(TaskStart).TotalMilliseconds / TaskTime.TotalMilliseconds)));
@@ -100,7 +117,19 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public bool IsRunning()
         {
-            return Instance!=null;
+            return Instance != null;
+        }
+
+        #endregion
+
+        public static PendingIntent GetPendingIndent(NotificationAction action, int nid)
+        {
+            var intent = new Intent(Application.Context, typeof(ActionActivity));
+            intent.SetAction(IntentActions.FromEnum(action));
+            intent.PutExtra("NID", nid);
+            intent.AddFlags(ActivityFlags.ClearTop);
+            var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
+            return pendingIntent;
         }
     }
 }
