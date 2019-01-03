@@ -271,9 +271,10 @@ namespace Timeinator.Mobile
 
         private void NotifyProgress()
         {
+            var perc = (int)(TaskProgress * 100);
             if (mNotificationHandler.Type != NotificationType.Progress)
-                mNotificationHandler.BuildNotification("Current task", "Progress", NotificationType.Progress, NotificationAction.GoToSession);
-            mNotificationHandler.UpdateNotification((int)(TaskProgress * 100));
+                mNotificationHandler.BuildNotification("Current task", $"{perc} %", NotificationType.Progress, NotificationAction.GoToSession);
+            mNotificationHandler.UpdateNotification(perc);
             mNotificationHandler.Notify();
         }
 

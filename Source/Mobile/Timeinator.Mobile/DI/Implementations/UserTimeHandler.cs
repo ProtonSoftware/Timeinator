@@ -59,10 +59,7 @@ namespace Timeinator.Mobile
         public virtual void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
             TaskTimer.Dispose();
-            TaskTimer = new Timer
-            {
-                AutoReset = false
-            };
+            TaskTimer = new Timer { AutoReset = false };
             TaskTimer.Elapsed += (sender, e) => TimesUp.Invoke();
             SessionTasks = new List<TimeTaskContext>(sessionTasks);
             CurrentTaskStartTime = CurrentTime;

@@ -24,18 +24,16 @@ namespace Timeinator.Mobile.Droid
 
         public override void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
-            TaskTimer = new Timer
-            {
-                AutoReset = false
-            };
-            SessionTasks = new List<TimeTaskContext>(sessionTasks);
-            CurrentTaskStartTime = CurrentTime;
-            StartTask();
+            base.StartTimeHandler(sessionTasks);
+            TaskTimer.Dispose();
+            TaskTimer = new Timer { AutoReset = false };
         }
 
         public override void StartTask()
         {
             base.StartTask();
+            mCurrentTaskSvc.TaskServiceStop();
+            mCurrentTaskSvc = new TaskIntentService(CurrentTask.AssignedTime);
         }
 
         #endregion
