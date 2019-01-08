@@ -30,7 +30,7 @@ namespace Timeinator.Mobile.Droid
             // Add NotificationHandler implementation to DI
             Dna.Framework.Construction.Services.AddSingleton<INotificationHandler, NotificationHandler>();
             // replace existing UserTimeHandler with Android specific version of it
-            // Dna.Framework.Construction.Services.AddSingleton<IUserTimeHandler, AndroidTimeHandler>();
+            Dna.Framework.Construction.Services.AddScoped<IUserTimeHandler, AndroidTimeHandler>();
             Dna.Framework.Construction.Build();
 
             // Read intent parameters and execute them

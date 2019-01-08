@@ -69,11 +69,6 @@ namespace Timeinator.Mobile.Droid
                     builder.SetDefaults((int)NotificationDefaults.All);
                 //builder.SetSound(); for API 26
             }
-            else
-            {
-                if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
-                    builder.SetDefaults((int)NotificationDefaults.All);
-            }
             NotificationBuilder = builder;
         }
 
@@ -115,7 +110,7 @@ namespace Timeinator.Mobile.Droid
         {
             if (Build.VERSION.SdkInt < BuildVersionCodes.O) // required only since API 26
                 return;
-            if (NManager.GetNotificationChannel(CHANNEL_ID) == null) // channel already created
+            if (NManager.GetNotificationChannel(CHANNEL_ID) != null) // channel already created
                 return;
             var channelName = "Timeinator";
             var channelDescription = "Timeinator session notifications";
