@@ -24,6 +24,11 @@
         /// <param name="viewModel">The view model to set initially on page (if provided)</param>
         public void GoToPage(ApplicationPage page, BaseViewModel viewModel = null)
         {
+            // If new page is the same as current one
+            //if (CurrentPage == page)
+                // Don't do anything
+              //  return;
+
             // Change current page to specified one
             CurrentPage = page;
 
