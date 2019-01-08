@@ -19,7 +19,6 @@ namespace Timeinator.Mobile.Droid
     {
         #region Private members
 
-        private readonly ITimeTasksService mTimeTasksService;
         private TaskIntentService CurrentTaskSvc { get; set; }
 
         #endregion
@@ -33,17 +32,21 @@ namespace Timeinator.Mobile.Droid
 
         public override void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
+            CurrentTaskSvc = new TaskIntentService(this);
+            //Application.Context.BindService(); // if exists
             base.StartTimeHandler(sessionTasks);
             TaskTimer.Dispose();
             TaskTimer = new Timer { AutoReset = false };
-            //Application.Context.BindService(); // if exists
-            CurrentTaskSvc = new TaskIntentService();
         }
 
         public override void StartTask()
         {
             base.StartTask();
-            CurrentTaskSvc.StartForegroundService(new Intent(CurrentTaskSvc, typeof(TaskIntentService)));
+            var intent = new Intent(Application.Context, typeof(TaskIntentService));
+            if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
+                CurrentTaskSvc.StartService(intent);
+            else
+                CurrentTaskSvc.StartForegroundService(intent);
             CurrentTaskSvc.StartForeground(TaskIntentService.NOTIFICATION_ID, CurrentTaskSvc.GetNotification());
         }
 

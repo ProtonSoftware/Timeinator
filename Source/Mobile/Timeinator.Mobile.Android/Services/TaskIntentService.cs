@@ -15,7 +15,7 @@ namespace Timeinator.Mobile.Droid
     /// <summary>
     /// Service handling session in the background
     /// </summary>
-    [Service]
+    [Service(IsolatedProcess=true)]
     public class TaskIntentService : Service
     {
         #region Private members
@@ -34,11 +34,11 @@ namespace Timeinator.Mobile.Droid
 
         #region Constructor
 
-        public TaskIntentService()
+        public TaskIntentService() : base()
         {
         }
 
-        public TaskIntentService(IUserTimeHandler androidTimeHandler)
+        public TaskIntentService(IUserTimeHandler androidTimeHandler) : base()
         {
             mAndroidTimeHandler = androidTimeHandler;
         }

@@ -61,13 +61,21 @@ namespace Timeinator.Mobile.Droid
                             .SetSmallIcon(ICON)
                             .SetContentTitle(title)
                             .SetContentText(content);
+            if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
+                builder.SetDefaults((int)NotificationDefaults.Lights);
             if (type == NotificationType.Progress)
+            {
                 builder.SetCategory(Notification.CategoryProgress);
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.O) // Only since API 26
+                {
+                    builder.SetVibrate(null);
+                    builder.SetSound(null);
+                }
+            }
             else if (type == NotificationType.Prompt)
             {
                 if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
                     builder.SetDefaults((int)NotificationDefaults.All);
-                //builder.SetSound(); for API 26
             }
             NotificationBuilder = builder;
         }
