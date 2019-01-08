@@ -20,7 +20,16 @@ namespace Timeinator.Mobile
             InitializeComponent();
 
             // Setup our Dependency Injection for this application
-            DI.InitialSetup();
+            try
+            {
+                // If this doesnt call exception, it means DI is already created
+                var a = DI.Application;
+            }
+            catch
+            {
+                // Exception caught - make brand-new DI
+                DI.InitialSetup();
+            }
 
             // Setup main page to host our pages
             MainPage = new PageHost();
