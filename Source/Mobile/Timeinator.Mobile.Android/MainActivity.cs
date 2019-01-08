@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Android.Content;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace Timeinator.Mobile.Droid
 {
@@ -27,11 +28,14 @@ namespace Timeinator.Mobile.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
 
-            // Add NotificationHandler implementation to DI
-            Dna.Framework.Construction.Services.AddSingleton<INotificationHandler, NotificationHandler>();
-            // replace existing UserTimeHandler with Android specific version of it
-            Dna.Framework.Construction.Services.AddScoped<IUserTimeHandler, AndroidTimeHandler>();
-            Dna.Framework.Construction.Build();
+            if (!Dna.Framework.Construction.Services.Any(x => x.ServiceType == typeof(INotificationHandler)))
+            {
+                // Add NotificationHandler implementation to DI
+                Dna.Framework.Construction.Services.AddSingleton<INotificationHandler, NotificationHandler>();
+                // replace existing UserTimeHandler with Android specific version of it
+                Dna.Framework.Construction.Services.AddScoped<IUserTimeHandler, UserTimeHandler>();
+                Dna.Framework.Construction.Build();
+            }
 
             // Read intent parameters and execute them
             if (Intent.Action == IntentActions.ACTION_GOSESSION)
