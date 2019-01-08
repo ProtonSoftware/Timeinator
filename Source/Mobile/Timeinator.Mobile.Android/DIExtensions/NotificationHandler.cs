@@ -15,7 +15,7 @@ namespace Timeinator.Mobile.Droid
     /// </summary>
     public class NotificationHandler : INotificationHandler
     {
-        #region Private Memebers
+        #region Private Members
 
         private static readonly int NOTIFICATION_ID = 3030;
         private static readonly int ICON = Resource.Mipmap.logo;
