@@ -66,7 +66,6 @@ namespace Timeinator.Mobile
             // Prepare a list to return
             var taskContexts = new List<TimeTaskContext>();
 
-
             // Get every task in the database
             var dbTasks = mTimeTasksRepository.GetSavedTasksForToday();
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using Timeinator.Mobile.DataAccess;
 
@@ -30,12 +31,16 @@ namespace Timeinator.Mobile
             {
                 // Create TimeTask entity to TimeTaskContext map
                 config.CreateMap<TimeTask, TimeTaskContext>()
+                      // Map the HasConstantTime flag based on whether entity has specified assigned time or not
+                      .ForMember(context => context.HasConstantTime, options => options.MapFrom(ent => ent.AssignedTime != default(TimeSpan)))
                       // And the other way around
                       .ReverseMap();
                 // Create TimeTaskContext to TimeTaskViewModel map
                 config.CreateMap<TimeTaskContext, TimeTaskViewModel>()
                       // And the other way around        
-                      .ReverseMap();
+                      .ReverseMap()
+                      // For VM => context mapping, assign the constant time flag accordingly
+                      .ForMember(context => context.HasConstantTime, options => options.MapFrom(vm => vm.AssignedTime != default(TimeSpan)));
                 // Create TimeTaskContext to CalculatedTimeTaskViewModel map
                 config.CreateMap<TimeTaskContext, CalculatedTimeTaskViewModel>()
                       // And the other way around

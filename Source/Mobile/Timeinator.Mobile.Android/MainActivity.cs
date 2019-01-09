@@ -17,30 +17,32 @@ namespace Timeinator.Mobile.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            // Exit activity since no action was requested
             if (Intent.Action == IntentActions.ACTION_NOTHING)
-                return; // exit activity since no action was requested
+                return;
 
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
-            // Is this correct if MainActivity is launched again over the old one???
+            
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
 
+            // If there is no DI setup yet, i.e. NotificationHandler is not injected
             if (!Dna.Framework.Construction.Services.Any(x => x.ServiceType == typeof(INotificationHandler)))
             {
-                // Add NotificationHandler implementation to DI
+                // Add Android-specific DI implementations
                 Dna.Framework.Construction.Services.AddSingleton<INotificationHandler, NotificationHandler>();
-                // replace existing UserTimeHandler with Android specific version of it
-                Dna.Framework.Construction.Services.AddScoped<IUserTimeHandler, UserTimeHandler>();
+                Dna.Framework.Construction.Services.AddScoped<IUserTimeHandler, UserTimeHandler>(); // TODO: Change to Android once it works
+
+                // Build new DI
                 Dna.Framework.Construction.Build();
             }
 
-            // Read intent parameters and execute them
+            // If we get there by session intent from notification
             if (Intent.Action == IntentActions.ACTION_GOSESSION)
             {
-                // Make sure that app correctly loads all data
+                // Change application's page to continue session
                 DI.Application.GoToPage(ApplicationPage.TasksSession);
             }
         }

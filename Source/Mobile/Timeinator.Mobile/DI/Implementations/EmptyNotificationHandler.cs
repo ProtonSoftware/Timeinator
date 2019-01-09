@@ -10,7 +10,7 @@ namespace Timeinator.Mobile
     /// </summary>
     public class EmptyNotificationHandler : INotificationHandler
     {
-        #region Interface implementation
+        #region Interface Implementation
 
         public NotificationType Type { get; private set; }
         public void Notify()

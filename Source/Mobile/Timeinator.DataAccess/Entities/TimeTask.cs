@@ -53,5 +53,10 @@ namespace Timeinator.Mobile.DataAccess
         /// The date that this task will show up in the list
         /// </summary>
         public DateTime TargetStartDate { get; set; }
+
+        /// <summary>
+        /// The constant time assigned to this task
+        /// </summary>
+        public TimeSpan AssignedTime { get; set; }
     }
 }

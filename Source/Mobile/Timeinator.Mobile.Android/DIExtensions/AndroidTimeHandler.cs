@@ -43,7 +43,7 @@ namespace Timeinator.Mobile.Droid
         {
             base.StartTask();
             var intent = new Intent(Application.Context, typeof(TaskIntentService));
-            if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
+            if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Deprecated since API 26
                 CurrentTaskSvc.StartService(intent);
             else
                 CurrentTaskSvc.StartForegroundService(intent);
