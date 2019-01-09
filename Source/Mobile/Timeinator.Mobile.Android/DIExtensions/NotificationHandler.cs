@@ -15,17 +15,22 @@ namespace Timeinator.Mobile.Droid
     /// </summary>
     public class NotificationHandler : INotificationHandler
     {
-        #region Private Members
+        #region Private Static Constants
 
         private static readonly int NOTIFICATION_ID = 3030;
         private static readonly int ICON = Resource.Mipmap.logo;
         private static readonly string CHANNEL_ID = "session_notification";
+
+        #endregion
+
+        #region Private Properties
+
         private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
         private NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
 
         #endregion
 
-        #region Interface implementation
+        #region Interface Implementation
 
         /// <summary>
         /// Type of the notificitaion
@@ -61,7 +66,7 @@ namespace Timeinator.Mobile.Droid
                             .SetSmallIcon(ICON)
                             .SetContentTitle(title)
                             .SetContentText(content);
-            if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
+            if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Deprecated since API 26
                 builder.SetDefaults((int)NotificationDefaults.Lights);
             if (type == NotificationType.Progress)
             {
@@ -74,7 +79,7 @@ namespace Timeinator.Mobile.Droid
             }
             else if (type == NotificationType.Prompt)
             {
-                if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Depracated since API 26
+                if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Deprecated since API 26
                     builder.SetDefaults((int)NotificationDefaults.All);
             }
             NotificationBuilder = builder;

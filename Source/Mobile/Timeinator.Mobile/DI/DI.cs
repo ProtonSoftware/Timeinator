@@ -36,7 +36,7 @@ namespace Timeinator.Mobile
                                                       .AddFileLogger()
                                                       .AddTimeinatorViewModels()
                                                       .AddDbContext()
-                                                      .Build();
+            .Build();
 
         #endregion
     }

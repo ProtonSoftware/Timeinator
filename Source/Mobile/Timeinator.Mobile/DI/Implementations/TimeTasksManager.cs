@@ -14,21 +14,25 @@ namespace Timeinator.Mobile
         private TimeSpan mAvailableTime;
 
         /// <summary>
-        /// Current tasks that user defined
+        /// The list of tasks that user has specified to do in next session
         /// </summary>
-        private List<TimeTaskContext> TaskContexts { get; set; }
+        private List<TimeTaskContext> mTaskContexts;
 
         /// <summary>
         /// Time when user was ready and declared free time, a moment when user clicked READY
         /// </summary>
-        private DateTime ReadyTime { get; set; }
+        private DateTime mReadyTime;
+
+        #endregion
+
+        #region Private Properties
 
         /// <summary>
         /// Remaining free time since user clicked READY
         /// </summary>
         private TimeSpan AvailableTime
         {
-            get => mAvailableTime - (DateTime.Now - ReadyTime);
+            get => mAvailableTime - (DateTime.Now - mReadyTime);
             set => mAvailableTime = value;
         }
 
@@ -44,39 +48,56 @@ namespace Timeinator.Mobile
         {
             if (userTime != default(TimeSpan))
             {
-                ReadyTime = DateTime.Now;
+                mReadyTime = DateTime.Now;
                 AvailableTime = userTime;
             }
-            TaskContexts = contexts;
+            mTaskContexts = contexts;
         }
 
         /// <summary>
-        /// Calculates assigned time for every task in the manager based on provided user free time
+        /// Calculates assigned time for every task in the manager
         /// </summary>
-        /// <param name="userTime">User's free time</param>
-        /// <returns>Ordered list of tasks with calculated time</returns>
+        /// <returns>Ordered list of tasks with calculated times</returns>
         public List<TimeTaskContext> GetCalculatedTasksListForSpecifiedTime()
         {
-            TaskContexts = CalcAssignedTimes(TaskContexts).ToList();
-            return TaskContexts.OrderBy(x => x.OrderId).ToList();
+            mTaskContexts = CalculateAssignedTimes();
+            return mTaskContexts.OrderBy(x => x.OrderId).ToList();
         }
 
         #endregion
 
-        #region Private Methods
+        #region Private Helpers
 
         /// <summary>
-        /// Recalculates AssignedTime in TimeTasks loaded to target TimeTasks
+        /// Calculates assigned times for every task in the manager
         /// </summary>
-        /// <returns>Ready list</returns>
-        private List<TimeTaskContext> CalcAssignedTimes(List<TimeTaskContext> target)
+        /// <returns>List of tasks with calculated times</returns>
+        private List<TimeTaskContext> CalculateAssignedTimes()
         {
-            var avt = AvailableTime - target.GetConstant().SumTimes();
-            var tmp = target.GetConstant(true);
-            var priors = tmp.SumPriorities();
-            for (var i = 0; i < tmp.Count; i++)
-                tmp[i].AssignedTime = TimeSpan.FromSeconds((int)Math.Ceiling(new TimeSpan((long)(avt.Ticks * (tmp[i].GetRealPriority() / priors))).TotalSeconds));
-            return tmp.Concat(target.GetConstant()).ToList();
+            // Get every task with already assigned times
+            var constantTasks = mTaskContexts.GetConstant();
+
+            // Get every not assigned task
+            var freeTasks = mTaskContexts.GetConstant(true);
+
+            // Calculate how much time left to assign to non-constant tasks
+            var timeLeft = AvailableTime - constantTasks.SumTimes();
+
+            // Get a sum of priorities for left tasks
+            var prioritySum = freeTasks.SumPriorities();
+
+            // For every task
+            foreach (var task in freeTasks)
+            {
+                // Calculate how much overall time should it take based on priorities
+                var timePart = task.GetRealPriority() / prioritySum;
+
+                // Calculate and assign time to task
+                task.AssignedTime = TimeSpan.FromSeconds(Math.Ceiling(new TimeSpan((long)(timeLeft.Ticks * timePart)).TotalSeconds));
+            }
+
+            // Return both task lists combined together 
+            return freeTasks.Concat(constantTasks).ToList();
         }
 
         #endregion

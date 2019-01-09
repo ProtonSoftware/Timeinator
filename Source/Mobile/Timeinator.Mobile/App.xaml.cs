@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System.Linq;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -19,15 +20,10 @@ namespace Timeinator.Mobile
             // Do default thing
             InitializeComponent();
 
-            // Setup our Dependency Injection for this application
-            try
+            // If there is no DI setup yet
+            if (Dna.Framework.Construction == null)
             {
-                // If this doesnt call exception, it means DI is already created
-                var a = DI.Application;
-            }
-            catch
-            {
-                // Exception caught - make brand-new DI
+                // Setup brand-new DI
                 DI.InitialSetup();
             }
 
