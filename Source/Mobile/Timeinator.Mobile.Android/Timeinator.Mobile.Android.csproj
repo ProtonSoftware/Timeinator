@@ -82,7 +82,8 @@
     <Compile Include="DIExtensions\NotificationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
-    <Compile Include="Services\TaskIntentService.cs" />
+    <Compile Include="Services\Interfaces\ITaskService.cs" />
+    <Compile Include="Services\TaskService.cs" />
     <Compile Include="DIExtensions\AndroidTimeHandler.cs" />
     <Compile Include="Services\TaskServiceBinder.cs" />
     <Compile Include="Services\TaskServiceConnection.cs" />

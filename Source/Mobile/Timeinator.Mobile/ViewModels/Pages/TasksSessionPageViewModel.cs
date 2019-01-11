@@ -141,7 +141,7 @@ namespace Timeinator.Mobile
 
         private void Resume()
         {
-            mUserTimeHandler.RefreshTasksState(mTimeTasksService);
+            mUserTimeHandler.RefreshTasksState();
             mUserTimeHandler.ResumeTask();
             LoadTaskList();
             ClickStandardAction();
@@ -196,7 +196,7 @@ namespace Timeinator.Mobile
             {
                 mUserTimeHandler.FinishTask();
                 ContinueUserTasks();
-                mUserTimeHandler.RefreshTasksState(mTimeTasksService);
+                mUserTimeHandler.RefreshTasksState();
                 LoadTaskList();
             }
         }
@@ -226,7 +226,7 @@ namespace Timeinator.Mobile
         /// </summary>
         private void ContinueUserTasks()
         {
-            mUserTimeHandler.RemoveAndContinueTasks(mTimeTasksService);
+            mUserTimeHandler.RemoveAndContinueTasks();
             LoadTaskList();
             if (TaskItems.Count <= 0)
             {

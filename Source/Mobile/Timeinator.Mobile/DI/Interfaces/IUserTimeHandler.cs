@@ -7,19 +7,22 @@ namespace Timeinator.Mobile
 {
     public interface IUserTimeHandler
     {
+        TimeTaskContext CurrentTask { get; }
         TimeSpan TimePassed { get; }
+        DateTime CurrentTaskStartTime { get; }
         double RecentProgress { get; set; }
 
         void StartTimeHandler(List<TimeTaskContext> sessionTasks);
         List<TimeTaskContext> DownloadSession();
-        void RefreshTasksState(ITimeTasksService mTimeTasksService);
-        void RemoveAndContinueTasks(ITimeTasksService mTimeTasksService);
+        void RefreshTasksState();
+        void RemoveAndContinueTasks();
         TimeSpan TimeLossValue();
         bool TimerStateRunning();
         void StartTask();
         void StopTask();
         void ResumeTask();
         void FinishTask();
+        void InvokeTimesUp();
 
         event Action TimesUp;
     }

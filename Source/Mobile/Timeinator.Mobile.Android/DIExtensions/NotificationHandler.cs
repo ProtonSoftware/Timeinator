@@ -15,6 +15,8 @@ namespace Timeinator.Mobile.Droid
     /// </summary>
     public class NotificationHandler : INotificationHandler
     {
+        public static NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
+
         #region Private Static Constants
 
         private static readonly int NOTIFICATION_ID = 3030;
@@ -26,7 +28,6 @@ namespace Timeinator.Mobile.Droid
         #region Private Properties
 
         private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
-        private NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
 
         #endregion
 
