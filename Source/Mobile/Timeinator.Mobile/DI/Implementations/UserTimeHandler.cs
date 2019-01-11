@@ -77,21 +77,23 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Recalculate assigned times on current session
         /// </summary>
-        public void RefreshTasksState(ITimeTasksService mTimeTasksService)
+        public void RefreshTasksState()
         {
-            mTimeTasksService.ConveyTasksToManager(SessionTasks);
-            SessionTasks = mTimeTasksService.GetCalculatedTasksFromManager();
+            var ttsvc = Dna.Framework.Service<ITimeTasksService>();
+            ttsvc.ConveyTasksToManager(SessionTasks);
+            SessionTasks = ttsvc.GetCalculatedTasksFromManager();
         }
 
         /// <summary>
         /// Pushes tasks forward on stack if CurrentTask is finished
         /// </summary>
-        public virtual void RemoveAndContinueTasks(ITimeTasksService mTimeTasksService)
+        public virtual void RemoveAndContinueTasks()
         {
             if (CurrentTask == null || CurrentTask.Progress < 1)
                 return;
             TaskTimer.Stop();
-            mTimeTasksService.RemoveFinishedTasks(new List<TimeTaskContext> { CurrentTask });
+            var ttsvc = Dna.Framework.Service<ITimeTasksService>();
+            ttsvc.RemoveFinishedTasks(new List<TimeTaskContext> { CurrentTask });
             SessionTasks.Remove(CurrentTask);
             StartTask();
         }
@@ -167,6 +169,14 @@ namespace Timeinator.Mobile
                 return;
             TaskTimer.Stop();
             CurrentTask.Progress = 1;
+        }
+
+        /// <summary>
+        /// Call TimesUp
+        /// </summary>
+        public void InvokeTimesUp()
+        {
+            TimesUp.Invoke();
         }
 
         #endregion

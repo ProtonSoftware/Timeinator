@@ -21,14 +21,15 @@ namespace Timeinator.Mobile.Droid
         #region Private members
 
         private IUserTimeHandler mAndroidTimeHandler;
-        private ITimeTasksService mTimeTasksService;
         private static TaskService Instance = null;
+
+        private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
+        private Timer TaskTimer { get; set; }
 
         private string TaskName { get; set; }
         private DateTime TaskStart { get; set; }
         private TimeSpan TaskTime { get; set; }
         private double RecentProgress { get; set; }
-        private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
 
         #endregion
 
@@ -42,13 +43,15 @@ namespace Timeinator.Mobile.Droid
 
         #region Public methods
 
-        public static readonly int NOTIFICATION_ID = 3333;
+        public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 5;
         public IBinder Binder { get; private set; }
 
         public override void OnCreate()
         {
             base.OnCreate();
             Instance = this;
+            TaskTimer = new Timer();
+            TaskTimer.ScheduleAtFixedRate(new ServiceRefresh(this), TaskTime.Ticks, TimeSpan.FromSeconds(REFRESH_RATE).Ticks);
         }
 
         [return: GeneratedEnum]
@@ -81,7 +84,7 @@ namespace Timeinator.Mobile.Droid
             if (intent.Action == IntentActions.ACTION_NEXTTASK)
             {
                 mAndroidTimeHandler.FinishTask();
-                mAndroidTimeHandler.RemoveAndContinueTasks(mTimeTasksService);
+                mAndroidTimeHandler.RemoveAndContinueTasks();
             }
             else if (intent.Action == IntentActions.ACTION_PAUSETASK)
             {
@@ -91,8 +94,10 @@ namespace Timeinator.Mobile.Droid
             {
                 mAndroidTimeHandler.ResumeTask();
             }
-            else if (intent.Action == IntentActions.ACTION_STOP)
+            if (intent.Action == IntentActions.ACTION_STOP)
                 StopTaskService();
+            else
+                CollectTaskInfo();
         }
 
         /// <summary>
@@ -100,6 +105,7 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public void StopTaskService()
         {
+            TaskTimer.Dispose();
             StopSelf();
         }
 
@@ -138,10 +144,62 @@ namespace Timeinator.Mobile.Droid
         /// <summary>
         /// Setup references to Timeinator DI
         /// </summary>
-        public void RefreshService(IUserTimeHandler androidTimeHandler, ITimeTasksService timeTasksService)
+        public void RefreshService(IUserTimeHandler androidTimeHandler)
         {
             mAndroidTimeHandler = androidTimeHandler;
-            mTimeTasksService = timeTasksService;
+            CollectTaskInfo();
+        }
+
+        /// <summary>
+        /// Execute when task time is over
+        /// </summary>
+        public void EndOfTask()
+        {
+            mAndroidTimeHandler.InvokeTimesUp();
+            var intent = new Intent();
+            intent.SetAction(IntentActions.ACTION_NEXTTASK);
+            HandleMessage(intent);
+        }
+
+        public TimeSpan TimeRemaining() => TaskStart.Add(TaskTime) - DateTime.Now;
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Loads data about CurrentTask to local properties
+        /// </summary>
+        private void CollectTaskInfo()
+        {
+            var task = mAndroidTimeHandler.CurrentTask;
+            if (task == null)
+                return;
+            TaskName = task.Name;
+            TaskStart = mAndroidTimeHandler.CurrentTaskStartTime;
+            TaskTime = task.AssignedTime;
+            RecentProgress = mAndroidTimeHandler.RecentProgress;
+        }
+
+        /// <summary>
+        /// Run fired every REFRESH_RATE period, updates Service state
+        /// </summary>
+        private class ServiceRefresh : TimerTask
+        {
+            public ServiceRefresh(TaskService service) : base()
+            {
+                mService = service;
+            }
+
+            private TaskService mService;
+
+            public override void Run()
+            {
+                NotificationHandler.NManager.Notify(NOTIFICATION_ID, mService.GetNotification());
+                // Check if time has passed
+                if (mService.TimeRemaining().Ticks < 0)
+                    mService.EndOfTask();
+            }
         }
 
         #endregion

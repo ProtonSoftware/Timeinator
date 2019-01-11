@@ -19,7 +19,7 @@ namespace Timeinator.Mobile.Droid
     {
         #region Private members
 
-        private TaskServiceConnection ServiceConnection { get; set; }
+        private TaskServiceConnection mServiceConnection;
 
         #endregion
 
@@ -27,31 +27,25 @@ namespace Timeinator.Mobile.Droid
 
         public override bool TimerStateRunning()
         {
-            return ServiceConnection.IsRunning();
+            return mServiceConnection.IsConnected;
         }
 
         public override void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
-            //Application.Context.BindService(); // if exists
             base.StartTimeHandler(sessionTasks);
             TaskTimer.Dispose();
             TaskTimer = new Timer { AutoReset = false };
+            ConnectService();
         }
 
         public override void StartTask()
         {
             base.StartTask();
-            var intent = new Intent(Application.Context, typeof(TaskService));
-            if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Deprecated since API 26
-                Application.Context.StartService(intent);
-            else
-                Application.Context.StartForegroundService(intent);
         }
 
         public override void StopTask()
         {
             base.StopTask();
-            ServiceConnection.StopTaskService();
         }
 
         public override void ResumeTask()
@@ -59,6 +53,21 @@ namespace Timeinator.Mobile.Droid
             base.ResumeTask();
         }
 
+        public override void RemoveAndContinueTasks()
+        {
+            base.RemoveAndContinueTasks();
+        }
+
         #endregion
+
+        public void ConnectService()
+        {
+            if (mServiceConnection == null)
+                mServiceConnection = new TaskServiceConnection();
+            var intent = new Intent(Application.Context, typeof(TaskService));
+            Application.Context.BindService(intent, mServiceConnection, Bind.AutoCreate);
+            // Provide DI to service
+            mServiceConnection.RefreshService(this);
+        }
     }
 }

@@ -65,11 +65,11 @@ namespace Timeinator.Mobile.Droid
             return Binder.Service.IsRunning();
         }
 
-        public void RefreshService(IUserTimeHandler androidTimeHandler, ITimeTasksService timeTasksService)
+        public void RefreshService(IUserTimeHandler androidTimeHandler)
         {
             if (!IsConnected)
                 return;
-            Binder.Service.RefreshService(androidTimeHandler, timeTasksService);
+            Binder.Service.RefreshService(androidTimeHandler);
         }
 
         #endregion
