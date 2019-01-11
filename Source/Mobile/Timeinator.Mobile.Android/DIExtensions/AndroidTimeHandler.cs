@@ -19,7 +19,7 @@ namespace Timeinator.Mobile.Droid
     {
         #region Private members
 
-        private TaskIntentService CurrentTaskSvc { get; set; }
+        private TaskServiceConnection ServiceConnection { get; set; }
 
         #endregion
 
@@ -27,12 +27,11 @@ namespace Timeinator.Mobile.Droid
 
         public override bool TimerStateRunning()
         {
-            return CurrentTaskSvc.IsRunning();
+            return ServiceConnection.IsRunning();
         }
 
         public override void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
-            CurrentTaskSvc = new TaskIntentService(this);
             //Application.Context.BindService(); // if exists
             base.StartTimeHandler(sessionTasks);
             TaskTimer.Dispose();
@@ -42,25 +41,22 @@ namespace Timeinator.Mobile.Droid
         public override void StartTask()
         {
             base.StartTask();
-            var intent = new Intent(Application.Context, typeof(TaskIntentService));
+            var intent = new Intent(Application.Context, typeof(TaskService));
             if (Build.VERSION.SdkInt < BuildVersionCodes.O) // Deprecated since API 26
-                CurrentTaskSvc.StartService(intent);
+                Application.Context.StartService(intent);
             else
-                CurrentTaskSvc.StartForegroundService(intent);
-            CurrentTaskSvc.StartForeground(TaskIntentService.NOTIFICATION_ID, CurrentTaskSvc.GetNotification());
+                Application.Context.StartForegroundService(intent);
         }
 
         public override void StopTask()
         {
             base.StopTask();
-            CurrentTaskSvc.StopSelf();
+            ServiceConnection.StopTaskService();
         }
 
         public override void ResumeTask()
         {
             base.ResumeTask();
-            CurrentTaskSvc.StartForegroundService(new Intent(CurrentTaskSvc, typeof(TaskIntentService)));
-            CurrentTaskSvc.StartForeground(TaskIntentService.NOTIFICATION_ID, CurrentTaskSvc.GetNotification());
         }
 
         #endregion

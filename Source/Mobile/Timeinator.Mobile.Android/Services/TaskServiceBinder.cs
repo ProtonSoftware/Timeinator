@@ -14,11 +14,11 @@ namespace Timeinator.Mobile.Droid
 {
     public class TaskServiceBinder : Binder
     {
-        public TaskServiceBinder(TaskIntentService service)
+        public TaskServiceBinder(TaskService service)
         {
             Service = service;
         }
 
-        public TaskIntentService Service { get; private set; }
+        public TaskService Service { get; private set; }
     }
 }

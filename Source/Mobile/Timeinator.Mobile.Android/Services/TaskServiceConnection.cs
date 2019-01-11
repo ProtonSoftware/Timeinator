@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace Timeinator.Mobile.Droid
 {
-    public class TaskServiceConnection : Java.Lang.Object, IServiceConnection
+    public class TaskServiceConnection : Java.Lang.Object, IServiceConnection, ITaskService
     {
         public TaskServiceConnection()
         {
@@ -25,12 +25,53 @@ namespace Timeinator.Mobile.Droid
 
         public void OnServiceConnected(ComponentName name, IBinder service)
         {
-            throw new NotImplementedException();
+            Binder = service as TaskServiceBinder;
+            IsConnected = Binder != null;
         }
 
         public void OnServiceDisconnected(ComponentName name)
         {
-            throw new NotImplementedException();
+            Binder = null;
+            IsConnected = false;
         }
+
+        #region Interface Implementation
+
+        public Notification GetNotification()
+        {
+            if (!IsConnected)
+                return null;
+            return Binder.Service.GetNotification();
+        }
+
+        public void HandleMessage(Intent intent)
+        {
+            if (!IsConnected)
+                return;
+            Binder.Service.HandleMessage(intent);
+        }
+
+        public void StopTaskService()
+        {
+            if (!IsConnected)
+                return;
+            Binder.Service.StopTaskService();
+        }
+
+        public bool IsRunning()
+        {
+            if (!IsConnected)
+                return false;
+            return Binder.Service.IsRunning();
+        }
+
+        public void RefreshService(IUserTimeHandler androidTimeHandler, ITimeTasksService timeTasksService)
+        {
+            if (!IsConnected)
+                return;
+            Binder.Service.RefreshService(androidTimeHandler, timeTasksService);
+        }
+
+        #endregion
     }
 }

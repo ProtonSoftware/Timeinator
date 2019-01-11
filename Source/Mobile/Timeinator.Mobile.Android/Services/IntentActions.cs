@@ -8,21 +8,24 @@
         public const string ACTION_NEXTTASK = "com.gummybearstudio.NEXTTASK";
         public const string ACTION_PAUSETASK = "com.gummybearstudio.PAUSETASK";
         public const string ACTION_RESUMETASK = "com.gummybearstudio.RESUMETASK";
+        public const string ACTION_STOP = "com.gummybearstudio.STOP";
 
-        public static string FromEnum(NotificationAction e)
+        public static string FromEnum(AppAction e)
         {
             switch (e)
             {
-                case NotificationAction.DoNothing:
+                case AppAction.DoNothing:
                     return ACTION_SHOW;
-                case NotificationAction.GoToSession:
+                case AppAction.GoToSession:
                     return ACTION_GOSESSION;
-                case NotificationAction.NextSessionTask:
+                case AppAction.NextSessionTask:
                     return ACTION_NEXTTASK;
-                case NotificationAction.PauseSession:
+                case AppAction.PauseSession:
                     return ACTION_PAUSETASK;
-                case NotificationAction.ResumeSession:
+                case AppAction.ResumeSession:
                     return ACTION_RESUMETASK;
+                case AppAction.Stop:
+                    return ACTION_STOP;
             }
             return ACTION_NOTHING;
         }

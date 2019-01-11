@@ -19,7 +19,7 @@ namespace Timeinator.Mobile
         public void Cancel()
         {
         }
-        public void BuildNotification(string title, string content, NotificationType type, NotificationAction action)
+        public void BuildNotification(string title, string content, NotificationType type, AppAction action)
         {
             Type = type;
         }
@@ -29,7 +29,7 @@ namespace Timeinator.Mobile
         public void UpdateNotification(int progress)
         {
         }
-        public void UpdateNotification(string title, NotificationAction option)
+        public void UpdateNotification(string title, AppAction option)
         {
         }
         public void CreateNotificationChannel()

@@ -16,15 +16,15 @@ namespace Timeinator.Mobile.Droid
     /// Service handling session in the background
     /// </summary>
     [Service(IsolatedProcess=true)]
-    public class TaskIntentService : Service
+    public class TaskService : Service, ITaskService
     {
         #region Private members
 
-        private readonly IUserTimeHandler mAndroidTimeHandler;
-        private readonly ITimeTasksService mTimeTasksService;
-        private static TaskIntentService Instance = null;
+        private IUserTimeHandler mAndroidTimeHandler;
+        private ITimeTasksService mTimeTasksService;
+        private static TaskService Instance = null;
 
-        private static Timer TaskTimer = new Timer();
+        private string TaskName { get; set; }
         private DateTime TaskStart { get; set; }
         private TimeSpan TaskTime { get; set; }
         private double RecentProgress { get; set; }
@@ -34,13 +34,8 @@ namespace Timeinator.Mobile.Droid
 
         #region Constructor
 
-        public TaskIntentService() : base()
+        public TaskService() : base()
         {
-        }
-
-        public TaskIntentService(IUserTimeHandler androidTimeHandler) : base()
-        {
-            mAndroidTimeHandler = androidTimeHandler;
         }
 
         #endregion
@@ -59,6 +54,7 @@ namespace Timeinator.Mobile.Droid
         [return: GeneratedEnum]
         public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
         {
+            StartForeground(NOTIFICATION_ID, GetNotification());
             return StartCommandResult.Sticky;
         }
 
@@ -69,6 +65,18 @@ namespace Timeinator.Mobile.Droid
         }
 
         public override IBinder OnBind(Intent intent)
+        {
+            // Check and handle any incoming action
+            HandleMessage(intent);
+
+            Binder = new TaskServiceBinder(this);
+            return Binder;
+        }
+
+        /// <summary>
+        /// Perform any action supported by Service
+        /// </summary>
+        public void HandleMessage(Intent intent)
         {
             if (intent.Action == IntentActions.ACTION_NEXTTASK)
             {
@@ -83,8 +91,16 @@ namespace Timeinator.Mobile.Droid
             {
                 mAndroidTimeHandler.ResumeTask();
             }
-            Binder = new TaskServiceBinder(this);
-            return Binder;
+            else if (intent.Action == IntentActions.ACTION_STOP)
+                StopTaskService();
+        }
+
+        /// <summary>
+        /// Stops service immediately
+        /// </summary>
+        public void StopTaskService()
+        {
+            StopSelf();
         }
 
         /// <summary>
@@ -95,7 +111,7 @@ namespace Timeinator.Mobile.Droid
             if (NotificationBuilder == null)
             {
                 var intent = new Intent(Application.Context, typeof(ActionActivity));
-                intent.SetAction(IntentActions.FromEnum(NotificationAction.GoToSession));
+                intent.SetAction(IntentActions.FromEnum(AppAction.GoToSession));
                 intent.PutExtra("NID", NOTIFICATION_ID);
                 intent.AddFlags(ActivityFlags.ClearTop);
                 var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
@@ -104,7 +120,7 @@ namespace Timeinator.Mobile.Droid
                                 .SetSmallIcon(Resource.Mipmap.logo);
             }
             var progress = (int)(100 * (RecentProgress + (1.0 - RecentProgress) * (DateTime.Now.Subtract(TaskStart).TotalMilliseconds / TaskTime.TotalMilliseconds)));
-            NotificationBuilder.SetContentTitle("Current task")
+            NotificationBuilder.SetContentTitle(TaskName)
                 .SetTicker("Timeinator Session")
                 .SetContentText($"{progress} %")
                 .SetProgress(100, progress, false);
@@ -117,6 +133,15 @@ namespace Timeinator.Mobile.Droid
         public bool IsRunning()
         {
             return Instance != null;
+        }
+
+        /// <summary>
+        /// Setup references to Timeinator DI
+        /// </summary>
+        public void RefreshService(IUserTimeHandler androidTimeHandler, ITimeTasksService timeTasksService)
+        {
+            mAndroidTimeHandler = androidTimeHandler;
+            mTimeTasksService = timeTasksService;
         }
 
         #endregion
