@@ -19,17 +19,16 @@ namespace Timeinator.Mobile.Droid
         {
             base.OnCreate(savedInstanceState);
 
+            var intent = new Intent(Application.Context, typeof(MainActivity));
+            intent.SetAction(IntentActions.ACTION_NOTHING);
             // Read intent parameters and execute them
             if (Intent.Action == IntentActions.ACTION_GOSESSION)
             {
-                var intent = new Intent(Application.Context, typeof(MainActivity));
                 intent.SetAction(IntentActions.ACTION_GOSESSION);
-                StartActivity(intent);
             }
             else if (Intent.Action == IntentActions.ACTION_SHOW)
             {
-                var intent = new Intent(Application.Context, typeof(MainActivity));
-                StartActivity(intent);
+                intent.SetAction(IntentActions.ACTION_SHOW);
             }
             else if (Intent.Action == IntentActions.ACTION_NEXTTASK)
             {
@@ -44,6 +43,7 @@ namespace Timeinator.Mobile.Droid
             {
                 // Controlled by Service, but can be implemented here as well
             }
+            StartActivity(intent);
         }
     }
 }

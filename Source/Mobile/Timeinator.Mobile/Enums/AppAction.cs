@@ -3,7 +3,7 @@
     /// <summary>
     /// Actions supported by Main Activity
     /// </summary>
-    public enum NotificationAction
+    public enum AppAction
     {
         /// <summary>
         /// Simply opens app
@@ -28,6 +28,11 @@
         /// <summary>
         /// Resumes paused session
         /// </summary>
-        ResumeSession
+        ResumeSession,
+
+        /// <summary>
+        /// Stop / cancel session
+        /// </summary>
+        Stop
     }
 }

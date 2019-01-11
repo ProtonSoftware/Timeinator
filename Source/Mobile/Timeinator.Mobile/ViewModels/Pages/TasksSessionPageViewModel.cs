@@ -19,7 +19,6 @@ namespace Timeinator.Mobile
         private readonly ITimeTasksService mTimeTasksService;
         private readonly IUserTimeHandler mUserTimeHandler;
         private readonly IUIManager mUIManager;
-        private readonly INotificationHandler mNotificationHandler;
 
         /// <summary>
         /// Stores time loss of CurrentTask
@@ -112,7 +111,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSessionPageViewModel(ITimeTasksService timeTasksService, IUserTimeHandler userTimeHandler, IUIManager uiManager, TimeTasksMapper tasksMapper, INotificationHandler notificationHandler)
+        public TasksSessionPageViewModel(ITimeTasksService timeTasksService, IUserTimeHandler userTimeHandler, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
             StopCommand = new RelayCommand(Stop);
@@ -124,14 +123,11 @@ namespace Timeinator.Mobile
             mUserTimeHandler = userTimeHandler;
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
-            mNotificationHandler = notificationHandler;
 
             mUserTimeHandler.TimesUp += () => Device.BeginInvokeOnMainThread(async () => await UserTimeHandler_TimesUpAsync());
             RealTimer.Elapsed += RealTimer_Elapsed;  
 
             LoadTaskList();
-            mNotificationHandler.CreateNotificationChannel();
-            mNotificationHandler.BuildNotification("Current task", "Progress", NotificationType.Progress, NotificationAction.GoToSession);
             RealTimer.Start();
         }
 
@@ -156,11 +152,7 @@ namespace Timeinator.Mobile
             if (Paused)
             {
                 if (CurrentTask == null)
-                {
-                    mNotificationHandler.Cancel();
                     return;
-                }
-                NotifyMessage();
                 BreakStart = DateTime.Now;
                 mRemainingTaskTime = new TimeSpan(TimeRemaining.Ticks);
                 OnPropertyChanged(nameof(CurrentTask));
@@ -182,7 +174,6 @@ namespace Timeinator.Mobile
             else
             {
                 UpdateProgressBar();
-                NotifyProgress();
                 OnPropertyChanged(nameof(TimeRemaining));
             }
             OnPropertyChanged(nameof(Paused));
@@ -215,7 +206,6 @@ namespace Timeinator.Mobile
         /// </summary>
         private async Task UserTimeHandler_TimesUpAsync()
         {
-            NotifyPrompt();
             var popupViewModel = new PopupMessageViewModel
                 (
                     "Skończył się czas", 
@@ -241,7 +231,6 @@ namespace Timeinator.Mobile
             if (TaskItems.Count <= 0)
             {
                 RealTimer.Stop();
-                mNotificationHandler.Cancel();
                 DI.Application.GoToPage(ApplicationPage.TasksList);
             }
         }
@@ -267,33 +256,6 @@ namespace Timeinator.Mobile
             TaskProgress = recent + (1.0 - recent) * (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
             if (TaskProgress > 1)
                 TaskProgress = 1;
-        }
-
-        private void NotifyProgress()
-        {
-            var perc = (int)(TaskProgress * 100);
-            if (mNotificationHandler.Type != NotificationType.Progress)
-                mNotificationHandler.BuildNotification("Current task", $"{perc} %", NotificationType.Progress, NotificationAction.GoToSession);
-            mNotificationHandler.UpdateNotification(perc);
-            mNotificationHandler.Notify();
-        }
-
-        private void NotifyPrompt()
-        {
-            if (mNotificationHandler.Type != NotificationType.Prompt)
-            {
-                mNotificationHandler.BuildNotification("Current task", "Finished", NotificationType.Prompt, NotificationAction.GoToSession);
-                mNotificationHandler.UpdateNotification("Next task", NotificationAction.NextSessionTask);
-                mNotificationHandler.UpdateNotification("Pause", NotificationAction.PauseSession);
-            }
-            mNotificationHandler.Notify();
-        }
-
-        private void NotifyMessage()
-        {
-            if (mNotificationHandler.Type != NotificationType.Message)
-                mNotificationHandler.BuildNotification("Current task", "Paused", NotificationType.Message, NotificationAction.GoToSession);
-            mNotificationHandler.Notify();
         }
     }
 }

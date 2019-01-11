@@ -33,7 +33,7 @@ namespace Timeinator.Mobile.Droid
             {
                 // Add Android-specific DI implementations
                 Dna.Framework.Construction.Services.AddSingleton<INotificationHandler, NotificationHandler>();
-                Dna.Framework.Construction.Services.AddScoped<IUserTimeHandler, UserTimeHandler>(); // TODO: Change to Android once it works
+                Dna.Framework.Construction.Services.AddScoped<IUserTimeHandler, AndroidTimeHandler>();
 
                 // Build new DI
                 Dna.Framework.Construction.Build();

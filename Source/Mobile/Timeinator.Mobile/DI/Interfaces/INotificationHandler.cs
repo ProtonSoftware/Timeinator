@@ -9,10 +9,10 @@ namespace Timeinator.Mobile
         NotificationType Type { get; }
         void Notify();
         void Cancel();
-        void BuildNotification(string title, string content, NotificationType type, NotificationAction action);
+        void BuildNotification(string title, string content, NotificationType type, AppAction action);
         void UpdateNotification(string title, string content);
         void UpdateNotification(int progress);
-        void UpdateNotification(string title, NotificationAction option);
+        void UpdateNotification(string title, AppAction option);
         void CreateNotificationChannel();
     }
 }

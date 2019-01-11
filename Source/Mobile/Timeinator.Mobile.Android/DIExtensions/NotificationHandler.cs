@@ -58,7 +58,7 @@ namespace Timeinator.Mobile.Droid
         /// <summary>
         /// Builds notification which can be notified and updated
         /// </summary>
-        public void BuildNotification(string title, string content, NotificationType type, NotificationAction action)
+        public void BuildNotification(string title, string content, NotificationType type, AppAction action)
         {
             Type = type;
             var builder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context, CHANNEL_ID)
@@ -109,7 +109,7 @@ namespace Timeinator.Mobile.Droid
         /// <summary>
         /// Change Notification's parameters
         /// </summary>
-        public void UpdateNotification(string title, NotificationAction option)
+        public void UpdateNotification(string title, AppAction option)
         {
             if (NotificationBuilder == null)
                 return;
@@ -139,7 +139,7 @@ namespace Timeinator.Mobile.Droid
 
         #region Private Helpers
 
-        private PendingIntent GetPendingIndent(NotificationAction action)
+        private PendingIntent GetPendingIndent(AppAction action)
         {
             var intent = new Intent(Application.Context, typeof(ActionActivity));
             intent.SetAction(IntentActions.FromEnum(action));
