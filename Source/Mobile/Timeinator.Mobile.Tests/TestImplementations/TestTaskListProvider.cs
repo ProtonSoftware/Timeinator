@@ -169,6 +169,7 @@ namespace Timeinator.Mobile.Tests
                             Name = "NAME2",
                             Priority = Priority.One,
                             AssignedTime = new TimeSpan(0, 15, 0),
+                            HasConstantTime = true,
                             OrderId = 1
                         },
                         new TimeTaskContext
@@ -194,6 +195,7 @@ namespace Timeinator.Mobile.Tests
                             Name = "NAME2",
                             Priority = Priority.Five,
                             AssignedTime = new TimeSpan(0, 30, 0),
+                            HasConstantTime = true,
                             OrderId = 1
                         },
                         new TimeTaskContext
@@ -201,6 +203,7 @@ namespace Timeinator.Mobile.Tests
                             Name = "NAME3",
                             Priority = Priority.Five,
                             AssignedTime = new TimeSpan(0, 50, 0),
+                            HasConstantTime = true,
                             IsImportant = true,
                             OrderId = 2
                         },
@@ -215,6 +218,7 @@ namespace Timeinator.Mobile.Tests
                             Name = "NAME5",
                             Priority = Priority.Three,
                             AssignedTime = new TimeSpan(0, 40, 0),
+                            HasConstantTime = true,
                             OrderId = 4
                         },
                         new TimeTaskContext
