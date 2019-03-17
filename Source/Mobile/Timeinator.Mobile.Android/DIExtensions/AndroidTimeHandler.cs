@@ -33,8 +33,8 @@ namespace Timeinator.Mobile.Droid
         public override void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
             base.StartTimeHandler(sessionTasks);
-            TaskTimer.Dispose();
-            TaskTimer = new Timer { AutoReset = false };
+            //TaskTimer.Dispose();
+            //TaskTimer = new Timer { AutoReset = false };
             ConnectService();
         }
 

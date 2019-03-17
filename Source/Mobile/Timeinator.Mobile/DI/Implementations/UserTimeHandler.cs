@@ -174,7 +174,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Call TimesUp
         /// </summary>
-        public void InvokeTimesUp()
+        public void InvokeTimesUp() //REMOVE THIS BAD CODE
         {
             TimesUp.Invoke();
         }
