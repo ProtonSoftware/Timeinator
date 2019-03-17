@@ -12,6 +12,9 @@ using Android.Widget;
 
 namespace Timeinator.Mobile.Droid
 {
+    /// <summary>
+    /// Interface for Android-specific way of handling service
+    /// </summary>
     public interface ITaskService
     {
         Notification GetNotification();

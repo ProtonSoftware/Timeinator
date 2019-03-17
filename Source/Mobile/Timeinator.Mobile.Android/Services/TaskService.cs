@@ -13,7 +13,7 @@ using Java.Util;
 namespace Timeinator.Mobile.Droid
 {
     /// <summary>
-    /// Service handling session in the background
+    /// Low-level Android Service handling session in the background
     /// </summary>
     [Service(IsolatedProcess=true)]
     public class TaskService : Service, ITaskService
@@ -144,7 +144,7 @@ namespace Timeinator.Mobile.Droid
         /// <summary>
         /// Setup references to Timeinator DI
         /// </summary>
-        public void RefreshService(IUserTimeHandler androidTimeHandler)
+        public void RefreshService(IUserTimeHandler androidTimeHandler) // REMOVE THIS BAD CODE
         {
             mAndroidTimeHandler = androidTimeHandler;
             CollectTaskInfo();
@@ -170,7 +170,7 @@ namespace Timeinator.Mobile.Droid
         /// <summary>
         /// Loads data about CurrentTask to local properties
         /// </summary>
-        private void CollectTaskInfo()
+        private void CollectTaskInfo() // REMOVE THIS BAD CODE!!! - PROVIDE LOW-API INSTEAD AND USE TaskServiceConnection TO HANDLE REQUESTS
         {
             var task = mAndroidTimeHandler.CurrentTask;
             if (task == null)

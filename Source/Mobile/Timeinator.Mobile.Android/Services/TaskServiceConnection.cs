@@ -12,7 +12,10 @@ using Android.Widget;
 
 namespace Timeinator.Mobile.Droid
 {
-    public class TaskServiceConnection : Java.Lang.Object, IServiceConnection, ITaskService
+    /// <summary>
+    /// Handles communication with Service using low-level <see cref="ITaskService"/> and high-level <see cref="ISessionService"/>
+    /// </summary>
+    public class TaskServiceConnection : Java.Lang.Object, IServiceConnection, ITaskService, ISessionService
     {
         public TaskServiceConnection()
         {
