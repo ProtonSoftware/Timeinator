@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Linq;
 using Xamarin.Forms;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile
 {

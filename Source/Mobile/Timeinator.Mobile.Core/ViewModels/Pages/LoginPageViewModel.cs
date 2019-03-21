@@ -1,5 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 using System.Windows.Input;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile.Core
 {
