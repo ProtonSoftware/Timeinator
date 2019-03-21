@@ -5,12 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="Dna.Framework" Version="1.0.7.14" />
     <PackageReference Include="MvvmCross" Version="6.2.3" />
     <PackageReference Include="PropertyChanged.Fody" Version="2.6.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Backend\Timeinator.Core\Timeinator.Core.csproj" />
+    <ProjectReference Include="..\Timeinator.DataAccess\Timeinator.Mobile.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

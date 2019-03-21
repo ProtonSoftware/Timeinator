@@ -2,6 +2,7 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Microsoft.Extensions.DependencyInjection;
 using MvvmCross.Droid.Support.V7.AppCompat;
 using Timeinator.Mobile.Core;
 
@@ -21,6 +22,9 @@ namespace Timeinator.Mobile.AndroidNative
 
             // Set back main application theme after the application is loaded and splash screen can disappear
             SetTheme(Resource.Style.AppTheme);
+
+            // Add Android-specific dependency injection implementations
+            Dna.Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
         }
     }
 }
