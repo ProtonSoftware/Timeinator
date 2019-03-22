@@ -1,5 +1,8 @@
-﻿using MvvmCross.Navigation;
+﻿using MvvmCross;
+using MvvmCross.Base;
+using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
+using System;
 using System.Threading.Tasks;
 using Timeinator.Mobile.Core;
 
@@ -17,6 +20,11 @@ namespace Timeinator.Mobile.AndroidNative
         /// </summary>
         private IMvxNavigationService mNavigationService;
 
+        /// <summary>
+        /// The dispatcher that allows us to use main thread
+        /// </summary>
+        private IMvxMainThreadAsyncDispatcher mMainThreadDispatcher;
+
         #endregion
 
         #region Constructor
@@ -24,9 +32,10 @@ namespace Timeinator.Mobile.AndroidNative
         /// <summary>
         /// Default constructor
         /// </summary>
-        public UIManager(IMvxNavigationService navigationService)
+        public UIManager()
         {
-            mNavigationService = navigationService;
+            mNavigationService = Mvx.IoCProvider.Resolve<IMvxNavigationService>();
+            mMainThreadDispatcher = Mvx.IoCProvider.Resolve<IMvxMainThreadAsyncDispatcher>();
         }
 
         #endregion
@@ -81,8 +90,19 @@ namespace Timeinator.Mobile.AndroidNative
             return false;
         }
 
+        /// <summary>
+        /// Takes the action on the main application's thread and executes it here
+        /// </summary>
+        /// <param name="action">The action to execute on main thread</param>
+        /// <returns></returns>
+        public async Task ExecuteOnMainThread(Action action)
+        {
+            await mMainThreadDispatcher.ExecuteOnMainThreadAsync(action);
+        }
+
         public void ChangeLanguage(string langCode)
         {
+            // TODO: Implement this
             throw new System.NotImplementedException();
         }
 

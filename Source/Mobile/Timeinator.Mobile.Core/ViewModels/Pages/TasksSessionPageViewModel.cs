@@ -1,6 +1,4 @@
-﻿using MvvmCross;
-using MvvmCross.Base;
-using MvvmCross.ViewModels;
+﻿using MvvmCross.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -127,7 +125,7 @@ namespace Timeinator.Mobile.Core
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 
-            mUserTimeHandler.TimesUp += async () => await Mvx.IoCProvider.Resolve<IMvxMainThreadAsyncDispatcher>().ExecuteOnMainThreadAsync(async () => await UserTimeHandler_TimesUpAsync());
+            mUserTimeHandler.TimesUp += async () => await uiManager.ExecuteOnMainThread(async () => await UserTimeHandler_TimesUpAsync());
             RealTimer.Elapsed += RealTimer_Elapsed;  
 
             LoadTaskList();

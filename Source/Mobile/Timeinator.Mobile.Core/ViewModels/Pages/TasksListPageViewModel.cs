@@ -104,7 +104,7 @@ namespace Timeinator.Mobile.Core
             // Create commands
             // TODO: AddNewTaskCommand = new RelayCommand(() => mUIManager.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
             EditTaskCommand = new RelayParameterizedCommand(EditTask);
-            DeleteTaskCommand = new RelayParameterizedCommand(async (param) => await Mvx.IoCProvider.Resolve<IMvxMainThreadAsyncDispatcher>().ExecuteOnMainThreadAsync(async () => await DeleteTaskAsync(param)));
+            DeleteTaskCommand = new RelayParameterizedCommand(async (param) => await uiManager.ExecuteOnMainThread(async () => await DeleteTaskAsync(param)));
             UserReadyCommand = new RelayCommand(UserReady);
 
             // Get injected DI services

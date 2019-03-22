@@ -1,4 +1,5 @@
 ﻿using Dna;
+using MvvmCross;
 using MvvmCross.ViewModels;
 
 namespace Timeinator.Mobile.Core
@@ -42,7 +43,7 @@ namespace Timeinator.Mobile.Core
                                                       .AddFileLogger()
                                                       .AddTimeinatorViewModels()
                                                       .AddDbContext()
-            .Build();
+                                                      .Build();
 
         #endregion
     }

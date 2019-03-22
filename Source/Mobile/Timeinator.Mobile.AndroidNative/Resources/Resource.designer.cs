@@ -7052,7 +7052,10 @@ namespace Timeinator.Mobile.AndroidNative
 			public const int support_simple_spinner_dropdown_item = 2130968635;
 			
 			// aapt resource value: 0x7f04003c
-			public const int tooltip = 2130968636;
+			public const int TasksListPage = 2130968636;
+			
+			// aapt resource value: 0x7f04003d
+			public const int tooltip = 2130968637;
 			
 			static Layout()
 			{
