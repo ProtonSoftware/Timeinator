@@ -22,9 +22,6 @@ namespace Timeinator.Mobile.AndroidNative
 
             // Set back main application theme after the application is loaded and splash screen can disappear
             SetTheme(Resource.Style.AppTheme);
-
-            // Add Android-specific dependency injection implementations
-            Dna.Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
         }
     }
 }

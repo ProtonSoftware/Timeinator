@@ -1,4 +1,5 @@
 ﻿using MvvmCross.ViewModels;
+using System;
 using System.Threading.Tasks;
 
 namespace Timeinator.Mobile.Core
@@ -13,6 +14,8 @@ namespace Timeinator.Mobile.Core
         Task GoToViewModelPage(MvxViewModel viewModel);
 
         Task<bool> DisplayPopupMessageAsync(PopupMessageViewModel viewmodel);
+
+        Task ExecuteOnMainThread(Action action);
 
         void ChangeLanguage(string langCode);
     }

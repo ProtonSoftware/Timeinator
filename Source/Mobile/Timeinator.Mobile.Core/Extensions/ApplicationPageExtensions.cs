@@ -1,4 +1,5 @@
 ﻿using MvvmCross.ViewModels;
+using System.Diagnostics;
 
 namespace Timeinator.Mobile.Core
 {
@@ -13,7 +14,31 @@ namespace Timeinator.Mobile.Core
         /// <param name="page">The page to get view model for</param>
         public static MvxViewModel GetViewModel(this ApplicationPage page)
         {
-            return null;
+            switch (page)
+            {
+                case ApplicationPage.Login:
+                    return DI.GetInjectedPageViewModel<LoginPageViewModel>();
+
+                case ApplicationPage.About:
+                    return new AboutPageViewModel();
+
+                case ApplicationPage.Settings:
+                    return DI.GetInjectedPageViewModel<SettingsPageViewModel>();
+
+                case ApplicationPage.TasksList:
+                    return DI.GetInjectedPageViewModel<TasksListPageViewModel>();
+
+                case ApplicationPage.TasksPreparation:
+                    return DI.GetInjectedPageViewModel<TasksPreparationPageViewModel>();
+
+                case ApplicationPage.TasksSession:
+                    return DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
+
+                default:
+                    // Alert developer of an issue
+                    Debugger.Break();
+                    return null;
+            }
         }
     }
 }

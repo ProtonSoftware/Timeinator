@@ -9,7 +9,6 @@ namespace Timeinator.Mobile.Core
     /// </summary>
     public class LoginPageViewModel : MvxViewModel
     {
-        public string Temp { get; set; } = "COOOOS";
         #region Commands
 
         /// <summary>
@@ -39,7 +38,8 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public void ChangePageWithoutLogin()
         {
-            Temp += "C";
+            // Simply go to main task list page
+            DI.Application.GoToPage(ApplicationPage.TasksList);
         }
 
         #endregion
