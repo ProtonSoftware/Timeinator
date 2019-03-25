@@ -17,11 +17,17 @@ namespace Timeinator.Mobile.Droid
     /// </summary>
     public class TaskServiceConnection : Java.Lang.Object, IServiceConnection, ITaskService, ISessionService
     {
+        #region Constructors
+
         public TaskServiceConnection()
         {
             IsConnected = false;
             Binder = null;
         }
+
+        #endregion
+
+        #region Public properties
 
         public bool IsConnected { get; private set; }
         public TaskServiceBinder Binder { get; private set; }
@@ -37,6 +43,8 @@ namespace Timeinator.Mobile.Droid
             Binder = null;
             IsConnected = false;
         }
+
+        #endregion
 
         #region Interface Implementation
 
