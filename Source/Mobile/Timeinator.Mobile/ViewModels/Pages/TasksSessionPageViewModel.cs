@@ -136,7 +136,7 @@ namespace Timeinator.Mobile
         private void Stop()
         {
             mUserTimeHandler.StopTask();
-            ClickStandardAction();
+            RefreshProperties();
         }
 
         private void Resume()
@@ -144,10 +144,10 @@ namespace Timeinator.Mobile
             mUserTimeHandler.RefreshTasksState();
             mUserTimeHandler.ResumeTask();
             LoadTaskList();
-            ClickStandardAction();
+            RefreshProperties();
         }
 
-        private void ClickStandardAction()
+        private void RefreshProperties()
         {
             if (Paused)
             {
