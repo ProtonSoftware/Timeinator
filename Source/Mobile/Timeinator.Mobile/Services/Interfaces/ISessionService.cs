@@ -8,5 +8,11 @@ namespace Timeinator.Mobile
     /// </summary>
     public interface ISessionService
     {
+        bool Active { get; }
+        void Interval(TimeSpan assignedT);
+        void Stop();
+        void Start();
+
+        event Action TimerElapsed;
     }
 }

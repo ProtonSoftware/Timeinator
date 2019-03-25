@@ -13,7 +13,7 @@ using Android.Widget;
 namespace Timeinator.Mobile.Droid
 {
     /// <summary>
-    /// Manager to handle one session - Android extension
+    /// Handler for session - Android extension
     /// </summary>
     public class AndroidTimeHandler : UserTimeHandler
     {
@@ -24,50 +24,25 @@ namespace Timeinator.Mobile.Droid
         #endregion
 
         #region Interface implementation
-
-        public override bool TimerStateRunning()
-        {
-            return mServiceConnection.IsConnected;
-        }
-
-        public override void StartTimeHandler(List<TimeTaskContext> sessionTasks)
-        {
-            base.StartTimeHandler(sessionTasks);
-            //TaskTimer.Dispose();
-            //TaskTimer = new Timer { AutoReset = false };
-            ConnectService();
-        }
-
-        public override void StartTask()
-        {
-            base.StartTask();
-        }
-
-        public override void StopTask()
-        {
-            base.StopTask();
-        }
-
-        public override void ResumeTask()
-        {
-            base.ResumeTask();
-        }
-
-        public override void RemoveAndContinueTasks()
-        {
-            base.RemoveAndContinueTasks();
-        }
-
+        // SURPRISE! THERE IS NO INTERFACE IMPLEMENTATION NEEDED ANYMORE
         #endregion
 
-        public void ConnectService()
+        #region Private helpers
+
+        private void ConnectService()
         {
             if (mServiceConnection == null)
                 mServiceConnection = new TaskServiceConnection();
             var intent = new Intent(Application.Context, typeof(TaskService));
             Application.Context.BindService(intent, mServiceConnection, Bind.AutoCreate);
-            // Provide DI to service
-            mServiceConnection.RefreshService(this);
         }
+
+        protected override void StartService()
+        {
+            ConnectService();
+            mSessionService = mServiceConnection;
+        }
+
+        #endregion
     }
 }

@@ -53,7 +53,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Holds current task state
         /// </summary>
-        public bool Paused => !mUserTimeHandler.TimerStateRunning();
+        public bool Paused => !mUserTimeHandler.SessionRunning;
 
         /// <summary>
         /// Remaining time from handler

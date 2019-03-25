@@ -46,28 +46,34 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Event called when time for task elapsed
         /// </summary>
-        public event Action TimesUp;
+        public event Action TimesUp {
+            add { mSessionService.TimerElapsed += value; }
+            remove { mSessionService.TimerElapsed -= value; }
+        }
+
+        /// <summary>
+        /// Tells whether Session Timer is running
+        /// </summary>
+        public bool SessionRunning => mSessionService.Active;
 
         #endregion
 
         #region Interface Implementation
 
         /// <summary>
-        /// Resets handler and loads list of tasks to TimeHandler and starts the first one
+        /// Resets handler, starts <see cref="ISessionService"/>, loads list of tasks to TimeHandler and starts the first one
         /// </summary>
         /// <param name="sessionTasks">Session tasks sorted by OrderId</param>
         public virtual void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
-            TaskTimer.Dispose();
-            TaskTimer = new Timer { AutoReset = false };
-            TaskTimer.Elapsed += (sender, e) => TimesUp.Invoke();
+            StartService();
             SessionTasks = new List<TimeTaskContext>(sessionTasks);
             CurrentTaskStartTime = CurrentTime;
             StartTask();
         }
 
         /// <summary>
-        /// Function serving correct Session Tasks
+        /// Function providing correct Session Tasks
         /// </summary>
         public virtual List<TimeTaskContext> DownloadSession()
         {
@@ -91,7 +97,7 @@ namespace Timeinator.Mobile
         {
             if (CurrentTask == null || CurrentTask.Progress < 1)
                 return;
-            TaskTimer.Stop();
+            mSessionService.Stop();
             var ttsvc = Dna.Framework.Service<ITimeTasksService>();
             ttsvc.RemoveFinishedTasks(new List<TimeTaskContext> { CurrentTask });
             SessionTasks.Remove(CurrentTask);
@@ -109,25 +115,20 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
-        /// Checks state of TaskTimer
-        /// </summary>
-        public virtual bool TimerStateRunning() => TaskTimer.Enabled;
-
-        /// <summary>
         /// Starts next task
         /// </summary>
         public virtual void StartTask()
         {
-            TaskTimer.Stop();
+            mSessionService.Stop();
             if (CurrentTask == null)
                 return;
-            var CurrentTaskAssignedMilliseconds = CurrentTask.AssignedTime.TotalMilliseconds;
-            if (CurrentTaskAssignedMilliseconds > 0)
+            var CurrentTaskAssignedT = CurrentTask.AssignedTime;
+            if (CurrentTaskAssignedT.TotalMilliseconds > 0)
             {
                 RecentProgress = 0;
-                TaskTimer.Interval = CurrentTaskAssignedMilliseconds;
+                mSessionService.Interval(CurrentTaskAssignedT);
                 CurrentTaskStartTime = CurrentTime;
-                TaskTimer.Start();
+                mSessionService.Start();
             }
             else
                 SessionTasks.Remove(CurrentTask);
@@ -138,7 +139,7 @@ namespace Timeinator.Mobile
         /// </summary>
         public virtual void StopTask()
         {
-            TaskTimer.Stop();
+            mSessionService.Stop();
             if (CurrentTask == null)
                 return;
             SaveProgress();
@@ -152,11 +153,11 @@ namespace Timeinator.Mobile
             if (CurrentTask == null)
                 return;
             CurrentTaskStartTime = CurrentTime;
-            var assignedms = CurrentTask.AssignedTime.TotalMilliseconds;
-            if (assignedms > 0)
+            var CurrentTaskAssignedT = CurrentTask.AssignedTime;
+            if (CurrentTaskAssignedT.TotalMilliseconds > 0)
             {
-                TaskTimer.Interval = CurrentTask.AssignedTime.TotalMilliseconds;
-                TaskTimer.Start();
+                mSessionService.Interval(CurrentTaskAssignedT);
+                mSessionService.Start();
             }
         }
 
@@ -167,16 +168,8 @@ namespace Timeinator.Mobile
         {
             if (CurrentTask == null)
                 return;
-            TaskTimer.Stop();
+            mSessionService.Stop();
             CurrentTask.Progress = 1;
-        }
-
-        /// <summary>
-        /// Call TimesUp
-        /// </summary>
-        public void InvokeTimesUp() //REMOVE THIS BAD CODE
-        {
-            TimesUp.Invoke();
         }
 
         #endregion
@@ -184,9 +177,9 @@ namespace Timeinator.Mobile
         #region Private Helpers
 
         /// <summary>
-        /// Timer used in all of tasks sessions
+        /// Interface for accessing Timer handling functionality
         /// </summary>
-        protected Timer TaskTimer { get; set; } = new Timer();
+        protected ISessionService mSessionService;
 
         /// <summary>
         /// Stores current time
@@ -201,6 +194,15 @@ namespace Timeinator.Mobile
             var step = TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds;
             CurrentTask.Progress = RecentProgress + (1.0 - RecentProgress) * step;
             RecentProgress += step;
+        }
+
+        /// <summary>
+        /// Get the proper Service running
+        /// </summary>
+        protected virtual void StartService()
+        {
+            if (mSessionService == null)
+                mSessionService = new DrySessionService();
         }
 
         #endregion
