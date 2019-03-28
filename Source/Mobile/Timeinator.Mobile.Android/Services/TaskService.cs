@@ -8,7 +8,6 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Java.Util;
 
 namespace Timeinator.Mobile.Droid
 {
@@ -16,16 +15,14 @@ namespace Timeinator.Mobile.Droid
     /// Low-level Android Service handling session in the background
     /// </summary>
     [Service(IsolatedProcess=true)]
-    public class TaskService : Service, ITaskService
+    public class TaskService : Service
     {
+        public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 5;
         public NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
 
         #region Private members
 
-        private static TaskService Instance = null;
-
         private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
-        private Timer TaskTimer { get; set; }
 
         #endregion
 
@@ -38,25 +35,8 @@ namespace Timeinator.Mobile.Droid
         #endregion
 
         #region Public methods
-        //public string Name { get; set; }
-        //public DateTime Start { get; set; }
-        //public TimeSpan Time { get; set; }
-        //public double RecentProgress { get; set; }
 
-        //public event Action TimerElapsed;
-
-        public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 5;
         public IBinder Binder { get; private set; }
-
-        //public TimeSpan TimeRemaining() => Start.Add(Time) - DateTime.Now;
-
-        public override void OnCreate()
-        {
-            base.OnCreate();
-            Instance = this;
-            //TimerElapsed = () => { };
-            //CreateTimer();
-        }
 
         [return: GeneratedEnum]
         public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
@@ -65,10 +45,14 @@ namespace Timeinator.Mobile.Droid
             return StartCommandResult.Sticky;
         }
 
+        public override void OnCreate()
+        {
+            base.OnCreate();
+        }
+
         public override void OnDestroy()
         {
             base.OnDestroy();
-            Instance = null;
         }
 
         public override IBinder OnBind(Intent intent)
@@ -79,6 +63,18 @@ namespace Timeinator.Mobile.Droid
             Binder = new TaskServiceBinder(this);
             return Binder;
         }
+
+        #endregion
+
+        //public string Name { get; set; }
+        //public DateTime Start { get; set; }
+        //public TimeSpan Time { get; set; }
+        //public double RecentProgress { get; set; }
+
+        //public event Action TimerElapsed;
+
+        //public TimeSpan TimeRemaining() => Start.Add(Time) - DateTime.Now;
+
 
         /// <summary>
         /// Perform any action supported by Service
@@ -100,7 +96,6 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public void StopTaskService()
         {
-            TaskTimer.Dispose();
             StopSelf();
         }
 
@@ -131,14 +126,6 @@ namespace Timeinator.Mobile.Droid
         }
 
         /// <summary>
-        /// Checks if instance is created
-        /// </summary>
-        public bool IsRunning()
-        {
-            return Instance != null;
-        }
-
-        /// <summary>
         /// Execute when task time is over
         /// </summary>
         public void EndOfTime()
@@ -147,19 +134,5 @@ namespace Timeinator.Mobile.Droid
             intent.SetAction(IntentActions.ACTION_NEXTTASK);
             HandleMessage(intent);
         }
-
-        #endregion
-
-        #region Private Methods
-
-        private void CreateTimer()
-        {
-            if (TaskTimer != null)
-                TaskTimer.Dispose();
-            TaskTimer = new Timer();
-            //TaskTimer.ScheduleAtFixedRate(new ServiceRefresh(this), Time.Ticks, TimeSpan.FromSeconds(REFRESH_RATE).Ticks);
-        }
-
-        #endregion
     }
 }
