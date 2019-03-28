@@ -15,9 +15,6 @@ namespace Timeinator.Mobile.WPF
 
             Forms.Init();
             LoadApplication(new Timeinator.Mobile.App());
-
-            Dna.Framework.Construction.Services.AddSingleton<INotificationHandler, EmptyNotificationHandler>();
-            Dna.Framework.Construction.Build();
         }
     }
 }

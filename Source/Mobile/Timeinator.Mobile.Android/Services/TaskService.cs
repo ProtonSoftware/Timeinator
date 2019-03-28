@@ -18,6 +18,8 @@ namespace Timeinator.Mobile.Droid
     [Service(IsolatedProcess=true)]
     public class TaskService : Service, ITaskService
     {
+        public NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
+
         #region Private members
 
         private static TaskService Instance = null;
@@ -109,7 +111,7 @@ namespace Timeinator.Mobile.Droid
         {
             if (NotificationBuilder == null)
             {
-                var intent = new Intent(Application.Context, typeof(ActionActivity));
+                var intent = new Intent(Application.Context, typeof(MainActivity));
                 intent.SetAction(IntentActions.FromEnum(AppAction.GoToSession));
                 intent.PutExtra("NID", NOTIFICATION_ID);
                 intent.AddFlags(ActivityFlags.ClearTop);
@@ -149,27 +151,6 @@ namespace Timeinator.Mobile.Droid
         #endregion
 
         #region Private Methods
-
-        /// <summary>
-        /// Run fired every REFRESH_RATE period, updates Service state
-        /// </summary>
-        private class ServiceRefresh : TimerTask
-        {
-            public ServiceRefresh(TaskService service) : base()
-            {
-                mService = service;
-            }
-
-            private TaskService mService;
-
-            public override void Run()
-            {
-                NotificationHandler.NManager.Notify(NOTIFICATION_ID, mService.GetNotification());
-                // Check if time has passed
-                //if (mService.TimeRemaining().Ticks < 0)
-                //    mService.EndOfTime();
-            }
-        }
 
         private void CreateTimer()
         {

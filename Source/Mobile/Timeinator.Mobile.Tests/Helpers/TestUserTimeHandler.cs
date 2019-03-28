@@ -24,7 +24,7 @@ namespace Timeinator.Mobile.Tests
             handler.StartTimeHandler(tasksList);
 
             // Assert
-            Assert.True(handler.TimerStateRunning());
+            Assert.True(handler.SessionRunning);
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace Timeinator.Mobile.Tests
             handler.StopTask();
 
             // Assert
-            Assert.False(handler.TimerStateRunning());
+            Assert.False(handler.SessionRunning);
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace Timeinator.Mobile.Tests
             handler.ResumeTask();
 
             // Assert
-            Assert.True(handler.TimerStateRunning());
+            Assert.True(handler.SessionRunning);
         }
     }
 }
