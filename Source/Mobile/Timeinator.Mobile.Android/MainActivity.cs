@@ -29,10 +29,9 @@ namespace Timeinator.Mobile.Droid
             LoadApplication(new App());
 
             // If there is no DI setup yet, i.e. NotificationHandler is not injected
-            if (!Dna.Framework.Construction.Services.Any(x => x.ServiceType == typeof(INotificationHandler)))
+            if (!Dna.Framework.Construction.Services.Any(x => x.ServiceType == typeof(IUserTimeHandler)))
             {
                 // Add Android-specific DI implementations
-                Dna.Framework.Construction.Services.AddSingleton<INotificationHandler, NotificationHandler>();
                 Dna.Framework.Construction.Services.AddScoped<IUserTimeHandler, AndroidTimeHandler>();
 
                 // Build new DI
