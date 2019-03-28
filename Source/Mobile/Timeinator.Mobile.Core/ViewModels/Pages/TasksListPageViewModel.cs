@@ -121,6 +121,9 @@ namespace Timeinator.Mobile.Core
 
             // Get every unique tag to display in the view
             GetEveryTaskTags();
+
+            // TODO: Delete
+            TaskItems.Add(new TimeTaskViewModel { Name = "XXXXXXXX", Description = "XASDASDDSADDAS", IsEnabled = true });
         }
 
         #endregion
