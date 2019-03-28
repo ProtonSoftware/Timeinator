@@ -21,6 +21,5 @@ namespace Timeinator.Mobile.Droid
         void HandleMessage(Intent intent);
         void StopTaskService();
         bool IsRunning();
-        void RefreshService(IUserTimeHandler androidTimeHandler);
     }
 }

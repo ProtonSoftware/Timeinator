@@ -26,6 +26,7 @@ namespace Timeinator.Mobile
         {
             TaskTiming = new Timer { AutoReset = false };
             TaskTiming.Elapsed += (s, e) => TimerElapsed.Invoke();
+            TimerElapsed = () => { };
         }
 
         ~DrySessionService()
@@ -48,6 +49,7 @@ namespace Timeinator.Mobile
         }
 
         public void Stop() => TaskTiming.Stop();
+
         public void Start() => TaskTiming.Start();
 
         #endregion

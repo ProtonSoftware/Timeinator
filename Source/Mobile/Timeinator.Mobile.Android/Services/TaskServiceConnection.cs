@@ -46,7 +46,55 @@ namespace Timeinator.Mobile.Droid
 
         #endregion
 
-        #region Interface Implementation
+        #region ISessionService Implementation
+        public bool Active { get; set; }
+        public event Action TimerElapsed;
+        public void Interval(TimeSpan assignedT) { }
+        public void Stop() { }
+        public void Start() { }
+        /*
+        public bool Active => IsRunning();
+
+        public event Action TimerElapsed
+        {
+            add { Binder.Service.TimerElapsed += value; }
+            remove { Binder.Service.TimerElapsed -= value; }
+        }
+
+        public void Interval(TimeSpan assignedT)
+        {
+            if (Active)
+            {
+                var intent = new Intent();
+                intent.SetAction(IntentActions.ACTION_PAUSETASK);
+                HandleMessage(intent);
+            }
+            if (IsConnected)
+            {
+                Binder.Service.Start = DateTime.Now;
+                Binder.Service.Time = assignedT;
+                Binder.Service.Name = "TEST";
+                Binder.Service.RecentProgress = 0;
+            }
+        }
+
+        public void Stop()
+        {
+            var intent = new Intent();
+            intent.SetAction(IntentActions.ACTION_PAUSETASK);
+            HandleMessage(intent);
+        }
+
+        public void Start()
+        {
+            var intent = new Intent();
+            intent.SetAction(IntentActions.ACTION_RESUMETASK);
+            HandleMessage(intent);
+        }
+        */
+        #endregion
+
+        #region ITaskService Implementation
 
         public Notification GetNotification()
         {
@@ -74,13 +122,6 @@ namespace Timeinator.Mobile.Droid
             if (!IsConnected)
                 return false;
             return Binder.Service.IsRunning();
-        }
-
-        public void RefreshService(IUserTimeHandler androidTimeHandler)
-        {
-            if (!IsConnected)
-                return;
-            Binder.Service.RefreshService(androidTimeHandler);
         }
 
         #endregion
