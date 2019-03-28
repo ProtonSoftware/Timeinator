@@ -10,7 +10,4 @@
         android:textSize="30dp"
 		local:MvxBind="Click EnterWithoutLoginCommand"
 	/>
-	<TimePicker 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
 </LinearLayout>

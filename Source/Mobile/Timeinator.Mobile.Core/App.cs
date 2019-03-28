@@ -8,6 +8,9 @@ namespace Timeinator.Mobile.Core
     {
         public override void Initialize()
         {
+            // Set initial page
+            RegisterAppStart<LoginPageViewModel>();
+
             // Mvx specific stuff
             CreatableTypes()
                 .EndingWith("Service")
@@ -20,9 +23,6 @@ namespace Timeinator.Mobile.Core
                 // Setup brand-new DI
                 DI.InitialSetup();
             }
-
-            // Set initial page
-            RegisterAppStart<LoginPageViewModel>();
         }
     }
 }

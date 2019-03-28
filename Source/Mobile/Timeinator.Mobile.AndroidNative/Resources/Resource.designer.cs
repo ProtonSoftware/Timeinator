@@ -3959,6 +3959,156 @@ namespace Timeinator.Mobile.AndroidNative
 			global::MvvmCross.Droid.Support.V7.AppCompat.Resource.Styleable.ViewStubCompat_android_id = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.ViewStubCompat_android_id;
 			global::MvvmCross.Droid.Support.V7.AppCompat.Resource.Styleable.ViewStubCompat_android_inflatedId = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.ViewStubCompat_android_inflatedId;
 			global::MvvmCross.Droid.Support.V7.AppCompat.Resource.Styleable.ViewStubCompat_android_layout = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.ViewStubCompat_android_layout;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxBind = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.MvxBind;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxDropDownItemTemplate = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.MvxDropDownItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxGroupItemTemplate = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.MvxGroupItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxItemTemplate = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.MvxItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxLang = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.MvxLang;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxTemplate = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.MvxTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.MvxTemplateSelector = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.MvxTemplateSelector;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fastScrollEnabled = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fastScrollEnabled;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fastScrollHorizontalThumbDrawable = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fastScrollHorizontalThumbDrawable;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fastScrollHorizontalTrackDrawable = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fastScrollHorizontalTrackDrawable;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fastScrollVerticalThumbDrawable = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fastScrollVerticalThumbDrawable;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fastScrollVerticalTrackDrawable = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fastScrollVerticalTrackDrawable;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.font = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.font;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fontProviderAuthority = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fontProviderAuthority;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fontProviderCerts = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fontProviderCerts;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fontProviderFetchStrategy = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fontProviderFetchStrategy;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fontProviderFetchTimeout = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fontProviderFetchTimeout;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fontProviderPackage = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fontProviderPackage;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fontProviderQuery = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fontProviderQuery;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fontStyle = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fontStyle;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.fontWeight = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.fontWeight;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.layoutManager = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.layoutManager;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.reverseLayout = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.reverseLayout;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.spanCount = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.spanCount;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Attribute.stackFromEnd = global::Timeinator.Mobile.AndroidNative.Resource.Attribute.stackFromEnd;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Boolean.abc_action_bar_embed_tabs = global::Timeinator.Mobile.AndroidNative.Resource.Boolean.abc_action_bar_embed_tabs;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Color.notification_action_color_filter = global::Timeinator.Mobile.AndroidNative.Resource.Color.notification_action_color_filter;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Color.notification_icon_bg_color = global::Timeinator.Mobile.AndroidNative.Resource.Color.notification_icon_bg_color;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Color.ripple_material_light = global::Timeinator.Mobile.AndroidNative.Resource.Color.ripple_material_light;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Color.secondary_text_default_material_light = global::Timeinator.Mobile.AndroidNative.Resource.Color.secondary_text_default_material_light;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.compat_button_inset_horizontal_material = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.compat_button_inset_horizontal_material;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.compat_button_inset_vertical_material = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.compat_button_inset_vertical_material;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.compat_button_padding_horizontal_material = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.compat_button_padding_horizontal_material;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.compat_button_padding_vertical_material = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.compat_button_padding_vertical_material;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.compat_control_corner_material = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.compat_control_corner_material;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.fastscroll_default_thickness = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.fastscroll_default_thickness;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.fastscroll_margin = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.fastscroll_margin;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.fastscroll_minimum_range = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.fastscroll_minimum_range;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.item_touch_helper_max_drag_scroll_per_frame;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.item_touch_helper_swipe_escape_max_velocity;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.item_touch_helper_swipe_escape_velocity = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.item_touch_helper_swipe_escape_velocity;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_action_icon_size = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_action_icon_size;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_action_text_size = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_action_text_size;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_big_circle_margin = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_big_circle_margin;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_content_margin_start = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_content_margin_start;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_large_icon_height = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_large_icon_height;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_large_icon_width = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_large_icon_width;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_main_column_padding_top = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_main_column_padding_top;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_media_narrow_margin = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_media_narrow_margin;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_right_icon_size = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_right_icon_size;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_right_side_padding_top = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_right_side_padding_top;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_small_icon_background_padding = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_small_icon_background_padding;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_small_icon_size_as_large = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_small_icon_size_as_large;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_subtext_size = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_subtext_size;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_top_pad = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_top_pad;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Dimension.notification_top_pad_large_text = global::Timeinator.Mobile.AndroidNative.Resource.Dimension.notification_top_pad_large_text;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notification_action_background = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notification_action_background;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notification_bg = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notification_bg;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notification_bg_low = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notification_bg_low;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notification_bg_low_normal = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notification_bg_low_normal;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notification_bg_low_pressed = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notification_bg_low_pressed;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notification_bg_normal = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notification_bg_normal;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notification_bg_normal_pressed = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notification_bg_normal_pressed;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notification_icon_background = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notification_icon_background;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notification_template_icon_bg = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notification_template_icon_bg;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notification_template_icon_low_bg = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notification_template_icon_low_bg;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notification_tile_bg = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notification_tile_bg;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Drawable.notify_panel_notification_icon_bg = global::Timeinator.Mobile.AndroidNative.Resource.Drawable.notify_panel_notification_icon_bg;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.MvvmCrossTagId = global::Timeinator.Mobile.AndroidNative.Resource.Id.MvvmCrossTagId;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.MvxBindingTagUnique = global::Timeinator.Mobile.AndroidNative.Resource.Id.MvxBindingTagUnique;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.action_container = global::Timeinator.Mobile.AndroidNative.Resource.Id.action_container;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.action_divider = global::Timeinator.Mobile.AndroidNative.Resource.Id.action_divider;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.action_image = global::Timeinator.Mobile.AndroidNative.Resource.Id.action_image;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.action_text = global::Timeinator.Mobile.AndroidNative.Resource.Id.action_text;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.actions = global::Timeinator.Mobile.AndroidNative.Resource.Id.actions;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.async = global::Timeinator.Mobile.AndroidNative.Resource.Id.async;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.blocking = global::Timeinator.Mobile.AndroidNative.Resource.Id.blocking;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.chronometer = global::Timeinator.Mobile.AndroidNative.Resource.Id.chronometer;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.forever = global::Timeinator.Mobile.AndroidNative.Resource.Id.forever;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.icon = global::Timeinator.Mobile.AndroidNative.Resource.Id.icon;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.icon_group = global::Timeinator.Mobile.AndroidNative.Resource.Id.icon_group;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.info = global::Timeinator.Mobile.AndroidNative.Resource.Id.info;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.italic = global::Timeinator.Mobile.AndroidNative.Resource.Id.italic;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.item_touch_helper_previous_elevation = global::Timeinator.Mobile.AndroidNative.Resource.Id.item_touch_helper_previous_elevation;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.line1 = global::Timeinator.Mobile.AndroidNative.Resource.Id.line1;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.line3 = global::Timeinator.Mobile.AndroidNative.Resource.Id.line3;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.normal = global::Timeinator.Mobile.AndroidNative.Resource.Id.normal;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.notification_background = global::Timeinator.Mobile.AndroidNative.Resource.Id.notification_background;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.notification_main_column = global::Timeinator.Mobile.AndroidNative.Resource.Id.notification_main_column;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.notification_main_column_container = global::Timeinator.Mobile.AndroidNative.Resource.Id.notification_main_column_container;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.right_icon = global::Timeinator.Mobile.AndroidNative.Resource.Id.right_icon;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.right_side = global::Timeinator.Mobile.AndroidNative.Resource.Id.right_side;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.tag_transition_group = global::Timeinator.Mobile.AndroidNative.Resource.Id.tag_transition_group;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.text = global::Timeinator.Mobile.AndroidNative.Resource.Id.text;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.text2 = global::Timeinator.Mobile.AndroidNative.Resource.Id.text2;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.time = global::Timeinator.Mobile.AndroidNative.Resource.Id.time;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Id.title = global::Timeinator.Mobile.AndroidNative.Resource.Id.title;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Integer.status_bar_notification_info_maxnum = global::Timeinator.Mobile.AndroidNative.Resource.Integer.status_bar_notification_info_maxnum;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Layout.notification_action = global::Timeinator.Mobile.AndroidNative.Resource.Layout.notification_action;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Layout.notification_action_tombstone = global::Timeinator.Mobile.AndroidNative.Resource.Layout.notification_action_tombstone;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Layout.notification_template_custom_big = global::Timeinator.Mobile.AndroidNative.Resource.Layout.notification_template_custom_big;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Layout.notification_template_icon_group = global::Timeinator.Mobile.AndroidNative.Resource.Layout.notification_template_icon_group;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Layout.notification_template_part_chronometer = global::Timeinator.Mobile.AndroidNative.Resource.Layout.notification_template_part_chronometer;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Layout.notification_template_part_time = global::Timeinator.Mobile.AndroidNative.Resource.Layout.notification_template_part_time;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.String.status_bar_notification_info_overflow = global::Timeinator.Mobile.AndroidNative.Resource.String.status_bar_notification_info_overflow;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Style.TextAppearance_Compat_Notification = global::Timeinator.Mobile.AndroidNative.Resource.Style.TextAppearance_Compat_Notification;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Style.TextAppearance_Compat_Notification_Info = global::Timeinator.Mobile.AndroidNative.Resource.Style.TextAppearance_Compat_Notification_Info;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Style.TextAppearance_Compat_Notification_Line2 = global::Timeinator.Mobile.AndroidNative.Resource.Style.TextAppearance_Compat_Notification_Line2;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Style.TextAppearance_Compat_Notification_Time = global::Timeinator.Mobile.AndroidNative.Resource.Style.TextAppearance_Compat_Notification_Time;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Style.TextAppearance_Compat_Notification_Title = global::Timeinator.Mobile.AndroidNative.Resource.Style.TextAppearance_Compat_Notification_Title;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Style.Widget_Compat_NotificationActionContainer = global::Timeinator.Mobile.AndroidNative.Resource.Style.Widget_Compat_NotificationActionContainer;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Style.Widget_Compat_NotificationActionText = global::Timeinator.Mobile.AndroidNative.Resource.Style.Widget_Compat_NotificationActionText;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamily = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamily;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamily_fontProviderAuthority = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamily_fontProviderAuthority;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamily_fontProviderCerts = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamily_fontProviderCerts;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamily_fontProviderFetchStrategy = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamily_fontProviderFetchStrategy;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamily_fontProviderFetchTimeout = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamily_fontProviderFetchTimeout;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamily_fontProviderPackage = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamily_fontProviderPackage;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamily_fontProviderQuery = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamily_fontProviderQuery;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamilyFont = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamilyFont;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamilyFont_android_font = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamilyFont_android_font;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamilyFont_android_fontStyle = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamilyFont_android_fontStyle;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamilyFont_android_fontWeight = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamilyFont_android_fontWeight;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamilyFont_font = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamilyFont_font;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamilyFont_fontStyle = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamilyFont_fontStyle;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.FontFamilyFont_fontWeight = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.FontFamilyFont_fontWeight;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxBinding = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxBinding;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxBinding_MvxBind = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxBinding_MvxBind;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxBinding_MvxLang = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxBinding_MvxLang;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxControl = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxControl;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxControl_MvxTemplate = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxControl_MvxTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxExpandableListView = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxExpandableListView;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxExpandableListView_MvxGroupItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxListView = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxListView;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxListView_MvxItemTemplate = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxListView_MvxItemTemplate;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxRecyclerView = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxRecyclerView;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.MvxRecyclerView_MvxTemplateSelector = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.MvxRecyclerView_MvxTemplateSelector;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_android_descendantFocusability = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView_android_descendantFocusability;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_android_orientation = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView_android_orientation;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_fastScrollEnabled = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView_fastScrollEnabled;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_fastScrollHorizontalThumbDrawable = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView_fastScrollHorizontalThumbDrawable;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_fastScrollHorizontalTrackDrawable = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView_fastScrollHorizontalTrackDrawable;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_fastScrollVerticalThumbDrawable = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView_fastScrollVerticalThumbDrawable;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_fastScrollVerticalTrackDrawable = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView_fastScrollVerticalTrackDrawable;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_layoutManager = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView_layoutManager;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_reverseLayout = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView_reverseLayout;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_spanCount = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView_spanCount;
+			global::MvvmCross.Droid.Support.V7.RecyclerView.Resource.Styleable.RecyclerView_stackFromEnd = global::Timeinator.Mobile.AndroidNative.Resource.Styleable.RecyclerView_stackFromEnd;
 		}
 		
 		public partial class Animation
@@ -4041,23 +4191,26 @@ namespace Timeinator.Mobile.AndroidNative
 		public partial class Attribute
 		{
 			
-			// aapt resource value: 0x7f01015a
-			public const int MvxBind = 2130772314;
-			
-			// aapt resource value: 0x7f01015e
-			public const int MvxDropDownItemTemplate = 2130772318;
+			// aapt resource value: 0x7f01015b
+			public const int MvxBind = 2130772315;
 			
 			// aapt resource value: 0x7f01015f
-			public const int MvxGroupItemTemplate = 2130772319;
+			public const int MvxDropDownItemTemplate = 2130772319;
 			
-			// aapt resource value: 0x7f01015d
-			public const int MvxItemTemplate = 2130772317;
+			// aapt resource value: 0x7f010160
+			public const int MvxGroupItemTemplate = 2130772320;
 			
-			// aapt resource value: 0x7f01015b
-			public const int MvxLang = 2130772315;
+			// aapt resource value: 0x7f01015e
+			public const int MvxItemTemplate = 2130772318;
 			
 			// aapt resource value: 0x7f01015c
-			public const int MvxTemplate = 2130772316;
+			public const int MvxLang = 2130772316;
+			
+			// aapt resource value: 0x7f01015d
+			public const int MvxTemplate = 2130772317;
+			
+			// aapt resource value: 0x7f01015a
+			public const int MvxTemplateSelector = 2130772314;
 			
 			// aapt resource value: 0x7f010052
 			public const int actionBarDivider = 2130772050;
@@ -5138,44 +5291,44 @@ namespace Timeinator.Mobile.AndroidNative
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f0d004b
-			public const int abc_background_cache_hint_selector_material_dark = 2131558475;
-			
-			// aapt resource value: 0x7f0d004c
-			public const int abc_background_cache_hint_selector_material_light = 2131558476;
-			
 			// aapt resource value: 0x7f0d004d
-			public const int abc_btn_colored_borderless_text_material = 2131558477;
+			public const int abc_background_cache_hint_selector_material_dark = 2131558477;
 			
 			// aapt resource value: 0x7f0d004e
-			public const int abc_btn_colored_text_material = 2131558478;
+			public const int abc_background_cache_hint_selector_material_light = 2131558478;
 			
 			// aapt resource value: 0x7f0d004f
-			public const int abc_color_highlight_material = 2131558479;
+			public const int abc_btn_colored_borderless_text_material = 2131558479;
 			
 			// aapt resource value: 0x7f0d0050
-			public const int abc_hint_foreground_material_dark = 2131558480;
+			public const int abc_btn_colored_text_material = 2131558480;
 			
 			// aapt resource value: 0x7f0d0051
-			public const int abc_hint_foreground_material_light = 2131558481;
+			public const int abc_color_highlight_material = 2131558481;
+			
+			// aapt resource value: 0x7f0d0052
+			public const int abc_hint_foreground_material_dark = 2131558482;
+			
+			// aapt resource value: 0x7f0d0053
+			public const int abc_hint_foreground_material_light = 2131558483;
 			
 			// aapt resource value: 0x7f0d0000
 			public const int abc_input_method_navigation_guard = 2131558400;
 			
-			// aapt resource value: 0x7f0d0052
-			public const int abc_primary_text_disable_only_material_dark = 2131558482;
-			
-			// aapt resource value: 0x7f0d0053
-			public const int abc_primary_text_disable_only_material_light = 2131558483;
-			
 			// aapt resource value: 0x7f0d0054
-			public const int abc_primary_text_material_dark = 2131558484;
+			public const int abc_primary_text_disable_only_material_dark = 2131558484;
 			
 			// aapt resource value: 0x7f0d0055
-			public const int abc_primary_text_material_light = 2131558485;
+			public const int abc_primary_text_disable_only_material_light = 2131558485;
 			
 			// aapt resource value: 0x7f0d0056
-			public const int abc_search_url_text = 2131558486;
+			public const int abc_primary_text_material_dark = 2131558486;
+			
+			// aapt resource value: 0x7f0d0057
+			public const int abc_primary_text_material_light = 2131558487;
+			
+			// aapt resource value: 0x7f0d0058
+			public const int abc_search_url_text = 2131558488;
 			
 			// aapt resource value: 0x7f0d0001
 			public const int abc_search_url_text_normal = 2131558401;
@@ -5186,29 +5339,29 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f0d0003
 			public const int abc_search_url_text_selected = 2131558403;
 			
-			// aapt resource value: 0x7f0d0057
-			public const int abc_secondary_text_material_dark = 2131558487;
-			
-			// aapt resource value: 0x7f0d0058
-			public const int abc_secondary_text_material_light = 2131558488;
-			
 			// aapt resource value: 0x7f0d0059
-			public const int abc_tint_btn_checkable = 2131558489;
+			public const int abc_secondary_text_material_dark = 2131558489;
 			
 			// aapt resource value: 0x7f0d005a
-			public const int abc_tint_default = 2131558490;
+			public const int abc_secondary_text_material_light = 2131558490;
 			
 			// aapt resource value: 0x7f0d005b
-			public const int abc_tint_edittext = 2131558491;
+			public const int abc_tint_btn_checkable = 2131558491;
 			
 			// aapt resource value: 0x7f0d005c
-			public const int abc_tint_seek_thumb = 2131558492;
+			public const int abc_tint_default = 2131558492;
 			
 			// aapt resource value: 0x7f0d005d
-			public const int abc_tint_spinner = 2131558493;
+			public const int abc_tint_edittext = 2131558493;
 			
 			// aapt resource value: 0x7f0d005e
-			public const int abc_tint_switch_track = 2131558494;
+			public const int abc_tint_seek_thumb = 2131558494;
+			
+			// aapt resource value: 0x7f0d005f
+			public const int abc_tint_spinner = 2131558495;
+			
+			// aapt resource value: 0x7f0d0060
+			public const int abc_tint_switch_track = 2131558496;
 			
 			// aapt resource value: 0x7f0d0004
 			public const int accent_material_dark = 2131558404;
@@ -5255,17 +5408,23 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f0d0049
 			public const int colorAccent = 2131558473;
 			
+			// aapt resource value: 0x7f0d004a
+			public const int colorBlack = 2131558474;
+			
 			// aapt resource value: 0x7f0d0047
 			public const int colorPrimary = 2131558471;
 			
 			// aapt resource value: 0x7f0d0048
 			public const int colorPrimaryDark = 2131558472;
 			
+			// aapt resource value: 0x7f0d004b
+			public const int colorWhite = 2131558475;
+			
 			// aapt resource value: 0x7f0d003c
 			public const int design_bottom_navigation_shadow_color = 2131558460;
 			
-			// aapt resource value: 0x7f0d005f
-			public const int design_error = 2131558495;
+			// aapt resource value: 0x7f0d0061
+			public const int design_error = 2131558497;
 			
 			// aapt resource value: 0x7f0d003d
 			public const int design_fab_shadow_end_color = 2131558461;
@@ -5291,8 +5450,8 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f0d0044
 			public const int design_snackbar_background_color = 2131558468;
 			
-			// aapt resource value: 0x7f0d0060
-			public const int design_tint_password_toggle = 2131558496;
+			// aapt resource value: 0x7f0d0062
+			public const int design_tint_password_toggle = 2131558498;
 			
 			// aapt resource value: 0x7f0d0012
 			public const int dim_foreground_disabled_material_dark = 2131558418;
@@ -5321,8 +5480,8 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f0d001a
 			public const int highlighted_text_material_light = 2131558426;
 			
-			// aapt resource value: 0x7f0d004a
-			public const int ic_launcher_background = 2131558474;
+			// aapt resource value: 0x7f0d004c
+			public const int ic_launcher_background = 2131558476;
 			
 			// aapt resource value: 0x7f0d001b
 			public const int material_blue_grey_800 = 2131558427;
@@ -5417,11 +5576,11 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f0d0036
 			public const int switch_thumb_disabled_material_light = 2131558454;
 			
-			// aapt resource value: 0x7f0d0061
-			public const int switch_thumb_material_dark = 2131558497;
+			// aapt resource value: 0x7f0d0063
+			public const int switch_thumb_material_dark = 2131558499;
 			
-			// aapt resource value: 0x7f0d0062
-			public const int switch_thumb_material_light = 2131558498;
+			// aapt resource value: 0x7f0d0064
+			public const int switch_thumb_material_light = 2131558500;
 			
 			// aapt resource value: 0x7f0d0037
 			public const int switch_thumb_normal_material_dark = 2131558455;
@@ -6356,8 +6515,8 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f09005e
 			public const int action_mode_close_button = 2131296350;
 			
-			// aapt resource value: 0x7f0900b1
-			public const int action_settings = 2131296433;
+			// aapt resource value: 0x7f0900b2
+			public const int action_settings = 2131296434;
 			
 			// aapt resource value: 0x7f09009d
 			public const int action_text = 2131296413;
@@ -6551,14 +6710,14 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f090063
 			public const int list_item = 2131296355;
 			
-			// aapt resource value: 0x7f0900b0
-			public const int masked = 2131296432;
+			// aapt resource value: 0x7f0900b1
+			public const int masked = 2131296433;
 			
 			// aapt resource value: 0x7f0900a1
 			public const int media_actions = 2131296417;
 			
-			// aapt resource value: 0x7f0900ae
-			public const int message = 2131296430;
+			// aapt resource value: 0x7f0900af
+			public const int message = 2131296431;
 			
 			// aapt resource value: 0x7f090033
 			public const int middle = 2131296307;
@@ -6737,6 +6896,9 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f090019
 			public const int tag_transition_group = 2131296281;
 			
+			// aapt resource value: 0x7f0900ae
+			public const int taskList = 2131296430;
+			
 			// aapt resource value: 0x7f09001a
 			public const int text = 2131296282;
 			
@@ -6806,8 +6968,8 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f090016
 			public const int view_offset_helper = 2131296278;
 			
-			// aapt resource value: 0x7f0900af
-			public const int visible = 2131296431;
+			// aapt resource value: 0x7f0900b0
+			public const int visible = 2131296432;
 			
 			// aapt resource value: 0x7f09003e
 			public const int withText = 2131296318;
@@ -7052,10 +7214,16 @@ namespace Timeinator.Mobile.AndroidNative
 			public const int support_simple_spinner_dropdown_item = 2130968635;
 			
 			// aapt resource value: 0x7f04003c
-			public const int TasksListPage = 2130968636;
+			public const int TaskListItem = 2130968636;
 			
 			// aapt resource value: 0x7f04003d
-			public const int tooltip = 2130968637;
+			public const int TasksListPage = 2130968637;
+			
+			// aapt resource value: 0x7f04003e
+			public const int TasksTimePage = 2130968638;
+			
+			// aapt resource value: 0x7f04003f
+			public const int tooltip = 2130968639;
 			
 			static Layout()
 			{
@@ -9829,8 +9997,8 @@ namespace Timeinator.Mobile.AndroidNative
 			public const int MenuView_subMenuArrow = 8;
 			
 			public static int[] MvxBinding = new int[] {
-					2130772314,
-					2130772315};
+					2130772315,
+					2130772316};
 			
 			// aapt resource value: 0
 			public const int MvxBinding_MvxBind = 0;
@@ -9839,26 +10007,32 @@ namespace Timeinator.Mobile.AndroidNative
 			public const int MvxBinding_MvxLang = 1;
 			
 			public static int[] MvxControl = new int[] {
-					2130772316};
+					2130772317};
 			
 			// aapt resource value: 0
 			public const int MvxControl_MvxTemplate = 0;
 			
 			public static int[] MvxExpandableListView = new int[] {
-					2130772319};
+					2130772320};
 			
 			// aapt resource value: 0
 			public const int MvxExpandableListView_MvxGroupItemTemplate = 0;
 			
 			public static int[] MvxListView = new int[] {
-					2130772317,
-					2130772318};
+					2130772318,
+					2130772319};
 			
 			// aapt resource value: 1
 			public const int MvxListView_MvxDropDownItemTemplate = 1;
 			
 			// aapt resource value: 0
 			public const int MvxListView_MvxItemTemplate = 0;
+			
+			public static int[] MvxRecyclerView = new int[] {
+					2130772314};
+			
+			// aapt resource value: 0
+			public const int MvxRecyclerView_MvxTemplateSelector = 0;
 			
 			public static int[] NavigationView = new int[] {
 					16842964,
