@@ -20,16 +20,10 @@ namespace Timeinator.Mobile.Droid
     {
         #region Private members
 
-        private IUserTimeHandler mAndroidTimeHandler;
         private static TaskService Instance = null;
 
         private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
         private Timer TaskTimer { get; set; }
-
-        private string TaskName { get; set; }
-        private DateTime TaskStart { get; set; }
-        private TimeSpan TaskTime { get; set; }
-        private double RecentProgress { get; set; }
 
         #endregion
 
@@ -42,16 +36,24 @@ namespace Timeinator.Mobile.Droid
         #endregion
 
         #region Public methods
+        //public string Name { get; set; }
+        //public DateTime Start { get; set; }
+        //public TimeSpan Time { get; set; }
+        //public double RecentProgress { get; set; }
+
+        //public event Action TimerElapsed;
 
         public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 5;
         public IBinder Binder { get; private set; }
+
+        //public TimeSpan TimeRemaining() => Start.Add(Time) - DateTime.Now;
 
         public override void OnCreate()
         {
             base.OnCreate();
             Instance = this;
-            TaskTimer = new Timer();
-            TaskTimer.ScheduleAtFixedRate(new ServiceRefresh(this), TaskTime.Ticks, TimeSpan.FromSeconds(REFRESH_RATE).Ticks);
+            //TimerElapsed = () => { };
+            //CreateTimer();
         }
 
         [return: GeneratedEnum]
@@ -81,23 +83,14 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public void HandleMessage(Intent intent)
         {
-            if (intent.Action == IntentActions.ACTION_NEXTTASK)
-            {
-                mAndroidTimeHandler.FinishTask();
-                mAndroidTimeHandler.RemoveAndContinueTasks();
-            }
-            else if (intent.Action == IntentActions.ACTION_PAUSETASK)
-            {
-                mAndroidTimeHandler.StopTask();
-            }
-            else if (intent.Action == IntentActions.ACTION_RESUMETASK)
-            {
-                mAndroidTimeHandler.ResumeTask();
-            }
-            if (intent.Action == IntentActions.ACTION_STOP)
-                StopTaskService();
-            else
-                CollectTaskInfo();
+            //if (intent.Action == IntentActions.ACTION_NEXTTASK)
+            //    TimerElapsed.Invoke();
+            //else if (intent.Action == IntentActions.ACTION_PAUSETASK)
+            //    TaskTimer.Cancel();
+            //else if (intent.Action == IntentActions.ACTION_RESUMETASK)
+            //    CreateTimer();
+            //if (intent.Action == IntentActions.ACTION_STOP)
+            //    StopTaskService();
         }
 
         /// <summary>
@@ -125,8 +118,10 @@ namespace Timeinator.Mobile.Droid
                                 .SetContentIntent(pendingIntent)
                                 .SetSmallIcon(Resource.Mipmap.logo);
             }
-            var progress = (int)(100 * (RecentProgress + (1.0 - RecentProgress) * (DateTime.Now.Subtract(TaskStart).TotalMilliseconds / TaskTime.TotalMilliseconds)));
-            NotificationBuilder.SetContentTitle(TaskName)
+            //var progress = (int)(100 * (RecentProgress + (1.0 - RecentProgress) * (DateTime.Now.Subtract(Start).TotalMilliseconds / Time.TotalMilliseconds)));
+            //NotificationBuilder.SetContentTitle(Name)
+            var progress = (int)(100 * 0.5);
+            NotificationBuilder.SetContentTitle("TEST")
                 .SetTicker("Timeinator Session")
                 .SetContentText($"{progress} %")
                 .SetProgress(100, progress, false);
@@ -142,44 +137,18 @@ namespace Timeinator.Mobile.Droid
         }
 
         /// <summary>
-        /// Setup references to Timeinator DI
-        /// </summary>
-        public void RefreshService(IUserTimeHandler androidTimeHandler) // REMOVE THIS BAD CODE
-        {
-            mAndroidTimeHandler = androidTimeHandler;
-            CollectTaskInfo();
-        }
-
-        /// <summary>
         /// Execute when task time is over
         /// </summary>
-        public void EndOfTask()
+        public void EndOfTime()
         {
-            mAndroidTimeHandler.InvokeTimesUp();
             var intent = new Intent();
             intent.SetAction(IntentActions.ACTION_NEXTTASK);
             HandleMessage(intent);
         }
 
-        public TimeSpan TimeRemaining() => TaskStart.Add(TaskTime) - DateTime.Now;
-
         #endregion
 
         #region Private Methods
-
-        /// <summary>
-        /// Loads data about CurrentTask to local properties
-        /// </summary>
-        private void CollectTaskInfo() // REMOVE THIS BAD CODE!!! - PROVIDE LOW-API INSTEAD AND USE TaskServiceConnection TO HANDLE REQUESTS
-        {
-            var task = mAndroidTimeHandler.CurrentTask;
-            if (task == null)
-                return;
-            TaskName = task.Name;
-            TaskStart = mAndroidTimeHandler.CurrentTaskStartTime;
-            TaskTime = task.AssignedTime;
-            RecentProgress = mAndroidTimeHandler.RecentProgress;
-        }
 
         /// <summary>
         /// Run fired every REFRESH_RATE period, updates Service state
@@ -197,9 +166,17 @@ namespace Timeinator.Mobile.Droid
             {
                 NotificationHandler.NManager.Notify(NOTIFICATION_ID, mService.GetNotification());
                 // Check if time has passed
-                if (mService.TimeRemaining().Ticks < 0)
-                    mService.EndOfTask();
+                //if (mService.TimeRemaining().Ticks < 0)
+                //    mService.EndOfTime();
             }
+        }
+
+        private void CreateTimer()
+        {
+            if (TaskTimer != null)
+                TaskTimer.Dispose();
+            TaskTimer = new Timer();
+            //TaskTimer.ScheduleAtFixedRate(new ServiceRefresh(this), Time.Ticks, TimeSpan.FromSeconds(REFRESH_RATE).Ticks);
         }
 
         #endregion
