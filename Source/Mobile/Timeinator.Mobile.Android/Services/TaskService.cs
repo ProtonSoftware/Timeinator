@@ -11,10 +11,11 @@ using Android.Widget;
 
 namespace Timeinator.Mobile.Droid
 {
+    //[Service(IsolatedProcess=true)]
     /// <summary>
     /// Low-level Android Service handling session in the background
     /// </summary>
-    [Service(IsolatedProcess=true)]
+    [Service]
     public class TaskService : Service
     {
         public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 5;
