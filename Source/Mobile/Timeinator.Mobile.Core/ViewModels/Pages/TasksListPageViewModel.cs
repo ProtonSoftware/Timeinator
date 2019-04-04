@@ -222,7 +222,7 @@ namespace Timeinator.Mobile.Core
             mTimeTasksService.ConveyTasksToManager(taskContexts, UserTime);
 
             // Change the page
-            DI.Application.GoToPage(ApplicationPage.TasksPreparation);
+            DI.Application.GoToPage(ApplicationPage.TasksSummary);
         }
 
         #endregion
