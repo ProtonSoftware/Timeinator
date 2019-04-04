@@ -28,8 +28,11 @@ namespace Timeinator.Mobile.Core
                 case ApplicationPage.TasksList:
                     return DI.GetInjectedPageViewModel<TasksListPageViewModel>();
 
-                case ApplicationPage.TasksPreparation:
-                    return DI.GetInjectedPageViewModel<TasksPreparationPageViewModel>();
+                case ApplicationPage.TasksTime:
+                    return DI.GetInjectedPageViewModel<TasksTimePageViewModel>();
+
+                case ApplicationPage.TasksSummary:
+                    return DI.GetInjectedPageViewModel<TasksSummaryPageViewModel>();
 
                 case ApplicationPage.TasksSession:
                     return DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();

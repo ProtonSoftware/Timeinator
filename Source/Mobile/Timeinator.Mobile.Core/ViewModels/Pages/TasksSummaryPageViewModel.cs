@@ -7,9 +7,9 @@ using Timeinator.Core;
 namespace Timeinator.Mobile.Core
 {
     /// <summary>
-    /// The view model for main tasks page
+    /// The view model for tasks summary page
     /// </summary>
-    public class TasksPreparationPageViewModel : MvxViewModel
+    public class TasksSummaryPageViewModel : MvxViewModel
     {
         #region Private Members
 
@@ -41,7 +41,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksPreparationPageViewModel(ITimeTasksService timeTasksService, ITimeTasksManager timeTasksManager, TimeTasksMapper tasksMapper)
+        public TasksSummaryPageViewModel(ITimeTasksService timeTasksService, ITimeTasksManager timeTasksManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);

@@ -30,7 +30,8 @@ namespace Timeinator.Mobile.Core
 
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<TasksListPageViewModel>();
-            construction.Services.AddTransient<TasksPreparationPageViewModel>();
+            construction.Services.AddTransient<TasksTimePageViewModel>();
+            construction.Services.AddTransient<TasksSummaryPageViewModel>();
             construction.Services.AddTransient<TasksSessionPageViewModel>();
             construction.Services.AddTransient<LoginPageViewModel>();
             construction.Services.AddTransient<AddNewTimeTaskViewModel>();

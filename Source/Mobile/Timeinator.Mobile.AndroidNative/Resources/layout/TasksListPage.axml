@@ -20,22 +20,61 @@
 		android:layout_height="wrap_content"
 		local:MvxItemTemplate="@layout/tasklistitem"
 		local:MvxBind="ItemsSource TaskItems" />
+    <android.support.design.widget.FloatingActionButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentRight="true"
+		android:layout_gravity="end|bottom"
+		android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
+		android:layout_marginBottom="94dp"
+        android:tint="@color/colorWhite"
+        android:src="@drawable/ic_add_black_18dp"
+        local:MvxBind="Click AddNewTaskCommand" />
 	<LinearLayout
-		android:layout_width="fill_parent"
+        android:id="@+id/bottomNavigation"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
 		android:elevation="@dimen/abc_action_bar_elevation_material"
-		android:layout_alignParentBottom="true">
-		<Button android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+			
+		<Button android:layout_width="0dp"
+                android:layout_height="wrap_content"
+				android:layout_weight="1"
 				android:text="Rozpocznij"
 				android:background="@color/colorAccent"
 				local:MvxBind="Click UserReadyCommand"/>
-		<TextView
+		<android.support.design.widget.BottomNavigationView 
+				android:layout_width="0dp"
 				android:layout_height="match_parent"
-				android:layout_width="match_parent"
-				android:textAlignment="center"
-				android:textColor="@color/colorBlack"
-				android:text="Twoje zadania" />
-	</LinearLayout>
+				android:layout_weight="1"
+				local:itemIconTint="@android:color/darker_gray"
+				local:itemTextColor="@android:color/darker_gray"
+				local:menu="@menu/bottom_menu" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottomOptions"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+		android:elevation="@dimen/abc_action_bar_elevation_material"
+        android:layout_above="@id/bottomNavigation"
+        android:orientation="horizontal">
+			
+		<CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/icontextview" />
+
+    </LinearLayout>
+    <View style="@style/Divider"
+          android:layout_above="@id/bottomOptions" />
 </RelativeLayout>

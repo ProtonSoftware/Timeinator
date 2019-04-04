@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:local="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<TextView
+		android:id="@+id/title"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:textAlignment="center"
+		android:textSize="@dimen/abc_text_size_display_2_material"
+		android:textColor="@color/colorBlack"
+		android:text="Wybrana sesja" />
+	<mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
+		android:layout_below="@id/title"
+		android:id="@+id/taskList"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		local:MvxItemTemplate="@layout/tasksummaryitem"
+		local:MvxBind="ItemsSource TaskItems" />
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+        android:elevation="@dimen/abc_action_bar_elevation_material"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="4dp"
+            android:text="Start"
+            android:background="@color/colorAccent"
+            local:MvxBind="Click UserReadyCommand"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"
+            android:text="Przerwij"
+            android:background="@color/colorPrimary" />
+
+    </LinearLayout>
+    <View style="@style/Divider"
+          android:layout_above="@id/bottomNavigation" />
+</RelativeLayout>

@@ -16,9 +16,14 @@
         TasksList,
 
         /// <summary>
-        /// Tasks preparation page where session is calculated
+        /// Tasks time page where user selects how much time he has for session
         /// </summary>
-        TasksPreparation,
+        TasksTime,
+
+        /// <summary>
+        /// Tasks summary page where session is calculated
+        /// </summary>
+        TasksSummary,
 
         /// <summary>
         /// Tasks session page
