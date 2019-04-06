@@ -58,6 +58,7 @@
         android:layout_height = "wrap_content"
         android:ellipsize="marquee"
         android:singleLine="true"
+        local:MvxBind="Text Description"
         android:textColor = "@android:color/darker_gray"
         android:textSize = "14sp"
         android:fontFamily="sans-serif"
@@ -93,7 +94,7 @@
     android:layout_marginTop = "20dp"
     android:maxLines = "1"
     android:maxWidth = "40dp"
-    android:text = "19 min"
+    local:MvxBind="Text AssignedTime"
     android:textColor = "@android:color/darker_gray"
     android:textSize = "12sp"
     android:fontFamily="sans-serif"/>
@@ -107,7 +108,7 @@
     android:layout_marginBottom = "16dp"
     android:layout_marginLeft = "16dp"
     android:layout_marginRight = "16dp"
-    android:text="P: 5"/>
+    local:MvxBind="Text Priority" />
 
 <View 
     style="@style/Divider"

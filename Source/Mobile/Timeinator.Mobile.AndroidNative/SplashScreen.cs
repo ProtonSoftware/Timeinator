@@ -1,9 +1,11 @@
 ﻿
+using Acr.UserDialogs;
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
-using Microsoft.Extensions.DependencyInjection;
+using MvvmCross;
 using MvvmCross.Droid.Support.V7.AppCompat;
+using MvvmCross.Platforms.Android;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.AndroidNative
