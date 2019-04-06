@@ -3,6 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:local="http://schemas.android.com/apk/res-auto"
 	android:orientation="vertical"
+    android:id="@+id/taskListPage"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 	<TextView
@@ -28,7 +29,7 @@
 		android:layout_alignParentRight="true"
 		android:layout_gravity="end|bottom"
 		android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
-		android:layout_marginBottom="94dp"
+		android:layout_marginBottom="92dp"
         android:tint="@color/colorWhite"
         android:src="@drawable/ic_add_black_18dp"
         local:MvxBind="Click AddNewTaskCommand" />
@@ -43,17 +44,24 @@
 			
 		<Button android:layout_width="0dp"
                 android:layout_height="wrap_content"
-				android:layout_weight="1"
+				android:layout_weight="2"
 				android:text="Rozpocznij"
 				android:background="@color/colorAccent"
 				local:MvxBind="Click UserReadyCommand"/>
-		<android.support.design.widget.BottomNavigationView 
-				android:layout_width="0dp"
-				android:layout_height="match_parent"
+
+        <include
+                android:id="@+id/settingsIcon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
 				android:layout_weight="1"
-				local:itemIconTint="@android:color/darker_gray"
-				local:itemTextColor="@android:color/darker_gray"
-				local:menu="@menu/bottom_menu" />
+                layout="@layout/icontextview" />
+
+        <include
+                android:id="@+id/aboutIcon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+				android:layout_weight="1"
+                layout="@layout/icontextview" />
 
     </LinearLayout>
     <LinearLayout
@@ -68,11 +76,6 @@
 		<CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-        <include
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            layout="@layout/icontextview" />
 
     </LinearLayout>
     <View style="@style/Divider"

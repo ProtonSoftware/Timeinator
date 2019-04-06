@@ -8,16 +8,6 @@
     android:layout_marginTop = "8dp"
     android:orientation = "vertical">
 
-<CheckBox
-    android:id = "@+id/avatar"
-    android:layout_width = "40dp"
-    android:layout_height = "40dp"
-    android:layout_marginBottom = "20dp"
-    android:layout_marginLeft = "16dp"
-    android:layout_marginRight = "16dp"
-    android:layout_marginTop = "20dp"
-    android:contentDescription = "Avatar" />
-
 <LinearLayout
     android:layout_width = "match_parent"
     android:layout_height = "match_parent"
@@ -58,6 +48,7 @@
         android:layout_height = "wrap_content"
         android:ellipsize="marquee"
         android:singleLine="true"
+        local:MvxBind="Text Description"
         android:textColor = "@android:color/darker_gray"
         android:textSize = "14sp"
         android:fontFamily="sans-serif"
@@ -90,24 +81,13 @@
     android:layout_height = "wrap_content"
     android:layout_alignParentEnd = "true"
     android:layout_marginEnd = "16dp"
-    android:layout_marginTop = "20dp"
+    android:layout_marginTop = "30dp"
     android:maxLines = "1"
     android:maxWidth = "40dp"
-    android:text = "19 min"
-    android:textColor = "@android:color/darker_gray"
-    android:textSize = "12sp"
+    local:MvxBind="Text AssignedTime"
+    android:textColor = "@color/colorBlack"
+    android:textSize = "16sp"
     android:fontFamily="sans-serif"/>
-
-<TextView
-    android:id = "@+id/favourite"
-    android:layout_width = "24dp"
-    android:layout_height = "24dp"
-    android:layout_alignParentBottom = "true"
-    android:layout_alignParentEnd = "true"
-    android:layout_marginBottom = "16dp"
-    android:layout_marginLeft = "16dp"
-    android:layout_marginRight = "16dp"
-    android:text="P: 5"/>
 
 <View 
     style="@style/Divider"

@@ -1,6 +1,5 @@
 ﻿using MvvmCross.IoC;
 using MvvmCross.ViewModels;
-using System;
 
 namespace Timeinator.Mobile.Core
 {

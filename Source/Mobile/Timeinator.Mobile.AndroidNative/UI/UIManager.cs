@@ -1,4 +1,5 @@
-﻿using MvvmCross;
+﻿using Acr.UserDialogs;
+using MvvmCross;
 using MvvmCross.Base;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
@@ -25,6 +26,11 @@ namespace Timeinator.Mobile.AndroidNative
         /// </summary>
         private IMvxMainThreadAsyncDispatcher mMainThreadDispatcher;
 
+        /// <summary>
+        /// The service for user dialogs library
+        /// </summary>
+        private IUserDialogs mUserDialogs;
+
         #endregion
 
         #region Constructor
@@ -36,6 +42,7 @@ namespace Timeinator.Mobile.AndroidNative
         {
             mNavigationService = Mvx.IoCProvider.Resolve<IMvxNavigationService>();
             mMainThreadDispatcher = Mvx.IoCProvider.Resolve<IMvxMainThreadAsyncDispatcher>();
+            mUserDialogs = Mvx.IoCProvider.Resolve<IUserDialogs>();
         }
 
         #endregion
@@ -69,25 +76,21 @@ namespace Timeinator.Mobile.AndroidNative
         ///          In case popup doesnt take any response from the user, always returns true when popup was shown succesfully</returns>
         public async Task<bool> DisplayPopupMessageAsync(PopupMessageViewModel viewmodel)
         {
-            /* TODO: Make some dialog system in the android
             // If we dont want to get any user response...
             if (string.IsNullOrEmpty(viewmodel.AcceptButtonText))
             {
                 // Just show the message with provided informations
-                await (App.Current.MainPage as PageHost).DisplayAlert(viewmodel.Title, viewmodel.Message, viewmodel.CancelButtonText);
+                await mUserDialogs.AlertAsync(viewmodel.Message, viewmodel.Title, viewmodel.CancelButtonText);
 
                 // Return success afterwards
                 return true;
             }
 
             // Otherwise, show response popup
-            var response = await (App.Current.MainPage as PageHost).DisplayAlert(viewmodel.Title, viewmodel.Message, viewmodel.AcceptButtonText, viewmodel.CancelButtonText);
+            var response = await mUserDialogs.ConfirmAsync(viewmodel.Message, viewmodel.Title, viewmodel.AcceptButtonText, viewmodel.CancelButtonText);
 
             // And return user's response
             return response;
-            */
-            await Task.Delay(1);
-            return false;
         }
 
         /// <summary>

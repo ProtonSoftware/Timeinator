@@ -92,6 +92,16 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public ICommand UserReadyCommand { get; private set; }
 
+        /// <summary>
+        /// The command to show a settings page
+        /// </summary>
+        public ICommand OpenSettingsCommand { get; private set; }
+
+        /// <summary>
+        /// The command to show an about page
+        /// </summary>
+        public ICommand OpenAboutCommand { get; private set; }
+
         #endregion
 
         #region Constructor
@@ -112,8 +122,10 @@ namespace Timeinator.Mobile.Core
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 
+            // Attach reloading function to an event, so everytime tasks need update, it can be fired and updated
             TaskListHelpers.RefreshUITasks += ReloadTasks;
 
+            // Initially load every task
             ReloadTasks();
 
             // Initially, we want to sort tasks alphabetically by default
