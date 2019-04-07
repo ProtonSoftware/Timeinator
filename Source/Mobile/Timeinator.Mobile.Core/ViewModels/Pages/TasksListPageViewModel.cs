@@ -159,7 +159,7 @@ namespace Timeinator.Mobile.Core
             pageVM.TaskTag = taskVM.Tag;
             pageVM.TaskConstantTime = taskVM.AssignedTime;
             pageVM.TaskImmortality = taskVM.IsImmortal;
-            pageVM.TaskPrioritySliderValue = (double)taskVM.Priority;
+            pageVM.TaskPrioritySliderValue = (int)taskVM.Priority;
             pageVM.TaskImportance = taskVM.IsImportant;
 
             // Show the page with filled info

@@ -3,7 +3,6 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:local="http://schemas.android.com/apk/res-auto"
 	android:orientation="vertical"
-    android:id="@+id/taskListPage"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 	<TextView
@@ -26,7 +25,7 @@
         android:src="@drawable/ic_arrow_back_black_18dp"
         local:MvxBind="Click CancelAddingTaskCommand" />
 	<android.support.design.widget.TextInputLayout
-        android:id="@+id/textName"
+        android:id="@+id/inputName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
@@ -41,10 +40,10 @@
 
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/textDescription"
+        android:id="@+id/inputDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textName"
+        android:layout_below="@id/inputName"
 		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
         android:hint="Opis (opcjonalny)">
 
@@ -55,10 +54,10 @@
 
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/textTags"
+        android:id="@+id/inputTags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textDescription"
+        android:layout_below="@id/inputDescription"
 		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
         android:hint="Tagi (opcjonalne, rozdzielane spacją)">
 
@@ -68,6 +67,75 @@
             local:MvxBind="Text TaskTag" />
 
     </android.support.design.widget.TextInputLayout>
+    <RelativeLayout
+        android:id="@+id/inputTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputTags"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+            android:text="Przypisany czas stały" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/inputImportant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputTime"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+            android:text="Zadanie ważne" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+            local:MvxBind="Checked TaskImportance" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/inputImmortal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputImportant"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+            android:text="Zadanie wielokrotne" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+            local:MvxBind="Checked TaskImmortality" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/inputPriority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputImmortal"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="Priorytet" />
+        <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+            android:id="@+id/prioritySeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            local:dsb_min="1"
+            local:dsb_max="5" />
+    </LinearLayout>
 	<LinearLayout
         android:id="@+id/bottomNavigation"
 		android:layout_width="match_parent"
