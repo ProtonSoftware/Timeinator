@@ -8,7 +8,7 @@ namespace Timeinator.Mobile.Core
     /// <summary>
     /// The view model for new time task popup
     /// </summary>
-    public class AddNewTimeTaskViewModel : MvxViewModel
+    public class AddNewTimeTaskPageViewModel : MvxViewModel
     {
         #region Private Members
 
@@ -69,6 +69,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public ICommand AddTaskCommand { get; private set; }
 
+        /// <summary>
+        /// The command to cancel adding task and go back to previous page
+        /// </summary>
+        public ICommand CancelAddingTaskCommand { get; private set; }
+
         #endregion
 
         #region Constructor
@@ -76,10 +81,11 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AddNewTimeTaskViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
+        public AddNewTimeTaskPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
             AddTaskCommand = new RelayCommand(AddNewTask);
+            CancelAddingTaskCommand = new RelayCommand(CancelAndBack);
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
@@ -114,7 +120,7 @@ namespace Timeinator.Mobile.Core
                 Description = TaskDescription,
                 Tag = TaskTag,
                 AssignedTime = TaskConstantTime,
-                HasConstantTime = TaskConstantTime != default(TimeSpan),
+                HasConstantTime = TaskConstantTime != default,
                 IsImportant = TaskImportance,
                 IsImmortal = TaskImmortality,
                 Priority = (Priority)TaskPrioritySliderValue,
@@ -129,6 +135,18 @@ namespace Timeinator.Mobile.Core
 
             // Refresh UI list so it gets new task
             TaskListHelpers.RaiseRefreshEvent();
+        }
+
+        /// <summary>
+        /// Cancels current task creation and goes back to previous page
+        /// </summary>
+        private void CancelAndBack()
+        {
+            // TODO: Warn user about unsaved changes
+
+
+            // Go back to previous page
+            mUIManager.GoBackToPreviousPage(this);
         }
 
         #endregion
