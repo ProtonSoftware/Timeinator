@@ -11,8 +11,8 @@
       android:layout_height="24dp"
       android:layout_marginTop="4dp"
       android:layout_gravity="center_horizontal"
-        android:tint="@color/material_grey_800"
-        android:src="@drawable/ic_settings_black_24dp"
+      android:tint="@color/material_grey_800"
+      android:src="@drawable/ic_settings_black_24dp"
       android:duplicateParentState="true"/>
   <android.support.design.internal.BaselineLayout
       android:layout_width="wrap_content"
@@ -29,6 +29,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Name"
+        android:foregroundTint="@color/material_grey_800"
         android:textSize="@dimen/design_bottom_navigation_text_size"/>
     <TextView
         android:id="@+id/largeLabel"

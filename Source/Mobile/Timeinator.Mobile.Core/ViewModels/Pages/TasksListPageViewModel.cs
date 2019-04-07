@@ -112,7 +112,7 @@ namespace Timeinator.Mobile.Core
         public TasksListPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
-            // TODO: AddNewTaskCommand = new RelayCommand(() => mUIManager.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl()));
+            AddNewTaskCommand = new RelayCommand(() => mUIManager.GoToViewModelPage(DI.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>()));
             EditTaskCommand = new RelayParameterizedCommand(EditTask);
             DeleteTaskCommand = new RelayParameterizedCommand(async (param) => await uiManager.ExecuteOnMainThread(async () => await DeleteTaskAsync(param)));
             UserReadyCommand = new RelayCommand(UserReady);
@@ -152,7 +152,7 @@ namespace Timeinator.Mobile.Core
             var taskVM = param as TimeTaskViewModel;
 
             // Create edit page's view model based on that
-            var pageVM = DI.GetInjectedPageViewModel<AddNewTimeTaskViewModel>();
+            var pageVM = DI.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>();
             pageVM.TaskId = taskVM.Id;
             pageVM.TaskName = taskVM.Name;
             pageVM.TaskDescription = taskVM.Description;
@@ -163,7 +163,7 @@ namespace Timeinator.Mobile.Core
             pageVM.TaskImportance = taskVM.IsImportant;
 
             // Show the page with filled info
-            // TODO: mUIManager.ShowModalOnCurrentNavigation(new AddNewTimeTaskControl(pageVM));
+            mUIManager.GoToViewModelPage(pageVM);
         }
 
         /// <summary>

@@ -28,16 +28,16 @@
 		<Button android:layout_width="0dp"
                 android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:text="Rozpocznij"
+				android:text="Oblicz sesje"
 				android:background="@color/colorAccent"
 				local:MvxBind="Click UserReadyCommand"/>
-		<android.support.design.widget.BottomNavigationView 
-				android:layout_width="0dp"
-				android:layout_height="match_parent"
+
+        <Button android:layout_width="0dp"
+                android:layout_height="wrap_content"
 				android:layout_weight="1"
-				local:itemIconTint="@color/colorAccent"
-				local:itemTextColor="@color/colorAccent"
-				local:menu="@menu/bottom_menu" />
+				android:text="Przerwij"
+				android:background="@color/colorAccent"
+				local:MvxBind="Click UserReadyCommand"/>
 
     </LinearLayout>
 </RelativeLayout>

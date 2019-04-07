@@ -30,6 +30,7 @@
 		android:layout_gravity="end|bottom"
 		android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
 		android:layout_marginBottom="92dp"
+        android:elevation="@dimen/abc_action_bar_elevation_material"
         android:tint="@color/colorWhite"
         android:src="@drawable/ic_add_black_18dp"
         local:MvxBind="Click AddNewTaskCommand" />
