@@ -53,7 +53,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The value of priority slider (1-5 values) that will be converted to priority on the task being created
         /// </summary>
-        public double TaskPrioritySliderValue { get; set; } = 1f;
+        public int TaskPrioritySliderValue { get; set; } = 3;
 
         /// <summary>
         /// The id of a task, only set if we are editing existing one

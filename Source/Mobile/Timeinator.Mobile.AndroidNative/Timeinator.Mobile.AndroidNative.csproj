@@ -105,6 +105,9 @@
     <PackageReference Include="Dna.Framework">
       <Version>1.0.7.14</Version>
     </PackageReference>
+    <PackageReference Include="Karamunting.Android.AnderWeb.DiscreteSeekBar">
+      <Version>1.0.1.1</Version>
+    </PackageReference>
     <PackageReference Include="MvvmCross">
       <Version>6.2.3</Version>
     </PackageReference>
