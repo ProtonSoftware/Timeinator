@@ -42,11 +42,6 @@ namespace Timeinator.Mobile.Core
         public ObservableCollection<string> TaskTags { get; set; } = new ObservableCollection<string>();
 
         /// <summary>
-        /// The time that user has declared to calculate tasks for
-        /// </summary>
-        public TimeSpan UserTime { get; set; }
-
-        /// <summary>
         /// The index choosen in sorting combobox
         /// </summary>
         public int SortIndex
@@ -217,6 +212,7 @@ namespace Timeinator.Mobile.Core
                 return;
             }
 
+            /* TODO: Move it to time page
             // If user has not enough time to do all the tasks
             if (UserTime.TotalMinutes - taskContexts.GetConstant().SumTimes().TotalMinutes < taskContexts.GetConstant(true).SumPriorities())
             {
@@ -225,13 +221,13 @@ namespace Timeinator.Mobile.Core
 
                 // Don't do any further actions
                 return;
-            }
+            } 
 
             // Pass it to the service so it handles it to the manager, with user free time
-            mTimeTasksService.ConveyTasksToManager(taskContexts, UserTime);
+            mTimeTasksService.ConveyTasksToManager(taskContexts, UserTime);*/
 
             // Change the page
-            DI.Application.GoToPage(ApplicationPage.TasksSummary);
+            DI.Application.GoToPage(ApplicationPage.TasksTime);
         }
 
         #endregion
