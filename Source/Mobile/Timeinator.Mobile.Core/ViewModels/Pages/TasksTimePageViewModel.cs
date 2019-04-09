@@ -1,5 +1,7 @@
 ﻿using MvvmCross.ViewModels;
 using System;
+using System.Windows.Input;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile.Core
 {
@@ -11,6 +13,7 @@ namespace Timeinator.Mobile.Core
         #region Private Members
 
         private readonly ITimeTasksService mTimeTasksService;
+        private readonly IUIManager mUIManager;
 
         #endregion
 
@@ -23,14 +26,61 @@ namespace Timeinator.Mobile.Core
 
         #endregion
 
+        #region Commands
+
+        /// <summary>
+        /// The command to fire when user has picked the time and wants to calculate his session
+        /// </summary>
+        public ICommand CalculateSessionCommand { get; set; }
+
+        /// <summary>
+        /// The command that cancels current session and goes back to task list
+        /// </summary>
+        public ICommand CancelCommand { get; set; }
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksTimePageViewModel(ITimeTasksService timeTasksService)
+        public TasksTimePageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager)
         {
+            // Create commands
+            CalculateSessionCommand = new RelayCommand(CalculateSession);
+            CancelCommand = new RelayCommand(Cancel);
+
+            // Get injected DI services
             mTimeTasksService = timeTasksService;
+            mUIManager = uiManager;
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Checks if user has picked the right time and calculates new session for him
+        /// Which leads to next page
+        /// </summary>
+        private void CalculateSession()
+        {
+            // TODO: Logic from old tasklistpage
+
+            // Go to next page which shows a summary of calculated user session
+            DI.Application.GoToPage(ApplicationPage.TasksSummary);
+        }
+
+        /// <summary>
+        /// Cancels current session and goes back to task list
+        /// </summary>
+        private void Cancel()
+        {
+            // TODO: Clear task list in service when logic is done
+
+            // Go back to task list
+            mUIManager.GoBackToPreviousPage(this);
         }
 
         #endregion
