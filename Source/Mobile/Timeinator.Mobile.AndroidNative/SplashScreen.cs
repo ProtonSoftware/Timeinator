@@ -1,11 +1,8 @@
-﻿
-using Acr.UserDialogs;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
+using Android.Graphics;
 using Android.OS;
-using MvvmCross;
 using MvvmCross.Droid.Support.V7.AppCompat;
-using MvvmCross.Platforms.Android;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.AndroidNative
@@ -24,6 +21,9 @@ namespace Timeinator.Mobile.AndroidNative
 
             // Set back main application theme after the application is loaded and splash screen can disappear
             SetTheme(Resource.Style.AppTheme);
+
+            // Set application's font to Lato
+            _ = Typeface.CreateFromAsset(Application.Context.Assets, "fonts/Lato-Regular.ttf");
         }
     }
 }
