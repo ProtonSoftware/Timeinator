@@ -29,8 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
-        android:layout_marginTop="8dp"
-		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+        android:layout_marginTop="16dp"
+		android:paddingHorizontal="@dimen/abc_action_bar_overflow_padding_start_material"
+		local:counterEnabled="true"
+		local:counterMaxLength="50"
         android:hint="Nazwa zadania">
 
         <android.support.design.widget.TextInputEditText
@@ -44,7 +46,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/inputName"
-		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+		android:paddingHorizontal="@dimen/abc_action_bar_overflow_padding_start_material"
+		local:counterEnabled="true"
+		local:counterMaxLength="100"
         android:hint="Opis (opcjonalny)">
 
         <android.support.design.widget.TextInputEditText
