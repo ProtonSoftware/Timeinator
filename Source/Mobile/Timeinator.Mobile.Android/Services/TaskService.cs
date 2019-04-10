@@ -6,6 +6,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 
@@ -18,12 +19,13 @@ namespace Timeinator.Mobile.Droid
     [Service]
     public class TaskService : Service
     {
-        public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 5;
-        public NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
+        public static readonly int NOTIFICATION_ID = 3333;
+        public static readonly string CHANNEL_ID = "com.gummybearstudio.timeinator";
 
         #region Private members
 
         private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
+        private NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
 
         #endregion
 
@@ -42,6 +44,7 @@ namespace Timeinator.Mobile.Droid
         [return: GeneratedEnum]
         public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
         {
+            CreateNotificationChannel();
             StartForeground(NOTIFICATION_ID, GetNotification());
             return StartCommandResult.Sticky;
         }
@@ -67,29 +70,16 @@ namespace Timeinator.Mobile.Droid
 
         #endregion
 
-        //public string Name { get; set; }
-        //public DateTime Start { get; set; }
-        //public TimeSpan Time { get; set; }
-        //public double RecentProgress { get; set; }
-
-        //public event Action TimerElapsed;
-
-        //public TimeSpan TimeRemaining() => Start.Add(Time) - DateTime.Now;
-
+        public string Name { get; set; } = "None";
+        public DateTime Start { get; set; } = DateTime.Now;
+        public TimeSpan Time { get; set; } = TimeSpan.Zero;
+        public double RecentProgress { get; set; } = 0;
 
         /// <summary>
         /// Perform any action supported by Service
         /// </summary>
         public void HandleMessage(Intent intent)
         {
-            //if (intent.Action == IntentActions.ACTION_NEXTTASK)
-            //    TimerElapsed.Invoke();
-            //else if (intent.Action == IntentActions.ACTION_PAUSETASK)
-            //    TaskTimer.Cancel();
-            //else if (intent.Action == IntentActions.ACTION_RESUMETASK)
-            //    CreateTimer();
-            //if (intent.Action == IntentActions.ACTION_STOP)
-            //    StopTaskService();
         }
 
         /// <summary>
@@ -98,6 +88,16 @@ namespace Timeinator.Mobile.Droid
         public void StopTaskService()
         {
             StopSelf();
+        }
+
+        /// <summary>
+        /// Execute when task time is over
+        /// </summary>
+        public void EndOfTime()
+        {
+            var intent = new Intent();
+            intent.SetAction(IntentActions.ACTION_NEXTTASK);
+            HandleMessage(intent);
         }
 
         /// <summary>
@@ -112,28 +112,30 @@ namespace Timeinator.Mobile.Droid
                 intent.PutExtra("NID", NOTIFICATION_ID);
                 intent.AddFlags(ActivityFlags.ClearTop);
                 var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
-                NotificationBuilder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context)
-                                .SetContentIntent(pendingIntent)
-                                .SetSmallIcon(Resource.Mipmap.logo);
+                NotificationBuilder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context, CHANNEL_ID)
+                    .SetOngoing(true)
+                    .SetContentIntent(pendingIntent)
+                    .SetSmallIcon(Resource.Mipmap.logo);
             }
-            //var progress = (int)(100 * (RecentProgress + (1.0 - RecentProgress) * (DateTime.Now.Subtract(Start).TotalMilliseconds / Time.TotalMilliseconds)));
-            //NotificationBuilder.SetContentTitle(Name)
-            var progress = (int)(100 * 0.5);
-            NotificationBuilder.SetContentTitle("TEST")
+            var progress = (int)(100 * (RecentProgress + (1.0 - RecentProgress) * (DateTime.Now.Subtract(Start).TotalMilliseconds / Time.TotalMilliseconds)));
+            NotificationBuilder.SetContentTitle(Name)
                 .SetTicker("Timeinator Session")
                 .SetContentText($"{progress} %")
                 .SetProgress(100, progress, false);
             return NotificationBuilder.Build();
         }
 
-        /// <summary>
-        /// Execute when task time is over
-        /// </summary>
-        public void EndOfTime()
+        private void CreateNotificationChannel()
         {
-            var intent = new Intent();
-            intent.SetAction(IntentActions.ACTION_NEXTTASK);
-            HandleMessage(intent);
+            if (Build.VERSION.SdkInt < BuildVersionCodes.O)
+                return;
+            if (NManager.GetNotificationChannel(CHANNEL_ID) != null)
+                return;
+            var channel = new NotificationChannel(CHANNEL_ID, "Timeinator Sessions", NotificationImportance.Default)
+            {
+                Description = "Background session monitoring"
+            };
+            NManager.CreateNotificationChannel(channel);
         }
     }
 }

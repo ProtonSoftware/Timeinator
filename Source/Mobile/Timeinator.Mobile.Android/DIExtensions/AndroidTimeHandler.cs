@@ -34,7 +34,8 @@ namespace Timeinator.Mobile.Droid
             if (mServiceConnection == null)
                 mServiceConnection = new TaskServiceConnection();
             var intent = new Intent(Application.Context, typeof(TaskService));
-            Application.Context.BindService(intent, mServiceConnection, Bind.AutoCreate);
+            Application.Context.StartService(intent);
+            Application.Context.BindService(intent, mServiceConnection, Bind.WaivePriority);
         }
 
         protected override void StartService()
