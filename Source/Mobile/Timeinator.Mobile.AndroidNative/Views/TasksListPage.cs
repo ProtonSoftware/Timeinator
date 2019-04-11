@@ -1,9 +1,12 @@
 ﻿
 using Android.App;
 using Android.OS;
+using Android.Support.V7.Widget;
+using Android.Support.V7.Widget.Helper;
 using Android.Widget;
 using MvvmCross;
 using MvvmCross.Binding.Binders;
+using MvvmCross.Binding.Extensions;
 using MvvmCross.Droid.Support.V7.RecyclerView;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
@@ -63,6 +66,22 @@ namespace Timeinator.Mobile.AndroidNative
 
             // Find task list container
             var recyclerView = (MvxRecyclerView)page.FindViewById(Resource.Id.taskList);
+
+            // Allow item swiping
+            var callback = new SwipeRecyclerViewItemCallback(recyclerView.GetAdapter());
+            var itemTouchHelper = new ItemTouchHelper(callback);
+            itemTouchHelper.AttachToRecyclerView(recyclerView);
+            recyclerView.SetItemAnimator(new DefaultItemAnimator());
+
+            // When full swipe on item happens...
+            callback.OnSwipe += (position) => 
+            {
+                // Get view model of that item
+                var removedVM = recyclerView.Adapter.ItemsSource.ElementAt(position);
+
+                // Remove it from the list
+                viewModel.DeleteTaskCommand.Execute(removedVM);
+            };
 
             // For item single short clicks
             recyclerView.ItemClick = new RelayParameterizedCommand((s) =>
