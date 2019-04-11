@@ -19,7 +19,7 @@ namespace Timeinator.Mobile.Droid
     [Service]
     public class TaskService : Service
     {
-        public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 5000;
+        public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 1500;
         public static readonly string CHANNEL_ID = "com.gummybearstudio.timeinator";
 
         #region Private members
@@ -62,6 +62,7 @@ namespace Timeinator.Mobile.Droid
         {
             CreateNotificationChannel();
             StartForeground(NOTIFICATION_ID, GetNotification());
+            HandleMessage(intent);
             return StartCommandResult.Sticky;
         }
 
@@ -80,6 +81,7 @@ namespace Timeinator.Mobile.Droid
             // Check and handle any incoming action
             HandleMessage(intent);
             Elapsed = () => { };
+            RequestHandler = (a) => { };
             Binder = new TaskServiceBinder(this);
             return Binder;
         }
@@ -93,26 +95,53 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public Notification GetNotification()
         {
+            // Prepare Intent opening App
+            var intent = new Intent(Application.Context, typeof(MainActivity));
+            intent.SetAction(IntentActions.ACTION_GOSESSION).AddFlags(ActivityFlags.ClearTop);
+            var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
+
+            // Create NotificationBuilder if not existing yet
             if (NotificationBuilder == null)
             {
-                var intent = new Intent(Application.Context, typeof(MainActivity));
-                intent.SetAction(IntentActions.FromEnum(AppAction.GoToSession)).PutExtra("NID", NOTIFICATION_ID).AddFlags(ActivityFlags.ClearTop);
-                var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
                 NotificationBuilder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context, CHANNEL_ID)
                     .SetOngoing(true)
                     .SetContentIntent(pendingIntent)
-                    .SetSmallIcon(Resource.Mipmap.logo);
+                    .SetSmallIcon(Resource.Mipmap.logo)
+                    .SetTicker("Timeinator Session");
             }
+
+            // Set information on Notification
             var timePassed = DateTime.Now.Subtract(ParamStart);
             var progress = 0;
             if (ParamTime.TotalMilliseconds > 0)
                 progress = (int)(100 * (ParamRecentProgress + (1.0 - ParamRecentProgress) * (timePassed.TotalMilliseconds / ParamTime.TotalMilliseconds)));
-            NotificationBuilder.SetContentTitle(ParamName)
-                .SetTicker("Timeinator Session");
-            if (progress > 100)
-                NotificationBuilder.SetContentText("Task finished").SetProgress(0, 0, false);
+            NotificationBuilder.SetContentTitle(ParamName);
+
+            // Remove all buttons and add new ones
+            NotificationBuilder.MActions.Clear();
+            // Task finished notification
+            if (progress >= 100)
+            {
+                NotificationBuilder.SetContentText("Task finished").SetProgress(0, 0, false)
+                    .AddAction(Resource.Mipmap.icon_round, "Next", pendingIntent);
+            }
+            // Task in progress notification
             else
-                NotificationBuilder.SetContentText(string.Format("{0:hh\\:mm\\:ss} ({1}%)", timePassed, progress)).SetProgress(100, progress, false);
+            {
+                NotificationBuilder.SetProgress(100, progress, false);
+                AddButton(1, "Finish", IntentActions.ACTION_NEXTTASK);
+                if (Running)
+                {
+                    NotificationBuilder.SetContentText(string.Format("{0:hh\\:mm\\:ss} ({1}%)", ParamTime - timePassed, progress));
+                    AddButton(2, "Pause", IntentActions.ACTION_PAUSETASK);
+                }
+                else
+                {
+                    NotificationBuilder.SetContentText(string.Format("Session paused ({0}%)", progress));
+                    AddButton(3, "Resume", IntentActions.ACTION_RESUMETASK);
+                }
+            }
+
             return NotificationBuilder.Build();
         }
 
@@ -129,9 +158,20 @@ namespace Timeinator.Mobile.Droid
             NManager.CreateNotificationChannel(channel);
         }
 
+        private void AddButton(int id, string title, string action)
+        {
+            var intent = new Intent(Application.Context, typeof(TaskService));
+            intent.SetAction(action).AddFlags(ActivityFlags.FromBackground);
+            var pendingIntent = PendingIntent.GetService(this, id, intent, PendingIntentFlags.Immutable);
+            NotificationBuilder.AddAction(Resource.Mipmap.icon_round, title, pendingIntent);
+        }
+
         #endregion
 
+        public bool Running => TaskTiming != null;
+
         public event Action Elapsed;
+        public event Action<AppAction> RequestHandler;
 
         public string ParamName { get; set; } = "None";
         public DateTime ParamStart { get; set; } = DateTime.Now;
@@ -143,17 +183,18 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public void HandleMessage(Intent intent)
         {
-            if (intent.Action == IntentActions.ACTION_NEXTTASK || intent.Action == IntentActions.ACTION_RESUMETASK)
+            if (intent.Action == IntentActions.ACTION_STOP)
+                KillService();
+            else
             {
                 if (intent.Action == IntentActions.ACTION_NEXTTASK)
-                    ParamName = intent.GetStringExtra("Name");
-                UpdateTask(DateTime.Now, TimeSpan.FromSeconds(intent.GetDoubleExtra("Time", 0)), intent.GetDoubleExtra("Progress", 0));
-                Start();
+                    RequestHandler.Invoke(AppAction.NextSessionTask);
+                else if (intent.Action == IntentActions.ACTION_RESUMETASK)
+                    RequestHandler.Invoke(AppAction.ResumeSession);
+                else if (intent.Action == IntentActions.ACTION_PAUSETASK)
+                    RequestHandler.Invoke(AppAction.PauseSession);
+                ReNotify();
             }
-            else if (intent.Action == IntentActions.ACTION_PAUSETASK)
-                Stop();
-            else if (intent.Action == IntentActions.ACTION_STOP)
-                KillService();
         }
 
         /// <summary>
@@ -166,10 +207,11 @@ namespace Timeinator.Mobile.Droid
         /// </summary>
         public void Stop()
         {
-            if (TaskTiming != null)
+            if (Running)
             {
                 TaskTiming.Cancel();
                 TaskTiming.Dispose();
+                TaskTiming = null;
             }
         }
 

@@ -16,7 +16,7 @@ namespace Timeinator.Mobile
         void StartTimeHandler(List<TimeTaskContext> sessionTasks);
         List<TimeTaskContext> DownloadSession();
         void RefreshTasksState();
-        void RemoveAndContinueTasks();
+        void CleanTasks();
         TimeSpan TimeLossValue();
         void StartTask();
         void StopTask();

@@ -66,6 +66,7 @@ namespace Timeinator.Mobile
         public virtual void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
             StartService();
+            mSessionService.Request += SessionService_Request;
             SessionTasks = new List<TimeTaskContext>(sessionTasks);
             CurrentTaskStartTime = CurrentTime;
             StartTask();
@@ -92,7 +93,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Pushes tasks forward on stack if CurrentTask is finished
         /// </summary>
-        public virtual void RemoveAndContinueTasks()
+        public virtual void CleanTasks()
         {
             if (CurrentTask == null || CurrentTask.Progress < 1)
                 return;
@@ -100,7 +101,8 @@ namespace Timeinator.Mobile
             var ttsvc = Dna.Framework.Service<ITimeTasksService>();
             ttsvc.RemoveFinishedTasks(new List<TimeTaskContext> { CurrentTask });
             SessionTasks.Remove(CurrentTask);
-            StartTask();
+            if (CurrentTask == null)
+                mSessionService.Kill();
         }
 
         /// <summary>
@@ -204,6 +206,27 @@ namespace Timeinator.Mobile
         {
             if (mSessionService == null)
                 mSessionService = new DrySessionService();
+        }
+
+        /// <summary>
+        /// Handle action requested by Service
+        /// </summary>
+        protected virtual void SessionService_Request(AppAction obj)
+        {
+            if (obj == AppAction.NextSessionTask)
+            {
+                FinishTask();
+                CleanTasks();
+                RefreshTasksState();
+                StartTask();
+            }
+            else if (obj == AppAction.PauseSession)
+                StopTask();
+            else if (obj == AppAction.ResumeSession)
+            {
+                RefreshTasksState();
+                ResumeTask();
+            }
         }
 
         #endregion

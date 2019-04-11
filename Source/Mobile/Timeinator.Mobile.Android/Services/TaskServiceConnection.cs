@@ -21,8 +21,8 @@ namespace Timeinator.Mobile.Droid
 
         public TaskServiceConnection()
         {
-            Active = false;
             TimerElapsed = () => { };
+            Request = (a) => { };
             IsConnected = false;
             Binder = null;
         }
@@ -39,7 +39,10 @@ namespace Timeinator.Mobile.Droid
             Binder = service as TaskServiceBinder;
             IsConnected = Binder != null;
             if (IsConnected)
+            {
                 Binder.Service.Elapsed += () => TimerElapsed.Invoke();
+                Binder.Service.RequestHandler += (a) => Request.Invoke(a);
+            }
         }
 
         public void OnServiceDisconnected(ComponentName name)
@@ -55,8 +58,17 @@ namespace Timeinator.Mobile.Droid
         private string TaskName { get; set; }
         private double RecentProgress { get; set; }
 
-        public bool Active { get; private set; }
+        public bool Active
+        {
+            get {
+                if (!IsConnected)
+                    return false;
+                else
+                    return Binder.Service.Running;
+            }
+        }
         public event Action TimerElapsed;
+        public event Action<AppAction> Request;
 
         public void Details(string nameT, double progressT)
         {
@@ -66,7 +78,6 @@ namespace Timeinator.Mobile.Droid
 
         public void Interval(TimeSpan assignedT)
         {
-            Active = false;
             if (!IsConnected)
                 return;
             Binder.Service.Stop();
@@ -75,7 +86,6 @@ namespace Timeinator.Mobile.Droid
 
         public void Stop()
         {
-            Active = false;
             if (!IsConnected)
                 return;
             Binder.Service.Stop();
@@ -84,18 +94,13 @@ namespace Timeinator.Mobile.Droid
         public void Start()
         {
             if (!IsConnected)
-            {
-                Active = false;
                 return;
-            }
             Binder.Service.ParamStart = DateTime.Now;
             Binder.Service.Start();
-            Active = true;
         }
 
         public void Kill()
         {
-            Active = false;
             if (!IsConnected)
                 return;
             Binder.Service.KillService();

@@ -17,5 +17,6 @@ namespace Timeinator.Mobile
         void Kill();
 
         event Action TimerElapsed;
+        event Action<AppAction> Request;
     }
 }
