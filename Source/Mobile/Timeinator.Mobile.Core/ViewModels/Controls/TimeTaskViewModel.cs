@@ -1,5 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 using System;
+using System.Windows.Input;
 using Timeinator.Core;
 
 namespace Timeinator.Mobile.Core
@@ -9,6 +10,8 @@ namespace Timeinator.Mobile.Core
     /// </summary>
     public class TimeTaskViewModel : MvxViewModel
     {
+        #region Public Properties
+
         /// <summary>
         /// Unique id number of the task
         /// </summary>
@@ -69,5 +72,54 @@ namespace Timeinator.Mobile.Core
         /// The date when this task was initially created
         /// </summary>
         public DateTime CreationDate { get; set; }
+
+        /// <summary>
+        /// Indicates if context menu for this item should be visible
+        /// </summary>
+        public bool IsContextMenuVisible { get; set; }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// The event to fire whenever user wants to edit this task
+        /// </summary>
+        public event Action<object> OnEditRequest = (id) => { };
+
+        /// <summary>
+        /// The event to fire whenever user wants to remove this task
+        /// </summary>
+        public event Action<object> OnDeleteRequest = (id) => { };
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// The command to fire editing event
+        /// </summary>
+        public ICommand EditCommand { get; private set; }
+
+        /// <summary>
+        /// The command to fire deleting event
+        /// </summary>
+        public ICommand DeleteCommand { get; private set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public TimeTaskViewModel()
+        {
+            // Create commands
+            EditCommand = new RelayCommand(() => OnEditRequest.Invoke(this));
+            DeleteCommand = new RelayCommand(() => OnDeleteRequest.Invoke(this));
+        }
+
+        #endregion
     }
 }

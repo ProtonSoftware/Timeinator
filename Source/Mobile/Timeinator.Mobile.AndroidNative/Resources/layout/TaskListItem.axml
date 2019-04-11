@@ -85,6 +85,35 @@
 
 </LinearLayout>
 
+<LinearLayout
+    android:id = "@+id/contextMenu"
+    android:layout_width = "wrap_content"
+    android:layout_height = "wrap_content"
+    android:layout_alignParentEnd = "true"
+    android:layout_marginEnd = "16dp"
+    android:layout_marginTop = "20dp"
+    android:maxLines = "1"
+    android:maxWidth = "40dp"
+    android:elevation="@dimen/abc_action_bar_elevation_material"
+    local:MvxBind="Visible IsContextMenuVisible"
+    android:orientation="horizontal">
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        local:MvxBind="Click EditCommand"
+        android:elevation="@dimen/abc_action_bar_elevation_material"
+        android:tint="@color/colorWhite"
+        android:src="@drawable/ic_edit_black_18dp" />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        local:MvxBind="Click DeleteCommand"
+        android:elevation="@dimen/abc_action_bar_elevation_material"
+        android:tint="@color/colorWhite"
+        android:src="@drawable/ic_delete_black_18dp" />
+</LinearLayout>
+
 <TextView
     android:id = "@+id/minor_info"
     android:layout_width = "wrap_content"

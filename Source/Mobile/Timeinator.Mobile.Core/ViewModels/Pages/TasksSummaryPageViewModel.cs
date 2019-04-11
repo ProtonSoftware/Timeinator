@@ -1,4 +1,5 @@
 ﻿using MvvmCross.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -15,6 +16,7 @@ namespace Timeinator.Mobile.Core
 
         private readonly TimeTasksMapper mTimeTasksMapper;
         private readonly ITimeTasksService mTimeTasksService;
+        private readonly IUIManager mUIManager;
 
         #endregion
 
@@ -34,6 +36,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public ICommand StartTasksCommand { get; private set; }
 
+        /// <summary>
+        /// The command that cancels current session and goes back to task list
+        /// </summary>
+        public ICommand CancelCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -41,17 +48,20 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSummaryPageViewModel(ITimeTasksService timeTasksService, ITimeTasksManager timeTasksManager, TimeTasksMapper tasksMapper)
+        public TasksSummaryPageViewModel(ITimeTasksService timeTasksService, ITimeTasksManager timeTasksManager, TimeTasksMapper tasksMapper, IUIManager uiManager)
         {
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);
+            CancelCommand = new RelayCommand(Cancel);
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
             mTimeTasksMapper = tasksMapper;
+            mUIManager = uiManager;
 
+            // TODO: Once UI is done
             // Load tasks from the manager to this page
-            LoadTaskList();
+            //LoadTaskList();
         }
 
         #endregion
@@ -71,6 +81,18 @@ namespace Timeinator.Mobile.Core
 
             // Change the page afterwards
             DI.Application.GoToPage(ApplicationPage.TasksSession);
+        }
+
+        /// <summary>
+        /// Cancels current session and goes back to task list
+        /// </summary>
+        private void Cancel()
+        {
+            // TODO: Clear task list in service when logic is done
+
+            // TODO: Find better way
+            // Go back to task list
+            DI.Application.GoToPage(ApplicationPage.TasksList);
         }
 
         #endregion
