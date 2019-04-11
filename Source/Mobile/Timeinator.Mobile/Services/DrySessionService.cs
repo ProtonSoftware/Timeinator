@@ -41,6 +41,8 @@ namespace Timeinator.Mobile
         public bool Active => TaskTiming.Enabled;
         public event Action TimerElapsed;
 
+        public void Details(string nameT, double progressT) { }
+
         public void Interval(TimeSpan assignedT)
         {
             if (TaskTiming.Enabled)

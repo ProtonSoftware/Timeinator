@@ -21,6 +21,8 @@ namespace Timeinator.Mobile.Droid
 
         public TaskServiceConnection()
         {
+            Active = false;
+            TimerElapsed = () => { };
             IsConnected = false;
             Binder = null;
         }
@@ -50,13 +52,54 @@ namespace Timeinator.Mobile.Droid
 
         #region SessionService Implementation
 
+        private string TaskName { get; set; }
+        private double RecentProgress { get; set; }
+
         public bool Active { get; private set; }
         public event Action TimerElapsed;
 
-        public void Interval(TimeSpan assignedT) { }
-        public void Stop() { }
-        public void Start() { }
-        public void Kill() { }
+        public void Details(string nameT, double progressT)
+        {
+            TaskName = nameT;
+            RecentProgress = progressT;
+        }
+
+        public void Interval(TimeSpan assignedT)
+        {
+            Active = false;
+            if (!IsConnected)
+                return;
+            Binder.Service.Stop();
+            Binder.Service.UpdateTask(TaskName, DateTime.Now, assignedT, RecentProgress);
+        }
+
+        public void Stop()
+        {
+            Active = false;
+            if (!IsConnected)
+                return;
+            Binder.Service.Stop();
+        }
+
+        public void Start()
+        {
+            if (!IsConnected)
+            {
+                Active = false;
+                return;
+            }
+            Binder.Service.ParamStart = DateTime.Now;
+            Binder.Service.Start();
+            Active = true;
+        }
+
+        public void Kill()
+        {
+            Active = false;
+            if (!IsConnected)
+                return;
+            Binder.Service.KillService();
+        }
 
         #endregion
     }
