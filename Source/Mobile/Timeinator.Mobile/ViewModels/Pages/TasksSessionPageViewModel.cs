@@ -124,6 +124,7 @@ namespace Timeinator.Mobile
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 
+            mUserTimeHandler.Updated += () => { LoadTaskList(); RefreshProperties(); };
             mUserTimeHandler.TimesUp += () => Device.BeginInvokeOnMainThread(async () => await UserTimeHandler_TimesUpAsync());
             RealTimer.Elapsed += RealTimer_Elapsed;  
 
