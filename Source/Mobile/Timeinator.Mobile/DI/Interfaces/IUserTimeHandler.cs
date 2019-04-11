@@ -23,6 +23,6 @@ namespace Timeinator.Mobile
         void ResumeTask();
         void FinishTask();
 
-        event Action TimesUp;
+        event Action TimesUp, Updated;
     }
 }

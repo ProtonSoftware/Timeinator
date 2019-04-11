@@ -51,6 +51,11 @@ namespace Timeinator.Mobile
         }
 
         /// <summary>
+        /// Event called when Handler gets updated from background Request
+        /// </summary>
+        public event Action Updated;
+
+        /// <summary>
         /// Tells whether Session Timer is running
         /// </summary>
         public bool SessionRunning => mSessionService.Active;
@@ -66,6 +71,7 @@ namespace Timeinator.Mobile
         public virtual void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
             StartService();
+            Updated = () => { };
             mSessionService.Request += SessionService_Request;
             SessionTasks = new List<TimeTaskContext>(sessionTasks);
             CurrentTaskStartTime = CurrentTime;
@@ -227,6 +233,7 @@ namespace Timeinator.Mobile
                 RefreshTasksState();
                 ResumeTask();
             }
+            Updated.Invoke();
         }
 
         #endregion
