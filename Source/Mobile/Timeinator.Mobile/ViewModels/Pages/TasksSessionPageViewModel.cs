@@ -196,7 +196,6 @@ namespace Timeinator.Mobile
             {
                 mUserTimeHandler.FinishTask();
                 ContinueUserTasks();
-                mUserTimeHandler.RefreshTasksState();
                 LoadTaskList();
             }
         }
@@ -226,13 +225,15 @@ namespace Timeinator.Mobile
         /// </summary>
         private void ContinueUserTasks()
         {
-            mUserTimeHandler.RemoveAndContinueTasks();
+            mUserTimeHandler.CleanTasks();
+            mUserTimeHandler.RefreshTasksState();
             LoadTaskList();
             if (TaskItems.Count <= 0)
             {
                 RealTimer.Stop();
                 DI.Application.GoToPage(ApplicationPage.TasksList);
             }
+            mUserTimeHandler.StartTask();
         }
 
         /// <summary>

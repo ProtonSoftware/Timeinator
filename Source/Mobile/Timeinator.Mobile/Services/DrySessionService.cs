@@ -40,6 +40,7 @@ namespace Timeinator.Mobile
 
         public bool Active => TaskTiming.Enabled;
         public event Action TimerElapsed;
+        public event Action<AppAction> Request;
 
         public void Details(string nameT, double progressT) { }
 
