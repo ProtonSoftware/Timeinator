@@ -6491,26 +6491,26 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
-			// aapt resource value: 0x7f020075
-			public const int avd_hide_password_1 = 2130837621;
-			
-			// aapt resource value: 0x7f020076
-			public const int avd_hide_password_2 = 2130837622;
-			
 			// aapt resource value: 0x7f020077
-			public const int avd_hide_password_3 = 2130837623;
+			public const int avd_hide_password_1 = 2130837623;
+			
+			// aapt resource value: 0x7f020078
+			public const int avd_hide_password_2 = 2130837624;
+			
+			// aapt resource value: 0x7f020079
+			public const int avd_hide_password_3 = 2130837625;
 			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
 			
-			// aapt resource value: 0x7f020078
-			public const int avd_show_password_1 = 2130837624;
-			
-			// aapt resource value: 0x7f020079
-			public const int avd_show_password_2 = 2130837625;
-			
 			// aapt resource value: 0x7f02007a
-			public const int avd_show_password_3 = 2130837626;
+			public const int avd_show_password_1 = 2130837626;
+			
+			// aapt resource value: 0x7f02007b
+			public const int avd_show_password_2 = 2130837627;
+			
+			// aapt resource value: 0x7f02007c
+			public const int avd_show_password_3 = 2130837628;
 			
 			// aapt resource value: 0x7f020055
 			public const int design_bottom_navigation_item_background = 2130837589;
@@ -6537,76 +6537,82 @@ namespace Timeinator.Mobile.AndroidNative
 			public const int ic_arrow_back_black_18dp = 2130837596;
 			
 			// aapt resource value: 0x7f02005d
-			public const int ic_errorstatus = 2130837597;
+			public const int ic_delete_black_18dp = 2130837597;
 			
 			// aapt resource value: 0x7f02005e
-			public const int ic_info_black_18dp = 2130837598;
+			public const int ic_edit_black_18dp = 2130837598;
 			
 			// aapt resource value: 0x7f02005f
-			public const int ic_info_black_24dp = 2130837599;
+			public const int ic_errorstatus = 2130837599;
 			
 			// aapt resource value: 0x7f020060
-			public const int ic_settings_black_18dp = 2130837600;
+			public const int ic_info_black_18dp = 2130837600;
 			
 			// aapt resource value: 0x7f020061
-			public const int ic_settings_black_24dp = 2130837601;
+			public const int ic_info_black_24dp = 2130837601;
 			
 			// aapt resource value: 0x7f020062
-			public const int ic_successstatus = 2130837602;
+			public const int ic_settings_black_18dp = 2130837602;
 			
 			// aapt resource value: 0x7f020063
-			public const int navigation_empty_icon = 2130837603;
+			public const int ic_settings_black_24dp = 2130837603;
 			
 			// aapt resource value: 0x7f020064
-			public const int notification_action_background = 2130837604;
+			public const int ic_successstatus = 2130837604;
 			
 			// aapt resource value: 0x7f020065
-			public const int notification_bg = 2130837605;
+			public const int navigation_empty_icon = 2130837605;
 			
 			// aapt resource value: 0x7f020066
-			public const int notification_bg_low = 2130837606;
+			public const int notification_action_background = 2130837606;
 			
 			// aapt resource value: 0x7f020067
-			public const int notification_bg_low_normal = 2130837607;
+			public const int notification_bg = 2130837607;
 			
 			// aapt resource value: 0x7f020068
-			public const int notification_bg_low_pressed = 2130837608;
+			public const int notification_bg_low = 2130837608;
 			
 			// aapt resource value: 0x7f020069
-			public const int notification_bg_normal = 2130837609;
+			public const int notification_bg_low_normal = 2130837609;
 			
 			// aapt resource value: 0x7f02006a
-			public const int notification_bg_normal_pressed = 2130837610;
+			public const int notification_bg_low_pressed = 2130837610;
 			
 			// aapt resource value: 0x7f02006b
-			public const int notification_icon_background = 2130837611;
-			
-			// aapt resource value: 0x7f020073
-			public const int notification_template_icon_bg = 2130837619;
-			
-			// aapt resource value: 0x7f020074
-			public const int notification_template_icon_low_bg = 2130837620;
+			public const int notification_bg_normal = 2130837611;
 			
 			// aapt resource value: 0x7f02006c
-			public const int notification_tile_bg = 2130837612;
+			public const int notification_bg_normal_pressed = 2130837612;
 			
 			// aapt resource value: 0x7f02006d
-			public const int notify_panel_notification_icon_bg = 2130837613;
+			public const int notification_icon_background = 2130837613;
+			
+			// aapt resource value: 0x7f020075
+			public const int notification_template_icon_bg = 2130837621;
+			
+			// aapt resource value: 0x7f020076
+			public const int notification_template_icon_low_bg = 2130837622;
 			
 			// aapt resource value: 0x7f02006e
-			public const int roundedbg = 2130837614;
+			public const int notification_tile_bg = 2130837614;
 			
 			// aapt resource value: 0x7f02006f
-			public const int roundedbgdark = 2130837615;
+			public const int notify_panel_notification_icon_bg = 2130837615;
 			
 			// aapt resource value: 0x7f020070
-			public const int splash_screen = 2130837616;
+			public const int roundedbg = 2130837616;
 			
 			// aapt resource value: 0x7f020071
-			public const int tooltip_frame_dark = 2130837617;
+			public const int roundedbgdark = 2130837617;
 			
 			// aapt resource value: 0x7f020072
-			public const int tooltip_frame_light = 2130837618;
+			public const int splash_screen = 2130837618;
+			
+			// aapt resource value: 0x7f020073
+			public const int tooltip_frame_dark = 2130837619;
+			
+			// aapt resource value: 0x7f020074
+			public const int tooltip_frame_light = 2130837620;
 			
 			static Drawable()
 			{
@@ -6645,8 +6651,8 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f090039
 			public const int SYM = 2131296313;
 			
-			// aapt resource value: 0x7f0900c4
-			public const int aboutIcon = 2131296452;
+			// aapt resource value: 0x7f0900c5
+			public const int aboutIcon = 2131296453;
 			
 			// aapt resource value: 0x7f0900ab
 			public const int action0 = 2131296427;
@@ -6699,8 +6705,8 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f09005e
 			public const int action_mode_close_button = 2131296350;
 			
-			// aapt resource value: 0x7f0900cb
-			public const int action_settings = 2131296459;
+			// aapt resource value: 0x7f0900cc
+			public const int action_settings = 2131296460;
 			
 			// aapt resource value: 0x7f0900aa
 			public const int action_text = 2131296426;
@@ -6744,8 +6750,8 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f090095
 			public const int bottomNavigation = 2131296405;
 			
-			// aapt resource value: 0x7f0900c5
-			public const int bottomOptions = 2131296453;
+			// aapt resource value: 0x7f0900c6
+			public const int bottomOptions = 2131296454;
 			
 			// aapt resource value: 0x7f090065
 			public const int buttonPanel = 2131296357;
@@ -6782,6 +6788,9 @@ namespace Timeinator.Mobile.AndroidNative
 			
 			// aapt resource value: 0x7f090068
 			public const int contentPanel = 2131296360;
+			
+			// aapt resource value: 0x7f0900bf
+			public const int contextMenu = 2131296447;
 			
 			// aapt resource value: 0x7f090099
 			public const int coordinator = 2131296409;
@@ -6840,8 +6849,8 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f090074
 			public const int expanded_menu = 2131296372;
 			
-			// aapt resource value: 0x7f0900c0
-			public const int favourite = 2131296448;
+			// aapt resource value: 0x7f0900c1
+			public const int favourite = 2131296449;
 			
 			// aapt resource value: 0x7f090052
 			public const int fill = 2131296338;
@@ -6939,14 +6948,14 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f0900a7
 			public const int loadingProgressWheel = 2131296423;
 			
-			// aapt resource value: 0x7f0900c8
-			public const int masked = 2131296456;
+			// aapt resource value: 0x7f0900c9
+			public const int masked = 2131296457;
 			
 			// aapt resource value: 0x7f0900ae
 			public const int media_actions = 2131296430;
 			
-			// aapt resource value: 0x7f0900c6
-			public const int message = 2131296454;
+			// aapt resource value: 0x7f0900c7
+			public const int message = 2131296455;
 			
 			// aapt resource value: 0x7f090033
 			public const int middle = 2131296307;
@@ -6954,20 +6963,20 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f090055
 			public const int mini = 2131296341;
 			
-			// aapt resource value: 0x7f0900bf
-			public const int minor_info = 2131296447;
+			// aapt resource value: 0x7f0900c0
+			public const int minor_info = 2131296448;
 			
 			// aapt resource value: 0x7f09002a
 			public const int multiply = 2131296298;
 			
-			// aapt resource value: 0x7f0900ca
-			public const int navigation_about = 2131296458;
+			// aapt resource value: 0x7f0900cb
+			public const int navigation_about = 2131296459;
 			
 			// aapt resource value: 0x7f09009e
 			public const int navigation_header_container = 2131296414;
 			
-			// aapt resource value: 0x7f0900c9
-			public const int navigation_settings = 2131296457;
+			// aapt resource value: 0x7f0900ca
+			public const int navigation_settings = 2131296458;
 			
 			// aapt resource value: 0x7f09003d
 			public const int never = 2131296317;
@@ -7083,8 +7092,8 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f09008c
 			public const int select_dialog_listview = 2131296396;
 			
-			// aapt resource value: 0x7f0900c3
-			public const int settingsIcon = 2131296451;
+			// aapt resource value: 0x7f0900c4
+			public const int settingsIcon = 2131296452;
 			
 			// aapt resource value: 0x7f090076
 			public const int shortcut = 2131296374;
@@ -7143,11 +7152,11 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f090019
 			public const int tag_transition_group = 2131296281;
 			
-			// aapt resource value: 0x7f0900c2
-			public const int taskList = 2131296450;
+			// aapt resource value: 0x7f0900c3
+			public const int taskList = 2131296451;
 			
-			// aapt resource value: 0x7f0900c1
-			public const int taskListPage = 2131296449;
+			// aapt resource value: 0x7f0900c2
+			public const int taskListPage = 2131296450;
 			
 			// aapt resource value: 0x7f09001a
 			public const int text = 2131296282;
@@ -7224,8 +7233,8 @@ namespace Timeinator.Mobile.AndroidNative
 			// aapt resource value: 0x7f090016
 			public const int view_offset_helper = 2131296278;
 			
-			// aapt resource value: 0x7f0900c7
-			public const int visible = 2131296455;
+			// aapt resource value: 0x7f0900c8
+			public const int visible = 2131296456;
 			
 			// aapt resource value: 0x7f09003e
 			public const int withText = 2131296318;

@@ -16,14 +16,21 @@ namespace Timeinator.Mobile.AndroidNative
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.AddNewTimeTaskPage);
+
+            OverridePendingTransition(Resource.Animation.design_bottom_sheet_slide_in, Resource.Animation.design_bottom_sheet_slide_out);
         }
 
         protected override void OnStart()
         {
             base.OnStop();
 
-            // Find the priority seekbar and listen out for progress changes
+            // Find the priority seekbar
             var prioritySeekBar = (DiscreteSeekBar)FindViewById(Resource.Id.prioritySeekBar);
+            
+            // Set initial progress value
+            prioritySeekBar.Progress = (BindingContext.DataContext as AddNewTimeTaskPageViewModel).TaskPrioritySliderValue;
+
+            // Listen out for future progress changes
             prioritySeekBar.ProgressChanged += PrioritySeekBar_ProgressChanged;
         }
 

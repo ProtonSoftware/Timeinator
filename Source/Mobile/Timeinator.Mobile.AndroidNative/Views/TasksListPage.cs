@@ -4,9 +4,11 @@ using Android.OS;
 using Android.Widget;
 using MvvmCross;
 using MvvmCross.Binding.Binders;
+using MvvmCross.Droid.Support.V7.RecyclerView;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
 using System.Linq;
+using Timeinator.Core;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.AndroidNative
@@ -19,6 +21,8 @@ namespace Timeinator.Mobile.AndroidNative
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.TasksListPage);
+
+            OverridePendingTransition(Resource.Animation.abc_slide_in_bottom, Resource.Animation.abc_slide_out_top);
         }
 
         protected override void OnStart()
@@ -56,6 +60,34 @@ namespace Timeinator.Mobile.AndroidNative
             BindingContext.RegisterBinding(settingsIcon, bindingSettings);
             var bindingAbout = binder.Bind(viewModel, aboutIcon, "Click OpenAboutCommand").First();
             BindingContext.RegisterBinding(aboutIcon, bindingAbout);
+
+            // Find task list container
+            var recyclerView = (MvxRecyclerView)page.FindViewById(Resource.Id.taskList);
+
+            // For item single short clicks
+            recyclerView.ItemClick = new RelayParameterizedCommand((s) =>
+            {
+                // Enable/disable it as if checkbox was clicked - provides better UX
+                var itemVM = s as TimeTaskViewModel;
+
+                // Handle it only when context menu is hidden
+                if (itemVM.IsContextMenuVisible == false)
+                    itemVM.IsEnabled ^= true;
+            });
+
+            // For item long clicks
+            recyclerView.ItemLongClick = new RelayParameterizedCommand((s) => 
+            {
+                // Show context menu with edit/delete buttons
+                var itemVM = s as TimeTaskViewModel;
+                itemVM.IsContextMenuVisible ^= true;
+
+                // Subscribe to context menu events so action can be performed after clicks
+                itemVM.OnEditRequest -= (param) => viewModel.EditTaskCommand.Execute(param);
+                itemVM.OnDeleteRequest -= (param) => viewModel.DeleteTaskCommand.Execute(param);
+                itemVM.OnEditRequest += (param) => viewModel.EditTaskCommand.Execute(param);
+                itemVM.OnDeleteRequest += (param) => viewModel.DeleteTaskCommand.Execute(param);
+            });
         }
     }
 }
