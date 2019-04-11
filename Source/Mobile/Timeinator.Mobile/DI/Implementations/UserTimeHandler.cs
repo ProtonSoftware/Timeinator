@@ -125,6 +125,7 @@ namespace Timeinator.Mobile
             if (CurrentTaskAssignedT.TotalMilliseconds > 0)
             {
                 RecentProgress = 0;
+                mSessionService.Details(CurrentTask.Name, RecentProgress);
                 mSessionService.Interval(CurrentTaskAssignedT);
                 CurrentTaskStartTime = CurrentTime;
                 mSessionService.Start();
@@ -155,6 +156,7 @@ namespace Timeinator.Mobile
             var CurrentTaskAssignedT = CurrentTask.AssignedTime;
             if (CurrentTaskAssignedT.TotalMilliseconds > 0)
             {
+                mSessionService.Details(CurrentTask.Name, RecentProgress);
                 mSessionService.Interval(CurrentTaskAssignedT);
                 mSessionService.Start();
             }

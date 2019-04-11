@@ -19,6 +19,11 @@ namespace Timeinator.Mobile.Droid
     [Service]
     public class TaskService : Service
     {
+        public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 5000;
+        public static readonly string CHANNEL_ID = "com.gummybearstudio.timeinator";
+
+        #region Private members
+
         private class Timer : CountDownTimer
         {
             private TaskService mParent;
@@ -28,17 +33,10 @@ namespace Timeinator.Mobile.Droid
                 mParent = parent;
             }
 
-            public override void OnTick(long millisUntilFinished)
-            {
-            }
+            public override void OnTick(long millisUntilFinished) => mParent.ReNotify();
 
             public override void OnFinish() => mParent.TimeOut();
         }
-
-        public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 5000;
-        public static readonly string CHANNEL_ID = "com.gummybearstudio.timeinator";
-
-        #region Private members
 
         private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
         private NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
@@ -105,16 +103,16 @@ namespace Timeinator.Mobile.Droid
                     .SetContentIntent(pendingIntent)
                     .SetSmallIcon(Resource.Mipmap.logo);
             }
-            var timeLeft = DateTime.Now.Subtract(ParamStart);
+            var timePassed = DateTime.Now.Subtract(ParamStart);
             var progress = 0;
             if (ParamTime.TotalMilliseconds > 0)
-                progress = (int)(100 * (ParamRecentProgress + (1.0 - ParamRecentProgress) * (timeLeft.TotalMilliseconds / ParamTime.TotalMilliseconds)));
+                progress = (int)(100 * (ParamRecentProgress + (1.0 - ParamRecentProgress) * (timePassed.TotalMilliseconds / ParamTime.TotalMilliseconds)));
             NotificationBuilder.SetContentTitle(ParamName)
                 .SetTicker("Timeinator Session");
             if (progress > 100)
                 NotificationBuilder.SetContentText("Task finished").SetProgress(0, 0, false);
             else
-                NotificationBuilder.SetContentText($"{timeLeft} ({progress}%)").SetProgress(100, progress, false);
+                NotificationBuilder.SetContentText(string.Format("{0:hh\\:mm\\:ss} ({1}%)", timePassed, progress)).SetProgress(100, progress, false);
             return NotificationBuilder.Build();
         }
 
@@ -133,17 +131,29 @@ namespace Timeinator.Mobile.Droid
 
         #endregion
 
+        public event Action Elapsed;
+
         public string ParamName { get; set; } = "None";
         public DateTime ParamStart { get; set; } = DateTime.Now;
         public TimeSpan ParamTime { get; set; } = TimeSpan.Zero;
         public double ParamRecentProgress { get; set; } = 0;
-        public event Action Elapsed;
 
         /// <summary>
         /// Call any action supported by Service
         /// </summary>
         public void HandleMessage(Intent intent)
         {
+            if (intent.Action == IntentActions.ACTION_NEXTTASK || intent.Action == IntentActions.ACTION_RESUMETASK)
+            {
+                if (intent.Action == IntentActions.ACTION_NEXTTASK)
+                    ParamName = intent.GetStringExtra("Name");
+                UpdateTask(DateTime.Now, TimeSpan.FromSeconds(intent.GetDoubleExtra("Time", 0)), intent.GetDoubleExtra("Progress", 0));
+                Start();
+            }
+            else if (intent.Action == IntentActions.ACTION_PAUSETASK)
+                Stop();
+            else if (intent.Action == IntentActions.ACTION_STOP)
+                KillService();
         }
 
         /// <summary>
@@ -157,21 +167,20 @@ namespace Timeinator.Mobile.Droid
         public void Stop()
         {
             if (TaskTiming != null)
+            {
                 TaskTiming.Cancel();
+                TaskTiming.Dispose();
+            }
         }
 
         /// <summary>
-        /// Set an alarm to fire at Task time out
+        /// Start background timing with notification refreshing
         /// </summary>
         public void Start()
         {
             if (ParamTime.Ticks <= 0)
                 return;
-            if (TaskTiming != null)
-            {
-                TaskTiming.Cancel();
-                TaskTiming.Dispose();
-            }
+            Stop();
             TaskTiming = new Timer((long)ParamTime.TotalMilliseconds, REFRESH_RATE, this);
             TaskTiming.Start();
             // AlarmManager version below (not tested)
@@ -185,9 +194,17 @@ namespace Timeinator.Mobile.Droid
         /// <summary>
         /// Update information about current Task
         /// </summary>
-        public void UpdateInfo(string n, DateTime s, TimeSpan t, double p)
+        public void UpdateTask(string n, DateTime s, TimeSpan t, double p)
         {
             ParamName = n;
+            UpdateTask(s, t, p);
+        }
+
+        /// <summary>
+        /// Update information about current Task
+        /// </summary>
+        public void UpdateTask(DateTime s, TimeSpan t, double p)
+        {
             ParamStart = s;
             ParamTime = t;
             ParamRecentProgress = p;
@@ -199,6 +216,7 @@ namespace Timeinator.Mobile.Droid
         public void TimeOut()
         {
             Elapsed.Invoke();
+            ReNotify();
         }
 
         /// <summary>

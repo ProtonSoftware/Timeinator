@@ -23,16 +23,14 @@ namespace Timeinator.Mobile.Droid
 
         #endregion
 
-        #region Interface implementation
-        // SURPRISE! THERE IS NO INTERFACE IMPLEMENTATION NEEDED ANYMORE
-        #endregion
-
         #region Private helpers
 
         private void ConnectService()
         {
             if (mServiceConnection == null)
                 mServiceConnection = new TaskServiceConnection();
+            if (mServiceConnection.IsConnected)
+                return;
             var intent = new Intent(Application.Context, typeof(TaskService));
             Application.Context.StartService(intent);
             Application.Context.BindService(intent, mServiceConnection, Bind.WaivePriority);
