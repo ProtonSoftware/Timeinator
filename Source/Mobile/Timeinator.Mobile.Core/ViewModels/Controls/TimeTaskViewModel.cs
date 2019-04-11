@@ -58,6 +58,12 @@ namespace Timeinator.Mobile.Core
         public bool IsEnabled { get; set; } = true;
 
         /// <summary>
+        /// Indicates if this task has contant time assigned
+        /// If false, AssignedTime property is ignored
+        /// </summary>
+        public bool IsAssignedTime { get; set; }
+
+        /// <summary>
         /// The time assigned for this specific task
         /// </summary>
         public TimeSpan AssignedTime { get; set; }
@@ -85,12 +91,12 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The event to fire whenever user wants to edit this task
         /// </summary>
-        public event Action<object> OnEditRequest = (id) => { };
+        public event Action<object> OnEditRequest = (vm) => { };
 
         /// <summary>
         /// The event to fire whenever user wants to remove this task
         /// </summary>
-        public event Action<object> OnDeleteRequest = (id) => { };
+        public event Action<object> OnDeleteRequest = (vm) => { };
 
         #endregion
 
