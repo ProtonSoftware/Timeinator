@@ -36,6 +36,8 @@ namespace Timeinator.Mobile.Droid
         {
             Binder = service as TaskServiceBinder;
             IsConnected = Binder != null;
+            if (IsConnected)
+                Binder.Service.Elapsed += () => TimerElapsed.Invoke();
         }
 
         public void OnServiceDisconnected(ComponentName name)
@@ -46,12 +48,16 @@ namespace Timeinator.Mobile.Droid
 
         #endregion
 
-        #region ISessionService Implementation
-        public bool Active { get; set; }
+        #region SessionService Implementation
+
+        public bool Active { get; private set; }
         public event Action TimerElapsed;
+
         public void Interval(TimeSpan assignedT) { }
         public void Stop() { }
         public void Start() { }
+        public void Kill() { }
+
         #endregion
     }
 }

@@ -12,6 +12,7 @@ namespace Timeinator.Mobile
         void Interval(TimeSpan assignedT);
         void Stop();
         void Start();
+        void Kill();
 
         event Action TimerElapsed;
     }
