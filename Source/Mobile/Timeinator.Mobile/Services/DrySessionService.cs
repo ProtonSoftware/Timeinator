@@ -52,6 +52,8 @@ namespace Timeinator.Mobile
 
         public void Start() => TaskTiming.Start();
 
+        public void Kill() => TaskTiming.Dispose();
+
         #endregion
     }
 }

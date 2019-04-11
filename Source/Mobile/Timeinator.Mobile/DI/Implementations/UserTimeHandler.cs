@@ -82,7 +82,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Recalculate assigned times on current session
         /// </summary>
-        public void RefreshTasksState()
+        public virtual void RefreshTasksState()
         {
             var ttsvc = Dna.Framework.Service<ITimeTasksService>();
             ttsvc.ConveyTasksToManager(SessionTasks);
@@ -106,7 +106,7 @@ namespace Timeinator.Mobile
         /// <summary>
         /// Gets CurrentTask time loss every second of Break
         /// </summary>
-        public virtual TimeSpan TimeLossValue()
+        public TimeSpan TimeLossValue()
         {
             if (CurrentTask == null)
                 return default(TimeSpan);
