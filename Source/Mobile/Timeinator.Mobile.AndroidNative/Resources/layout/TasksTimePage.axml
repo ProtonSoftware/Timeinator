@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:local="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<TextView
+		android:id="@+id/title"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:textAlignment="center"
+		android:textSize="@dimen/abc_text_size_display_1_material"
+		android:textColor="@color/colorBlack"
+		android:text="Wybierz czas trwania sesji" />
+	<TimePicker android:layout_below="@id/title"
+		android:layout_margin="@dimen/abc_action_bar_content_inset_material"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+        android:elevation="@dimen/abc_action_bar_elevation_material"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="4dp"
+            android:text="Oblicz sesję"
+            android:background="@color/colorAccent"
+            local:MvxBind="Click CalculateSessionCommand"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"
+            android:text="Przerwij"
+            android:background="@color/colorPrimaryDark"
+            local:MvxBind="Click CancelCommand" />
+
+    </LinearLayout>
+    <View style="@style/Divider"
+          android:layout_above="@id/bottomNavigation" />
+</RelativeLayout>
