@@ -111,6 +111,8 @@ namespace Timeinator.Mobile.Core
             EditTaskCommand = new RelayParameterizedCommand(EditTask);
             DeleteTaskCommand = new RelayParameterizedCommand(async (param) => await uiManager.ExecuteOnMainThread(async () => await DeleteTaskAsync(param)));
             UserReadyCommand = new RelayCommand(UserReady);
+            OpenSettingsCommand = new RelayCommand(() => mUIManager.GoToViewModelPage(DI.GetInjectedPageViewModel<SettingsPageViewModel>()));
+            OpenAboutCommand = new RelayCommand(() => mUIManager.GoToViewModelPage(DI.GetInjectedPageViewModel<AboutPageViewModel>()));
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
