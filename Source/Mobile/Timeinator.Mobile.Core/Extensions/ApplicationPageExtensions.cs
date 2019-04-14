@@ -20,7 +20,7 @@ namespace Timeinator.Mobile.Core
                     return DI.GetInjectedPageViewModel<LoginPageViewModel>();
 
                 case ApplicationPage.About:
-                    return new AboutPageViewModel();
+                    return DI.GetInjectedPageViewModel<AboutPageViewModel>();
 
                 case ApplicationPage.Settings:
                     return DI.GetInjectedPageViewModel<SettingsPageViewModel>();
