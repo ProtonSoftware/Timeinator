@@ -69,6 +69,11 @@ namespace Timeinator.Mobile.Core
             }
         }
 
+        /// <summary>
+        /// The value of check-all-tasks checkbox
+        /// </summary>
+        public bool CheckAllBox { get; set; }
+
         #endregion
 
         #region Commands
