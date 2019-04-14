@@ -26,9 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
-        android:elevation="@dimen/abc_action_bar_elevation_material"
+        android:elevation="@dimen/design_bottom_navigation_elevation"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#fff">
 
         <Button
             android:layout_width="0dp"
@@ -49,6 +50,22 @@
             local:MvxBind="Click CancelCommand" />
 
     </LinearLayout>
-    <View style="@style/Divider"
-          android:layout_above="@id/bottomNavigation" />
+    <LinearLayout
+        android:id="@+id/bottomOptions"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+		android:elevation="@dimen/design_bottom_navigation_elevation"
+        android:layout_above="@id/bottomNavigation"
+        android:orientation="horizontal"
+        android:background="#fff">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="Przewidywany czas sesji: 5h 20m 0s"
+                local:MvxBind="Text TimeSpanToText(SessionTime, true)"
+                android:textSize="@dimen/abc_text_size_large_material"/>
+
+    </LinearLayout>
 </RelativeLayout>
