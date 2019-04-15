@@ -168,6 +168,12 @@ namespace Timeinator.Mobile
         /// </summary>
         private void RealTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            if (CurrentTask == null)
+            {
+                RealTimer.Stop();
+                DI.Application.GoToPage(ApplicationPage.TasksList);
+                return;
+            }
             if (Paused)
             {
                 BreakDuration = DateTime.Now - BreakStart;
@@ -230,11 +236,6 @@ namespace Timeinator.Mobile
             mUserTimeHandler.CleanTasks();
             mUserTimeHandler.RefreshTasksState();
             LoadTaskList();
-            if (TaskItems.Count <= 0)
-            {
-                RealTimer.Stop();
-                DI.Application.GoToPage(ApplicationPage.TasksList);
-            }
             mUserTimeHandler.StartTask();
         }
 
