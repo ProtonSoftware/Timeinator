@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Android.App;
 using Android.Content;
+using Android.Media;
 using Android.OS;
 using Android.Runtime;
 using Android.Util;
@@ -258,6 +259,10 @@ namespace Timeinator.Mobile.Droid
         public void TimeOut()
         {
             Elapsed.Invoke();
+            using (var r = RingtoneManager.GetRingtone(ApplicationContext, RingtoneManager.GetDefaultUri(RingtoneType.Ringtone)))
+            {
+                r.Play();
+            }
             ReNotify();
         }
 
