@@ -102,12 +102,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Timeinator.Mobile\Timeinator.Mobile.csproj">
-      <Project>{33ba2abc-644c-4577-9b1b-11149a39d8ce}</Project>
-      <Name>Timeinator.Mobile</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Dna.Framework">
       <Version>1.0.7.10</Version>
     </PackageReference>
