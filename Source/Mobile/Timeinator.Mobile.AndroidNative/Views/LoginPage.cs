@@ -40,6 +40,13 @@ namespace Timeinator.Mobile.AndroidNative
 
             // Build new DI
             Dna.Framework.Construction.Build();
+
+            // If we get there by session intent from notification
+            if (Intent.Action == IntentActions.ACTION_GOSESSION)
+            {
+                // Change application's page to continue session
+                DI.Application.GoToPage(ApplicationPage.TasksSession);
+            }
         }
     }
 }

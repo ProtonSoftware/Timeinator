@@ -9,6 +9,7 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.AndroidNative
 {
@@ -96,7 +97,7 @@ namespace Timeinator.Mobile.AndroidNative
         public Notification GetNotification()
         {
             // Prepare Intent opening App
-            var intent = new Intent(Application.Context, typeof(MainActivity));
+            var intent = new Intent(Application.Context, typeof(LoginPage)); // LoginPage or SessionPage directly ???
             intent.SetAction(IntentActions.ACTION_GOSESSION).AddFlags(ActivityFlags.ClearTop);
             var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
 
@@ -163,7 +164,7 @@ namespace Timeinator.Mobile.AndroidNative
             var intent = new Intent(Application.Context, typeof(TaskService));
             intent.SetAction(action).AddFlags(ActivityFlags.FromBackground);
             var pendingIntent = PendingIntent.GetService(this, id, intent, PendingIntentFlags.Immutable);
-            NotificationBuilder.AddAction(Resource.Mipmap.icon_round, title, pendingIntent);
+            NotificationBuilder.AddAction(Resource.Mipmap.ic_launcher_round, title, pendingIntent);
         }
 
         #endregion
