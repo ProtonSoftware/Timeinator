@@ -259,7 +259,7 @@ namespace Timeinator.Mobile.Droid
         public void TimeOut()
         {
             Elapsed.Invoke();
-            using (var r = RingtoneManager.GetRingtone(ApplicationContext, RingtoneManager.GetDefaultUri(RingtoneType.Ringtone)))
+            using (var r = RingtoneManager.GetRingtone(ApplicationContext, RingtoneManager.GetDefaultUri(RingtoneType.Notification)))
             {
                 r.Play();
             }
