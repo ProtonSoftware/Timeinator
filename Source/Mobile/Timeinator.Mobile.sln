@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeinator.Mobile.Android", "Timeinator.Mobile.Android\Timeinator.Mobile.Android.csproj", "{59694A19-FD34-42C3-9E55-142D0C6355EC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeinator.Mobile", "Timeinator.Mobile\Timeinator.Mobile.csproj", "{33BA2ABC-644C-4577-9B1B-11149A39D8CE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeinator.Core", "..\Backend\Timeinator.Core\Timeinator.Core.csproj", "{AE3E20C1-CC67-4A86-A7FE-AEB92951C715}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeinator.Mobile.DataAccess", "Timeinator.DataAccess\Timeinator.Mobile.DataAccess.csproj", "{353E215D-8931-4513-9906-5C15DF2655C7}"
@@ -22,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeinator.Mobile.WPF", "Ti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeinator.Mobile.AndroidNative", "Timeinator.Mobile.AndroidNative\Timeinator.Mobile.AndroidNative.csproj", "{3BC0AC7E-3B3B-4D3F-9CC0-B2BDECC460A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeinator.Mobile.Core", "Timeinator.Mobile.Core\Timeinator.Mobile.Core.csproj", "{17BBEBF5-BD41-412D-9616-6C7E228F8E4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeinator.Mobile.Core", "Timeinator.Mobile.Core\Timeinator.Mobile.Core.csproj", "{17BBEBF5-BD41-412D-9616-6C7E228F8E4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,16 +26,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{59694A19-FD34-42C3-9E55-142D0C6355EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59694A19-FD34-42C3-9E55-142D0C6355EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59694A19-FD34-42C3-9E55-142D0C6355EC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{59694A19-FD34-42C3-9E55-142D0C6355EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59694A19-FD34-42C3-9E55-142D0C6355EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59694A19-FD34-42C3-9E55-142D0C6355EC}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{33BA2ABC-644C-4577-9B1B-11149A39D8CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33BA2ABC-644C-4577-9B1B-11149A39D8CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33BA2ABC-644C-4577-9B1B-11149A39D8CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33BA2ABC-644C-4577-9B1B-11149A39D8CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE3E20C1-CC67-4A86-A7FE-AEB92951C715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AE3E20C1-CC67-4A86-A7FE-AEB92951C715}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE3E20C1-CC67-4A86-A7FE-AEB92951C715}.Release|Any CPU.ActiveCfg = Release|Any CPU
