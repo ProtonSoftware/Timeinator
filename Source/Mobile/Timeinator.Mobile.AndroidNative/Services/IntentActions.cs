@@ -1,4 +1,6 @@
-﻿namespace Timeinator.Mobile.AndroidNative
+﻿using Timeinator.Mobile.Core;
+
+namespace Timeinator.Mobile.AndroidNative
 {
     public class IntentActions
     {

@@ -1,11 +1,11 @@
-﻿using MvvmCross.ViewModels;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 using Timeinator.Core;
+using MvvmCross.ViewModels;
 
 namespace Timeinator.Mobile.Core
 {
@@ -54,7 +54,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Holds current task state
         /// </summary>
-        public bool Paused => !mUserTimeHandler.TimerStateRunning();
+        public bool Paused => !mUserTimeHandler.SessionRunning;
 
         /// <summary>
         /// Remaining time from handler
@@ -63,7 +63,7 @@ namespace Timeinator.Mobile.Core
             get
             {
                 try { return CurrentTask.AssignedTime - mUserTimeHandler.TimePassed; }
-                catch { return default(TimeSpan); }
+                catch { return default; }
             }
         }
 
@@ -125,6 +125,7 @@ namespace Timeinator.Mobile.Core
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 
+            mUserTimeHandler.Updated += () => { LoadTaskList(); RefreshProperties(); };
             mUserTimeHandler.TimesUp += async () => await uiManager.ExecuteOnMainThread(async () => await UserTimeHandler_TimesUpAsync());
             RealTimer.Elapsed += RealTimer_Elapsed;  
 
@@ -137,7 +138,7 @@ namespace Timeinator.Mobile.Core
         private void Stop()
         {
             mUserTimeHandler.StopTask();
-            ClickStandardAction();
+            RefreshProperties();
         }
 
         private void Resume()
@@ -145,10 +146,10 @@ namespace Timeinator.Mobile.Core
             mUserTimeHandler.RefreshTasksState();
             mUserTimeHandler.ResumeTask();
             LoadTaskList();
-            ClickStandardAction();
+            RefreshProperties();
         }
 
-        private void ClickStandardAction()
+        private void RefreshProperties()
         {
             if (Paused)
             {
@@ -167,6 +168,12 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void RealTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            if (CurrentTask == null)
+            {
+                RealTimer.Stop();
+                DI.Application.GoToPage(ApplicationPage.TasksList);
+                return;
+            }
             if (Paused)
             {
                 BreakDuration = DateTime.Now - BreakStart;
@@ -197,7 +204,6 @@ namespace Timeinator.Mobile.Core
             {
                 mUserTimeHandler.FinishTask();
                 ContinueUserTasks();
-                mUserTimeHandler.RefreshTasksState();
                 LoadTaskList();
             }
         }
@@ -227,13 +233,10 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void ContinueUserTasks()
         {
-            mUserTimeHandler.RemoveAndContinueTasks();
+            mUserTimeHandler.CleanTasks();
+            mUserTimeHandler.RefreshTasksState();
             LoadTaskList();
-            if (TaskItems.Count <= 0)
-            {
-                RealTimer.Stop();
-                DI.Application.GoToPage(ApplicationPage.TasksList);
-            }
+            mUserTimeHandler.StartTask();
         }
 
         /// <summary>
