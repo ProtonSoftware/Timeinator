@@ -68,7 +68,9 @@
     <Compile Include="Services\TaskServiceConnection.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="UI\UIManager.cs" />
+    <Compile Include="Views\AboutPage.cs" />
     <Compile Include="Views\AddNewTimeTaskPage.cs" />
+    <Compile Include="Views\SettingsPage.cs" />
     <Compile Include="Views\TasksSessionPage.cs" />
     <Compile Include="Views\TasksSummaryPage.cs" />
     <Compile Include="Views\TasksTimePage.cs" />
@@ -318,6 +320,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_delete_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\AboutPage.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\SettingsPage.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

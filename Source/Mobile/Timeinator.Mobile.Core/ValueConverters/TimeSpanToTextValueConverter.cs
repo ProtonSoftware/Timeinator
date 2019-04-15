@@ -12,9 +12,13 @@ namespace Timeinator.Mobile.Core
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var prependSentence = "";
             var timespan = (TimeSpan)value;
 
-            return $"{timespan.Hours}h {timespan.Minutes}m {timespan.Seconds}s";
+            if (parameter != null)
+                prependSentence = "Przewidywany czas sesji: ";
+
+            return $"{prependSentence}{timespan.Hours}h {timespan.Minutes}m {timespan.Seconds}s";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
