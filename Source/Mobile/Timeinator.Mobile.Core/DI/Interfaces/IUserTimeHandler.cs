@@ -11,19 +11,18 @@ namespace Timeinator.Mobile.Core
         TimeSpan TimePassed { get; }
         DateTime CurrentTaskStartTime { get; }
         double RecentProgress { get; set; }
+        bool SessionRunning { get; }
 
         void StartTimeHandler(List<TimeTaskContext> sessionTasks);
         List<TimeTaskContext> DownloadSession();
         void RefreshTasksState();
-        void RemoveAndContinueTasks();
+        void CleanTasks();
         TimeSpan TimeLossValue();
-        bool TimerStateRunning();
         void StartTask();
         void StopTask();
         void ResumeTask();
         void FinishTask();
-        void InvokeTimesUp();
 
-        event Action TimesUp;
+        event Action TimesUp, Updated;
     }
 }
