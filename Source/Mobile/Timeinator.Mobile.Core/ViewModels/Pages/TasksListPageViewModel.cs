@@ -23,9 +23,9 @@ namespace Timeinator.Mobile.Core
         private readonly IUIManager mUIManager;
 
         /// <summary>
-        /// A value of selected index in sorting combobox
+        /// A value of selected item in sorting combobox
         /// </summary>
-        private int mSortIndex = 10;
+        private string mSortValue;
 
         #endregion
 
@@ -41,17 +41,23 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public ObservableCollection<string> TaskTags { get; set; } = new ObservableCollection<string>();
 
-        /// <summary>
-        /// The index choosen in sorting combobox
-        /// </summary>
-        public int SortIndex
+        public ObservableCollection<string> SortItems { get; set; } = new ObservableCollection<string>
         {
-            get => mSortIndex;
+            "Alfabetycznie",
+            "Po dacie dodania"
+        };
+
+        /// <summary>
+        /// The item choosen in sorting combobox
+        /// </summary>
+        public string SortValue
+        {
+            get => mSortValue;
             set
             {
-                mSortIndex = value;
+                mSortValue = value;
 
-                switch (mSortIndex)
+                switch (SortItems.IndexOf(mSortValue))
                 {
                     case 0:
                         TaskItems = new ObservableCollection<TimeTaskViewModel>(TaskItems.OrderBy(x => x.Name));
@@ -62,6 +68,11 @@ namespace Timeinator.Mobile.Core
                 }
             }
         }
+
+        /// <summary>
+        /// The value of check-all-tasks checkbox
+        /// </summary>
+        public bool CheckAllBox { get; set; }
 
         #endregion
 
@@ -111,6 +122,8 @@ namespace Timeinator.Mobile.Core
             EditTaskCommand = new RelayParameterizedCommand(EditTask);
             DeleteTaskCommand = new RelayParameterizedCommand(async (param) => await uiManager.ExecuteOnMainThread(async () => await DeleteTaskAsync(param)));
             UserReadyCommand = new RelayCommand(UserReady);
+            OpenSettingsCommand = new RelayCommand(() => mUIManager.GoToViewModelPage(DI.GetInjectedPageViewModel<SettingsPageViewModel>()));
+            OpenAboutCommand = new RelayCommand(() => mUIManager.GoToViewModelPage(DI.GetInjectedPageViewModel<AboutPageViewModel>()));
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
@@ -124,7 +137,7 @@ namespace Timeinator.Mobile.Core
             ReloadTasks();
 
             // Initially, we want to sort tasks alphabetically by default
-            SortIndex = 0;
+            SortValue = SortItems[0];
 
             // Get every unique tag to display in the view
             GetEveryTaskTags();

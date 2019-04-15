@@ -27,6 +27,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public ObservableCollection<CalculatedTimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<CalculatedTimeTaskViewModel>();
 
+        /// <summary>
+        /// The time needed for current session
+        /// </summary>
+        public TimeSpan SessionTime { get; set; }
+
         #endregion
 
         #region Commands

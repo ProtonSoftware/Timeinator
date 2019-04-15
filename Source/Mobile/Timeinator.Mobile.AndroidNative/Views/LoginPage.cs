@@ -13,7 +13,8 @@ using Timeinator.Mobile.Core;
 namespace Timeinator.Mobile.AndroidNative
 {
     [MvxActivityPresentation]
-    [Activity(Label = "View for LoginPageViewModel")]
+    [Activity(Label = "View for LoginPageViewModel",
+              NoHistory = true)]
     public class LoginPage : MvxActivity
     {
         protected override void OnCreate(Bundle bundle)
