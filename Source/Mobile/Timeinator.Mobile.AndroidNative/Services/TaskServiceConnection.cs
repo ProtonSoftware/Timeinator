@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using System;
 using Timeinator.Mobile.Core;
 
-namespace Timeinator.Mobile.AndroidNative
+namespace Timeinator.Mobile.Android
 {
     /// <summary>
     /// Handles communication with Service using low-level TaskService and high-level <see cref="ISessionService"/>
     /// </summary>
     public class TaskServiceConnection : Java.Lang.Object, IServiceConnection, ISessionService
     {
-        #region Constructors
+        #region Constructor
 
         public TaskServiceConnection()
         {
@@ -30,10 +22,12 @@ namespace Timeinator.Mobile.AndroidNative
 
         #endregion
 
-        #region Public properties
+        #region Public Properties
 
         public bool IsConnected { get; private set; }
         public TaskServiceBinder Binder { get; private set; }
+
+        #endregion
 
         public void OnServiceConnected(ComponentName name, IBinder service)
         {
@@ -51,8 +45,6 @@ namespace Timeinator.Mobile.AndroidNative
             Binder = null;
             IsConnected = false;
         }
-
-        #endregion
 
         #region SessionService Implementation
 

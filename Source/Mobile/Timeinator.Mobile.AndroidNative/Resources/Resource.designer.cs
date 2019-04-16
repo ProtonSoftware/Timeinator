@@ -11,7 +11,7 @@
 
 [assembly: global::Android.Runtime.ResourceDesignerAttribute("Timeinator.Mobile.AndroidNative.Resource", IsApplication=true)]
 
-namespace Timeinator.Mobile.AndroidNative
+namespace Timeinator.Mobile.Android
 {
 	
 	

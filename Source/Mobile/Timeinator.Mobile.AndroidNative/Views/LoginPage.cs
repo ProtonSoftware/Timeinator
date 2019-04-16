@@ -10,7 +10,7 @@ using MvvmCross.Platforms.Android.Views;
 using System.Linq;
 using Timeinator.Mobile.Core;
 
-namespace Timeinator.Mobile.AndroidNative
+namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
     [Activity(Label = "View for LoginPageViewModel",
@@ -28,14 +28,12 @@ namespace Timeinator.Mobile.AndroidNative
             // Add dialogs library to Mvx DI
             Mvx.IoCProvider.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
 
-            // Add Android-specific dependency injection implementations
-            Dna.Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
-
-            // If there is no DI setup yet, i.e. NotificationHandler is not injected
+            // If there is no DI setup yet, i.e. IUserTimeHandler is not injected
             if (!Dna.Framework.Construction.Services.Any(x => x.ServiceType == typeof(IUserTimeHandler) && x.ImplementationType == typeof(AndroidTimeHandler)))
             {
-                // Add Android-specific DI implementations
+                // Add Android-specific dependency injection implementations
                 Dna.Framework.Construction.Services.AddScoped<IUserTimeHandler, AndroidTimeHandler>();
+                Dna.Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
             }
 
             // Build new DI

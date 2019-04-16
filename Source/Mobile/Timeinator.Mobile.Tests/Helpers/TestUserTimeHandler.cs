@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using Timeinator.Core;
+using Timeinator.Mobile.Core;
 using Xunit;
 
 namespace Timeinator.Mobile.Tests

@@ -10,8 +10,8 @@
     <TemplateGuid>{84dd83c5-0fe3-4294-9419-09e7c8ba324f}</TemplateGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Timeinator.Mobile.AndroidNative</RootNamespace>
-    <AssemblyName>Timeinator.Mobile.AndroidNative</AssemblyName>
+    <RootNamespace>Timeinator.Mobile.Android</RootNamespace>
+    <AssemblyName>Timeinator.Mobile.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
@@ -36,6 +36,10 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
     <LangVersion>7.1</LangVersion>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
+    <MandroidI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>PdbOnly</DebugType>
@@ -59,7 +63,7 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DIExt\AndroidTimeHandler.cs" />
+    <Compile Include="DIExtensions\AndroidTimeHandler.cs" />
     <Compile Include="Helpers\MovementRecyclerViewItemCallback.cs" />
     <Compile Include="Helpers\SwipeRecyclerViewItemCallback.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

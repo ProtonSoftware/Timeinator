@@ -1,30 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Timers;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Timeinator.Mobile.Core;
 
-namespace Timeinator.Mobile.AndroidNative
+namespace Timeinator.Mobile.Android
 {
     /// <summary>
     /// Handler for session - Android extension
     /// </summary>
     public class AndroidTimeHandler : UserTimeHandler
     {
-        #region Private members
+        #region Private Members
 
         private TaskServiceConnection mServiceConnection;
 
         #endregion
 
-        #region Private helpers
+        #region Private Helpers
 
         private void ConnectService()
         {

@@ -6,7 +6,7 @@ using MvvmCross.Platforms.Android.Views;
 using Org.Adw.Library.Widgets.Discreteseekbar;
 using Timeinator.Mobile.Core;
 
-namespace Timeinator.Mobile.AndroidNative
+namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
     [Activity(Label = "View for AddNewTimeTaskPageViewModel")]
