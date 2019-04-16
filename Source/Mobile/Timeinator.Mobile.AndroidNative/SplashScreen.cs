@@ -5,7 +5,7 @@ using Android.OS;
 using MvvmCross.Droid.Support.V7.AppCompat;
 using Timeinator.Mobile.Core;
 
-namespace Timeinator.Mobile.AndroidNative
+namespace Timeinator.Mobile.Android
 {
     [Activity(
         Label = "Timeinator", 

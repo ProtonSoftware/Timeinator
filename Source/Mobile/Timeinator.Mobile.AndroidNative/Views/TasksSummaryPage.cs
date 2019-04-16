@@ -9,7 +9,7 @@ using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
 using Timeinator.Mobile.Core;
 
-namespace Timeinator.Mobile.AndroidNative
+namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
     [Activity(Label = "View for TasksSummaryPageViewModel",

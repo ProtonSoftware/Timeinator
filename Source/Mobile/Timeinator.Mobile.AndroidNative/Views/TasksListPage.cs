@@ -14,7 +14,7 @@ using System.Linq;
 using Timeinator.Core;
 using Timeinator.Mobile.Core;
 
-namespace Timeinator.Mobile.AndroidNative
+namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
     [Activity(Label = "View for TasksListPageViewModel")]

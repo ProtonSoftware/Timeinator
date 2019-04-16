@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using Timeinator.Mobile.Core;
 
-namespace Timeinator.Mobile.AndroidNative
+namespace Timeinator.Mobile.Android
 {
     /// <summary>
     /// Manages all the UI stuff in this application

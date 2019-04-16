@@ -1,6 +1,6 @@
 ﻿using Timeinator.Mobile.Core;
 
-namespace Timeinator.Mobile.AndroidNative
+namespace Timeinator.Mobile.Android
 {
     public class IntentActions
     {

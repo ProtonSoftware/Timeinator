@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Timeinator.Core;
 using Timeinator.Mobile;
+using Timeinator.Mobile.Core;
 using Timeinator.Mobile.DataAccess;
 using Xunit;
 

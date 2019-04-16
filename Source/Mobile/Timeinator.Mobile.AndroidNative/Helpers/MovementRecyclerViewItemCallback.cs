@@ -2,7 +2,7 @@
 using Android.Support.V7.Widget.Helper;
 using System;
 
-namespace Timeinator.Mobile.AndroidNative
+namespace Timeinator.Mobile.Android
 {
     /// <summary>
     /// A helper class to allow movements on recycler view items
