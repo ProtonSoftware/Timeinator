@@ -7,6 +7,7 @@ namespace Timeinator.Mobile.Core
     public interface ITimeTasksManager
     {
         void UploadTasksList(List<TimeTaskContext> contexts, TimeSpan userTime);
+        void UploadTime(TimeSpan userTime);
 
         List<TimeTaskContext> GetCalculatedTasksListForSpecifiedTime();
     }
