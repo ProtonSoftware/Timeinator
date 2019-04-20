@@ -84,7 +84,7 @@ namespace Timeinator.Mobile.Core
         }
 
         /// <summary>
-        /// Sets up the manager and transfers specified tasks
+        /// Initially used - resets tasks order. Sets up the manager and transfers specified tasks
         /// </summary>
         /// <param name="tasks">The tasks that user wants to have in the session</param>
         /// <param name="userTime">The time user has declared to calculate</param>
@@ -98,11 +98,16 @@ namespace Timeinator.Mobile.Core
         /// Sets up the manager and transfers specified tasks
         /// </summary>
         /// <param name="tasks">The tasks that user wants to have in the session</param>
-        /// <param name="userTime">The time user has declared to calculate</param>
         public void ConveyTasksToManager(List<TimeTaskContext> tasks)
         {
             // Add the list to the manager with provided time
             mTimeTasksManager.UploadTasksList(tasks, default(TimeSpan));
+        }
+
+        public void ConveyTimeToManager(TimeSpan userTime)
+        {
+            // Update time
+            mTimeTasksManager.UploadTime(userTime);
         }
 
         /// <summary>
