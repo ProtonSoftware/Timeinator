@@ -225,19 +225,8 @@ namespace Timeinator.Mobile.Core
                 return;
             }
 
-            /* TODO: Move it to time page
-            // If user has not enough time to do all the tasks
-            if (UserTime.TotalMinutes - taskContexts.GetConstant().SumTimes().TotalMinutes < taskContexts.GetConstant(true).SumPriorities())
-            {
-                // Show user an error
-                mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Wybrany czas jest niewystarczający, by zacząc sesję!"));
-
-                // Don't do any further actions
-                return;
-            } 
-
-            // Pass it to the service so it handles it to the manager, with user free time
-            mTimeTasksService.ConveyTasksToManager(taskContexts, UserTime);*/
+            // Send taskContexts to TasksTimePage
+            mTimeTasksService.ConveyTasksToManager(taskContexts, default);
 
             // Change the page
             DI.Application.GoToPage(ApplicationPage.TasksTime);
