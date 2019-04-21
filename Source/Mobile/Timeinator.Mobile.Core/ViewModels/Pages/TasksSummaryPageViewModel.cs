@@ -64,9 +64,8 @@ namespace Timeinator.Mobile.Core
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 
-            // TODO: Once UI is done
             // Load tasks from the manager to this page
-            //LoadTaskList();
+            LoadTaskList();
         }
 
         #endregion

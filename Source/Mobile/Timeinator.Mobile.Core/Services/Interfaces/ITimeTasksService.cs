@@ -12,6 +12,7 @@ namespace Timeinator.Mobile.Core
         List<TimeTaskContext> LoadStoredTasks();
         void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime);
         void ConveyTasksToManager(List<TimeTaskContext> tasks);
+        void ConveyTimeToManager(TimeSpan userTime);
         List<TimeTaskContext> GetCalculatedTasksFromManager();
         void ConveyTasksToTimeHandler(List<TimeTaskContext> tasks);
 

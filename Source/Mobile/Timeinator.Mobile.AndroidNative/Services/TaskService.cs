@@ -100,6 +100,7 @@ namespace Timeinator.Mobile.Android
             if (NotificationBuilder == null)
             {
                 NotificationBuilder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context, CHANNEL_ID)
+                    .SetOnlyAlertOnce(true)
                     .SetOngoing(true)
                     .SetContentIntent(pendingIntent)
                     .SetSmallIcon(Resource.Mipmap.logo)

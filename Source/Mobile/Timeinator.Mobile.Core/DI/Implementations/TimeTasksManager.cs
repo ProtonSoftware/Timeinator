@@ -41,16 +41,25 @@ namespace Timeinator.Mobile.Core
         #region Interface Implementation
 
         /// <summary>
-        /// Uploads provided list of tasks to this manager (overrides previous one)
+        /// Updates User specified session time
         /// </summary>
-        /// <param name="contexts">The tasks to upload</param>
-        public void UploadTasksList(List<TimeTaskContext> contexts, TimeSpan userTime = default(TimeSpan))
+        /// <param name="userTime">User-declared session time</param>
+        public void UploadTime(TimeSpan userTime)
         {
             if (userTime != default(TimeSpan))
             {
                 mReadyTime = DateTime.Now;
                 AvailableTime = userTime;
             }
+        }
+
+        /// <summary>
+        /// Uploads provided list of tasks to this manager (overrides previous one)
+        /// </summary>
+        /// <param name="contexts">The tasks to upload</param>
+        public void UploadTasksList(List<TimeTaskContext> contexts, TimeSpan userTime = default(TimeSpan))
+        {
+            UploadTime(userTime);
             mTaskContexts = contexts;
         }
 
