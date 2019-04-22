@@ -22,10 +22,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The time that user has declared to calculate tasks for
         /// </summary>
-        public TimeSpan UserTime => TimeSpan.FromHours(UserHour).Add(TimeSpan.FromMinutes(UserMinute));
-
-        public int UserHour { get; set; }
-        public int UserMinute { get; set; }
+        public TimeSpan UserTime { get; set; }
 
         #endregion
 
