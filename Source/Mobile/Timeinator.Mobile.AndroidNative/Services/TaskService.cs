@@ -3,6 +3,7 @@ using Android.Content;
 using Android.Media;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.App;
 using System;
 using Timeinator.Mobile.Core;
 
@@ -34,7 +35,7 @@ namespace Timeinator.Mobile.Android
             public override void OnFinish() => mParent.TimeOut();
         }
 
-        private Android.Support.V4.App.NotificationCompat.Builder NotificationBuilder { get; set; }
+        private NotificationCompat.Builder NotificationBuilder { get; set; }
         private NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
 
         private Timer TaskTiming { get; set; } = null;
@@ -99,7 +100,7 @@ namespace Timeinator.Mobile.Android
             // Create NotificationBuilder if not existing yet
             if (NotificationBuilder == null)
             {
-                NotificationBuilder = new Android.Support.V4.App.NotificationCompat.Builder(Application.Context, CHANNEL_ID)
+                NotificationBuilder = new NotificationCompat.Builder(Application.Context, CHANNEL_ID)
                     .SetOnlyAlertOnce(true)
                     .SetOngoing(true)
                     .SetContentIntent(pendingIntent)
