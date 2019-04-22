@@ -66,7 +66,7 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void CalculateSession()
         {
-            /* FIX THIS - task from previous page have to be conveyed differently - FIX THIS
+            /* TODO: FIX THIS - task from previous page have to be conveyed differently - FIX THIS
             // If user has not enough time to do all the tasks
             if (UserTime.TotalMinutes - taskContexts.GetConstant().SumTimes().TotalMinutes < taskContexts.GetConstant(true).SumPriorities())
             {
