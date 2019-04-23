@@ -104,11 +104,19 @@ namespace Timeinator.Mobile.Core
             mTimeTasksManager.UploadTasksList(tasks, default(TimeSpan));
         }
 
+        /// <summary>
+        /// Set new Session Time
+        /// </summary>
         public void ConveyTimeToManager(TimeSpan userTime)
         {
             // Update time
             mTimeTasksManager.UploadTime(userTime);
         }
+
+        /// <summary>
+        /// Retrieve minimum allowed time to start session
+        /// </summary>
+        public TimeSpan GetMinimumTime() => mTimeTasksManager.GetMinimumTime();
 
         /// <summary>
         /// Retrieves tasks with recalculated times
