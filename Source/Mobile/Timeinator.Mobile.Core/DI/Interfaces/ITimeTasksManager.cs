@@ -8,6 +8,7 @@ namespace Timeinator.Mobile.Core
     {
         void UploadTasksList(List<TimeTaskContext> contexts, TimeSpan userTime);
         void UploadTime(TimeSpan userTime);
+        TimeSpan GetMinimumTime();
 
         List<TimeTaskContext> GetCalculatedTasksListForSpecifiedTime();
     }

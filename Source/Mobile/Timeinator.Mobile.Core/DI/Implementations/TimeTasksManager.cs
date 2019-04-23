@@ -64,6 +64,11 @@ namespace Timeinator.Mobile.Core
         }
 
         /// <summary>
+        /// Retrieve minimal session time for current TaskContexts
+        /// </summary>
+        public TimeSpan GetMinimumTime() => mTaskContexts.GetConstant().SumTimes() + TimeSpan.FromMinutes(mTaskContexts.GetConstant(true).SumPriorities());
+
+        /// <summary>
         /// Calculates assigned time for every task in the manager
         /// </summary>
         /// <returns>Ordered list of tasks with calculated times</returns>

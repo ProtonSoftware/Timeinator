@@ -13,6 +13,7 @@ namespace Timeinator.Mobile.Core
         void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime);
         void ConveyTasksToManager(List<TimeTaskContext> tasks);
         void ConveyTimeToManager(TimeSpan userTime);
+        TimeSpan GetMinimumTime();
         List<TimeTaskContext> GetCalculatedTasksFromManager();
         void ConveyTasksToTimeHandler(List<TimeTaskContext> tasks);
 

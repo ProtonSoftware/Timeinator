@@ -38,7 +38,7 @@
             android:layout_marginRight="4dp"
             android:text="Start"
             android:background="@color/colorAccent"
-            local:MvxBind="Click UserReadyCommand"/>
+            local:MvxBind="Click StartTasksCommand" />
 
         <Button
             android:layout_width="0dp"

@@ -66,17 +66,13 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void CalculateSession()
         {
-            /* TODO: FIX THIS - task from previous page have to be conveyed differently - FIX THIS
-            // If user has not enough time to do all the tasks
-            if (UserTime.TotalMinutes - taskContexts.GetConstant().SumTimes().TotalMinutes < taskContexts.GetConstant(true).SumPriorities())
+            if (UserTime < mTimeTasksService.GetMinimumTime())
             {
                 // Show user an error
                 mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Wybrany czas jest niewystarczający, by zacząc sesję!"));
-
                 // Don't do any further actions
                 return;
             }
-            */
 
             // Pass it to the service so it handles it to the manager, with user free time
             mTimeTasksService.ConveyTimeToManager(UserTime);

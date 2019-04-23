@@ -113,6 +113,8 @@ namespace Timeinator.Mobile.Core
 
             // Map the list as suitable view models
             TaskItems = new ObservableCollection<CalculatedTimeTaskViewModel>(mTimeTasksMapper.ListMapCal(contexts));
+
+            SessionTime = contexts.SumTimes();
         }
 
         #endregion
