@@ -6705,8 +6705,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f09005e
 			public const int action_mode_close_button = 2131296350;
 			
-			// aapt resource value: 0x7f0900d0
-			public const int action_settings = 2131296464;
+			// aapt resource value: 0x7f0900d2
+			public const int action_settings = 2131296466;
 			
 			// aapt resource value: 0x7f0900aa
 			public const int action_text = 2131296426;
@@ -6750,8 +6750,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f090095
 			public const int bottomNavigation = 2131296405;
 			
-			// aapt resource value: 0x7f0900c8
-			public const int bottomNavigationPaused = 2131296456;
+			// aapt resource value: 0x7f0900ca
+			public const int bottomNavigationPaused = 2131296458;
 			
 			// aapt resource value: 0x7f0900c6
 			public const int bottomOptions = 2131296454;
@@ -6951,14 +6951,14 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0900a7
 			public const int loadingProgressWheel = 2131296423;
 			
-			// aapt resource value: 0x7f0900cd
-			public const int masked = 2131296461;
+			// aapt resource value: 0x7f0900cf
+			public const int masked = 2131296463;
 			
 			// aapt resource value: 0x7f0900ae
 			public const int media_actions = 2131296430;
 			
-			// aapt resource value: 0x7f0900cb
-			public const int message = 2131296459;
+			// aapt resource value: 0x7f0900cd
+			public const int message = 2131296461;
 			
 			// aapt resource value: 0x7f090033
 			public const int middle = 2131296307;
@@ -6972,14 +6972,14 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f09002a
 			public const int multiply = 2131296298;
 			
-			// aapt resource value: 0x7f0900cf
-			public const int navigation_about = 2131296463;
+			// aapt resource value: 0x7f0900d1
+			public const int navigation_about = 2131296465;
 			
 			// aapt resource value: 0x7f09009e
 			public const int navigation_header_container = 2131296414;
 			
-			// aapt resource value: 0x7f0900ce
-			public const int navigation_settings = 2131296462;
+			// aapt resource value: 0x7f0900d0
+			public const int navigation_settings = 2131296464;
 			
 			// aapt resource value: 0x7f09003d
 			public const int never = 2131296317;
@@ -7008,14 +7008,20 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f09000b
 			public const int parent_matrix = 2131296267;
 			
-			// aapt resource value: 0x7f0900ca
-			public const int pickerSession = 2131296458;
+			// aapt resource value: 0x7f0900cc
+			public const int pickerSession = 2131296460;
 			
 			// aapt resource value: 0x7f09004f
 			public const int pin = 2131296335;
 			
 			// aapt resource value: 0x7f090094
 			public const int prioritySeekBar = 2131296404;
+			
+			// aapt resource value: 0x7f0900c8
+			public const int progressRing = 2131296456;
+			
+			// aapt resource value: 0x7f0900c9
+			public const int progressText = 2131296457;
 			
 			// aapt resource value: 0x7f090006
 			public const int progress_circular = 2131296262;
@@ -7164,8 +7170,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0900c2
 			public const int taskListPage = 2131296450;
 			
-			// aapt resource value: 0x7f0900c9
-			public const int taskSummaryPage = 2131296457;
+			// aapt resource value: 0x7f0900cb
+			public const int taskSummaryPage = 2131296459;
 			
 			// aapt resource value: 0x7f09001a
 			public const int text = 2131296282;
@@ -7245,8 +7251,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f090016
 			public const int view_offset_helper = 2131296278;
 			
-			// aapt resource value: 0x7f0900cc
-			public const int visible = 2131296460;
+			// aapt resource value: 0x7f0900ce
+			public const int visible = 2131296462;
 			
 			// aapt resource value: 0x7f09003e
 			public const int withText = 2131296318;

@@ -18,22 +18,8 @@
 		android:id="@+id/taskList"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		local:MvxItemTemplate="@layout/tasklistitem"
+		local:MvxItemTemplate="@layout/tasksummaryitem"
 		local:MvxBind="ItemsSource TaskItems" />
-	<ProgressBar
-		android:id="@+id/progressRing"
-		android:layout_above="@id/timeText"
-		android:layout_height="200px"
-		android:layout_width="match_parent" />
-	<TextView
-		android:id="@+id/progressText"
-		android:layout_above="@id/timeText"
-		android:layout_height="200px"
-		android:layout_width="match_parent"
-		android:textAlignment="center"
-		android:textSize="@dimen/abc_text_size_display_1_material"
-		android:textColor="@color/colorBlack"
-		android:text="0%" />
 	<TextView
 		android:layout_above="@id/bottomNavigation"
 		android:id="@+id/timeText"
@@ -42,7 +28,31 @@
 		android:textAlignment="center"
 		android:textSize="@dimen/abc_text_size_display_1_material"
 		android:textColor="@color/colorBlack"
+		local:MvxBind="Text TimeSpanToText(TimeRemaining)"
 		android:text="0h 0m 0s" />
+	<GridLayout
+		android:layout_above="@id/timeText"
+		android:layout_height="250px"
+		android:layout_width="match_parent" >
+		<ProgressBar
+			android:layout_row="0"
+			android:layout_column="0"
+			android:id="@+id/progressRing"
+			android:min="0"
+			android:max="100"
+			local:MvxBind="Progress Progress(TaskProgress)"
+			android:layout_height="match_parent"
+			android:layout_width="match_parent" />
+		<TextView
+			android:layout_row="0"
+			android:layout_column="0"
+			android:id="@+id/progressText"
+			android:textAlignment="center"
+			android:textSize="@dimen/abc_text_size_display_1_material"
+			android:textColor="@color/colorBlack"
+			local:MvxBind="Text Progress(TaskProgress, true)"
+			android:text="0%" />
+	</GridLayout>
 
     <LinearLayout
         android:id="@+id/bottomNavigation"
@@ -51,7 +61,7 @@
         android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
         android:elevation="@dimen/abc_action_bar_elevation_material"
         android:layout_alignParentBottom="true"
-		local:MvxBind="visibility PausedBoolToVisibility(Paused, true)"
+		local:MvxBind="Visibility PausedBoolToVisibility(Paused)"
         android:orientation="horizontal">
 
         <Button
@@ -80,7 +90,7 @@
         android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
         android:elevation="@dimen/abc_action_bar_elevation_material"
         android:layout_alignParentBottom="true"
-		local:MvxBind="visibility PausedBoolToVisibility(Paused, false)"
+		local:MvxBind="Visibility PausedBoolToVisibility(Paused, true)"
         android:orientation="horizontal">
 
         <Button
