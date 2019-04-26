@@ -23,7 +23,7 @@ namespace Timeinator.Mobile.Core
             // Create commands
             GoBackCommand = new RelayCommand(ClosePage);
 
-            // Get injected services
+            // Get injected DI services
             mUIManager = uiManager;
         }
 

@@ -29,6 +29,7 @@ namespace Timeinator.Mobile.Android
             // Set default values (otherwise it would be current user time, which we don't want)
             timepicker.Hour = 0;
             timepicker.Minute = 0;
+            timepicker.SetIs24HourView(new Java.Lang.Boolean(true));
 
             // Listen out for time changes
             timepicker.TimeChanged += Timepicker_TimeChanged;
