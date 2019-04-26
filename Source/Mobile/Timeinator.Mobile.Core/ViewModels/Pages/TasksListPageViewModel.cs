@@ -1,13 +1,10 @@
-﻿using System;
+﻿using MvvmCross.ViewModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Linq;
 using Timeinator.Core;
-using MvvmCross.ViewModels;
-using MvvmCross;
-using MvvmCross.Base;
 
 namespace Timeinator.Mobile.Core
 {
