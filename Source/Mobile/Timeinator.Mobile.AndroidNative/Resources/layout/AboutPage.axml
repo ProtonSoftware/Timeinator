@@ -5,6 +5,7 @@
 	android:orientation="vertical"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
+
 	<TextView
 		android:id="@+id/title"
 		android:layout_height="wrap_content"
@@ -14,14 +15,110 @@
 		android:textSize="@dimen/abc_text_size_display_2_material"
 		android:textColor="@color/colorBlack"
 		android:text="O nas" />
+
     <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="16dp"
-        android:elevation="@dimen/abc_action_bar_elevation_material"
-        android:tint="@color/material_grey_800"
-        android:src="@drawable/ic_arrow_back_black_18dp"
-        local:MvxBind="Click CancelAddingTaskCommand" />
+        style="@style/BackButton"
+        local:MvxBind="Click GoBackCommand" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/abc_action_bar_content_inset_material"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:textSize="@dimen/abc_text_size_display_1_material"
+		    android:textColor="@color/colorBlack"
+            android:text="Timeinator" />
+
+        <View 
+            android:layout_width="120dp"
+            android:layout_height="3dp"
+            android:background="@drawable/rounded_rectangle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextSecondaryGray"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="2dp"
+            android:text="Wersja" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMainBlack"
+            android:text="2.0.0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextSecondaryGray"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="2dp"
+            android:text="Ostatnia aktualizacja" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMainBlack"
+            android:text="Kwiecień 2019" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextSecondaryGray"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="2dp"
+            android:text="Autorzy" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMainBlack"
+            android:text="Patryk Mikulski" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMainBlack"
+            android:text="Maciej Nalepa" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMainBlack"
+            android:layout_marginTop="24dp"
+            android:text="W trosce o wygodę użytkowania, 
+aplikacja jest darmowa i bez reklam." />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMainBlack"
+            android:layout_marginTop="4dp"
+            android:text="Jeśli chcesz nas wspomóc, przyjmujemy
+dotacje PayPal pod adresem:" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextMainBlack"
+            android:layout_marginVertical="12dp"
+            android:textAlignment="center"
+            android:text="timeinator@gmail.com" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMainBlack"
+            android:text="Jeśli masz jakieś pytania lub propozycje
+nowych funkcjonalności, zapraszamy
+do kontaktu, chętnie pomożemy :)" />
+
+    </LinearLayout>
+
 </RelativeLayout>

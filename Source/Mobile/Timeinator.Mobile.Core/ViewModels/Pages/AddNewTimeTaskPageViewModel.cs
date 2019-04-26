@@ -1,5 +1,4 @@
-﻿using MvvmCross.ViewModels;
-using System;
+﻿using System;
 using System.Windows.Input;
 using Timeinator.Core;
 
@@ -8,7 +7,7 @@ namespace Timeinator.Mobile.Core
     /// <summary>
     /// The view model for new time task popup
     /// </summary>
-    public class AddNewTimeTaskPageViewModel : MvxViewModel
+    public class AddNewTimeTaskPageViewModel : BaseModalPageViewModel
     {
         #region Private Members
 
@@ -69,11 +68,6 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public ICommand AddTaskCommand { get; private set; }
 
-        /// <summary>
-        /// The command to cancel adding task and go back to previous page
-        /// </summary>
-        public ICommand CancelAddingTaskCommand { get; private set; }
-
         #endregion
 
         #region Constructor
@@ -85,7 +79,7 @@ namespace Timeinator.Mobile.Core
         {
             // Create commands
             AddTaskCommand = new RelayCommand(AddNewTask);
-            CancelAddingTaskCommand = new RelayCommand(CancelAndBack);
+            GoBackCommand = new RelayCommand(CancelAndBack);
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
