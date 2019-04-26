@@ -41,9 +41,7 @@
         android:singleLine="true"
         local:MvxBind="Text Name"
         android:text="First header line PH"
-        android:textColor = "@color/colorBlack"
-        android:textSize = "16sp"
-        android:fontFamily="sans-serif" />
+        style="@style/TextMainBlack" />
 
 </LinearLayout>
 
@@ -59,10 +57,8 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         local:MvxBind="Text Description"
-        android:textColor = "@android:color/darker_gray"
-        android:textSize = "14sp"
-        android:fontFamily="sans-serif"
-        tools:text = "This is the second line"/>
+        tools:text = "This is the second line"
+        style="@style/TextSecondaryGray" />
 
 </LinearLayout>
 
@@ -78,9 +74,7 @@
         android:ellipsize="marquee"
         android:singleLine="true"
         local:MvxBind="Text Tag"
-        android:textColor = "@android:color/darker_gray"
-        android:textSize = "14sp"
-        android:fontFamily="sans-serif"
+        style="@style/TextSecondaryGray"
         tools:text = "This is the third line"/>
 </LinearLayout>
 

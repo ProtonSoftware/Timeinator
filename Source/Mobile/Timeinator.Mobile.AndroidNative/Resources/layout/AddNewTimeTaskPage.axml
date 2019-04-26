@@ -15,15 +15,8 @@
 		android:textColor="@color/colorBlack"
 		android:text="Dodaj nowe zadanie" />
     <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="16dp"
-        android:elevation="@dimen/abc_action_bar_elevation_material"
-        android:tint="@color/material_grey_800"
-        android:src="@drawable/ic_arrow_back_black_18dp"
-        local:MvxBind="Click CancelAddingTaskCommand" />
+        style="@style/BackButton"
+        local:MvxBind="Click GoBackCommand" />
 	<android.support.design.widget.TextInputLayout
         android:id="@+id/inputName"
         android:layout_width="match_parent"

@@ -1,5 +1,4 @@
-﻿using MvvmCross.ViewModels;
-using System;
+﻿using System;
 using System.ComponentModel;
 using Timeinator.Core;
 using Timeinator.Mobile.DataAccess;
@@ -9,7 +8,7 @@ namespace Timeinator.Mobile.Core
     /// <summary>
     /// The view model for application's settings page
     /// </summary>
-    public class SettingsPageViewModel : MvxViewModel
+    public class SettingsPageViewModel : BaseModalPageViewModel
     {
         #region Private Members
 
@@ -88,6 +87,9 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public SettingsPageViewModel(IUIManager uiManager, ISettingsRepository settingsRepository)
         {
+            // Create commands
+            GoBackCommand = new RelayCommand(ClosePage);
+
             // Get injected DI services
             mUIManager = uiManager;
             mSettingsRepository = settingsRepository;
@@ -97,6 +99,19 @@ namespace Timeinator.Mobile.Core
 
             // Hook to property changed event, so everytime settings are being changed, we save it to the database
             PropertyChanged += SettingValueChanged;
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Closes this page and goes back to previous one
+        /// </summary>
+        private void ClosePage()
+        {
+            // Close this page
+            mUIManager.GoBackToPreviousPage(this);
         }
 
         #endregion
