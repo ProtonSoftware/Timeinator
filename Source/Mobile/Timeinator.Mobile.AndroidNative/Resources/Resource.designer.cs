@@ -6537,10 +6537,10 @@ namespace Timeinator.Mobile.Android
 			public const int ic_arrow_back_black_18dp = 2130837596;
 			
 			// aapt resource value: 0x7f02005d
-			public const int ic_delete_black_18dp = 2130837597;
+			public const int ic_delete_white_24dp = 2130837597;
 			
 			// aapt resource value: 0x7f02005e
-			public const int ic_edit_black_18dp = 2130837598;
+			public const int ic_edit_white_24dp = 2130837598;
 			
 			// aapt resource value: 0x7f02005f
 			public const int ic_errorstatus = 2130837599;
