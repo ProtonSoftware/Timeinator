@@ -24,6 +24,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private string mSortValue;
 
+        /// <summary>
+        /// A value of checkbox for selecting all tasks
+        /// </summary>
+        private bool mCheckAllBox;
+
         #endregion
 
         #region Public Properties
@@ -38,6 +43,9 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public ObservableCollection<string> TaskTags { get; set; } = new ObservableCollection<string>();
 
+        /// <summary>
+        /// The list of possible task list items sorting methods
+        /// </summary>
         public ObservableCollection<string> SortItems { get; set; } = new ObservableCollection<string>
         {
             "Alfabetycznie",
@@ -69,7 +77,17 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The value of check-all-tasks checkbox
         /// </summary>
-        public bool CheckAllBox { get; set; }
+        public bool CheckAllBox
+        {
+            get => mCheckAllBox;
+            set
+            {
+                mCheckAllBox = value;
+
+                foreach (var task in TaskItems)
+                    task.IsEnabled = mCheckAllBox;
+            }
+        }
 
         #endregion
 
