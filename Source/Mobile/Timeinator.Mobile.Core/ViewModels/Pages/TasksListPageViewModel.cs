@@ -133,12 +133,12 @@ namespace Timeinator.Mobile.Core
         public TasksListPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
-            AddNewTaskCommand = new RelayCommand(() => mUIManager.GoToViewModelPage(DI.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>()));
+            AddNewTaskCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.AddNewTask));
             EditTaskCommand = new RelayParameterizedCommand(EditTask);
             DeleteTaskCommand = new RelayParameterizedCommand(async (param) => await uiManager.ExecuteOnMainThread(async () => await DeleteTaskAsync(param)));
             UserReadyCommand = new RelayCommand(UserReady);
-            OpenSettingsCommand = new RelayCommand(() => mUIManager.GoToViewModelPage(DI.GetInjectedPageViewModel<SettingsPageViewModel>()));
-            OpenAboutCommand = new RelayCommand(() => mUIManager.GoToViewModelPage(DI.GetInjectedPageViewModel<AboutPageViewModel>()));
+            OpenSettingsCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.Settings));
+            OpenAboutCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.About));
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;

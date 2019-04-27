@@ -31,6 +31,11 @@
         TasksSession,
 
         /// <summary>
+        /// Add (or edit) new task page
+        /// </summary>
+        AddNewTask,
+
+        /// <summary>
         /// Settings page
         /// </summary>
         Settings,
