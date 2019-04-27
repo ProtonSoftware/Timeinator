@@ -18,8 +18,42 @@
 		android:id="@+id/taskList"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		local:MvxItemTemplate="@layout/tasklistitem"
+		local:MvxItemTemplate="@layout/tasksummaryitem"
 		local:MvxBind="ItemsSource TaskItems" />
+	<TextView
+		android:layout_above="@id/bottomNavigation"
+		android:id="@+id/timeText"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:textAlignment="center"
+		android:textSize="@dimen/abc_text_size_display_1_material"
+		android:textColor="@color/colorBlack"
+		local:MvxBind="Text TimeSpanToText(TimeRemaining)"
+		android:text="0h 0m 0s" />
+	<GridLayout
+		android:layout_above="@id/timeText"
+		android:layout_height="250px"
+		android:layout_width="match_parent" >
+		<ProgressBar
+			android:layout_row="0"
+			android:layout_column="0"
+			android:id="@+id/progressRing"
+			android:min="0"
+			android:max="100"
+			local:MvxBind="Progress Progress(TaskProgress)"
+			android:layout_height="match_parent"
+			android:layout_width="match_parent" />
+		<TextView
+			android:layout_row="0"
+			android:layout_column="0"
+			android:id="@+id/progressText"
+			android:textAlignment="center"
+			android:textSize="@dimen/abc_text_size_display_1_material"
+			android:textColor="@color/colorBlack"
+			local:MvxBind="Text Progress(TaskProgress, true)"
+			android:text="0%" />
+	</GridLayout>
+
     <LinearLayout
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
@@ -27,6 +61,7 @@
         android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
         android:elevation="@dimen/abc_action_bar_elevation_material"
         android:layout_alignParentBottom="true"
+		local:MvxBind="Visibility PausedBoolToVisibility(Paused)"
         android:orientation="horizontal">
 
         <Button
@@ -34,17 +69,38 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginRight="4dp"
-            android:text="Start"
+            android:text="Przerwa"
             android:background="@color/colorAccent"
-            local:MvxBind="Click UserReadyCommand"/>
+            local:MvxBind="Click StopCommand" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginLeft="4dp"
-            android:text="Przerwij"
-            android:background="@color/colorPrimary" />
+            android:text="Koniec"
+            android:background="@color/colorPrimary"
+            local:MvxBind="Click FinishCommand" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottomNavigationPaused"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+        android:elevation="@dimen/abc_action_bar_elevation_material"
+        android:layout_alignParentBottom="true"
+		local:MvxBind="Visibility PausedBoolToVisibility(Paused, true)"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"
+            android:text="Wznów"
+            android:background="@color/colorAccent"
+            local:MvxBind="Click ResumeCommand" />
 
     </LinearLayout>
     <View
