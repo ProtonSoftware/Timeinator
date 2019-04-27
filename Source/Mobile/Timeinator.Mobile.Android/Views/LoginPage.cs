@@ -22,6 +22,8 @@ namespace Timeinator.Mobile.Android
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.LoginPage);
 
+            OverridePendingTransition(Resource.Animation.abc_fade_in, Resource.Animation.abc_fade_out);
+
             // Initialize dialogs library
             UserDialogs.Init(() => Mvx.IoCProvider.Resolve<IMvxAndroidCurrentTopActivity>().Activity);
 

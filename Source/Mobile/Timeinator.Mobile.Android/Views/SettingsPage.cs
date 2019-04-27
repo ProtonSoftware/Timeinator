@@ -13,6 +13,8 @@ namespace Timeinator.Mobile.Android
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.SettingsPage);
+
+            OverridePendingTransition(Resource.Animation.abc_fade_in, Resource.Animation.abc_fade_out);
         }
     }
 }
