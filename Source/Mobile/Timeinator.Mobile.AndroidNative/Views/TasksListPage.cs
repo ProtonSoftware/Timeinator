@@ -74,13 +74,20 @@ namespace Timeinator.Mobile.Android
             recyclerView.SetItemAnimator(new DefaultItemAnimator());
 
             // When full swipe on item happens...
-            callback.OnSwipe += (position) => 
+            callback.OnSwipe += (position, removeDirection) => 
             {
                 // Get view model of that item
-                var removedVM = recyclerView.Adapter.ItemsSource.ElementAt(position);
+                var swipedVM = recyclerView.Adapter.ItemsSource.ElementAt(position);
 
-                // Remove it from the list
-                viewModel.DeleteTaskCommand.Execute(removedVM);
+                // If the item was moved in the remove direction...
+                if (removeDirection)
+                    // Remove it from the list
+                    viewModel.DeleteTaskCommand.Execute(swipedVM);
+
+                // Otherwise, that means it was moved in edit direction
+                else
+                    // Show edit modal with item's view model injected
+                    viewModel.EditTaskCommand.Execute(swipedVM);
             };
 
             // For item single short clicks
