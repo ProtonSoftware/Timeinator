@@ -25,6 +25,9 @@ namespace Timeinator.Mobile.Core
                 case ApplicationPage.Settings:
                     return DI.GetInjectedPageViewModel<SettingsPageViewModel>();
 
+                case ApplicationPage.AddNewTask:
+                    return DI.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>();
+
                 case ApplicationPage.TasksList:
                     return DI.GetInjectedPageViewModel<TasksListPageViewModel>();
 
