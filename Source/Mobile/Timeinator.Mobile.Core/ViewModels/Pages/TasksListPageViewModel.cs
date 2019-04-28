@@ -26,8 +26,9 @@ namespace Timeinator.Mobile.Core
 
         /// <summary>
         /// A value of checkbox for selecting all tasks
+        /// By default, select all the tasks
         /// </summary>
-        private bool mCheckAllBox;
+        private bool mCheckAllBox = true;
 
         #endregion
 

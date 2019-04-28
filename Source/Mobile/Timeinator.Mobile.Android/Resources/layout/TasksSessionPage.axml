@@ -3,6 +3,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:local="http://schemas.android.com/apk/res-auto"
 	android:orientation="vertical"
+    android:paddingHorizontal="4dp"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 	<TextView
@@ -70,7 +71,7 @@
             android:layout_weight="1"
             android:layout_marginRight="4dp"
             android:text="Przerwa"
-            android:background="@color/colorAccent"
+            style="@style/AccentButton"
             local:MvxBind="Click StopCommand" />
 
         <Button
@@ -99,7 +100,7 @@
             android:layout_weight="1"
             android:layout_marginLeft="4dp"
             android:text="Wznów"
-            android:background="@color/colorAccent"
+            style="@style/AccentButton"
             local:MvxBind="Click ResumeCommand" />
 
     </LinearLayout>
