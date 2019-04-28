@@ -41,6 +41,12 @@
     <item name="android:fontFamily">sans-serif</item>
   </style>
 
+  <style name="TextLargeBlack">
+    <item name="android:textColor">@color/colorBlack</item>
+    <item name="android:textSize">@dimen/abc_text_size_large_material</item>
+    <item name="android:fontFamily">sans-serif</item>
+  </style>
+
   <style name="BackButton">
     <item name="android:layout_width">32dp</item>
     <item name="android:layout_height">32dp</item>
@@ -50,6 +56,16 @@
     <item name="android:elevation">@dimen/abc_action_bar_elevation_material</item>
     <item name="android:tint">@color/material_grey_800</item>
     <item name="android:src">@drawable/ic_arrow_back_black_18dp</item>
+  </style>
+
+  <style name="AccentButton">
+    <item name="android:background">@color/colorAccent</item>
+  </style>
+
+  <style name="ElevatedCard">
+    <item name="android:padding">@dimen/abc_action_bar_overflow_padding_start_material</item>
+    <item name="android:elevation">@dimen/design_bottom_navigation_elevation</item>
+    <item name="android:background">@color/colorWhite</item>
   </style>
 
 </resources>
