@@ -13,47 +13,153 @@
 		android:textAlignment="center"
 		android:textSize="@dimen/abc_text_size_display_2_material"
 		android:textColor="@color/colorBlack"
-		android:text="Twoje zadania" />
-	<mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
-		android:layout_below="@id/title"
-		android:id="@+id/taskList"
+		android:text="Sesja" />
+    <LinearLayout
+        android:id="@+id/currentTaskTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginVertical="8dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/ic_content_paste_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            style="@style/TextLargeBlack"
+            android:text="Aktualne zadanie" />
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/taskContainer"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		local:MvxItemTemplate="@layout/tasksummaryitem"
-		local:MvxBind="ItemsSource TaskItems" />
-	<TextView
+        style="@style/ElevatedCard"
+	    android:orientation="vertical"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        android:layout_below="@id/currentTaskTitle">
+
+        <TextView
+            android:id="@+id/taskName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMainBlack"
+            android:layout_marginVertical="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Zadanie pierwsze" />
+        <TextView
+            android:id="@+id/taskDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextSecondaryGray"
+            android:layout_below="@id/taskName"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Opis pierwszego zadania, który może być bardzo bardzo długi, ponieważ mogą być tu instrukcje wykonania zadania" />
+        <TextView
+            android:id="@+id/taskTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextSecondaryGray"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:text="0h 19m 0s" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/remainingTimeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskContainer"
+        android:layout_marginVertical="8dp">
+
+        <ImageView
+            android:id="@+id/remainingTimeIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/ic_alarm_black_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/remainingTimeIcon"
+            android:maxLines="1"
+            style="@style/TextLargeBlack"
+            android:text="Pozostały czas" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:maxLines="1"
+            style="@style/TextLargeBlack"
+            android:textStyle="bold"
+		    local:MvxBind="Text TimeSpanToText(TimeRemaining)"
+            android:text="0h 15m 46s" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/sessionTimeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/remainingTimeTitle"
+        android:layout_marginVertical="8dp">
+
+        <ImageView
+            android:id="@+id/sessionTimeIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/ic_access_time_black_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/sessionTimeIcon"
+            android:maxLines="1"
+            style="@style/TextLargeBlack"
+            android:text="Sesja trwa" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            style="@style/TextLargeBlack"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            android:text="0h 3m 14s" />
+
+    </RelativeLayout>
+	<LinearLayout
 		android:layout_above="@id/bottomNavigation"
-		android:id="@+id/timeText"
-		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:textAlignment="center"
-		android:textSize="@dimen/abc_text_size_display_1_material"
-		android:textColor="@color/colorBlack"
-		local:MvxBind="Text TimeSpanToText(TimeRemaining)"
-		android:text="0h 0m 0s" />
-	<GridLayout
-		android:layout_above="@id/timeText"
 		android:layout_height="250px"
-		android:layout_width="match_parent" >
+		android:layout_width="match_parent"
+        android:gravity="center">
 		<ProgressBar
-			android:layout_row="0"
-			android:layout_column="0"
 			android:id="@+id/progressRing"
 			android:min="0"
 			android:max="100"
-			local:MvxBind="Progress Progress(TaskProgress)"
-			android:layout_height="match_parent"
-			android:layout_width="match_parent" />
+			local:MvxBind="Progress TaskProgress"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content" />
 		<TextView
-			android:layout_row="0"
-			android:layout_column="0"
 			android:id="@+id/progressText"
+            android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
 			android:textAlignment="center"
 			android:textSize="@dimen/abc_text_size_display_1_material"
 			android:textColor="@color/colorBlack"
 			local:MvxBind="Text Progress(TaskProgress, true)"
 			android:text="0%" />
-	</GridLayout>
+	</LinearLayout>
 
     <LinearLayout
         android:id="@+id/bottomNavigation"
