@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
 				android:layout_weight="2"
 				android:text="Rozpocznij"
-				android:background="@color/colorAccent"
+                style="@style/AccentButton"
 				local:MvxBind="Click UserReadyCommand"/>
 
         <include
