@@ -134,12 +134,12 @@ namespace Timeinator.Mobile.Core
         public TasksListPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
-            AddNewTaskCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.AddNewTask));
+            AddNewTaskCommand = new RelayCommand(() => DI.Application.GoToPageAsync(ApplicationPage.AddNewTask));
             EditTaskCommand = new RelayParameterizedCommand(EditTask);
             DeleteTaskCommand = new RelayParameterizedCommand(async (param) => await uiManager.ExecuteOnMainThread(async () => await DeleteTaskAsync(param)));
-            UserReadyCommand = new RelayCommand(UserReady);
-            OpenSettingsCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.Settings));
-            OpenAboutCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.About));
+            UserReadyCommand = new RelayCommand(async () => await UserReadyAsync());
+            OpenSettingsCommand = new RelayCommand(() => DI.Application.GoToPageAsync(ApplicationPage.Settings));
+            OpenAboutCommand = new RelayCommand(() => DI.Application.GoToPageAsync(ApplicationPage.About));
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
@@ -220,7 +220,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Fired when user wants to start new session with selected tasks
         /// </summary>
-        private void UserReady()
+        private async Task UserReadyAsync()
         {
             // Convert our collection to suitable list of contexts
             var taskContexts = new List<TimeTaskContext>();
@@ -235,17 +235,17 @@ namespace Timeinator.Mobile.Core
             if (taskContexts.Count == 0)
             {
                 // Show user an error
-                mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Nie wybrałes żadnego taska!"));
+                await mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Nie wybrałes żadnego taska!"));
 
                 // Don't do any further actions
                 return;
             }
 
-            // Send taskContexts to TasksTimePage
-            mTimeTasksService.ConveyTasksToManager(taskContexts, default);
-
             // Change the page
-            DI.Application.GoToPage(ApplicationPage.TasksTime);
+            await DI.Application.GoToPageAsync(ApplicationPage.TasksTime);
+
+            // Send task contexts to the manager
+            mTimeTasksService.ConveyTasksToManager(taskContexts);
         }
 
         #endregion

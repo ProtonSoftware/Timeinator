@@ -120,8 +120,8 @@ namespace Timeinator.Mobile.Core
         public TasksSessionPageViewModel(ITimeTasksService timeTasksService, IUserTimeHandler userTimeHandler, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
-            StopCommand = new RelayCommand(Stop);
-            ResumeCommand = new RelayCommand(Resume);
+            StopCommand = new RelayCommand(async () => await StopAsync());
+            ResumeCommand = new RelayCommand(async () => await ResumeAsync());
             FinishCommand = new RelayCommand(async () => await FinishAsync());
 
             // Get injected DI services
@@ -140,18 +140,24 @@ namespace Timeinator.Mobile.Core
 
         #endregion
 
-        private void Stop()
+        private async Task StopAsync()
         {
-            mUserTimeHandler.StopTask();
-            RefreshProperties();
+            await Task.Run(() =>
+            {
+                mUserTimeHandler.StopTask();
+                RefreshProperties();
+            });
         }
 
-        private void Resume()
+        private async Task ResumeAsync()
         {
-            mUserTimeHandler.RefreshTasksState();
-            mUserTimeHandler.ResumeTask();
-            LoadTaskList();
-            RefreshProperties();
+            await Task.Run(() =>
+            {
+                mUserTimeHandler.RefreshTasksState();
+                mUserTimeHandler.ResumeTask();
+                LoadTaskList();
+                RefreshProperties();
+            });
         }
 
         private void RefreshProperties()
@@ -176,7 +182,7 @@ namespace Timeinator.Mobile.Core
             if (CurrentTask.Name == null)
             {
                 RealTimer.Stop();
-                DI.Application.GoToPage(ApplicationPage.TasksList);
+                DI.Application.GoToPageAsync(ApplicationPage.TasksList);
                 return;
             }
             if (Paused)

@@ -1,4 +1,5 @@
 ﻿using MvvmCross.ViewModels;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Timeinator.Core;
 
@@ -26,7 +27,7 @@ namespace Timeinator.Mobile.Core
         public LoginPageViewModel()
         {
             // Create commands
-            EnterWithoutLoginCommand = new RelayCommand(ChangePageWithoutLogin);
+            EnterWithoutLoginCommand = new RelayCommand(async () => await ChangePageWithoutLoginAsync());
         }
 
         #endregion
@@ -36,10 +37,10 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Changes the page without users' logging in
         /// </summary>
-        public void ChangePageWithoutLogin()
+        public async Task ChangePageWithoutLoginAsync()
         {
             // Simply go to main task list page
-            DI.Application.GoToPage(ApplicationPage.TasksList);
+            await DI.Application.GoToPageAsync(ApplicationPage.TasksList);
         }
 
         #endregion
