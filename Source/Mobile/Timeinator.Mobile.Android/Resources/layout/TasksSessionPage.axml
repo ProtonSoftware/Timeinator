@@ -53,6 +53,7 @@
             style="@style/TextMainBlack"
             android:layout_marginVertical="8dp"
             android:layout_marginLeft="8dp"
+            local:MvxBind="Text CurrentTask.Name"
             android:text="Zadanie pierwsze" />
         <TextView
             android:id="@+id/taskDescription"
@@ -62,6 +63,7 @@
             android:layout_below="@id/taskName"
             android:layout_marginLeft="8dp"
             android:layout_marginBottom="8dp"
+            local:MvxBind="Text CurrentTask.Description"
             android:text="Opis pierwszego zadania, który może być bardzo bardzo długi, ponieważ mogą być tu instrukcje wykonania zadania" />
         <TextView
             android:id="@+id/taskTime"
@@ -70,6 +72,7 @@
             style="@style/TextSecondaryGray"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
+            local:MvxBind="Text CurrentTask.AssignedTime"
             android:text="0h 19m 0s" />
 
     </RelativeLayout>
@@ -135,21 +138,25 @@
             style="@style/TextLargeBlack"
             android:textStyle="bold"
             android:layout_alignParentEnd="true"
+		    local:MvxBind="Text TimeSpanToText(SessionDuration)"
             android:text="0h 3m 14s" />
 
     </RelativeLayout>
-	<LinearLayout
+	<RelativeLayout
 		android:layout_above="@id/bottomNavigation"
-		android:layout_height="250px"
+		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
         android:gravity="center">
 		<ProgressBar
 			android:id="@+id/progressRing"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/progress_ring_circle"
+            android:progress="50"
 			android:min="0"
 			android:max="100"
-			local:MvxBind="Progress TaskProgress"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content" />
+			local:MvxBind="Progress Progress(TaskProgress)" />
 		<TextView
 			android:id="@+id/progressText"
             android:layout_height="wrap_content"
@@ -159,7 +166,7 @@
 			android:textColor="@color/colorBlack"
 			local:MvxBind="Text Progress(TaskProgress, true)"
 			android:text="0%" />
-	</LinearLayout>
+	</RelativeLayout>
 
     <LinearLayout
         android:id="@+id/bottomNavigation"
