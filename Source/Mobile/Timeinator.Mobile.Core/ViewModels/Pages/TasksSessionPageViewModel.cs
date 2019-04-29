@@ -47,7 +47,7 @@ namespace Timeinator.Mobile.Core
             get
             {
                 try { return TaskItems.ElementAt(0); }
-                catch { return null; }
+                catch { return new TimeTaskViewModel(); }
             }
         }
 
@@ -97,6 +97,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public TimeSpan BreakDuration { get; set; }
 
+        /// <summary>
+        /// Current session length from the start of it
+        /// </summary>
+        public TimeSpan SessionDuration { get; set; }
+
         #endregion
 
         #region Commands
@@ -126,7 +131,7 @@ namespace Timeinator.Mobile.Core
             mUIManager = uiManager;
 
             mUserTimeHandler.Updated += () => { LoadTaskList(); RefreshProperties(); };
-            mUserTimeHandler.TimesUp += async () => await uiManager.ExecuteOnMainThread(async () => await UserTimeHandler_TimesUpAsync());
+            mUserTimeHandler.TimesUp += async () => await mUIManager.ExecuteOnMainThread(async () => await UserTimeHandler_TimesUpAsync());
             RealTimer.Elapsed += RealTimer_Elapsed;  
 
             LoadTaskList();
@@ -153,7 +158,7 @@ namespace Timeinator.Mobile.Core
         {
             if (Paused)
             {
-                if (CurrentTask == null)
+                if (CurrentTask.Name == null)
                     return;
                 BreakStart = DateTime.Now;
                 mRemainingTaskTime = new TimeSpan(TimeRemaining.Ticks);
@@ -168,7 +173,7 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void RealTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (CurrentTask == null)
+            if (CurrentTask.Name == null)
             {
                 RealTimer.Stop();
                 DI.Application.GoToPage(ApplicationPage.TasksList);
@@ -224,7 +229,7 @@ namespace Timeinator.Mobile.Core
             mUserTimeHandler.FinishTask();
             TaskProgress = 1;
             ContinueUserTasks();
-            if (!userResponse && CurrentTask!=null)
+            if (!userResponse && CurrentTask.Name != null)
                 StopCommand.Execute(null);
         }
         
@@ -240,7 +245,7 @@ namespace Timeinator.Mobile.Core
         }
 
         /// <summary>
-        /// Loads tasks from the <see cref="UserTimeHandler"/>
+        /// Loads tasks from the current implementation of <see cref="IUserTimeHandler"/>
         /// </summary>
         public void LoadTaskList()
         {
@@ -254,7 +259,7 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void UpdateProgressBar()
         {
-            if (CurrentTask == null)
+            if (CurrentTask.Name == null)
                 return;
             var recent = mUserTimeHandler.RecentProgress;
             TaskProgress = recent + (1.0 - recent) * (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
