@@ -8,6 +8,7 @@ using MvvmCross.Platforms.Android;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
 using System.Linq;
+using System.Threading.Tasks;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android
@@ -24,29 +25,36 @@ namespace Timeinator.Mobile.Android
 
             OverridePendingTransition(Resource.Animation.abc_fade_in, Resource.Animation.abc_fade_out);
 
-            // Initialize dialogs library
-            UserDialogs.Init(() => Mvx.IoCProvider.Resolve<IMvxAndroidCurrentTopActivity>().Activity);
-
-            // Add dialogs library to Mvx DI
-            Mvx.IoCProvider.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
-
-            // If there is no DI setup yet, i.e. IUserTimeHandler is not injected
-            if (!Dna.Framework.Construction.Services.Any(x => x.ServiceType == typeof(IUserTimeHandler) && x.ImplementationType == typeof(AndroidTimeHandler)))
+            // Run configuration on a different thread
+            // So UI thread isn't blocked
+            // And App can keep starting up
+            Task.Run(() =>
             {
-                // Add Android-specific dependency injection implementations
-                Dna.Framework.Construction.Services.AddScoped<IUserTimeHandler, AndroidTimeHandler>();
-                Dna.Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
-            }
+                // Initialize dialogs library
+                UserDialogs.Init(() => Mvx.IoCProvider.Resolve<IMvxAndroidCurrentTopActivity>().Activity);
 
-            // Build new DI
-            Dna.Framework.Construction.Build();
+                // Add dialogs library to Mvx DI
+                Mvx.IoCProvider.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
 
-            // If we get there by session intent from notification
-            if (Intent.Action == IntentActions.ACTION_GOSESSION)
-            {
-                // Change application's page to continue session
-                DI.Application.GoToPage(ApplicationPage.TasksSession);
-            }
+                // If there is no DI setup yet, i.e. IUserTimeHandler is not injected
+                if (!Dna.Framework.Construction.Services.Any(x => x.ServiceType == typeof(IUserTimeHandler) && x.ImplementationType == typeof(AndroidTimeHandler)))
+                {
+                    // Add Android-specific dependency injection implementations
+                    Dna.Framework.Construction.Services.AddScoped<IUserTimeHandler, AndroidTimeHandler>();
+                    Dna.Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
+
+                    // Build new DI
+                    Dna.Framework.Construction.Build();
+                }
+
+                // If we get there by session intent from notification
+                if (Intent.Action == IntentActions.ACTION_GOSESSION)
+                {
+                    // Change application's page to continue session
+                    DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
+                }
+
+            });
         }
     }
 }

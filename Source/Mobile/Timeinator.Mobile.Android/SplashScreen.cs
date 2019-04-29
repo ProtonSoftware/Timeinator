@@ -1,6 +1,5 @@
 ﻿using Android.App;
 using Android.Content.PM;
-using Android.Graphics;
 using Android.OS;
 using MvvmCross.Droid.Support.V7.AppCompat;
 using Timeinator.Mobile.Core;
@@ -23,7 +22,7 @@ namespace Timeinator.Mobile.Android
             SetTheme(Resource.Style.AppTheme);
 
             // Set application's font to Lato
-            _ = Typeface.CreateFromAsset(Application.Context.Assets, "fonts/Lato-Regular.ttf");
+            //_ = Typeface.CreateFromAsset(Application.Context.Assets, "fonts/Lato-Regular.ttf");
         }
     }
 }
