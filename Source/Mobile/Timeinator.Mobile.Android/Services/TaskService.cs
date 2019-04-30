@@ -223,12 +223,6 @@ namespace Timeinator.Mobile.Android
             Stop();
             TaskTiming = new Timer((long)ParamTime.TotalMilliseconds, REFRESH_RATE, this);
             TaskTiming.Start();
-            // AlarmManager version below (not tested)
-            /*var am = AlarmManager.FromContext(Application.Context);
-            var intent = new Intent(Application.Context, typeof(TaskService));
-            intent.SetAction(IntentActions.ACTION_NEXTTASK).AddFlags(ActivityFlags.FromBackground);
-            var pintent = PendingIntent.GetService(Application.Context, 0, intent, PendingIntentFlags.Immutable);
-            am.Set(AlarmType.ElapsedRealtimeWakeup, (long)ParamTime.TotalMilliseconds, pintent);*/
         }
 
         /// <summary>
