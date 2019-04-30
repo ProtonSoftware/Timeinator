@@ -17,7 +17,7 @@ namespace Timeinator.Mobile.Android
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.AddNewTimeTaskPage);
 
-            OverridePendingTransition(Resource.Animation.design_bottom_sheet_slide_in, Resource.Animation.design_bottom_sheet_slide_out);
+            OverridePendingTransition(Resource.Animation.abc_fade_in, Resource.Animation.abc_fade_out);
         }
 
         protected override void OnStart()

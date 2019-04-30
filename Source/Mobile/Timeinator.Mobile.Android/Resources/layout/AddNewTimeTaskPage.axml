@@ -142,12 +142,13 @@
 		android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 			
-		<Button android:layout_width="0dp"
-                android:layout_height="wrap_content"
-				android:layout_weight="2"
-				android:text="Zatwierdź"
-				android:background="@color/colorAccent"
-				local:MvxBind="Click AddTaskCommand"/>
+		<Button 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+			android:layout_weight="2"
+			android:text="Zatwierdź"
+            style="@style/AccentButton"
+			local:MvxBind="Click AddTaskCommand"/>
 
     </LinearLayout>
     <View style="@style/Divider"
