@@ -84,7 +84,7 @@ namespace Timeinator.Mobile.Core
             mTimeTasksService.ConveyTasksToTimeHandler(taskContexts);
 
             // Change the page afterwards
-            DI.Application.GoToPage(ApplicationPage.TasksSession);
+            DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Timeinator.Mobile.Core
 
             // TODO: Find better way
             // Go back to task list
-            DI.Application.GoToPage(ApplicationPage.TasksList);
+            DI.Application.GoToPageAsync(ApplicationPage.TasksList);
         }
 
         #endregion

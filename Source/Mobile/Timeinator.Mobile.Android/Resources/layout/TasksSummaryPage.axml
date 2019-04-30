@@ -25,11 +25,9 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
-        android:elevation="@dimen/design_bottom_navigation_elevation"
+        style="@style/ElevatedCard"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:background="#fff">
+        android:orientation="horizontal">
 
         <Button
             android:layout_width="0dp"
@@ -54,18 +52,16 @@
         android:id="@+id/bottomOptions"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
-		android:elevation="@dimen/design_bottom_navigation_elevation"
+        style="@style/ElevatedCard"
         android:layout_above="@id/bottomNavigation"
-        android:orientation="horizontal"
-        android:background="#fff">
+        android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/TextLargeBlack"
                 android:maxLines="1"
                 android:text="Przewidywany czas sesji: 5h 20m 0s"
-                local:MvxBind="Text TimeSpanToText(SessionTime, true)"
-                android:textSize="@dimen/abc_text_size_large_material"/>
+                local:MvxBind="Text TimeSpanToText(SessionTime, true)" />
 
     </LinearLayout>
 </RelativeLayout>

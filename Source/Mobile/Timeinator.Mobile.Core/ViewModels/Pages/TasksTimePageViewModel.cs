@@ -1,5 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Timeinator.Core;
 
@@ -48,7 +49,7 @@ namespace Timeinator.Mobile.Core
         public TasksTimePageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager)
         {
             // Create commands
-            CalculateSessionCommand = new RelayCommand(CalculateSession);
+            CalculateSessionCommand = new RelayCommand(async () => await CalculateSessionAsync());
             CancelCommand = new RelayCommand(Cancel);
 
             // Get injected DI services
@@ -64,21 +65,23 @@ namespace Timeinator.Mobile.Core
         /// Checks if user has picked the right time and calculates new session for him
         /// Which leads to next page
         /// </summary>
-        private void CalculateSession()
+        private async Task CalculateSessionAsync()
         {
+            // If user's selected time is not enough to start a session...
             if (UserTime < mTimeTasksService.GetMinimumTime())
             {
                 // Show user an error
-                mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Wybrany czas jest niewystarczający, by zacząc sesję!"));
+                await mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Wybrany czas jest niewystarczający, by zacząc sesję!"));
+
                 // Don't do any further actions
                 return;
             }
 
-            // Pass it to the service so it handles it to the manager, with user free time
+            // Pass user free time to the service so it conveys it to the manager
             mTimeTasksService.ConveyTimeToManager(UserTime);
 
             // Go to next page which shows a summary of calculated user session
-            DI.Application.GoToPage(ApplicationPage.TasksSummary);
+            await DI.Application.GoToPageAsync(ApplicationPage.TasksSummary);
         }
 
         /// <summary>
