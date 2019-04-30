@@ -69,11 +69,21 @@
             android:id="@+id/taskTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextSecondaryGray"
+            style="@style/TextMainBlack"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             local:MvxBind="Text CurrentTask.AssignedTime"
             android:text="0h 19m 0s" />
+
+	    <mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
+		    android:layout_below="@id/taskDescription"
+		    android:id="@+id/taskList"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+		    local:MvxItemTemplate="@layout/tasksessionitem"
+		    local:MvxBind="ItemsSource TaskItems" />
 
     </RelativeLayout>
     <RelativeLayout
@@ -149,8 +159,8 @@
         android:gravity="center">
 		<ProgressBar
 			android:id="@+id/progressRing"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
+			android:layout_height="80dp"
+			android:layout_width="80dp"
             style="?android:attr/progressBarStyleHorizontal"
             android:progressDrawable="@drawable/progress_ring_circle"
             android:progress="50"

@@ -4,7 +4,7 @@
     xmlns:tools = "http://schemas.android.com/tools"
 	xmlns:local="http://schemas.android.com/apk/res-auto"
     android:layout_width = "match_parent"
-    android:layout_height = "88dp"
+    android:layout_height = "48dp"
     android:layout_marginTop = "8dp"
     android:orientation = "vertical">
 
@@ -14,7 +14,7 @@
         android:layout_marginBottom = "16dp"
         android:layout_marginEnd = "56dp"
         android:layout_marginStart = "16dp"
-        android:layout_marginTop = "16dp"
+        android:layout_marginTop = "8dp"
         android:orientation = "vertical">
 
         <LinearLayout
@@ -35,23 +35,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:orientation = "horizontal">
-
-            <TextView
-                android:id = "@+id/second_line"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:ellipsize="marquee"
-                android:singleLine="true"
-                local:MvxBind="Text Description"
-                style="@style/TextSecondaryGray"
-                tools:text = "This is the second line"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <TextView
@@ -60,7 +43,7 @@
         android:layout_height = "wrap_content"
         android:layout_alignParentEnd = "true"
         android:layout_marginEnd = "16dp"
-        android:layout_marginTop = "30dp"
+        android:layout_marginTop = "8dp"
         android:maxLines = "1"
         local:MvxBind="Text TimeSpanToText(AssignedTime)"
         android:text="0h 19 min 0s"
