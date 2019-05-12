@@ -37,10 +37,10 @@ namespace Timeinator.Mobile.DataAccess
         /// Gets every time task that is saved in the database
         /// </summary>
         /// <returns>List of time task entities</returns>
-        public List<TimeTask> GetSavedTasksForToday()
+        public IEnumerable<TimeTask> GetSavedTasksForToday()
         {
             // TODO: Logic when we are going for date tasks, for now - get literaly everything
-            var result = DbSet.ToList();
+            var result = GetAll();
 
             return result;
         }
