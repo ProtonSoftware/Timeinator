@@ -8,7 +8,7 @@ namespace Timeinator.Mobile.DataAccess
     /// </summary>
     public interface ISettingsRepository : IRepository<Setting, int>
     {
-        List<SettingsPropertyInfo> GetAllSettings();
+        IEnumerable<SettingsPropertyInfo> GetAllSettings();
         void SaveSetting(SettingsPropertyInfo setting);
     }
 }
