@@ -6,16 +6,26 @@ using Timeinator.Mobile.DataAccess;
 namespace Timeinator.Mobile.Core
 {
     /// <summary>
-    /// The service that mediates between database and <see cref="TimeTasksManager"/> to handle tasks
+    /// The service that handles all the logic associated with the time tasks
     /// </summary>
     public class TimeTasksService : ITimeTasksService
     {
         #region Private Members
 
         private readonly TimeTasksMapper mTimeTasksMapper;
-        private readonly ITimeTasksManager mTimeTasksManager;
+        private readonly ITimeTasksCalculator mTimeTasksCalculator;
         private readonly ITimeTasksRepository mTimeTasksRepository;
         private readonly IUserTimeHandler mUserTimeHandler;
+
+        /// <summary>
+        /// The list of current tasks contexts stored in this manager
+        /// </summary>
+        private List<TimeTaskContext> mCurrentTasks;
+
+        /// <summary>
+        /// The time for the current session
+        /// </summary>
+        private TimeSpan mSessionTime;
 
         #endregion
 
@@ -24,10 +34,10 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TimeTasksService(ITimeTasksManager timeTasksManager, ITimeTasksRepository timeTasksRepository, IUserTimeHandler userTimeHandler, TimeTasksMapper tasksMapper)
+        public TimeTasksService(ITimeTasksCalculator timeTasksCalculator, ITimeTasksRepository timeTasksRepository, IUserTimeHandler userTimeHandler, TimeTasksMapper tasksMapper)
         {
             // Get injected DI services
-            mTimeTasksManager = timeTasksManager;
+            mTimeTasksCalculator = timeTasksCalculator;
             mTimeTasksRepository = timeTasksRepository;
             mUserTimeHandler = userTimeHandler;
             mTimeTasksMapper = tasksMapper;
@@ -36,106 +46,6 @@ namespace Timeinator.Mobile.Core
         #endregion
 
         #region Interface Implementation
-
-        /// <summary>
-        /// Switches orderId of given context
-        /// </summary>
-        /// <param name="contexts">Current list of contexts</param>
-        /// <param name="swap">Context to change order of</param>
-        /// <param name="newid">New position of swap context</param>
-        /// <returns>Reordered list</returns>
-        public List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid)
-        {
-            contexts.Find(x => x == swap).OrderId = newid;
-            contexts = contexts.OrderBy(x => x.OrderId).ToList();
-            var orig = contexts.FindIndex(x => x.OrderId == newid);
-            for (var i = orig; i < contexts.Count; i++)
-            {
-                if (contexts[i] != swap)
-                    contexts[i].OrderId++;
-            }
-            return contexts;
-        }
-
-        /// <summary>
-        /// Loads saved tasks from the database and passes it in the manager
-        /// </summary>
-        /// <returns>A list of found tasks mapped as context</returns>
-        public List<TimeTaskContext> LoadStoredTasks()
-        {
-            // Prepare a list to return
-            var taskContexts = new List<TimeTaskContext>();
-
-            // Get every task in the database
-            var dbTasks = mTimeTasksRepository.GetSavedTasksForToday();
-
-            // For each of them...
-            foreach (var entity in dbTasks)
-            {
-                // Map it as a context
-                var context = mTimeTasksMapper.Map(entity);
-
-                // Add it to the list
-                taskContexts.Add(context);
-            }
-
-            // Return every found task
-            return taskContexts;
-        }
-
-        /// <summary>
-        /// Initially used - resets tasks order. Sets up the manager and transfers specified tasks
-        /// </summary>
-        /// <param name="tasks">The tasks that user wants to have in the session</param>
-        /// <param name="userTime">The time user has declared to calculate</param>
-        public void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime)
-        {
-            // Add the list to the manager with provided time
-            mTimeTasksManager.UploadTasksList(SetTaskOrder(tasks), userTime);
-        }
-
-        /// <summary>
-        /// Sets up the manager and transfers specified tasks
-        /// </summary>
-        /// <param name="tasks">The tasks that user wants to have in the session</param>
-        public void ConveyTasksToManager(List<TimeTaskContext> tasks)
-        {
-            // Add the list to the manager with provided time
-            mTimeTasksManager.UploadTasksList(tasks, default(TimeSpan));
-        }
-
-        /// <summary>
-        /// Set new Session Time
-        /// </summary>
-        public void ConveyTimeToManager(TimeSpan userTime)
-        {
-            // Update time
-            mTimeTasksManager.UploadTime(userTime);
-        }
-
-        /// <summary>
-        /// Retrieve minimum allowed time to start session
-        /// </summary>
-        public TimeSpan GetMinimumTime() => mTimeTasksManager.GetMinimumTime();
-
-        /// <summary>
-        /// Retrieves tasks with recalculated times
-        /// </summary>
-        /// <returns>List of ready time tasks</returns>
-        public List<TimeTaskContext> GetCalculatedTasksFromManager()
-        {
-            return mTimeTasksManager.GetCalculatedTasksListForSpecifiedTime();
-        }
-
-        /// <summary>
-        /// Sets up the time handler and starts new session
-        /// </summary>
-        /// <param name="tasks">The tasks that user wants to have in the session</param>
-        public void ConveyTasksToTimeHandler(List<TimeTaskContext> tasks)
-        {
-            // Add the list to the time handler and start it
-            mUserTimeHandler.StartTimeHandler(tasks);
-        }
 
         /// <summary>
         /// Saves new task to the database and adds it to the application's task list
@@ -187,41 +97,132 @@ namespace Timeinator.Mobile.Core
             mTimeTasksRepository.RemoveTasks(taskIds);
         }
 
+        /// <summary>
+        /// Loads every saved task from the database
+        /// </summary>
+        /// <returns>A list of found tasks as <see cref="TimeTaskContext"/></returns>
+        public List<TimeTaskContext> LoadStoredTasks()
+        {
+            // Get every task in the database
+            var dbTasks = mTimeTasksRepository.GetSavedTasksForToday();
+
+            // Map entities as contexts
+            var result = mTimeTasksMapper.ListMap(dbTasks.ToList());
+
+            // Return every found task
+            return result;
+        }
+
+        /// <summary>
+        /// Sets provided tasks in our internal task list
+        /// </summary>
+        /// <param name="contexts">The tasks to set</param>
+        public void SetSessionTasks(List<TimeTaskContext> contexts)
+        {
+            // Set our internal list with provided tasks
+            mCurrentTasks = contexts;
+        }
+
+        /// <summary>
+        /// Sets provided time as user session time
+        /// </summary>
+        /// <returns>True, if time was set successfully, or false, if time wasn't enough for the current session</returns>
+        public bool SetSessionTime(TimeSpan userTime)
+        {
+            // Validate provided time
+            if (ValidateTime(userTime))
+            {
+                // It is proper one, so set it
+                mSessionTime = userTime;
+
+                // And return success
+                return true;
+            }
+
+            // The time isn't enough for the session, just return failure
+            return false;
+        }
+
+        /// <summary>
+        /// Empties the task list in manager
+        /// </summary>
+        public void ClearSessionTasks()
+        {
+            // Simply nullify the list, so the service state is exactly the same as when before the use
+            mCurrentTasks = null;
+        }
+
+        /// <summary>
+        /// Gets a list of calculated tasks for the session
+        /// </summary>
+        /// <returns>List of calculated <see cref="TimeTaskContext"/></returns>
+        public List<TimeTaskContext> GetCalculatedTasks()
+        {
+            // Check if task list is properly set
+            ValidateTasks();
+
+            // Check if time for session is properly set
+            if (!ValidateTime(mSessionTime))
+            {
+                // Throw exception because it should not ever happen in the code (time should be checked before), so something needs a fix
+                throw new Exception("Attempted to calculate tasks without proper time set.");
+            }
+
+            // Everything is nice and set, calculate our session
+            var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(mCurrentTasks, mSessionTime);
+
+            // Return the tasks
+            return calculatedTasks;
+        }
+
+        /// <summary>
+        /// TODO: Use/fix it, for now its not even called anywhere
+        /// Switches orderId of given context
+        /// </summary>
+        /// <param name="contexts">Current list of contexts</param>
+        /// <param name="swap">Context to change order of</param>
+        /// <param name="newid">New position of swap context</param>
+        /// <returns>Reordered list</returns>
+        public List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid)
+        {
+            contexts.Find(x => x == swap).OrderId = newid;
+            contexts = contexts.OrderBy(x => x.OrderId).ToList();
+            var orig = contexts.FindIndex(x => x.OrderId == newid);
+            for (var i = orig; i < contexts.Count; i++)
+            {
+                if (contexts[i] != swap)
+                    contexts[i].OrderId++;
+            }
+            return contexts;
+        }
+
         #endregion
 
         #region Private Helpers
 
         /// <summary>
-        /// Sets first time OrderId to offer user basic order
+        /// Validates if we have proper tasks inside service
         /// </summary>
-        /// <returns>Task list with correct OrderId</returns>
-        private List<TimeTaskContext> SetTaskOrder(List<TimeTaskContext> rawContexts)
+        private void ValidateTasks()
         {
-            List<TimeTaskContext> rawImportant = rawContexts.GetImportant(),
-                rawSimple = rawContexts.GetImportant(true);
-            if (DI.Settings.HighestPrioritySetAsFirst)
+            // Tasks must be set and we need at least one of them
+            if (mCurrentTasks == null || mCurrentTasks.Count < 1)
             {
-                rawImportant = rawImportant.OrderBy(x => x.Priority).Reverse().ToList();
-                rawSimple = rawSimple.OrderBy(x => x.Priority).Reverse().ToList();
+                // Throw exception because it should not ever happen in the code, so something needs a fix
+                throw new Exception("Attempted to calculate tasks without providing them.");
             }
-            else
-            {
-                rawImportant = rawImportant.OrderBy(x => x.Priority).ToList();
-                rawSimple = rawSimple.OrderBy(x => x.Priority).ToList();
-            }
+        }
 
-            var oid = 0;
-            for (var i = 0; i < rawImportant.Count; i++)
-            {
-                rawImportant[i].OrderId = oid;
-                oid++;
-            }
-            for (var i = 0; i < rawSimple.Count; i++)
-            {
-                rawSimple[i].OrderId = oid;
-                oid++;
-            }
-            return rawImportant.Concat(rawSimple).ToList();
+        /// <summary>
+        /// Validates if session time is enough for current tasks
+        /// </summary>
+        private bool ValidateTime(TimeSpan time)
+        {
+            // Calculate what time we need for current session
+            var neededTime = mTimeTasksCalculator.CalculateMinimumTimeForTasks(mCurrentTasks);
+
+            // Time must be set and it needs to be greater or equal to minimum needed
+            return !(mSessionTime == default || time < neededTime);
         }
 
         #endregion

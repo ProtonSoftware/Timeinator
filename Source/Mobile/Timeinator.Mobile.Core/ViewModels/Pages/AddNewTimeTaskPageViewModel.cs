@@ -11,7 +11,6 @@ namespace Timeinator.Mobile.Core
     {
         #region Private Members
 
-        private readonly TimeTasksMapper mTimeTasksMapper;
         private readonly ITimeTasksService mTimeTasksService;
         private readonly IUIManager mUIManager;
 
@@ -75,7 +74,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AddNewTimeTaskPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
+        public AddNewTimeTaskPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager)
         {
             // Create commands
             AddTaskCommand = new RelayCommand(AddNewTask);
@@ -83,7 +82,6 @@ namespace Timeinator.Mobile.Core
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
-            mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
         }
 
@@ -92,7 +90,7 @@ namespace Timeinator.Mobile.Core
         #region Command Methods
 
         /// <summary>
-        /// Adds newly created task to the <see cref="TimeTasksManager"/>
+        /// Adds newly created task to the <see cref="TimeTasksCalculator"/>
         /// </summary>
         public void AddNewTask()
         {

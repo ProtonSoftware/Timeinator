@@ -20,7 +20,7 @@ namespace Timeinator.Mobile.Tests
         public void TimeTaskService_ShouldSaveAndLoadFromDatabase()
         {
             // Arrange
-            var manager = new TimeTasksManager();
+            var manager = new TimeTasksCalculator();
             var repository = new TimeTasksRepository(DatabaseContext);
             var handler = new UserTimeHandler();
             var mapper = new TimeTasksMapper();
@@ -48,7 +48,7 @@ namespace Timeinator.Mobile.Tests
         public void TimeTaskService_ShouldHandleManagerCalls()
         {
             // Arrange
-            var manager = new TimeTasksManager();
+            var manager = new TimeTasksCalculator();
             var repository = new TimeTasksRepository(DatabaseContext);
             var handler = new UserTimeHandler();
             var mapper = new TimeTasksMapper();
@@ -74,7 +74,7 @@ namespace Timeinator.Mobile.Tests
         public void TimeTaskService_ShouldRemoveTask()
         {
             // Arrange
-            var manager = new TimeTasksManager();
+            var manager = new TimeTasksCalculator();
             var repository = new TimeTasksRepository(DatabaseContext);
             var handler = new UserTimeHandler();
             var mapper = new TimeTasksMapper();

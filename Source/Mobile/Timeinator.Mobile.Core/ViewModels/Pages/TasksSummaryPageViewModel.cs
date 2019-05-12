@@ -53,7 +53,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSummaryPageViewModel(ITimeTasksService timeTasksService, ITimeTasksManager timeTasksManager, TimeTasksMapper tasksMapper, IUIManager uiManager)
+        public TasksSummaryPageViewModel(ITimeTasksService timeTasksService, ITimeTasksCalculator TimeTasksCalculator, TimeTasksMapper tasksMapper, IUIManager uiManager)
         {
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);
@@ -104,7 +104,7 @@ namespace Timeinator.Mobile.Core
         #region Private Helpers
 
         /// <summary>
-        /// Loads saved tasks from the <see cref="TimeTasksManager"/>
+        /// Loads saved tasks from the <see cref="TimeTasksCalculator"/>
         /// </summary>
         public void LoadTaskList()
         {
