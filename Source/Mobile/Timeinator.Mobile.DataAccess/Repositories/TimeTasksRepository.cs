@@ -70,6 +70,7 @@ namespace Timeinator.Mobile.DataAccess
                 dbEntity.Priority = entity.Priority;
                 dbEntity.Progress = entity.Progress;
                 dbEntity.Tag = entity.Tag;
+                dbEntity.AssignedTime = entity.AssignedTime;
                 dbEntity.CreationDate = entity.CreationDate;
             }
 

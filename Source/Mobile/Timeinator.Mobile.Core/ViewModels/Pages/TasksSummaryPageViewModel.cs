@@ -80,8 +80,8 @@ namespace Timeinator.Mobile.Core
             // Convert our collection to suitable list of contexts
             var taskContexts = mTimeTasksMapper.ListReverseMap(TaskItems.ToList());
 
-            // Pass it to the time handler to start new session
-            mTimeTasksService.ConveyTasksToTimeHandler(taskContexts);
+            // Pass it to the service to start new session
+            mTimeTasksService.StartSession(taskContexts);
 
             // Change the page afterwards
             DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
@@ -92,7 +92,8 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void Cancel()
         {
-            // TODO: Clear task list in service when logic is done
+            // Clear task list in service
+            mTimeTasksService.ClearSessionTasks();
 
             // TODO: Find better way
             // Go back to task list
@@ -109,7 +110,7 @@ namespace Timeinator.Mobile.Core
         public void LoadTaskList()
         {
             // Calculate selected tasks and get the contexts
-            var contexts = mTimeTasksService.GetCalculatedTasksFromManager();
+            var contexts = mTimeTasksService.GetCalculatedTasks();
 
             // Map the list as suitable view models
             TaskItems = new ObservableCollection<CalculatedTimeTaskViewModel>(mTimeTasksMapper.ListMapCal(contexts));

@@ -148,8 +148,9 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public void ClearSessionTasks()
         {
-            // Simply nullify the list, so the service state is exactly the same as when before the use
+            // Simply nullify the properties, so the service state is exactly the same as when before the use
             mCurrentTasks = null;
+            mSessionTime = default;
         }
 
         /// <summary>
@@ -162,7 +163,7 @@ namespace Timeinator.Mobile.Core
             ValidateTasks();
 
             // Check if time for session is properly set
-            if (!ValidateTime(mSessionTime))
+            if (mSessionTime == default || !ValidateTime(mSessionTime))
             {
                 // Throw exception because it should not ever happen in the code (time should be checked before), so something needs a fix
                 throw new Exception("Attempted to calculate tasks without proper time set.");
@@ -196,6 +197,15 @@ namespace Timeinator.Mobile.Core
             return contexts;
         }
 
+        /// <summary>
+        /// Starts the task session
+        /// </summary>
+        /// <param name="contexts">The tasks for the session</param>
+        public void StartSession(List<TimeTaskContext> contexts)
+        {
+
+        }
+
         #endregion
 
         #region Private Helpers
@@ -221,8 +231,8 @@ namespace Timeinator.Mobile.Core
             // Calculate what time we need for current session
             var neededTime = mTimeTasksCalculator.CalculateMinimumTimeForTasks(mCurrentTasks);
 
-            // Time must be set and it needs to be greater or equal to minimum needed
-            return !(mSessionTime == default || time < neededTime);
+            // Time must be greater or equal to minimum needed
+            return time >= neededTime;
         }
 
         #endregion
