@@ -22,5 +22,6 @@ namespace Timeinator.Mobile.Core
         bool SetSessionTime(TimeSpan userTime);
         void ClearSessionTasks();
         List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid);
+        void StartSession(List<TimeTaskContext> contexts);
     }
 }
