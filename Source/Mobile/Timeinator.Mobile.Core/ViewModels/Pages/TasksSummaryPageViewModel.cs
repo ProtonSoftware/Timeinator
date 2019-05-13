@@ -1,5 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -46,6 +47,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public ICommand CancelCommand { get; set; }
 
+        /// <summary>
+        /// The command to reorder specified task in the list
+        /// </summary>
+        public ICommand ReorderCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -58,6 +64,7 @@ namespace Timeinator.Mobile.Core
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);
             CancelCommand = new RelayCommand(Cancel);
+            ReorderCommand = new RelayParameterizedCommand(Reorder);
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
@@ -98,6 +105,47 @@ namespace Timeinator.Mobile.Core
             // TODO: Find better way
             // Go back to task list
             DI.Application.GoToPageAsync(ApplicationPage.TasksList);
+        }
+
+        /// <summary>
+        /// Reorders the task list when an item is moved
+        /// </summary>
+        /// <param name="param">The from-to positions provided as Tuple of two ints</param>
+        private void Reorder(object param)
+        {
+            // Get tuple from our parameter
+            if (!(param is Tuple<int, int> positions))
+            {
+                // Throw an exception because we explicitely say its Tuple in the code, so something must've gone seriously wrong
+                throw new Exception("Attempted to reorder tasks without providing the positions correctly.");
+            }
+
+            // Extract from and to positions from the tuple
+            var posFrom = positions.Item1;
+            var posTo = positions.Item2;
+
+            // Prepare list of the new order
+            var orderList = new List<int>();
+
+            // Loop each index
+            for (var i = 0; i < TaskItems.Count; i++)
+            {
+                // If its not posFrom
+                if (i != posFrom)
+                {
+                    // Just add the index
+                    orderList.Add(i);
+                }
+            }
+
+            // Now we have the whole list in the order without posFrom item, so add it in the proper place
+            orderList.Insert(posTo, posFrom);
+
+            // Reorder the task items by the order list we prepared
+            var reorderedList = orderList.Select(item => TaskItems.ElementAt(item)).ToList();
+
+            // Replace old list with reordered one
+            TaskItems = new ObservableCollection<CalculatedTimeTaskViewModel>(reorderedList);
         }
 
         #endregion
