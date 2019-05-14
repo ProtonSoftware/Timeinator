@@ -8,6 +8,10 @@ namespace Timeinator.Mobile.Core
     public interface ISessionTimer
     {
         TimeSpan SessionDuration { get; }
-        void StartSession(Action action);
+        TimeSpan CurrentTaskTimeLeft { get; }
+
+        event Action TaskFinished;
+        void SetupSession(Action action);
+        void StartNextTask(TimeSpan taskTime);
     }
 }
