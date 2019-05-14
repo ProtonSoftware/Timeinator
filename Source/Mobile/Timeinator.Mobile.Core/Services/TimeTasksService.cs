@@ -15,7 +15,7 @@ namespace Timeinator.Mobile.Core
         private readonly TimeTasksMapper mTimeTasksMapper;
         private readonly ITimeTasksCalculator mTimeTasksCalculator;
         private readonly ITimeTasksRepository mTimeTasksRepository;
-        private readonly IUserTimeHandler mUserTimeHandler;
+        private readonly ISessionTimer mSessionTimer;
 
         /// <summary>
         /// The list of current tasks contexts stored in this manager
@@ -29,17 +29,19 @@ namespace Timeinator.Mobile.Core
 
         #endregion
 
+        public TimeSpan SessionDuration => mSessionTimer.SessionDuration;
+
         #region Constructor
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TimeTasksService(ITimeTasksCalculator timeTasksCalculator, ITimeTasksRepository timeTasksRepository, IUserTimeHandler userTimeHandler, TimeTasksMapper tasksMapper)
+        public TimeTasksService(ITimeTasksCalculator timeTasksCalculator, ITimeTasksRepository timeTasksRepository, ISessionTimer sessionTimer, TimeTasksMapper tasksMapper)
         {
             // Get injected DI services
             mTimeTasksCalculator = timeTasksCalculator;
             mTimeTasksRepository = timeTasksRepository;
-            mUserTimeHandler = userTimeHandler;
+            mSessionTimer = sessionTimer;
             mTimeTasksMapper = tasksMapper;
         }
 
@@ -200,10 +202,11 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Starts the task session
         /// </summary>
-        /// <param name="contexts">The tasks for the session</param>
-        public void StartSession(List<TimeTaskContext> contexts)
+        /// <param name="action">The action that will be attached to the timer elapsed event</param>
+        public void StartSession(Action action)
         {
-
+            // Start the timer session
+            mSessionTimer.StartSession(action);
         }
 
         #endregion

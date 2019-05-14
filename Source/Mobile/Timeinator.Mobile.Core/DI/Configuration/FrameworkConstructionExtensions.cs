@@ -26,6 +26,7 @@ namespace Timeinator.Mobile.Core
             // Bind to a scoped instance of specified models
             construction.Services.AddScoped<ITimeTasksService, TimeTasksService>();
             construction.Services.AddScoped<ITimeTasksCalculator, TimeTasksCalculator>();
+            construction.Services.AddScoped<ISessionTimer, SessionTimer>();
             construction.Services.AddScoped<IUserTimeHandler, UserTimeHandler>();
 
             // Inject dependiencies into every page's view model

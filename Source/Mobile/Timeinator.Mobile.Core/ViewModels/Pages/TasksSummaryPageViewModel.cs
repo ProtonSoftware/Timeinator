@@ -87,8 +87,8 @@ namespace Timeinator.Mobile.Core
             // Convert our collection to suitable list of contexts
             var taskContexts = mTimeTasksMapper.ListReverseMap(TaskItems.ToList());
 
-            // Pass it to the service to start new session
-            mTimeTasksService.StartSession(taskContexts);
+            // Pass it to the service
+            mTimeTasksService.SetSessionTasks(taskContexts);
 
             // Change the page afterwards
             DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
