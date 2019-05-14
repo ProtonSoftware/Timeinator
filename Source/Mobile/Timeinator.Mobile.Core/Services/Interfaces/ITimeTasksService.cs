@@ -9,10 +9,11 @@ namespace Timeinator.Mobile.Core
     public interface ITimeTasksService
     {
         TimeSpan SessionDuration { get; }
+        TimeSpan CurrentTaskTimeLeft { get; }
 
         #region Database Interaction
 
-        List<TimeTaskContext> LoadStoredTasks();
+List<TimeTaskContext> LoadStoredTasks();
 
         void SaveTask(TimeTaskContext context);
         void RemoveTask(TimeTaskContext context);
@@ -25,6 +26,6 @@ namespace Timeinator.Mobile.Core
         bool SetSessionTime(TimeSpan userTime);
         void ClearSessionTasks();
         List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid);
-        void StartSession(Action action);
+        List<TimeTaskContext> StartSession(Action action);
     }
 }

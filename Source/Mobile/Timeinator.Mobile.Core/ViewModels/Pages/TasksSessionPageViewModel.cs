@@ -1,11 +1,9 @@
-﻿using System;
+﻿using MvvmCross.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Input;
 using Timeinator.Core;
-using MvvmCross.ViewModels;
 
 namespace Timeinator.Mobile.Core
 {
@@ -45,9 +43,9 @@ namespace Timeinator.Mobile.Core
         public TimeSpan SessionDuration => mTimeTasksService.SessionDuration;
 
         /// <summary>
-        /// The remaining time left of current session
+        /// The remaining time left of current task
         /// </summary>
-        public TimeSpan TimeRemaining { get; set; }
+        public TimeSpan TimeRemaining => mTimeTasksService.CurrentTaskTimeLeft;
 
         public bool Paused => false;
 
@@ -80,20 +78,17 @@ namespace Timeinator.Mobile.Core
         public TasksSessionPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
-            PauseCommand = new RelayCommand(PauseTask);
-            ResumeCommand = new RelayCommand(ResumeTask);
-            FinishCommand = new RelayCommand(FinishTask);
+            PauseCommand = new RelayCommand(PauseTaskAsync);
+            ResumeCommand = new RelayCommand(ResumeTaskAsync);
+            FinishCommand = new RelayCommand(FinishTaskAsync);
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 
-            // Create an action to fire whenever session timer ticks
-            var action = new Action(UpdateSessionProperties);
-
-            // Start new session
-            mTimeTasksService.StartSession(action);
+            // Initialize this session
+            InitializeSession();
         }
 
         #endregion
@@ -103,7 +98,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Pauses current task and starts the break
         /// </summary>
-        private void PauseTask()
+        private async void PauseTaskAsync()
         {
             throw new NotImplementedException();
         }
@@ -111,7 +106,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Finishes the break and resumes current task
         /// </summary>
-        private void ResumeTask()
+        private async void ResumeTaskAsync()
         {
             throw new NotImplementedException();
         }
@@ -119,27 +114,67 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Finishes the current task by removing it and goes to the next one
         /// </summary>
-        private void FinishTask()
+        private async void FinishTaskAsync()
         {
-            throw new NotImplementedException();
+            // Ask the user if he's certain to finish the task before it ends
+            var popupViewModel = new PopupMessageViewModel
+                (
+                    "Koniec zadania",
+                    "Na pewno chcesz zakończyć zadanie?",
+                    "Tak",
+                    "Nie"
+                );
+            var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
+
+            // If he disagreed
+            if (!userResponse)
+            {
+                // Don't finish
+                return;
+            }
+
+            // TODO: Finish task
         }
 
         #endregion
 
         #region Private Helpers
 
+        /// <summary>
+        /// Initializes the session on this page
+        /// </summary>
+        private void InitializeSession()
+        {
+            // Create an action to fire whenever session timer ticks
+            var action = new Action(UpdateSessionProperties);
+
+            // Start new session and get all the tasks
+            var contexts = mTimeTasksService.StartSession(action);
+
+            // At the start of the session, first task in the list is always current one, so set it accordingly
+            var currentTask = contexts.ElementAt(0);
+            CurrentTask = mTimeTasksMapper.Map(currentTask);
+
+            // Delete current task from the contexts
+            contexts.Remove(currentTask);
+
+            // And set the remaining list tasks
+            RemainingTasks = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(contexts));
+        }
+
+        /// <summary>
+        /// Updates every session property with new values
+        /// </summary>
         private void UpdateSessionProperties()
         {
+            // Simply use the helper to fire every property's change event, for now it works just fine
+            // Potentially in the future, update only required properties, not everything
             RaiseAllPropertiesChanged();
         }
 
         #endregion
     }
-    /*/// <summary>
-    /// The view model for tasks session page
-    /// </summary>
-    public class TasksSessionPageViewModel : MvxViewModel
-    {
+    /*
         #region Private Members
 
         private readonly TimeTasksMapper mTimeTasksMapper;
@@ -379,5 +414,5 @@ namespace Timeinator.Mobile.Core
             if (TaskProgress > 1)
                 TaskProgress = 1;
         }
-    }*/
+    */
 }

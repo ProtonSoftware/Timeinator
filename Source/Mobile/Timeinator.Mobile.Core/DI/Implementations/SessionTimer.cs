@@ -8,35 +8,72 @@ namespace Timeinator.Mobile.Core
     /// </summary>
     public class SessionTimer : ISessionTimer
     {
-        #region Public Properties
+        #region Private Members
 
         /// <summary>
         /// The timer that elapses every second so everything related to time can update everytime it ticks
         /// </summary>
-        public Timer SecondsTicker { get; set; }
+        public Timer mSecondsTicker;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         /// The duration of the whole current session
         /// </summary>
         public TimeSpan SessionDuration { get; private set; } = new TimeSpan(0);
 
+        /// <summary>
+        /// The time that left in current session task
+        /// </summary>
+        public TimeSpan CurrentTaskTimeLeft { get; private set; }
+
         #endregion
 
-        public void StartSession(Action action)
+        #region Public Events
+
+        /// <summary>
+        /// The event that is fired any time the current task finishes
+        /// </summary>
+        public event Action TaskFinished = () => { };
+
+        #endregion
+
+        public void SetupSession(Action action)
         {
             // Timer setup
-            SecondsTicker = new Timer(1000);
-            SecondsTicker.Elapsed += SecondsTicker_Elapsed;
-            SecondsTicker.Elapsed += (s, e) => action();
+            mSecondsTicker = new Timer(1000);
+            mSecondsTicker.Elapsed += SecondsTicker_Elapsed;
+            mSecondsTicker.Elapsed += (s, e) => action();
+        }
+
+        public void StartNextTask(TimeSpan taskTime)
+        {
+            // Set provided time
+            CurrentTaskTimeLeft = taskTime;
 
             // Start the timer
-            SecondsTicker.Start();
+            mSecondsTicker.Start();
         }
 
         private void SecondsTicker_Elapsed(object sender, ElapsedEventArgs e)
         {
             // Add one second to the session duration
-            SessionDuration = SessionDuration.Add(new TimeSpan(0, 0, 1));
+            SessionDuration += TimeSpan.FromSeconds(1);
+
+            // Substract one second from the task time
+            CurrentTaskTimeLeft -= TimeSpan.FromSeconds(1);
+
+            // If the task finished already...
+            if (CurrentTaskTimeLeft <= TimeSpan.FromSeconds(0))
+            {
+                // Inform everyone about it
+                TaskFinished.Invoke();
+
+                // Stop the timer
+                mSecondsTicker.Stop();
+            }
         }
     }
 }
