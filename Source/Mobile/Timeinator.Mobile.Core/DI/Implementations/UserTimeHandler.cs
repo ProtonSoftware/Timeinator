@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Timeinator.Mobile.Core
 {
@@ -10,6 +9,20 @@ namespace Timeinator.Mobile.Core
     /// </summary>
     public class UserTimeHandler : IUserTimeHandler
     {
+        #region Protected Properties
+
+        /// <summary>
+        /// Interface for accessing Timer handling functionality
+        /// </summary>
+        protected ISessionService mSessionService;
+
+        /// <summary>
+        /// Stores current time
+        /// </summary>
+        protected DateTime CurrentTime => DateTime.Now;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -44,9 +57,19 @@ namespace Timeinator.Mobile.Core
         public double RecentProgress { get; set; }
 
         /// <summary>
+        /// Tells whether Session Timer is running
+        /// </summary>
+        public bool SessionRunning => mSessionService.Active;
+
+        #endregion
+
+        #region Public Events
+
+        /// <summary>
         /// Event called when time for task elapsed
         /// </summary>
-        public event Action TimesUp {
+        public event Action TimesUp
+        {
             add { mSessionService.TimerElapsed += value; }
             remove { mSessionService.TimerElapsed -= value; }
         }
@@ -55,11 +78,6 @@ namespace Timeinator.Mobile.Core
         /// Event called when Handler gets updated from background Request
         /// </summary>
         public event Action Updated;
-
-        /// <summary>
-        /// Tells whether Session Timer is running
-        /// </summary>
-        public bool SessionRunning => mSessionService.Active;
 
         #endregion
 
@@ -93,8 +111,8 @@ namespace Timeinator.Mobile.Core
         public virtual void RefreshTasksState()
         {
             var ttsvc = Dna.Framework.Service<ITimeTasksService>();
-            ttsvc.ConveyTasksToManager(SessionTasks);
-            SessionTasks = ttsvc.GetCalculatedTasksFromManager();
+            ttsvc.SetSessionTasks(SessionTasks);
+            SessionTasks = ttsvc.GetCalculatedTasks();
         }
 
         /// <summary>
@@ -118,7 +136,7 @@ namespace Timeinator.Mobile.Core
         public TimeSpan TimeLossValue()
         {
             if (CurrentTask == null)
-                return default(TimeSpan);
+                return default;
             return TimeSpan.FromSeconds((int)CurrentTask.Priority / SessionTasks.SumPriorities());
         }
 
@@ -184,17 +202,7 @@ namespace Timeinator.Mobile.Core
 
         #endregion
 
-        #region Private Helpers
-
-        /// <summary>
-        /// Interface for accessing Timer handling functionality
-        /// </summary>
-        protected ISessionService mSessionService;
-
-        /// <summary>
-        /// Stores current time
-        /// </summary>
-        protected DateTime CurrentTime => DateTime.Now;
+        #region Protected Helpers
 
         /// <summary>
         /// Method used to save progress of the task when it gets paused
