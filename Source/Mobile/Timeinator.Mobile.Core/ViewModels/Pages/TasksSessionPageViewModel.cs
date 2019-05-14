@@ -18,6 +18,132 @@ namespace Timeinator.Mobile.Core
 
         private readonly TimeTasksMapper mTimeTasksMapper;
         private readonly ITimeTasksService mTimeTasksService;
+        private readonly IUIManager mUIManager;
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// The list of time tasks for current session that are not the current one
+        /// </summary>
+        public ObservableCollection<TimeTaskViewModel> RemainingTasks { get; set; } = new ObservableCollection<TimeTaskViewModel>();
+
+        /// <summary>
+        /// The current task the user is doing on the session
+        /// </summary>
+        public TimeTaskViewModel CurrentTask { get; set; }
+
+        /// <summary>
+        /// Progress of current task shown in the progress bar on UI
+        /// </summary>
+        public double TaskProgress { get; set; }
+
+        /// <summary>
+        /// Current session length from the start of it
+        /// </summary>
+        public TimeSpan SessionDuration => mTimeTasksService.SessionDuration;
+
+        /// <summary>
+        /// The remaining time left of current session
+        /// </summary>
+        public TimeSpan TimeRemaining { get; set; }
+
+        public bool Paused => false;
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// The command to pause current task
+        /// </summary>
+        public ICommand PauseCommand { get; private set; }
+
+        /// <summary>
+        /// The command to resume current task, available when task is paused
+        /// </summary>
+        public ICommand ResumeCommand { get; private set; }
+
+        /// <summary>
+        /// The command to finish current task and go for the next one
+        /// </summary>
+        public ICommand FinishCommand { get; private set; }
+
+        #endregion
+
+        #region Constructor 
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public TasksSessionPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
+        {
+            // Create commands
+            PauseCommand = new RelayCommand(PauseTask);
+            ResumeCommand = new RelayCommand(ResumeTask);
+            FinishCommand = new RelayCommand(FinishTask);
+
+            // Get injected DI services
+            mTimeTasksService = timeTasksService;
+            mTimeTasksMapper = tasksMapper;
+            mUIManager = uiManager;
+
+            // Create an action to fire whenever session timer ticks
+            var action = new Action(UpdateSessionProperties);
+
+            // Start new session
+            mTimeTasksService.StartSession(action);
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Pauses current task and starts the break
+        /// </summary>
+        private void PauseTask()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Finishes the break and resumes current task
+        /// </summary>
+        private void ResumeTask()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Finishes the current task by removing it and goes to the next one
+        /// </summary>
+        private void FinishTask()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        private void UpdateSessionProperties()
+        {
+            RaiseAllPropertiesChanged();
+        }
+
+        #endregion
+    }
+    /*/// <summary>
+    /// The view model for tasks session page
+    /// </summary>
+    public class TasksSessionPageViewModel : MvxViewModel
+    {
+        #region Private Members
+
+        private readonly TimeTasksMapper mTimeTasksMapper;
+        private readonly ITimeTasksService mTimeTasksService;
         private readonly IUserTimeHandler mUserTimeHandler;
         private readonly IUIManager mUIManager;
 
@@ -59,13 +185,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Remaining time from handler
         /// </summary>
-        public TimeSpan TimeRemaining {
-            get
-            {
-                try { return CurrentTask.AssignedTime - mUserTimeHandler.TimePassed; }
-                catch { return default; }
-            }
-        }
+        public TimeSpan TimeRemaining => CurrentTask?.AssignedTime != default ? CurrentTask.AssignedTime - mUserTimeHandler.TimePassed : new TimeSpan(0);
 
         /// <summary>
         /// Time lost since break start
@@ -96,11 +216,6 @@ namespace Timeinator.Mobile.Core
         /// Current break length in a timespan
         /// </summary>
         public TimeSpan BreakDuration { get; set; }
-
-        /// <summary>
-        /// Current session length from the start of it
-        /// </summary>
-        public TimeSpan SessionDuration { get; set; }
 
         #endregion
 
@@ -156,10 +271,10 @@ namespace Timeinator.Mobile.Core
 
         private void RefreshProperties()
         {
+            if (CurrentTask == null)
+                return;
             if (Paused)
             {
-                if (CurrentTask == null)
-                    return;
                 BreakStart = DateTime.Now;
                 mRemainingTaskTime = new TimeSpan(TimeRemaining.Ticks);
                 RaisePropertyChanged(nameof(CurrentTask));
@@ -259,12 +374,10 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void UpdateProgressBar()
         {
-            if (CurrentTask == null)
-                return;
             var recent = mUserTimeHandler.RecentProgress;
             TaskProgress = recent + (1.0 - recent) * (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
             if (TaskProgress > 1)
                 TaskProgress = 1;
         }
-    }
+    }*/
 }
