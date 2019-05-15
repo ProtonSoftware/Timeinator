@@ -83,19 +83,12 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public void RemoveFinishedTasks(List<TimeTaskContext> contexts)
         {
-            // Prepare a list of task ids to remove
-            var taskIds = new List<int>();
-
-            // For each of provided tasks...
-            foreach (var task in contexts)
-            {
-                // Immortal tasks won't be removed
-                if (task.IsImmortal)
-                    continue;
-
-                // Add the id to the list
-                taskIds.Add(task.Id);
-            }
+            // Get list of task ids...
+            var taskIds = contexts
+                         // That are not immortal
+                         .Where(x => x.IsImmortal == false)
+                         // Take ids instead of tasks
+                         .Select(x => x.Id);
 
             // Send collected ids to the repository to remove associated tasks
             mTimeTasksRepository.RemoveTasks(taskIds);

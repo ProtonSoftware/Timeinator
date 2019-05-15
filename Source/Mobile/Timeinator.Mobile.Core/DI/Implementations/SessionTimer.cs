@@ -40,12 +40,14 @@ namespace Timeinator.Mobile.Core
 
         #endregion
 
+        #region Interface Implementation
+
         public void SetupSession(Action action)
         {
             // Timer setup
             mSecondsTicker = new Timer(1000);
             mSecondsTicker.Elapsed += SecondsTicker_Elapsed;
-            mSecondsTicker.Elapsed += (s, e) => action();
+            mSecondsTicker.Elapsed += (s, e) => action.Invoke();
         }
 
         public void StartNextTask(TimeSpan taskTime)
@@ -75,5 +77,7 @@ namespace Timeinator.Mobile.Core
                 mSecondsTicker.Stop();
             }
         }
+
+        #endregion
     }
 }

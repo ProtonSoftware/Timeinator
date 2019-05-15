@@ -82,7 +82,7 @@ namespace Timeinator.Mobile.DataAccess
         /// Removes specified tasks from the database by provided ids
         /// </summary>
         /// <param name="ids">The ids of tasks to remove</param>
-        public void RemoveTasks(List<int> ids)
+        public void RemoveTasks(IEnumerable<int> ids)
         {
             // Get list of every entity associated with provided ids
             var entities = DbSet.Where(x => ids.Contains(x.Id));
