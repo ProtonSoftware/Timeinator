@@ -29,9 +29,13 @@ namespace Timeinator.Mobile.Core
 
         #endregion
 
+        #region Public Properties
+
         public TimeSpan SessionDuration => mSessionTimer.SessionDuration;
 
         public TimeSpan CurrentTaskTimeLeft => mSessionTimer.CurrentTaskTimeLeft;
+
+        #endregion
 
         #region Constructor
 
@@ -197,12 +201,13 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Starts the task session
         /// </summary>
-        /// <param name="action">The action that will be attached to the timer elapsed event</param>
+        /// <param name="timerAction">The action that will be attached to the timer elapsed event</param>
+        /// <param name="taskAction">The action that will be attached to the task finished event</param>
         /// <returns>List of every task in the session we start</returns>
-        public List<TimeTaskContext> StartSession(Action action)
+        public List<TimeTaskContext> StartSession(Action timerAction, Action taskAction)
         {
             // Setup the timer session
-            mSessionTimer.SetupSession(action);
+            mSessionTimer.SetupSession(timerAction, taskAction);
 
             // Start first task
             var firstTaskTime = mCurrentTasks.ElementAt(0).AssignedTime;

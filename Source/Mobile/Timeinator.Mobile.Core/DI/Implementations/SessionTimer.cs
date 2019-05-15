@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Timers;
 
 namespace Timeinator.Mobile.Core
@@ -42,14 +43,25 @@ namespace Timeinator.Mobile.Core
 
         #region Interface Implementation
 
-        public void SetupSession(Action action)
+        public void SetupSession(Action timerAction, Action taskAction)
         {
-            // Timer setup
+            // Timer ticks every second
             mSecondsTicker = new Timer(1000);
+
+            // Run our elapsed function every time timer ticks
             mSecondsTicker.Elapsed += SecondsTicker_Elapsed;
-            mSecondsTicker.Elapsed += (s, e) => action.Invoke();
+
+            // Attach provided action as well
+            mSecondsTicker.Elapsed += (s, e) => timerAction.Invoke();
+
+            // Attach provided task action to the task finished event
+            TaskFinished += taskAction;
         }
 
+        /// <summary>
+        /// Starts new task in the session
+        /// </summary>
+        /// <param name="taskTime">The provided task's time we set and count from</param>
         public void StartNextTask(TimeSpan taskTime)
         {
             // Set provided time
@@ -59,6 +71,13 @@ namespace Timeinator.Mobile.Core
             mSecondsTicker.Start();
         }
 
+        #endregion
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Runs every time the timer ticks
+        /// </summary>
         private void SecondsTicker_Elapsed(object sender, ElapsedEventArgs e)
         {
             // Add one second to the session duration

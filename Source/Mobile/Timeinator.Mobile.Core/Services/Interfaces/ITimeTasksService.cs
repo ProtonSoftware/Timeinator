@@ -26,6 +26,6 @@ List<TimeTaskContext> LoadStoredTasks();
         bool SetSessionTime(TimeSpan userTime);
         void ClearSessionTasks();
         List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid);
-        List<TimeTaskContext> StartSession(Action action);
+        List<TimeTaskContext> StartSession(Action timerAction, Action taskAction);
     }
 }

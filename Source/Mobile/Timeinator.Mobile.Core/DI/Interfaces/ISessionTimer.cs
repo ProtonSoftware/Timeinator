@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Timeinator.Mobile.Core
 {
@@ -11,7 +12,7 @@ namespace Timeinator.Mobile.Core
         TimeSpan CurrentTaskTimeLeft { get; }
 
         event Action TaskFinished;
-        void SetupSession(Action action);
+        void SetupSession(Action timerAction, Action taskAction);
         void StartNextTask(TimeSpan taskTime);
     }
 }
