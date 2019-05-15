@@ -10,6 +10,6 @@ namespace Timeinator.Mobile.DataAccess
     {
         IEnumerable<TimeTask> GetSavedTasksForToday();
         void SaveTask(TimeTask entity);
-        void RemoveTasks(List<int> ids);
+        void RemoveTasks(IEnumerable<int> ids);
     }
 }
