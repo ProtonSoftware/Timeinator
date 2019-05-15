@@ -146,10 +146,13 @@ namespace Timeinator.Mobile.Core
         private void InitializeSession()
         {
             // Create an action to fire whenever session timer ticks
-            var action = new Action(UpdateSessionProperties);
+            var updatePropertiesAction = new Action(UpdateSessionProperties);
+
+            // Create an action to fire whenever task finishes
+            var taskFinishAction = new Action(TaskTimeFinishAsync);
 
             // Start new session and get all the tasks
-            var contexts = mTimeTasksService.StartSession(action);
+            var contexts = mTimeTasksService.StartSession(updatePropertiesAction, taskFinishAction);
 
             // At the start of the session, first task in the list is always current one, so set it accordingly
             var currentTask = contexts.ElementAt(0);
@@ -160,6 +163,21 @@ namespace Timeinator.Mobile.Core
 
             // And set the remaining list tasks
             RemainingTasks = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(contexts));
+        }
+
+        /// <summary>
+        /// Called when current task's time runs out
+        /// </summary>
+        private async void TaskTimeFinishAsync()
+        {
+            var popupViewModel = new PopupMessageViewModel
+                (
+                    "Skończył się czas",
+                    "Skończył się czas na zadanie, co chcesz teraz zrobić?",
+                    "Następne zadanie",
+                    "Nie, chcę przerwę"
+                );
+            var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
         }
 
         /// <summary>
