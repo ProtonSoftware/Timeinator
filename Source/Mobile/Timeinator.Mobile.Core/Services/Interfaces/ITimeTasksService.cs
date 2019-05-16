@@ -10,6 +10,7 @@ namespace Timeinator.Mobile.Core
     {
         TimeSpan SessionDuration { get; }
         TimeSpan CurrentTaskTimeLeft { get; }
+        double CurrentTaskCalculatedProgress { get; }
 
         #region Database Interaction
 
@@ -27,5 +28,6 @@ List<TimeTaskContext> LoadStoredTasks();
         void ClearSessionTasks();
         List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid);
         List<TimeTaskContext> StartSession(Action timerAction, Action taskAction);
+        void StartNextTask(TimeTaskContext context);
     }
 }

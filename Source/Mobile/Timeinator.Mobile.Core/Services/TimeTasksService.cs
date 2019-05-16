@@ -27,13 +27,43 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private TimeSpan mSessionTime;
 
+        /// <summary>
+        /// The time that current task in session has assigned
+        /// </summary>
+        private TimeSpan mCurrentTaskTime;
+
         #endregion
 
         #region Public Properties
 
+        /// <summary>
+        /// Gets session duration time from session timer
+        /// </summary>
         public TimeSpan SessionDuration => mSessionTimer.SessionDuration;
 
+        /// <summary>
+        /// Gets time left to complete current task from session timer
+        /// </summary>
         public TimeSpan CurrentTaskTimeLeft => mSessionTimer.CurrentTaskTimeLeft;
+
+        /// <summary>
+        /// Calculates the progress value of current task in session and returns it
+        /// </summary>
+        public double CurrentTaskCalculatedProgress
+        {
+            get
+            {
+                // Calculate the value from current time left and task time
+                var calculatedValue = (mCurrentTaskTime - mSessionTimer.CurrentTaskTimeLeft).TotalSeconds / mCurrentTaskTime.TotalSeconds;
+
+                // Task can't be done in more than 100%
+                if (calculatedValue > 1)
+                    calculatedValue = 1;
+
+                // Return as two-digit rounded value
+                return Math.Round(calculatedValue, 2);
+            }
+        }
 
         #endregion
 
@@ -210,11 +240,24 @@ namespace Timeinator.Mobile.Core
             mSessionTimer.SetupSession(timerAction, taskAction);
 
             // Start first task
-            var firstTaskTime = mCurrentTasks.ElementAt(0).AssignedTime;
-            mSessionTimer.StartNextTask(firstTaskTime);
+            var firstTask = mCurrentTasks.ElementAt(0);
+            StartNextTask(firstTask);
 
             // Return the task session list
             return mCurrentTasks;
+        }
+
+        /// <summary>
+        /// Starts new task in current session
+        /// </summary>
+        /// <param name="context">The task context to start</param>
+        public void StartNextTask(TimeTaskContext context)
+        {
+            // Pass task's time to the timer to start
+            mSessionTimer.StartNextTask(context.AssignedTime);
+
+            // Save it for progress calculations
+            mCurrentTaskTime = context.AssignedTime;
         }
 
         #endregion
