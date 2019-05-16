@@ -138,15 +138,12 @@ namespace Timeinator.Mobile.Core
                 );
             var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
 
-            // If he disagreed
-            if (!userResponse)
+            // If he agreed...
+            if (userResponse)
             {
-                // Don't finish
-                return;
+                // Finish task
+                FinishCurrentTask();
             }
-
-            // Finish task
-            FinishCurrentTask();
         }
 
         #endregion

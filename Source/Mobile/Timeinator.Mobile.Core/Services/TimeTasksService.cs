@@ -253,6 +253,9 @@ namespace Timeinator.Mobile.Core
         /// <param name="context">The task context to start</param>
         public void StartNextTask(TimeTaskContext context)
         {
+            // Add previous' task time to this one
+            context.AssignedTime += mSessionTimer.CurrentTaskTimeLeft;
+
             // Pass task's time to the timer to start
             mSessionTimer.StartNextTask(context.AssignedTime);
 
