@@ -14,7 +14,7 @@ namespace Timeinator.Mobile.Core
 
         #region Database Interaction
 
-List<TimeTaskContext> LoadStoredTasks();
+        List<TimeTaskContext> LoadStoredTasks();
 
         void SaveTask(TimeTaskContext context);
         void RemoveTask(TimeTaskContext context);
@@ -29,5 +29,7 @@ List<TimeTaskContext> LoadStoredTasks();
         List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid);
         List<TimeTaskContext> StartSession(Action timerAction, Action taskAction);
         void StartNextTask(TimeTaskContext context);
+        void StartBreak();
+        void EndBreak();
     }
 }
