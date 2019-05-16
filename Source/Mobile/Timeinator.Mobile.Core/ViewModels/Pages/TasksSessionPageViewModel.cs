@@ -1,5 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -35,7 +36,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Progress of current task shown in the progress bar on UI
         /// </summary>
-        public double TaskProgress { get; set; }
+        public double TaskProgress => mTimeTasksService.CurrentTaskCalculatedProgress;
 
         /// <summary>
         /// Current session length from the start of it
@@ -155,14 +156,7 @@ namespace Timeinator.Mobile.Core
             var contexts = mTimeTasksService.StartSession(updatePropertiesAction, taskFinishAction);
 
             // At the start of the session, first task in the list is always current one, so set it accordingly
-            var currentTask = contexts.ElementAt(0);
-            CurrentTask = mTimeTasksMapper.Map(currentTask);
-
-            // Delete current task from the contexts
-            contexts.Remove(currentTask);
-
-            // And set the remaining list tasks
-            RemainingTasks = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(contexts));
+            SetCurrentTask(0, contexts);
         }
 
         /// <summary>
@@ -190,49 +184,29 @@ namespace Timeinator.Mobile.Core
             RaiseAllPropertiesChanged();
         }
 
+        /// <summary>
+        /// Sets specified task from the list to the current one, also removing it from the remaining list
+        /// </summary>
+        /// <param name="index">The index of the task to set as current</param>
+        /// <param name="contexts">The list of task contexts</param>
+        private void SetCurrentTask(int index, List<TimeTaskContext> contexts)
+        {
+            // Pick the task at specified index
+            var currentTask = contexts.ElementAt(index);
+            
+            // Set it as view model
+            CurrentTask = mTimeTasksMapper.Map(currentTask);
+
+            // Delete current task from the contexts
+            contexts.Remove(currentTask);
+
+            // And set the remaining list tasks
+            RemainingTasks = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(contexts));
+        }
+
         #endregion
     }
     /*
-        #region Private Members
-
-        private readonly TimeTasksMapper mTimeTasksMapper;
-        private readonly ITimeTasksService mTimeTasksService;
-        private readonly IUserTimeHandler mUserTimeHandler;
-        private readonly IUIManager mUIManager;
-
-        /// <summary>
-        /// Stores time loss of CurrentTask
-        /// </summary>
-        private TimeSpan mCurrentTimeLoss;
-
-        /// <summary>
-        /// Stores remaining time of Current Task when paused
-        /// </summary>
-        private TimeSpan mRemainingTaskTime;
-
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        /// The list of time tasks for current session to show in this page
-        /// </summary>
-        public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<TimeTaskViewModel>();
-
-        /// <summary>
-        /// Returns ViewModel of current task
-        /// </summary>
-        public TimeTaskViewModel CurrentTask {
-            get
-            {
-                try { return TaskItems.ElementAt(0); }
-                catch { return null; }
-            }
-        }
-
-        /// <summary>
-        /// Holds current task state
-        /// </summary>
         public bool Paused => !mUserTimeHandler.SessionRunning;
 
         /// <summary>
@@ -272,32 +246,9 @@ namespace Timeinator.Mobile.Core
 
         #endregion
 
-        #region Commands
-
-        public ICommand StopCommand { get; private set; }
-        public ICommand ResumeCommand { get; private set; }
-        public ICommand FinishCommand { get; private set; }
-
-        #endregion
-
-        #region Constructor 
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public TasksSessionPageViewModel(ITimeTasksService timeTasksService, IUserTimeHandler userTimeHandler, IUIManager uiManager, TimeTasksMapper tasksMapper)
+        ///Constructor 
+        public TasksSessionPageViewModel()
         {
-            // Create commands
-            StopCommand = new RelayCommand(Stop);
-            ResumeCommand = new RelayCommand(Resume);
-            FinishCommand = new RelayCommand(async () => await FinishAsync());
-
-            // Get injected DI services
-            mTimeTasksService = timeTasksService;
-            mUserTimeHandler = userTimeHandler;
-            mTimeTasksMapper = tasksMapper;
-            mUIManager = uiManager;
-
             mUserTimeHandler.Updated += () => { LoadTaskList(); RefreshProperties(); };
             mUserTimeHandler.TimesUp += async () => await mUIManager.ExecuteOnMainThread(async () => await UserTimeHandler_TimesUpAsync());
             RealTimer.Elapsed += RealTimer_Elapsed;  
@@ -305,8 +256,6 @@ namespace Timeinator.Mobile.Core
             LoadTaskList();
             RealTimer.Start();
         }
-
-        #endregion
 
         private void Stop()
         {
@@ -336,9 +285,7 @@ namespace Timeinator.Mobile.Core
             RaisePropertyChanged(nameof(TaskItems));
         }
 
-        /// <summary>
         /// Refreshes properties for UI
-        /// </summary>
         private void RealTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (CurrentTask == null)
@@ -360,18 +307,8 @@ namespace Timeinator.Mobile.Core
             RaisePropertyChanged(nameof(Paused));
         }
 
-        /// <summary>
-        /// Prompts dialog whether to remove current task and does it
-        /// </summary>
         private async Task FinishAsync()
         {
-            var popupViewModel = new PopupMessageViewModel
-                (
-                    "Koniec zadania", 
-                    "Na pewno chcesz zakończyć zadanie?",
-                    "Tak", 
-                    "Nie"
-                );
             var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
             if (userResponse)
             {
@@ -380,19 +317,8 @@ namespace Timeinator.Mobile.Core
                 LoadTaskList();
             }
         }
-
-        /// <summary>
-        /// Fired when the current task has run out of time 
-        /// </summary>
         private async Task UserTimeHandler_TimesUpAsync()
         {
-            var popupViewModel = new PopupMessageViewModel
-                (
-                    "Skończył się czas", 
-                    "Skończył się czas na zadanie, co chcesz teraz zrobić?",
-                    "Następne zadanie", 
-                    "Nie, chcę przerwę"
-                );
             var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
             mUserTimeHandler.FinishTask();
             TaskProgress = 1;
@@ -401,9 +327,6 @@ namespace Timeinator.Mobile.Core
                 StopCommand.Execute(null);
         }
         
-        /// <summary>
-        /// Checks if to exit to main page or start next task
-        /// </summary>
         private void ContinueUserTasks()
         {
             mUserTimeHandler.CleanTasks();
@@ -411,20 +334,6 @@ namespace Timeinator.Mobile.Core
             LoadTaskList();
             mUserTimeHandler.StartTask();
         }
-
-        /// <summary>
-        /// Loads tasks from the current implementation of <see cref="IUserTimeHandler"/>
-        /// </summary>
-        public void LoadTaskList()
-        {
-            var tasks = mUserTimeHandler.DownloadSession();
-            TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tasks));
-            mCurrentTimeLoss = mUserTimeHandler.TimeLossValue();
-        }
-
-        /// <summary>
-        /// Updates progress on current task
-        /// </summary>
         private void UpdateProgressBar()
         {
             var recent = mUserTimeHandler.RecentProgress;
