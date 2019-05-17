@@ -73,7 +73,12 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The command to finish current task and go for the next one
         /// </summary>
-        public ICommand FinishCommand { get; private set; }
+        public ICommand FinishTaskCommand { get; private set; }
+
+        /// <summary>
+        /// The command to end current session
+        /// </summary>
+        public ICommand EndSessionCommand { get; private set; }
 
         #endregion
 
@@ -87,7 +92,8 @@ namespace Timeinator.Mobile.Core
             // Create commands
             PauseCommand = new RelayCommand(PauseTask);
             ResumeCommand = new RelayCommand(ResumeTask);
-            FinishCommand = new RelayCommand(FinishTaskAsync);
+            FinishTaskCommand = new RelayCommand(FinishTaskAsync);
+            EndSessionCommand = new RelayCommand(EndSessionAsync);
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
@@ -132,7 +138,7 @@ namespace Timeinator.Mobile.Core
             var popupViewModel = new PopupMessageViewModel
                 (
                     "Koniec zadania",
-                    "Na pewno chcesz zakończyć zadanie?",
+                    "Na pewno chcesz zakończyć aktualne zadanie?",
                     "Tak",
                     "Nie"
                 );
@@ -143,6 +149,33 @@ namespace Timeinator.Mobile.Core
             {
                 // Finish task
                 FinishCurrentTask();
+            }
+        }
+
+        /// <summary>
+        /// Ends current user session, if he decides to
+        /// </summary>
+        private async void EndSessionAsync()
+        {
+            // Ask the user if he's certain to end the session
+            var popupViewModel = new PopupMessageViewModel
+                (
+                    "Koniec sesji",
+                    "Na pewno chcesz zakończyć sesję?",
+                    "Tak",
+                    "Nie"
+                );
+            var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
+
+            // If he agreed...
+            if (userResponse)
+            {
+                // Save current task as finished one
+                var finishedTask = mTimeTasksMapper.ReverseMap(CurrentTask);
+                mFinishedTasks.Add(finishedTask);
+
+                // End the session
+                EndSession();
             }
         }
 
