@@ -10,9 +10,13 @@ namespace Timeinator.Mobile.Core
     {
         TimeSpan SessionDuration { get; }
         TimeSpan CurrentTaskTimeLeft { get; }
+        TimeSpan CurrentBreakDuration { get; }
 
         event Action TaskFinished;
+
         void SetupSession(Action timerAction, Action taskAction);
         void StartNextTask(TimeSpan taskTime);
+        void StartBreak();
+        void EndBreak();
     }
 }
