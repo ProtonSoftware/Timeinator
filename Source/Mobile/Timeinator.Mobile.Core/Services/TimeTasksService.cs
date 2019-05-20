@@ -47,6 +47,11 @@ namespace Timeinator.Mobile.Core
         public TimeSpan CurrentTaskTimeLeft => mSessionTimer.CurrentTaskTimeLeft;
 
         /// <summary>
+        /// Gets current break duration from session timer
+        /// </summary>
+        public TimeSpan CurrentBreakDuration => mSessionTimer.CurrentBreakDuration;
+
+        /// <summary>
         /// Calculates the progress value of current task in session and returns it
         /// </summary>
         public double CurrentTaskCalculatedProgress
@@ -262,6 +267,16 @@ namespace Timeinator.Mobile.Core
             // Save it for progress calculations
             mCurrentTaskTime = context.AssignedTime;
         }
+
+        /// <summary>
+        /// Starts the break time
+        /// </summary>
+        public void StartBreak() => mSessionTimer.StartBreak();
+
+        /// <summary>
+        /// Ends the break time
+        /// </summary>
+        public void EndBreak() => mSessionTimer.EndBreak();
 
         #endregion
 

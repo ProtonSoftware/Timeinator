@@ -14,7 +14,12 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The timer that elapses every second so everything related to time can update everytime it ticks
         /// </summary>
-        public Timer mSecondsTicker;
+        private Timer mSecondsTicker;
+
+        /// <summary>
+        /// Indicates if break-mode is on or off
+        /// </summary>
+        private bool mIsOnBreak;
 
         #endregion
 
@@ -30,6 +35,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public TimeSpan CurrentTaskTimeLeft { get; private set; }
 
+        /// <summary>
+        /// The duration of current break
+        /// </summary>
+        public TimeSpan CurrentBreakDuration { get; set; }
+
         #endregion
 
         #region Public Events
@@ -43,6 +53,11 @@ namespace Timeinator.Mobile.Core
 
         #region Interface Implementation
 
+        /// <summary>
+        /// Setups new session in the timer
+        /// </summary>
+        /// <param name="timerAction">The action to fire along with timer ticks</param>
+        /// <param name="taskAction">The action to fire when task's time finishes</param>
         public void SetupSession(Action timerAction, Action taskAction)
         {
             // Timer ticks every second
@@ -71,6 +86,27 @@ namespace Timeinator.Mobile.Core
             mSecondsTicker.Start();
         }
 
+        /// <summary>
+        /// Starts the break time on current task
+        /// </summary>
+        public void StartBreak()
+        {
+            // Erase any previous break time 
+            CurrentBreakDuration = new TimeSpan(0);
+
+            // Set the indicator
+            mIsOnBreak = true;
+        }
+
+        /// <summary>
+        /// Ends the break time
+        /// </summary>
+        public void EndBreak()
+        {
+            // Set the indicator
+            mIsOnBreak = false;
+        }
+
         #endregion
 
         #region Private Helpers
@@ -82,6 +118,16 @@ namespace Timeinator.Mobile.Core
         {
             // Add one second to the session duration
             SessionDuration += TimeSpan.FromSeconds(1);
+
+            // If break time is on...
+            if (mIsOnBreak)
+            {
+                // Add one second to the break duration
+                CurrentBreakDuration += TimeSpan.FromSeconds(1);
+
+                // Don't do anything else while on break
+                return;
+            }
 
             // Substract one second from the task time
             CurrentTaskTimeLeft -= TimeSpan.FromSeconds(1);

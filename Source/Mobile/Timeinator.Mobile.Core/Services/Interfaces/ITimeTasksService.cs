@@ -10,6 +10,7 @@ namespace Timeinator.Mobile.Core
     {
         TimeSpan SessionDuration { get; }
         TimeSpan CurrentTaskTimeLeft { get; }
+        TimeSpan CurrentBreakDuration { get; }
         double CurrentTaskCalculatedProgress { get; }
 
         #region Database Interaction

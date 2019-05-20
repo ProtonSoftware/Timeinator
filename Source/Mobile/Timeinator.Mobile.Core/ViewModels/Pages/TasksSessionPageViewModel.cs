@@ -54,7 +54,12 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public TimeSpan TimeRemaining => mTimeTasksService.CurrentTaskTimeLeft;
 
-        public bool Paused => false;
+        /// <summary>
+        /// Current break duration, displayed only when break indicator is true
+        /// </summary>
+        public TimeSpan BreakDuration => mTimeTasksService.CurrentBreakDuration;
+
+        public bool Paused { get; set; }
 
         #endregion
 
@@ -118,6 +123,9 @@ namespace Timeinator.Mobile.Core
 
             // Start the break
             mTimeTasksService.StartBreak();
+
+            // Set the indicator
+            Paused = true;
         }
 
         /// <summary>
@@ -127,6 +135,9 @@ namespace Timeinator.Mobile.Core
         {
             // Stop the break
             mTimeTasksService.EndBreak();
+
+            // Set the indicator
+            Paused = false;
         }
 
         /// <summary>
