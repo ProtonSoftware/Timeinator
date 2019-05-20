@@ -131,7 +131,7 @@ namespace Timeinator.Mobile.Core
             mUIManager = uiManager;
 
             mUserTimeHandler.Updated += () => { LoadTaskList(); RefreshProperties(); };
-            mUserTimeHandler.TimesUp += async () => await mUIManager.ExecuteOnMainThread(async () => await UserTimeHandler_TimesUpAsync());
+            mUserTimeHandler.TimesUp += () => { RealTimer.Stop(); DI.Application.GoToPageAsync(ApplicationPage.Alarm); };
             RealTimer.Elapsed += RealTimer_Elapsed;  
 
             LoadTaskList();
@@ -213,26 +213,6 @@ namespace Timeinator.Mobile.Core
             }
         }
 
-        /// <summary>
-        /// Fired when the current task has run out of time 
-        /// </summary>
-        private async Task UserTimeHandler_TimesUpAsync()
-        {
-            var popupViewModel = new PopupMessageViewModel
-                (
-                    "Skończył się czas", 
-                    "Skończył się czas na zadanie, co chcesz teraz zrobić?",
-                    "Następne zadanie", 
-                    "Nie, chcę przerwę"
-                );
-            var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
-            mUserTimeHandler.FinishTask();
-            TaskProgress = 1;
-            ContinueUserTasks();
-            if (!userResponse && CurrentTask != null)
-                StopCommand.Execute(null);
-        }
-        
         /// <summary>
         /// Checks if to exit to main page or start next task
         /// </summary>

@@ -71,6 +71,8 @@ namespace Timeinator.Mobile.Core
         /// <param name="sessionTasks">Session tasks sorted by OrderId</param>
         public virtual void StartTimeHandler(List<TimeTaskContext> sessionTasks)
         {
+            if (mSessionService != null)
+                mSessionService.Kill();
             StartService();
             Updated = () => { };
             mSessionService.Request += SessionService_Request;

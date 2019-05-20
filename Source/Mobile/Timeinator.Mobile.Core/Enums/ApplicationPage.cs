@@ -43,6 +43,11 @@
         /// <summary>
         /// About page
         /// </summary>
-        About
+        About,
+
+        /// <summary>
+        /// Alarm page
+        /// </summary>
+        Alarm
     }
 }
