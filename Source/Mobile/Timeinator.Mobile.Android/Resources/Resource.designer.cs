@@ -8288,11 +8288,14 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0b0161
 			public const int Base_Widget_Design_TabLayout = 2131427681;
 			
+			// aapt resource value: 0x7f0b018d
+			public const int DangerButton = 2131427725;
+			
 			// aapt resource value: 0x7f0b0187
 			public const int Divider = 2131427719;
 			
-			// aapt resource value: 0x7f0b018d
-			public const int ElevatedCard = 2131427725;
+			// aapt resource value: 0x7f0b018e
+			public const int ElevatedCard = 2131427726;
 			
 			// aapt resource value: 0x7f0b001e
 			public const int Platform_AppCompat = 2131427358;
