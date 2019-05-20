@@ -66,6 +66,7 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Views\AlarmPage.cs" />
     <Compile Include="DIExtensions\AndroidTimeHandler.cs" />
     <Compile Include="Helpers\MovementRecyclerViewItemCallback.cs" />
     <Compile Include="Helpers\SwipeRecyclerViewItemCallback.cs" />
@@ -392,6 +393,11 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\TaskSessionItem.axml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\AlarmPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
