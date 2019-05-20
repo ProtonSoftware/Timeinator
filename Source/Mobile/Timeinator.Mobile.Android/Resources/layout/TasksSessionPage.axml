@@ -182,7 +182,7 @@
             android:layout_weight="1"
             android:layout_marginLeft="4dp"
             android:text="Koniec sesji"
-            android:background="@color/colorPrimary"
+            style="@style/DangerButton"
             local:MvxBind="Click EndSessionCommand" />
 
     </LinearLayout>

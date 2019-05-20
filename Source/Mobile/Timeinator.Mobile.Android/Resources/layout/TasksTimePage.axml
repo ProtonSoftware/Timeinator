@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:layout_marginLeft="4dp"
             android:text="Przerwij"
-            android:background="@color/colorPrimaryDark"
+            style="@style/DangerButton"
             local:MvxBind="Click CancelCommand" />
 
     </LinearLayout>
