@@ -6,5 +6,48 @@
     android:paddingHorizontal="4dp"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
+	<TextView
+		android:id="@+id/title"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:textAlignment="center"
+		android:textSize="@dimen/abc_text_size_display_2_material"
+		android:textColor="@color/colorBlack"
+		android:text="Alarm" />
+
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+        android:elevation="@dimen/abc_action_bar_elevation_material"
+        android:layout_alignParentBottom="true"
+		local:MvxBind="Visibility PausedBoolToVisibility(Paused)"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="4dp"
+            android:text="PRZERWA"
+            style="@style/AccentButton"
+            local:MvxBind="Click StopCommand" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"
+            android:text="NASTĘPNE"
+            android:background="@color/colorPrimary"
+            local:MvxBind="Click FinishCommand" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/bottomNavigation"
+        android:background="@android:color/darker_gray"/>
 
 </RelativeLayout>
