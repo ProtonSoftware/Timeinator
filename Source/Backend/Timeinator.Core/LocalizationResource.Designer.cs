@@ -61,11 +61,119 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid data.
+        /// </summary>
+        public static string InvalidData {
+            get {
+                return ResourceManager.GetString("InvalidData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next task.
+        /// </summary>
+        public static string NextTask {
+            get {
+                return ResourceManager.GetString("NextTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The data provided for the task doesn&apos;t meet requirements..
+        /// </summary>
+        public static string ProvidedTaskDataInvalid {
+            get {
+                return ResourceManager.GetString("ProvidedTaskDataInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to finish the session?.
+        /// </summary>
+        public static string QuestionAreYouSureToFinishSession {
+            get {
+                return ResourceManager.GetString("QuestionAreYouSureToFinishSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to finish current task?.
+        /// </summary>
+        public static string QuestionAreYouSureToFinishTask {
+            get {
+                return ResourceManager.GetString("QuestionAreYouSureToFinishTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time has ran out, what do you want to do?.
+        /// </summary>
+        public static string QuestionTimeRanOutWhatToDo {
+            get {
+                return ResourceManager.GetString("QuestionTimeRanOutWhatToDo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session finished.
+        /// </summary>
+        public static string SessionFinished {
+            get {
+                return ResourceManager.GetString("SessionFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Session.
         /// </summary>
         public static string SessionTitle {
             get {
                 return ResourceManager.GetString("SessionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start break.
+        /// </summary>
+        public static string StartBreak {
+            get {
+                return ResourceManager.GetString("StartBreak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task finished.
+        /// </summary>
+        public static string TaskFinished {
+            get {
+                return ResourceManager.GetString("TaskFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time has ran out.
+        /// </summary>
+        public static string TimeRanOut {
+            get {
+                return ResourceManager.GetString("TimeRanOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

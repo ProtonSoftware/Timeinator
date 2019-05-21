@@ -117,7 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InvalidData" xml:space="preserve">
+    <value>Invalid data</value>
+  </data>
+  <data name="NextTask" xml:space="preserve">
+    <value>Next task</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ProvidedTaskDataInvalid" xml:space="preserve">
+    <value>The data provided for the task doesn't meet requirements.</value>
+  </data>
+  <data name="QuestionAreYouSureToFinishSession" xml:space="preserve">
+    <value>Are you sure you want to finish the session?</value>
+  </data>
+  <data name="QuestionAreYouSureToFinishTask" xml:space="preserve">
+    <value>Are you sure you want to finish current task?</value>
+  </data>
+  <data name="QuestionTimeRanOutWhatToDo" xml:space="preserve">
+    <value>Time has ran out, what do you want to do?</value>
+  </data>
+  <data name="SessionFinished" xml:space="preserve">
+    <value>Session finished</value>
+  </data>
   <data name="SessionTitle" xml:space="preserve">
     <value>Session</value>
+  </data>
+  <data name="StartBreak" xml:space="preserve">
+    <value>Start break</value>
+  </data>
+  <data name="TaskFinished" xml:space="preserve">
+    <value>Task finished</value>
+  </data>
+  <data name="TimeRanOut" xml:space="preserve">
+    <value>Time has ran out</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

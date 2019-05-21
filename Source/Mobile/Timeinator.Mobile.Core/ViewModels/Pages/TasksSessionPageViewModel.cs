@@ -157,10 +157,10 @@ namespace Timeinator.Mobile.Core
             // Ask the user if he's certain to finish the task before it ends
             var popupViewModel = new PopupMessageViewModel
                 (
-                    "Koniec zadania",
-                    "Na pewno chcesz zakończyć aktualne zadanie?",
-                    "Tak",
-                    "Nie"
+                    LocalizationResource.TaskFinished,
+                    LocalizationResource.QuestionAreYouSureToFinishTask,
+                    LocalizationResource.Yes,
+                    LocalizationResource.No
                 );
             var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
 
@@ -180,10 +180,10 @@ namespace Timeinator.Mobile.Core
             // Ask the user if he's certain to end the session
             var popupViewModel = new PopupMessageViewModel
                 (
-                    "Koniec sesji",
-                    "Na pewno chcesz zakończyć sesję?",
-                    "Tak",
-                    "Nie"
+                    LocalizationResource.SessionFinished,
+                    LocalizationResource.QuestionAreYouSureToFinishSession,
+                    LocalizationResource.Yes,
+                    LocalizationResource.No
                 );
             var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
 
@@ -223,10 +223,10 @@ namespace Timeinator.Mobile.Core
             // Ask the user if he wants to finish the task or take a break
             var popupViewModel = new PopupMessageViewModel
                 (
-                    "Skończył się czas",
-                    "Skończył się czas na zadanie, co chcesz teraz zrobić?",
-                    "Następne zadanie",
-                    "Nie, chcę przerwę"
+                    LocalizationResource.TimeRanOut,
+                    LocalizationResource.QuestionTimeRanOutWhatToDo,
+                    LocalizationResource.NextTask,
+                    LocalizationResource.StartBreak
                 );
             var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
 
