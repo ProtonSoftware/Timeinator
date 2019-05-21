@@ -13,7 +13,6 @@
 		android:textAlignment="center"
 		android:textSize="@dimen/abc_text_size_display_2_material"
 		android:textColor="@color/colorBlack"
-        local:MvxBind="Text Strings.GetString(nameof(SessionTitle))"
 		android:text="Sesja" />
     <android.support.design.widget.FloatingActionButton
 		android:layout_width="wrap_content"
@@ -23,7 +22,7 @@
 		android:layout_alignParentRight="true"
 		android:layout_gravity="end|bottom"
 		android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
-		android:layout_marginBottom="36dp"
+		android:layout_marginBottom="72dp"
         local:elevation="@dimen/design_navigation_elevation"
         android:tint="@color/colorWhite"
         android:background="@color/colorAccent"
@@ -37,7 +36,7 @@
 		android:layout_alignParentRight="true"
 		android:layout_gravity="end|bottom"
 		android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
-		android:layout_marginBottom="36dp"
+		android:layout_marginBottom="72dp"
         local:elevation="@dimen/design_navigation_elevation"
         android:tint="@color/colorWhite"
         android:background="@color/colorAccent"
@@ -197,6 +196,36 @@
 		android:layout_above="@id/remainingTimeTitle"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="4dp"
+            local:MvxBind="Visibility PausedBoolToVisibility(Paused, true)"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/breakTimeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-8dp"
+                style="@style/TextLargeBlack"
+                android:textColor="@color/colorWhite"
+                android:layout_centerInParent="true"
+                android:text="Czas trwania przerwy" />
+
+            <TextView
+                android:id="@+id/breakTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextLargeBlack"
+                android:textColor="@color/colorWhite"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/breakTimeTitle"
+                local:MvxBind="Text TimeSpanToText(BreakDuration)"
+                android:text="Czas trwania przerwy" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/taskName"

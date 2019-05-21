@@ -23,8 +23,7 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
-        android:elevation="@dimen/abc_action_bar_elevation_material"
+        style="@style/ElevatedCard"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
@@ -47,6 +46,4 @@
             local:MvxBind="Click CancelCommand" />
 
     </LinearLayout>
-    <View style="@style/Divider"
-          android:layout_above="@id/bottomNavigation" />
 </RelativeLayout>
