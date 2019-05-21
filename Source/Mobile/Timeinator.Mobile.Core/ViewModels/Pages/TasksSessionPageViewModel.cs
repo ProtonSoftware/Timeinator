@@ -59,6 +59,9 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public TimeSpan BreakDuration => mTimeTasksService.CurrentBreakDuration;
 
+        /// <summary>
+        /// Indicates if user has paused current task
+        /// </summary>
         public bool Paused { get; set; }
 
         #endregion
@@ -126,6 +129,9 @@ namespace Timeinator.Mobile.Core
 
             // Set the indicator
             Paused = true;
+
+            // Update properties immediately instead of waiting for the timer for better UX
+            UpdateSessionProperties();
         }
 
         /// <summary>
@@ -138,6 +144,9 @@ namespace Timeinator.Mobile.Core
 
             // Set the indicator
             Paused = false;
+
+            // Update properties immediately instead of waiting for the timer for better UX
+            UpdateSessionProperties();
         }
 
         /// <summary>
