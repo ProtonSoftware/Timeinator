@@ -199,14 +199,8 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void InitializeSession()
         {
-            // Create an action to fire whenever session timer ticks
-            var updatePropertiesAction = new Action(UpdateSessionProperties);
-
-            // Create an action to fire whenever task finishes
-            var taskFinishAction = new Action(TaskTimeFinishAsync);
-
-            // Start new session and get all the tasks
-            var contexts = mTimeTasksService.StartSession(updatePropertiesAction, taskFinishAction);
+            // Start new session providing required actions and get all the tasks
+            var contexts = mTimeTasksService.StartSession(UpdateSessionProperties, TaskTimeFinishAsync);
 
             // At the start of the session, first task in the list is always current one, so set it accordingly
             SetCurrentTask(0, mTimeTasksMapper.ListMap(contexts));
@@ -322,102 +316,4 @@ namespace Timeinator.Mobile.Core
 
         #endregion
     }
-    /*
-        public bool Paused => !mUserTimeHandler.SessionRunning;
-        public TimeSpan TimeRemaining => CurrentTask?.AssignedTime != default ? CurrentTask.AssignedTime - mUserTimeHandler.TimePassed : new TimeSpan(0);
-        public TimeSpan CurrentTimeLoss => TimeSpan.FromSeconds(BreakDuration.TotalSeconds * mCurrentTimeLoss.TotalSeconds);
-        public TimeSpan BreakTaskTime { get; set; }
-        public Timer RealTimer { get; set; } = new Timer(1000);
-        public DateTime BreakStart { get; set; }
-        public TimeSpan BreakDuration { get; set; }
-
-        ///Constructor 
-        public TasksSessionPageViewModel()
-        {
-            mUserTimeHandler.Updated += () => { LoadTaskList(); RefreshProperties(); };
-            mUserTimeHandler.TimesUp += async () => await mUIManager.ExecuteOnMainThread(async () => await UserTimeHandler_TimesUpAsync());
-            RealTimer.Elapsed += RealTimer_Elapsed;  
-
-            LoadTaskList();
-            RealTimer.Start();
-        }
-
-        private void Stop()
-        {
-            mUserTimeHandler.StopTask();
-            RefreshProperties();
-        }
-
-        private void Resume()
-        {
-            mUserTimeHandler.RefreshTasksState();
-            mUserTimeHandler.ResumeTask();
-            LoadTaskList();
-            RefreshProperties();
-        }
-
-        private void RefreshProperties()
-        {
-            if (CurrentTask == null)
-                return;
-            if (Paused)
-            {
-                BreakStart = DateTime.Now;
-                mRemainingTaskTime = new TimeSpan(TimeRemaining.Ticks);
-                RaisePropertyChanged(nameof(CurrentTask));
-            }
-            UpdateProgressBar();
-            RaisePropertyChanged(nameof(TaskItems));
-        }
-
-        /// Refreshes properties for UI
-        private void RealTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            if (CurrentTask == null)
-            {
-                RealTimer.Stop();
-                DI.Application.GoToPageAsync(ApplicationPage.TasksList);
-                return;
-            }
-            if (Paused)
-            {
-                BreakDuration = DateTime.Now - BreakStart;
-                BreakTaskTime = mRemainingTaskTime - CurrentTimeLoss;
-            }
-            else
-            {
-                UpdateProgressBar();
-                RaisePropertyChanged(nameof(TimeRemaining));
-            }
-            RaisePropertyChanged(nameof(Paused));
-        }
-
-        private async Task FinishAsync()
-        {
-            var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
-            if (userResponse)
-            {
-                mUserTimeHandler.FinishTask();
-                ContinueUserTasks();
-                LoadTaskList();
-            }
-        }
-        private async Task UserTimeHandler_TimesUpAsync()
-        {
-            var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
-            mUserTimeHandler.FinishTask();
-            TaskProgress = 1;
-            ContinueUserTasks();
-            if (!userResponse && CurrentTask != null)
-                StopCommand.Execute(null);
-        }
-        
-        private void ContinueUserTasks()
-        {
-            mUserTimeHandler.CleanTasks();
-            mUserTimeHandler.RefreshTasksState();
-            LoadTaskList();
-            mUserTimeHandler.StartTask();
-        }
-    */
 }

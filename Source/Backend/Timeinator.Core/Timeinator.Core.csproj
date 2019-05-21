@@ -10,12 +10,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="LocalizationResource - Copy.Designer.cs">
+    <Compile Update="LocalizationResource.Designer.cs">
       <DependentUpon>LocalizationResource.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="LocalizationResource - Copy.Designer.cs">
+    <Compile Update="LocalizationResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>LocalizationResource.resx</DependentUpon>
@@ -25,7 +25,7 @@
   <ItemGroup>
     <EmbeddedResource Update="LocalizationResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LocalizationResource - Copy.Designer.cs</LastGenOutput>
+      <LastGenOutput>LocalizationResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

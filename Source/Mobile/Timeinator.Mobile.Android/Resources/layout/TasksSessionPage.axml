@@ -13,6 +13,7 @@
 		android:textAlignment="center"
 		android:textSize="@dimen/abc_text_size_display_2_material"
 		android:textColor="@color/colorBlack"
+        local:MvxBind="Text Strings.GetString(nameof(SessionTitle))"
 		android:text="Sesja" />
     <android.support.design.widget.FloatingActionButton
 		android:layout_width="wrap_content"
@@ -22,7 +23,7 @@
 		android:layout_alignParentRight="true"
 		android:layout_gravity="end|bottom"
 		android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
-		android:layout_marginBottom="42dp"
+		android:layout_marginBottom="36dp"
         local:elevation="@dimen/design_navigation_elevation"
         android:tint="@color/colorWhite"
         android:background="@color/colorAccent"
@@ -36,7 +37,7 @@
 		android:layout_alignParentRight="true"
 		android:layout_gravity="end|bottom"
 		android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
-		android:layout_marginBottom="42dp"
+		android:layout_marginBottom="36dp"
         local:elevation="@dimen/design_navigation_elevation"
         android:tint="@color/colorWhite"
         android:background="@color/colorAccent"
