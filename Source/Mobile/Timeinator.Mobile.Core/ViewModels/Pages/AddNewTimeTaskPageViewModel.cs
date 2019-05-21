@@ -98,7 +98,7 @@ namespace Timeinator.Mobile.Core
             if (!ValidateUserInput())
             {
                 // Display message to the user
-                mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Niepoprawne dane", "Podane informacje o tasku nie spełniają wymagań."));
+                mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel(LocalizationResource.InvalidData, LocalizationResource.ProvidedTaskDataInvalid));
 
                 // Stay at this page so user can correct his mistakes
                 return;
