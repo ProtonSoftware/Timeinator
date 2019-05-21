@@ -1,12 +1,11 @@
-﻿
-using Android.App;
+﻿using Android.App;
 using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Support.V7.Widget.Helper;
-using MvvmCross.Binding.Extensions;
 using MvvmCross.Droid.Support.V7.RecyclerView;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
+using System;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android
@@ -41,13 +40,14 @@ namespace Timeinator.Mobile.Android
             itemTouchHelper.AttachToRecyclerView(recyclerView);
             recyclerView.SetItemAnimator(new DefaultItemAnimator());
 
-            // When full swipe on item happens...
+            // When full move-over on item happens...
             callback.OnMovement += (posFrom, posTo) =>
             {
-                // Get view model of that item
-                var movedVM = recyclerView.Adapter.ItemsSource.ElementAt(posFrom);
+                // Set provided positons to parameter as tuple
+                var parameter = new Tuple<int, int>(posFrom, posTo);
 
-                // TODO: Make some function in TasksSummaryPageViewModel to call here so the items can be reordered
+                // Reorder the task list
+                viewModel.ReorderCommand.Execute(parameter);
             };
         }
     }

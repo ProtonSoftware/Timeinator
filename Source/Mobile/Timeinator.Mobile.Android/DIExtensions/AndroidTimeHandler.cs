@@ -1,6 +1,5 @@
 ﻿using Android.App;
 using Android.Content;
-using System.Threading.Tasks;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android

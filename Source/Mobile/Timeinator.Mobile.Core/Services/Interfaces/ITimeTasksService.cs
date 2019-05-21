@@ -8,17 +8,29 @@ namespace Timeinator.Mobile.Core
     /// </summary>
     public interface ITimeTasksService
     {
-        List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid);
+        TimeSpan SessionDuration { get; }
+        TimeSpan CurrentTaskTimeLeft { get; }
+        TimeSpan CurrentBreakDuration { get; }
+        double CurrentTaskCalculatedProgress { get; }
+
+        #region Database Interaction
+
         List<TimeTaskContext> LoadStoredTasks();
-        void ConveyTasksToManager(List<TimeTaskContext> tasks, TimeSpan userTime);
-        void ConveyTasksToManager(List<TimeTaskContext> tasks);
-        void ConveyTimeToManager(TimeSpan userTime);
-        TimeSpan GetMinimumTime();
-        List<TimeTaskContext> GetCalculatedTasksFromManager();
-        void ConveyTasksToTimeHandler(List<TimeTaskContext> tasks);
 
         void SaveTask(TimeTaskContext context);
         void RemoveTask(TimeTaskContext context);
         void RemoveFinishedTasks(List<TimeTaskContext> contexts);
+
+        #endregion
+
+        List<TimeTaskContext> GetCalculatedTasks();
+        void SetSessionTasks(List<TimeTaskContext> contexts);
+        bool SetSessionTime(TimeSpan userTime);
+        void ClearSessionTasks();
+        List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid);
+        List<TimeTaskContext> StartSession(Action timerAction, Action taskAction);
+        void StartNextTask(TimeTaskContext context);
+        void StartBreak();
+        void EndBreak();
     }
 }

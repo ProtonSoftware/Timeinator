@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:layout_marginRight="4dp"
             android:text="Start"
-            android:background="@color/colorAccent"
+            style="@style/AccentButton"
             local:MvxBind="Click StartTasksCommand" />
 
         <Button
@@ -44,7 +44,7 @@
             android:layout_weight="1"
             android:layout_marginLeft="4dp"
             android:text="Przerwij"
-            android:background="@color/colorPrimary"
+            style="@style/DangerButton"
             local:MvxBind="Click CancelCommand" />
 
     </LinearLayout>

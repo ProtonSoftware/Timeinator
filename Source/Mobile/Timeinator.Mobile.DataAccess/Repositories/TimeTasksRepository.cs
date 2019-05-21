@@ -37,10 +37,10 @@ namespace Timeinator.Mobile.DataAccess
         /// Gets every time task that is saved in the database
         /// </summary>
         /// <returns>List of time task entities</returns>
-        public List<TimeTask> GetSavedTasksForToday()
+        public IEnumerable<TimeTask> GetSavedTasksForToday()
         {
             // TODO: Logic when we are going for date tasks, for now - get literaly everything
-            var result = DbSet.ToList();
+            var result = GetAll();
 
             return result;
         }
@@ -70,6 +70,7 @@ namespace Timeinator.Mobile.DataAccess
                 dbEntity.Priority = entity.Priority;
                 dbEntity.Progress = entity.Progress;
                 dbEntity.Tag = entity.Tag;
+                dbEntity.AssignedTime = entity.AssignedTime;
                 dbEntity.CreationDate = entity.CreationDate;
             }
 
@@ -81,7 +82,7 @@ namespace Timeinator.Mobile.DataAccess
         /// Removes specified tasks from the database by provided ids
         /// </summary>
         /// <param name="ids">The ids of tasks to remove</param>
-        public void RemoveTasks(List<int> ids)
+        public void RemoveTasks(IEnumerable<int> ids)
         {
             // Get list of every entity associated with provided ids
             var entities = DbSet.Where(x => ids.Contains(x.Id));
