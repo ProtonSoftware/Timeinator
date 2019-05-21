@@ -67,8 +67,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private async Task CalculateSessionAsync()
         {
+            // Try to set user's selected time as session time
+            var result = mTimeTasksService.SetSessionTime(UserTime);
+
             // If user's selected time is not enough to start a session...
-            if (UserTime < mTimeTasksService.GetMinimumTime())
+            if (!result)
             {
                 // Show user an error
                 await mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Wybrany czas jest niewystarczający, by zacząc sesję!"));
@@ -77,10 +80,7 @@ namespace Timeinator.Mobile.Core
                 return;
             }
 
-            // Pass user free time to the service so it conveys it to the manager
-            mTimeTasksService.ConveyTimeToManager(UserTime);
-
-            // Go to next page which shows a summary of calculated user session
+            // Otherwise, go to next page which shows a summary of calculated user session
             await DI.Application.GoToPageAsync(ApplicationPage.TasksSummary);
         }
 
@@ -89,7 +89,8 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void Cancel()
         {
-            // TODO: Clear task list in service when logic is done
+            // Clear task list in service
+            mTimeTasksService.ClearSessionTasks();
 
             // Go back to task list
             mUIManager.GoBackToPreviousPage(this);

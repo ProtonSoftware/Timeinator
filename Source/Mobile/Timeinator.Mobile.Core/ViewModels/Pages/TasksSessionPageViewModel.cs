@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MvvmCross.ViewModels;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Input;
 using Timeinator.Core;
-using MvvmCross.ViewModels;
 
 namespace Timeinator.Mobile.Core
 {
@@ -18,97 +18,75 @@ namespace Timeinator.Mobile.Core
 
         private readonly TimeTasksMapper mTimeTasksMapper;
         private readonly ITimeTasksService mTimeTasksService;
-        private readonly IUserTimeHandler mUserTimeHandler;
         private readonly IUIManager mUIManager;
 
         /// <summary>
-        /// Stores time loss of CurrentTask
+        /// Stores the list of already finished tasks in this session
         /// </summary>
-        private TimeSpan mCurrentTimeLoss;
-
-        /// <summary>
-        /// Stores remaining time of Current Task when paused
-        /// </summary>
-        private TimeSpan mRemainingTaskTime;
+        private List<TimeTaskContext> mFinishedTasks = new List<TimeTaskContext>();
 
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        /// The list of time tasks for current session to show in this page
+        /// The list of time tasks for current session that are not the current one
         /// </summary>
-        public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<TimeTaskViewModel>();
+        public ObservableCollection<TimeTaskViewModel> RemainingTasks { get; set; } = new ObservableCollection<TimeTaskViewModel>();
 
         /// <summary>
-        /// Returns ViewModel of current task
+        /// The current task the user is doing on the session
         /// </summary>
-        public TimeTaskViewModel CurrentTask {
-            get
-            {
-                try { return TaskItems.ElementAt(0); }
-                catch { return null; }
-            }
-        }
+        public TimeTaskViewModel CurrentTask { get; set; }
 
         /// <summary>
-        /// Holds current task state
+        /// Progress of current task shown in the progress bar on UI
         /// </summary>
-        public bool Paused => !mUserTimeHandler.SessionRunning;
-
-        /// <summary>
-        /// Remaining time from handler
-        /// </summary>
-        public TimeSpan TimeRemaining {
-            get
-            {
-                try { return CurrentTask.AssignedTime - mUserTimeHandler.TimePassed; }
-                catch { return default; }
-            }
-        }
-
-        /// <summary>
-        /// Time lost since break start
-        /// </summary>
-        public TimeSpan CurrentTimeLoss => TimeSpan.FromSeconds(BreakDuration.TotalSeconds * mCurrentTimeLoss.TotalSeconds);
-
-        /// <summary>
-        /// Remaining task time displayed on break
-        /// </summary>
-        public TimeSpan BreakTaskTime { get; set; }
-
-        /// <summary>
-        /// Progress of current task
-        /// </summary>
-        public double TaskProgress { get; set; }
-
-        /// <summary>
-        /// Timer refreshing UI every sec
-        /// </summary>
-        public Timer RealTimer { get; set; } = new Timer(1000);
-
-        /// <summary>
-        /// Break started time - time when user paused task
-        /// </summary>
-        public DateTime BreakStart { get; set; }
-
-        /// <summary>
-        /// Current break length in a timespan
-        /// </summary>
-        public TimeSpan BreakDuration { get; set; }
+        public double TaskProgress => mTimeTasksService.CurrentTaskCalculatedProgress;
 
         /// <summary>
         /// Current session length from the start of it
         /// </summary>
-        public TimeSpan SessionDuration { get; set; }
+        public TimeSpan SessionDuration => mTimeTasksService.SessionDuration;
+
+        /// <summary>
+        /// The remaining time left of current task
+        /// </summary>
+        public TimeSpan TimeRemaining => mTimeTasksService.CurrentTaskTimeLeft;
+
+        /// <summary>
+        /// Current break duration, displayed only when break indicator is true
+        /// </summary>
+        public TimeSpan BreakDuration => mTimeTasksService.CurrentBreakDuration;
+
+        /// <summary>
+        /// Indicates if user has paused current task
+        /// </summary>
+        public bool Paused { get; set; }
 
         #endregion
 
         #region Commands
 
-        public ICommand StopCommand { get; private set; }
+        /// <summary>
+        /// The command to pause current task
+        /// </summary>
+        public ICommand PauseCommand { get; private set; }
+
+        /// <summary>
+        /// The command to resume current task, available when task is paused
+        /// </summary>
         public ICommand ResumeCommand { get; private set; }
-        public ICommand FinishCommand { get; private set; }
+
+        /// <summary>
+        /// The command to finish current task and go for the next one
+        /// </summary>
+        public ICommand FinishTaskCommand { get; private set; }
+
+        /// <summary>
+        /// The command to end current session
+        /// </summary>
+        public ICommand EndSessionCommand { get; private set; }
 
         #endregion
 
@@ -117,134 +95,234 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSessionPageViewModel(ITimeTasksService timeTasksService, IUserTimeHandler userTimeHandler, IUIManager uiManager, TimeTasksMapper tasksMapper)
+        public TasksSessionPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
-            StopCommand = new RelayCommand(Stop);
-            ResumeCommand = new RelayCommand(Resume);
-            FinishCommand = new RelayCommand(async () => await FinishAsync());
+            PauseCommand = new RelayCommand(PauseTask);
+            ResumeCommand = new RelayCommand(ResumeTask);
+            FinishTaskCommand = new RelayCommand(FinishTaskAsync);
+            EndSessionCommand = new RelayCommand(EndSessionAsync);
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
-            mUserTimeHandler = userTimeHandler;
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 
-            mUserTimeHandler.Updated += () => { LoadTaskList(); RefreshProperties(); };
-            mUserTimeHandler.TimesUp += () => { RealTimer.Stop(); DI.Application.GoToPageAsync(ApplicationPage.Alarm); };
-            RealTimer.Elapsed += RealTimer_Elapsed;  
-
-            LoadTaskList();
-            RealTimer.Start();
+            // Initialize this session
+            InitializeSession();
         }
 
         #endregion
 
-        private void Stop()
-        {
-            mUserTimeHandler.StopTask();
-            RefreshProperties();
-        }
+        #region Command Methods
 
-        private void Resume()
+        /// <summary>
+        /// Pauses current task and starts the break
+        /// </summary>
+        private void PauseTask()
         {
-            mUserTimeHandler.RefreshTasksState();
-            mUserTimeHandler.ResumeTask();
-            LoadTaskList();
-            RefreshProperties();
-        }
+            // Save current task's progress
+            CurrentTask.AssignedTime = mTimeTasksService.CurrentTaskTimeLeft;
 
-        private void RefreshProperties()
-        {
-            if (Paused)
-            {
-                if (CurrentTask == null)
-                    return;
-                BreakStart = DateTime.Now;
-                mRemainingTaskTime = new TimeSpan(TimeRemaining.Ticks);
-                RaisePropertyChanged(nameof(CurrentTask));
-            }
-            UpdateProgressBar();
-            RaisePropertyChanged(nameof(TaskItems));
+            // Start the break
+            mTimeTasksService.StartBreak();
+
+            // Set the indicator
+            Paused = true;
+
+            // Update properties immediately instead of waiting for the timer for better UX
+            UpdateSessionProperties();
         }
 
         /// <summary>
-        /// Refreshes properties for UI
+        /// Finishes the break and resumes current task
         /// </summary>
-        private void RealTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void ResumeTask()
         {
-            if (CurrentTask == null)
-            {
-                RealTimer.Stop();
-                DI.Application.GoToPageAsync(ApplicationPage.TasksList);
-                return;
-            }
-            if (Paused)
-            {
-                BreakDuration = DateTime.Now - BreakStart;
-                BreakTaskTime = mRemainingTaskTime - CurrentTimeLoss;
-            }
-            else
-            {
-                UpdateProgressBar();
-                RaisePropertyChanged(nameof(TimeRemaining));
-            }
-            RaisePropertyChanged(nameof(Paused));
+            // Stop the break
+            mTimeTasksService.EndBreak();
+
+            // Set the indicator
+            Paused = false;
+
+            // Update properties immediately instead of waiting for the timer for better UX
+            UpdateSessionProperties();
         }
 
         /// <summary>
-        /// Prompts dialog whether to remove current task and does it
+        /// Finishes the current task by removing it and goes to the next one
         /// </summary>
-        private async Task FinishAsync()
+        private async void FinishTaskAsync()
         {
+            // Ask the user if he's certain to finish the task before it ends
             var popupViewModel = new PopupMessageViewModel
                 (
-                    "Koniec zadania", 
-                    "Na pewno chcesz zakończyć zadanie?",
-                    "Tak", 
-                    "Nie"
+                    LocalizationResource.TaskFinished,
+                    LocalizationResource.QuestionAreYouSureToFinishTask,
+                    LocalizationResource.Yes,
+                    LocalizationResource.No
                 );
             var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
+
+            // If he agreed...
             if (userResponse)
             {
-                mUserTimeHandler.FinishTask();
-                ContinueUserTasks();
-                LoadTaskList();
+                // Finish task
+                FinishCurrentTask();
             }
         }
 
         /// <summary>
-        /// Checks if to exit to main page or start next task
+        /// Ends current user session, if he decides to
         /// </summary>
-        private void ContinueUserTasks()
+        private async void EndSessionAsync()
         {
-            mUserTimeHandler.CleanTasks();
-            mUserTimeHandler.RefreshTasksState();
-            LoadTaskList();
-            mUserTimeHandler.StartTask();
+            // Ask the user if he's certain to end the session
+            var popupViewModel = new PopupMessageViewModel
+                (
+                    LocalizationResource.SessionFinished,
+                    LocalizationResource.QuestionAreYouSureToFinishSession,
+                    LocalizationResource.Yes,
+                    LocalizationResource.No
+                );
+            var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
+
+            // If he agreed...
+            if (userResponse)
+            {
+                // Save current task as finished one
+                var finishedTask = mTimeTasksMapper.ReverseMap(CurrentTask);
+                mFinishedTasks.Add(finishedTask);
+
+                // End the session
+                EndSession();
+            }
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Initializes the session on this page
+        /// </summary>
+        private void InitializeSession()
+        {
+            // Start new session providing required actions and get all the tasks
+            var contexts = mTimeTasksService.StartSession(UpdateSessionProperties, TaskTimeFinishAsync);
+
+            // At the start of the session, first task in the list is always current one, so set it accordingly
+            SetCurrentTask(0, mTimeTasksMapper.ListMap(contexts));
         }
 
         /// <summary>
-        /// Loads tasks from the current implementation of <see cref="IUserTimeHandler"/>
+        /// Called when current task's time runs out
         /// </summary>
-        public void LoadTaskList()
+        private async void TaskTimeFinishAsync()
         {
-            var tasks = mUserTimeHandler.DownloadSession();
-            TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tasks));
-            mCurrentTimeLoss = mUserTimeHandler.TimeLossValue();
+            // Ask the user if he wants to finish the task or take a break
+            var popupViewModel = new PopupMessageViewModel
+                (
+                    LocalizationResource.TimeRanOut,
+                    LocalizationResource.QuestionTimeRanOutWhatToDo,
+                    LocalizationResource.NextTask,
+                    LocalizationResource.StartBreak
+                );
+            var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
+
+            // If he agreed...
+            if (userResponse)
+            {
+                // Finish the task
+                FinishCurrentTask();
+            }
+            // Otherwise...
+            else
+            {
+                // Start the break
+                mTimeTasksService.StartBreak();
+            }
         }
 
         /// <summary>
-        /// Updates progress on current task
+        /// Updates every session property with new values
         /// </summary>
-        private void UpdateProgressBar()
+        private void UpdateSessionProperties()
         {
-            if (CurrentTask == null)
-                return;
-            var recent = mUserTimeHandler.RecentProgress;
-            TaskProgress = recent + (1.0 - recent) * (mUserTimeHandler.TimePassed.TotalMilliseconds / CurrentTask.AssignedTime.TotalMilliseconds);
-            if (TaskProgress > 1)
-                TaskProgress = 1;
+            // Simply use the helper to fire every property's change event, for now it works just fine
+            // Potentially in the future, update only required properties, not everything
+            RaiseAllPropertiesChanged();
         }
+
+        /// <summary>
+        /// Finishes current displayed task
+        /// </summary>
+        private void FinishCurrentTask()
+        {
+            // Get finished task's context
+            var finishedTask = mTimeTasksMapper.ReverseMap(CurrentTask);
+
+            // Add finished task to the list for future reference
+            mFinishedTasks.Add(finishedTask);
+
+            // Set next task on the list
+            SetCurrentTask(0, RemainingTasks.ToList());
+
+            // Get new task's context
+            var newTask = mTimeTasksMapper.ReverseMap(CurrentTask);
+
+            // And start it in the session
+            mTimeTasksService.StartNextTask(newTask);
+        }
+
+
+        /// <summary>
+        /// Sets specified task from the list to the current one, also removing it from the remaining list
+        /// </summary>
+        /// <param name="index">The index of the task to set as current</param>
+        /// <param name="viewModels">The list of task view models</param>
+        private void SetCurrentTask(int index, List<TimeTaskViewModel> viewModels)
+        {
+            try
+            {
+                // Set the task at specified index
+                CurrentTask = viewModels.ElementAt(index);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // If we get here, the index is not in the list
+                // So the list is either empty...
+                if (viewModels.Count == 0)
+                {
+                    // Then we finish current session
+                    EndSession();
+                }
+                // Or something went wrong and we tried to start the task that doesn't exist
+                else
+                {
+                    Debugger.Break();
+                }
+            }
+
+            // Delete current task from the list
+            viewModels.Remove(CurrentTask);
+
+            // And set the remaining list tasks
+            RemainingTasks = new ObservableCollection<TimeTaskViewModel>(viewModels);
+        }
+
+        /// <summary>
+        /// Ends this session completely
+        /// </summary>
+        private void EndSession()
+        {
+            // Send finished tasks list for removal
+            mTimeTasksService.RemoveFinishedTasks(mFinishedTasks);
+
+            // Go to first page
+            DI.Application.GoToPageAsync(ApplicationPage.TasksList);
+        }
+
+        #endregion
     }
 }

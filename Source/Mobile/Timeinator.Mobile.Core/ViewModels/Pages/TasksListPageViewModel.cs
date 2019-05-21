@@ -49,6 +49,7 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public ObservableCollection<string> SortItems { get; set; } = new ObservableCollection<string>
         {
+            // TODO: Localization
             "Alfabetycznie",
             "Po dacie dodania"
         };
@@ -134,12 +135,12 @@ namespace Timeinator.Mobile.Core
         public TasksListPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
-            AddNewTaskCommand = new RelayCommand(() => DI.Application.GoToPageAsync(ApplicationPage.AddNewTask));
+            AddNewTaskCommand = new RelayCommand(async () => await DI.Application.GoToPageAsync(ApplicationPage.AddNewTask));
             EditTaskCommand = new RelayParameterizedCommand(EditTask);
             DeleteTaskCommand = new RelayParameterizedCommand(async (param) => await uiManager.ExecuteOnMainThread(async () => await DeleteTaskAsync(param)));
             UserReadyCommand = new RelayCommand(async () => await UserReadyAsync());
-            OpenSettingsCommand = new RelayCommand(() => DI.Application.GoToPageAsync(ApplicationPage.Settings));
-            OpenAboutCommand = new RelayCommand(() => DI.Application.GoToPageAsync(ApplicationPage.About));
+            OpenSettingsCommand = new RelayCommand(async () => await DI.Application.GoToPageAsync(ApplicationPage.Settings));
+            OpenAboutCommand = new RelayCommand(async () => await DI.Application.GoToPageAsync(ApplicationPage.About));
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
@@ -150,7 +151,7 @@ namespace Timeinator.Mobile.Core
             TaskListHelpers.RefreshUITasks += ReloadTasks;
 
             // Initially load every task
-            ReloadTasks();
+            TaskListHelpers.RaiseRefreshEvent();
 
             // Initially, we want to sort tasks alphabetically by default
             SortValue = SortItems[0];
@@ -244,8 +245,8 @@ namespace Timeinator.Mobile.Core
             // Change the page
             await DI.Application.GoToPageAsync(ApplicationPage.TasksTime);
 
-            // Send task contexts to the manager
-            mTimeTasksService.ConveyTasksToManager(taskContexts);
+            // Send task contexts to the service
+            mTimeTasksService.SetSessionTasks(taskContexts);
         }
 
         #endregion

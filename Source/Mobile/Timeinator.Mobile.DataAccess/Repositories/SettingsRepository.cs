@@ -39,13 +39,10 @@ namespace Timeinator.Mobile.DataAccess
         /// Gets all currently saved settings in the database
         /// </summary>
         /// <returns>List of every setting as <see cref="SettingsPropertyInfo"/></returns>
-        public List<SettingsPropertyInfo> GetAllSettings()
+        public IEnumerable<SettingsPropertyInfo> GetAllSettings()
         {
-            // Prepare a list of property infos to return
-            var propertyList = new List<SettingsPropertyInfo>();
-
             // Get all the settings from database
-            var entities = DbSet.ToList();
+            var entities = GetAll();
 
             // For each one...
             foreach (var entity in entities)
@@ -58,12 +55,9 @@ namespace Timeinator.Mobile.DataAccess
                     Value = entity.Value
                 };
 
-                // Add it to the list
-                propertyList.Add(propertyInfo);
+                // Return current one as an element of the whole list
+                yield return propertyInfo;
             }
-
-            // Return every collected setting
-            return propertyList;
         }
 
         /// <summary>

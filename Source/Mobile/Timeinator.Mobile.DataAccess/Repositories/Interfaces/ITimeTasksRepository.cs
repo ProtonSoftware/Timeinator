@@ -8,8 +8,8 @@ namespace Timeinator.Mobile.DataAccess
     /// </summary>
     public interface ITimeTasksRepository : IRepository<TimeTask, int>
     {
-        List<TimeTask> GetSavedTasksForToday();
+        IEnumerable<TimeTask> GetSavedTasksForToday();
         void SaveTask(TimeTask entity);
-        void RemoveTasks(List<int> ids);
+        void RemoveTasks(IEnumerable<int> ids);
     }
 }
