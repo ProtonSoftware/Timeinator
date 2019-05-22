@@ -24,18 +24,18 @@ namespace Timeinator.Mobile.Core
             construction.Services.AddSingleton<ISettingsRepository, SettingsRepository>();
 
             // Bind to a scoped instance of specified models
-            construction.Services.AddScoped<ITimeTasksService, TimeTasksService>();
-            construction.Services.AddScoped<ITimeTasksCalculator, TimeTasksCalculator>();
-            construction.Services.AddScoped<ISessionTimer, SessionTimer>();
+            construction.Services.AddSingleton<ITimeTasksService, TimeTasksService>();
+            construction.Services.AddSingleton<ITimeTasksCalculator, TimeTasksCalculator>();
+            construction.Services.AddSingleton<ISessionTimer, SessionTimer>();
 
             // Inject dependiencies into every page's view model
-            construction.Services.AddTransient<TasksListPageViewModel>();
-            construction.Services.AddTransient<TasksTimePageViewModel>();
-            construction.Services.AddTransient<TasksSummaryPageViewModel>();
-            construction.Services.AddTransient<TasksSessionPageViewModel>();
-            construction.Services.AddTransient<LoginPageViewModel>();
-            construction.Services.AddTransient<AboutPageViewModel>();
-            construction.Services.AddTransient<AddNewTimeTaskPageViewModel>();
+            construction.Services.AddSingleton<TasksListPageViewModel>();
+            construction.Services.AddSingleton<TasksTimePageViewModel>();
+            construction.Services.AddSingleton<TasksSummaryPageViewModel>();
+            construction.Services.AddSingleton<TasksSessionPageViewModel>();
+            construction.Services.AddSingleton<LoginPageViewModel>();
+            construction.Services.AddSingleton<AboutPageViewModel>();
+            construction.Services.AddSingleton<AddNewTimeTaskPageViewModel>();
 
             // Return the construction for chaining
             return construction;
