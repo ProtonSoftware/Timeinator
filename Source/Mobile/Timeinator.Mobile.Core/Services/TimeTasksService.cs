@@ -276,7 +276,15 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Ends the break time
         /// </summary>
-        public void EndBreak() => mSessionTimer.EndBreak();
+        public void EndBreak()
+        {
+            // If we should recalculate provided tasks...
+            if (DI.Settings.RecalculateTasksAfterBreak)
+            {
+                // TODO: Logic here
+            }
+            mSessionTimer.EndBreak();
+        }
 
         #endregion
 
