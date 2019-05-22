@@ -213,27 +213,6 @@ namespace Timeinator.Mobile.Core
         }
 
         /// <summary>
-        /// TODO: Use/fix it, for now its not even called anywhere
-        /// Switches orderId of given context
-        /// </summary>
-        /// <param name="contexts">Current list of contexts</param>
-        /// <param name="swap">Context to change order of</param>
-        /// <param name="newid">New position of swap context</param>
-        /// <returns>Reordered list</returns>
-        public List<TimeTaskContext> SwitchOrder(List<TimeTaskContext> contexts, TimeTaskContext swap, int newid)
-        {
-            contexts.Find(x => x == swap).OrderId = newid;
-            contexts = contexts.OrderBy(x => x.OrderId).ToList();
-            var orig = contexts.FindIndex(x => x.OrderId == newid);
-            for (var i = orig; i < contexts.Count; i++)
-            {
-                if (contexts[i] != swap)
-                    contexts[i].OrderId++;
-            }
-            return contexts;
-        }
-
-        /// <summary>
         /// Starts the task session
         /// </summary>
         /// <param name="timerAction">The action that will be attached to the timer elapsed event</param>

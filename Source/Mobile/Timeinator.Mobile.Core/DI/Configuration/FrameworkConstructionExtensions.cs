@@ -27,7 +27,6 @@ namespace Timeinator.Mobile.Core
             construction.Services.AddScoped<ITimeTasksService, TimeTasksService>();
             construction.Services.AddScoped<ITimeTasksCalculator, TimeTasksCalculator>();
             construction.Services.AddScoped<ISessionTimer, SessionTimer>();
-            construction.Services.AddScoped<IUserTimeHandler, UserTimeHandler>();
 
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<TasksListPageViewModel>();
