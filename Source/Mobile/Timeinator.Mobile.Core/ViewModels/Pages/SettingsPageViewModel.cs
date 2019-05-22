@@ -78,6 +78,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public bool HighestPrioritySetAsFirst { get; set; } = true;
 
+        /// <summary>
+        /// If set to true, whenever break ends remaining tasks will be recalculated for remaining time
+        /// </summary>
+        public bool RecalculateTasksAfterBreak { get; set; } = true;
+
         #endregion
 
         #region Constructor
