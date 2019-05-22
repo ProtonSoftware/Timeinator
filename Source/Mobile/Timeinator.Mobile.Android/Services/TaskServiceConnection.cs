@@ -6,9 +6,9 @@ using Timeinator.Mobile.Core;
 namespace Timeinator.Mobile.Android
 {
     /// <summary>
-    /// Handles communication with Service using low-level TaskService and high-level <see cref="ISessionService"/>
+    /// Handles communication with Service using low-level TaskService
     /// </summary>
-    public class TaskServiceConnection : Java.Lang.Object, IServiceConnection, ISessionService
+    public class TaskServiceConnection : Java.Lang.Object, IServiceConnection
     {
         #region Constructor
 
