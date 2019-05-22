@@ -7,7 +7,7 @@ namespace Timeinator.Mobile.Core
     /// <summary>
     /// Manager that handles time within one user session
     /// </summary>
-    public class UserTimeHandler : IUserTimeHandler
+    public class UserTimeHandler
     {
         #region Protected Properties
 
