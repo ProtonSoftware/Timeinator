@@ -26,7 +26,7 @@ namespace Timeinator.Mobile.Android
                     return ACTION_PAUSETASK;
                 case AppAction.ResumeSession:
                     return ACTION_RESUMETASK;
-                case AppAction.Stop:
+                case AppAction.StopSession:
                     return ACTION_STOP;
             }
             return ACTION_NOTHING;
