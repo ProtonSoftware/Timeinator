@@ -16,16 +16,16 @@ namespace Timeinator.Mobile.Android
     [Service]
     public class TaskService : Service
     {
-        public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 1500;
+        public static readonly int NOTIFICATION_ID = 3333, REFRESH_RATE = 1000;
         public static readonly string CHANNEL_ID = "com.gummybearstudio.timeinator";
 
         #region Private members
 
-        private class Timer : CountDownTimer
+        private class NotificationTimer : CountDownTimer
         {
             private TaskService mParent;
 
-            public Timer(long millis, long interval, TaskService parent) : base(millis, interval)
+            public NotificationTimer(long millis, long interval, TaskService parent) : base(millis, interval)
             {
                 mParent = parent;
             }
@@ -38,15 +38,7 @@ namespace Timeinator.Mobile.Android
         private NotificationCompat.Builder NotificationBuilder { get; set; }
         private NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
 
-        private Timer TaskTiming { get; set; } = null;
-
-        #endregion
-
-        #region Constructor
-
-        public TaskService() : base()
-        {
-        }
+        private NotificationTimer TaskTimer { get; set; }
 
         #endregion
 
@@ -61,16 +53,6 @@ namespace Timeinator.Mobile.Android
             StartForeground(NOTIFICATION_ID, GetNotification());
             HandleMessage(intent);
             return StartCommandResult.Sticky;
-        }
-
-        public override void OnCreate()
-        {
-            base.OnCreate();
-        }
-
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
         }
 
         public override IBinder OnBind(Intent intent)
@@ -110,15 +92,13 @@ namespace Timeinator.Mobile.Android
 
             // Set information on Notification
             var timePassed = DateTime.Now.Subtract(ParamStart);
-            var progress = 0;
-            if (ParamTime.TotalMilliseconds > 0)
-                progress = (int)(100 * (ParamRecentProgress + (1.0 - ParamRecentProgress) * (timePassed.TotalMilliseconds / ParamTime.TotalMilliseconds)));
+            var progress = Dna.Framework.Service<ITimeTasksService>().CurrentTaskCalculatedProgress * 100;
             NotificationBuilder.SetContentTitle(ParamName);
 
             // Remove all buttons and add new ones
             NotificationBuilder.MActions.Clear();
             // Task finished notification
-            if (progress >= 100)
+            if (progress == 100)
             {
                 NotificationBuilder.SetContentText("Task finished").SetProgress(0, 0, false);
                 AddButton(4, "Next", IntentActions.ACTION_NEXTTASK);
@@ -126,7 +106,7 @@ namespace Timeinator.Mobile.Android
             // Task in progress notification
             else
             {
-                NotificationBuilder.SetProgress(100, progress, false);
+                NotificationBuilder.SetProgress(100, (int)progress, false);
                 AddButton(1, "Finish", IntentActions.ACTION_NEXTTASK);
                 if (Running)
                 {
@@ -166,7 +146,7 @@ namespace Timeinator.Mobile.Android
 
         #endregion
 
-        public bool Running => TaskTiming != null;
+        public bool Running => TaskTimer != null;
 
         public event Action Elapsed;
         public event Action<AppAction> RequestHandler;
@@ -207,9 +187,10 @@ namespace Timeinator.Mobile.Android
         {
             if (Running)
             {
-                TaskTiming.Cancel();
-                TaskTiming.Dispose();
-                TaskTiming = null;
+                TaskTimer.Cancel();
+                TaskTimer.Dispose();
+                TaskTimer = null;
+                ReNotify();
             }
         }
 
@@ -221,8 +202,8 @@ namespace Timeinator.Mobile.Android
             if (ParamTime.Ticks <= 0)
                 return;
             Stop();
-            TaskTiming = new Timer((long)ParamTime.TotalMilliseconds, REFRESH_RATE, this);
-            TaskTiming.Start();
+            TaskTimer = new NotificationTimer((long)ParamTime.TotalMilliseconds, REFRESH_RATE, this);
+            TaskTimer.Start();
         }
 
         /// <summary>
@@ -231,18 +212,11 @@ namespace Timeinator.Mobile.Android
         public void UpdateTask(string n, DateTime s, TimeSpan t, double p)
         {
             ParamName = n;
-            UpdateTask(s, t, p);
-        }
-
-        /// <summary>
-        /// Update information about current Task
-        /// </summary>
-        public void UpdateTask(DateTime s, TimeSpan t, double p)
-        {
             ParamStart = s;
             ParamTime = t;
             ParamRecentProgress = p;
         }
+
 
         /// <summary>
         /// Execute when task time is over

@@ -59,7 +59,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSummaryPageViewModel(ITimeTasksService timeTasksService, ITimeTasksCalculator TimeTasksCalculator, TimeTasksMapper tasksMapper, IUIManager uiManager)
+        public TasksSummaryPageViewModel(ITimeTasksService timeTasksService, ISessionNotificationService sessionNotificationService, TimeTasksMapper tasksMapper, IUIManager uiManager)
         {
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);
@@ -73,6 +73,9 @@ namespace Timeinator.Mobile.Core
 
             // Load tasks from the manager to this page
             LoadTaskList();
+
+            // Prepare notification service for the up-coming session
+            sessionNotificationService.Setup();
         }
 
         #endregion

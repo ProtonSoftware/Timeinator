@@ -1,7 +1,7 @@
 ﻿namespace Timeinator.Mobile.Core
 {
     /// <summary>
-    /// Actions supported by Main Activity
+    /// Every possible action to do whenever application opens up
     /// </summary>
     public enum AppAction
     {
@@ -33,6 +33,6 @@
         /// <summary>
         /// Stop / cancel session
         /// </summary>
-        Stop
+        StopSession
     }
 }
