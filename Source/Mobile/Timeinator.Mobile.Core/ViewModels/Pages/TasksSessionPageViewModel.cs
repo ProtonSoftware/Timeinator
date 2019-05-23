@@ -18,6 +18,7 @@ namespace Timeinator.Mobile.Core
 
         private readonly TimeTasksMapper mTimeTasksMapper;
         private readonly ITimeTasksService mTimeTasksService;
+        private readonly ISessionNotificationService mSessionNotificationService;
         private readonly IUIManager mUIManager;
 
         /// <summary>
@@ -95,7 +96,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSessionPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
+        public TasksSessionPageViewModel(ITimeTasksService timeTasksService, ISessionNotificationService sessionNotificationService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
             PauseCommand = new RelayCommand(PauseTask);
@@ -105,6 +106,7 @@ namespace Timeinator.Mobile.Core
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
+            mSessionNotificationService = sessionNotificationService;
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 
@@ -123,9 +125,13 @@ namespace Timeinator.Mobile.Core
         {
             // Save current task's progress
             CurrentTask.AssignedTime = mTimeTasksService.CurrentTaskTimeLeft;
+            CurrentTask.Progress = mTimeTasksService.CurrentTaskCalculatedProgress;
 
             // Start the break
             mTimeTasksService.StartBreak();
+
+            // Inform the notification
+            mSessionNotificationService.StopCurrentTask();
 
             // Set the indicator
             Paused = true;
@@ -141,6 +147,9 @@ namespace Timeinator.Mobile.Core
         {
             // Stop the break
             mTimeTasksService.EndBreak();
+
+            // Inform the notification
+            mSessionNotificationService.StartNewTask(CurrentTask);
 
             // Set the indicator
             Paused = false;
@@ -208,11 +217,17 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void InitializeSession()
         {
+            // Initialize notification service
+            mSessionNotificationService.AttachClickCommands(NotificationButtonClick);
+
             // Start new session providing required actions and get all the tasks
             var contexts = mTimeTasksService.StartSession(UpdateSessionProperties, TaskTimeFinishAsync);
 
             // At the start of the session, first task in the list is always current one, so set it accordingly
             SetCurrentTask(0, mTimeTasksMapper.ListMap(contexts));
+
+            // Start the task in the notification as well
+            mSessionNotificationService.StartNewTask(CurrentTask);
         }
 
         /// <summary>
@@ -255,6 +270,35 @@ namespace Timeinator.Mobile.Core
         }
 
         /// <summary>
+        /// Called when user interacted with session notification
+        /// </summary>
+        /// <param name="action">The action user has made</param>
+        private void NotificationButtonClick(AppAction action)
+        {
+            // Fire proper command based on the action
+            // So clicking on the notification has the exact same effect as clicking on the page
+            switch (action)
+            {
+                case AppAction.NextSessionTask:
+                    {
+                        FinishTaskCommand.Execute(null);
+                    } break;
+                case AppAction.PauseSession:
+                    {
+                        PauseCommand.Execute(null);
+                    } break;
+                case AppAction.ResumeSession:
+                    {
+                        ResumeCommand.Execute(null);
+                    } break;
+                case AppAction.StopSession:
+                    {
+                        EndSessionCommand.Execute(null);
+                    } break;
+            }
+        }
+
+        /// <summary>
         /// Finishes current displayed task
         /// </summary>
         private void FinishCurrentTask()
@@ -273,6 +317,9 @@ namespace Timeinator.Mobile.Core
 
             // And start it in the session
             mTimeTasksService.StartNextTask(newTask);
+
+            // Inform the notification
+            mSessionNotificationService.StartNewTask(CurrentTask);
         }
 
 
@@ -318,6 +365,9 @@ namespace Timeinator.Mobile.Core
         {
             // Send finished tasks list for removal
             mTimeTasksService.RemoveFinishedTasks(mFinishedTasks);
+
+            // Remove the notification
+            mSessionNotificationService.RemoveNotification();
 
             // Go to first page
             DI.Application.GoToPageAsync(ApplicationPage.TasksList);
