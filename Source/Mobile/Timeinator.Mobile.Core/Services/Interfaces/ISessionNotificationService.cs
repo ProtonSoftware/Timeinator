@@ -7,7 +7,8 @@ namespace Timeinator.Mobile.Core
     /// </summary>
     public interface ISessionNotificationService
     {
-        void Setup(Action<AppAction> notificationButtonClick);
+        void Setup();
+        void AttachClickCommands(Action<AppAction> notificationButtonClick);
 
         void StartNewTask(TimeTaskViewModel timeTaskViewModel);
         void StopCurrentTask();
