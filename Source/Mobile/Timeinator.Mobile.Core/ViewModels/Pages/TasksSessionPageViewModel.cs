@@ -235,28 +235,12 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private async void TaskTimeFinishAsync()
         {
-            // Ask the user if he wants to finish the task or take a break
-            var popupViewModel = new PopupMessageViewModel
-                (
-                    LocalizationResource.TimeRanOut,
-                    LocalizationResource.QuestionTimeRanOutWhatToDo,
-                    LocalizationResource.NextTask,
-                    LocalizationResource.StartBreak
-                );
-            var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
+            await DI.Application.GoToPageAsync(ApplicationPage.Alarm);
 
             // If he agreed...
-            if (userResponse)
-            {
-                // Finish the task
-                FinishCurrentTask();
-            }
+                //FinishCurrentTask();
             // Otherwise...
-            else
-            {
-                // Start the break
-                mTimeTasksService.StartBreak();
-            }
+                //mTimeTasksService.StartBreak();
         }
 
         /// <summary>

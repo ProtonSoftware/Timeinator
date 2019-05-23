@@ -67,7 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Views\AlarmPage.cs" />
-    <Compile Include="DIExtensions\AndroidTimeHandler.cs" />
     <Compile Include="Helpers\MovementRecyclerViewItemCallback.cs" />
     <Compile Include="Helpers\SwipeRecyclerViewItemCallback.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
