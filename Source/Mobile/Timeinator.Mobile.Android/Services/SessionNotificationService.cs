@@ -34,7 +34,7 @@ namespace Timeinator.Mobile.Android
             // Create new intent for that service
             var intent = new Intent(Application.Context, typeof(TaskService));
 
-            // Setup android stuff
+            // Setup android foreground service
             Application.Context.StartService(intent);
             Application.Context.BindService(intent, mTaskServiceConnection, Bind.WaivePriority);
         }

@@ -16,54 +16,40 @@ namespace Timeinator.Mobile.Core
     {
         #region Private Members
 
-        private readonly IUserTimeHandler mUserTimeHandler;
+        private readonly ITimeTasksService mTimeTasksService;
+        private readonly ISessionNotificationService mSessionNotificationService;
 
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        /// The list of time tasks for current session to show in this page
-        /// </summary>
-        public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<TimeTaskViewModel>();
-
-        /// <summary>
-        /// Returns ViewModel of current task
-        /// </summary>
-        public TimeTaskViewModel CurrentTask {
-            get
-            {
-                try { return TaskItems.ElementAt(0); }
-                catch { return null; }
-            }
-        }
-
-        /// <summary>
-        /// Holds current task state
-        /// </summary>
-        public bool Paused => !mUserTimeHandler.SessionRunning;
-
-        /// <summary>
-        /// Remaining time from handler
-        /// </summary>
-        public TimeSpan TimeRemaining {
-            get
-            {
-                try { return CurrentTask.AssignedTime - mUserTimeHandler.TimePassed; }
-                catch { return default; }
-            }
-        }
-
-        /// <summary>
         /// Current session length from the start of it
         /// </summary>
-        public TimeSpan SessionDuration { get; set; }
+        public TimeSpan SessionDuration => mTimeTasksService.SessionDuration;
+
+        /// <summary>
+        /// The remaining time left of current task
+        /// </summary>
+        public TimeSpan TimeRemaining => mTimeTasksService.CurrentTaskTimeLeft;
+
+        /// <summary>
+        /// Current break duration, displayed only when break indicator is true
+        /// </summary>
+        public TimeSpan BreakDuration => mTimeTasksService.CurrentBreakDuration;
 
         #endregion
 
         #region Commands
 
-        public ICommand StopCommand { get; private set; }
+        /// <summary>
+        /// The command to pause current task
+        /// </summary>
+        public ICommand PauseCommand { get; private set; }
+
+        /// <summary>
+        /// The command to finish current task and go for the next one
+        /// </summary>
         public ICommand FinishCommand { get; private set; }
 
         #endregion
@@ -73,38 +59,39 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AlarmPageViewModel(IUserTimeHandler userTimeHandler)
+        public AlarmPageViewModel(ITimeTasksService timeTasksService, ISessionNotificationService sessionNotificationService)
         {
             // Create commands
-            StopCommand = new RelayCommand(Stop);
-            FinishCommand = new RelayCommand(Finish);
+            PauseCommand = new RelayCommand(PauseTask);
+            FinishCommand = new RelayCommand(FinishTask);
 
             // Get injected DI services
-            mUserTimeHandler = userTimeHandler;
+            mTimeTasksService = timeTasksService;
+            mSessionNotificationService = sessionNotificationService;
         }
 
         #endregion
 
-        private void Stop()
+        #region Command Methods
+
+        /// <summary>
+        /// Pause session after finished task
+        /// </summary>
+        private void PauseTask()
         {
-            Finish();
-            StopCommand.Execute(null);
+            // send pause command to sessionPage
+            DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
         }
 
-        private void Finish()
-        {
-            mUserTimeHandler.FinishTask();
-            ContinueUserTasks();
-        }
-        
         /// <summary>
-        /// Checks if to exit to main page or start next task
+        /// Finish task and go back to SessionPage
         /// </summary>
-        private void ContinueUserTasks()
+        private void FinishTask()
         {
-            mUserTimeHandler.CleanTasks();
-            mUserTimeHandler.RefreshTasksState();
-            mUserTimeHandler.StartTask();
+            // send finish command to sessionPage
+            DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
         }
+
+        #endregion
     }
 }
