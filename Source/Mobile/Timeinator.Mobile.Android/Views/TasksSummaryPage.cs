@@ -2,6 +2,7 @@
 using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Support.V7.Widget.Helper;
+using Dna;
 using MvvmCross.Droid.Support.V7.RecyclerView;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;

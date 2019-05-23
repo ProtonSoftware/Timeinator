@@ -24,8 +24,7 @@ namespace Timeinator.Mobile.Android
         /// <summary>
         /// Setups this service by connecting with the <see cref="TaskServiceConnection"/>
         /// </summary>
-        /// <param name="notificationButtonClick">The action to fire whenever notification interaction happens</param>
-        public void Setup(Action<AppAction> notificationButtonClick)
+        public void Setup()
         {
             // If the service is already connected...
             if (mTaskServiceConnection.IsConnected)
@@ -38,7 +37,14 @@ namespace Timeinator.Mobile.Android
             // Setup android stuff
             Application.Context.StartService(intent);
             Application.Context.BindService(intent, mTaskServiceConnection, Bind.WaivePriority);
+        }
 
+        /// <summary>
+        /// Attaches provided action to the notification interactions
+        /// </summary>
+        /// <param name="notificationButtonClick">The action to fire whenever notification interaction happens</param>
+        public void AttachClickCommands(Action<AppAction> notificationButtonClick)
+        {
             // Attach provided notification interaction action
             mTaskServiceConnection.Request += notificationButtonClick;
         }

@@ -218,7 +218,7 @@ namespace Timeinator.Mobile.Core
         private void InitializeSession()
         {
             // Initialize notification service
-            mSessionNotificationService.Setup(NotificationButtonClick);
+            mSessionNotificationService.AttachClickCommands(NotificationButtonClick);
 
             // Start new session providing required actions and get all the tasks
             var contexts = mTimeTasksService.StartSession(UpdateSessionProperties, TaskTimeFinishAsync);
