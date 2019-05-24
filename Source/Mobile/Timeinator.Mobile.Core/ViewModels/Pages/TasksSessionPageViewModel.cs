@@ -224,7 +224,7 @@ namespace Timeinator.Mobile.Core
             var contexts = mTimeTasksService.StartSession(UpdateSessionProperties, TaskTimeFinishAsync);
 
             // At the start of the session, first task in the list is always current one, so set it accordingly
-            SetCurrentTask(0, mTimeTasksMapper.ListMap(contexts));
+            SetCurrentTask(0, mTimeTasksMapper.ListMap(contexts.WholeList));
 
             // Start the task in the notification as well
             mSessionNotificationService.StartNewTask(CurrentTask);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Timeinator.Core;
 using Timeinator.Mobile.DataAccess;
 
 namespace Timeinator.Mobile.Core
@@ -20,7 +21,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The list of current tasks contexts stored in this manager
         /// </summary>
-        private List<TimeTaskContext> mCurrentTasks;
+        private HeadList<TimeTaskContext> mCurrentTasks;
 
         /// <summary>
         /// The time for the current session
@@ -156,7 +157,7 @@ namespace Timeinator.Mobile.Core
         public void SetSessionTasks(List<TimeTaskContext> contexts)
         {
             // Set our internal list with provided tasks
-            mCurrentTasks = contexts;
+            mCurrentTasks = new HeadList<TimeTaskContext>(contexts);
         }
 
         /// <summary>
@@ -206,7 +207,7 @@ namespace Timeinator.Mobile.Core
             }
 
             // Everything is nice and set, calculate our session
-            var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(mCurrentTasks, mSessionTime);
+            var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(mCurrentTasks.WholeList, mSessionTime);
 
             // Return the tasks
             return calculatedTasks;
@@ -218,13 +219,13 @@ namespace Timeinator.Mobile.Core
         /// <param name="timerAction">The action that will be attached to the timer elapsed event</param>
         /// <param name="taskAction">The action that will be attached to the task finished event</param>
         /// <returns>List of every task in the session we start</returns>
-        public List<TimeTaskContext> StartSession(Action timerAction, Action taskAction)
+        public HeadList<TimeTaskContext> StartSession(Action timerAction, Action taskAction)
         {
             // Setup the timer session
             mSessionTimer.SetupSession(timerAction, taskAction);
 
             // Start first task
-            var firstTask = mCurrentTasks.ElementAt(0);
+            var firstTask = mCurrentTasks.Head;
             StartNextTask(firstTask);
 
             // Return the task session list
