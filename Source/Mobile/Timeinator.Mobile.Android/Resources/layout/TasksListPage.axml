@@ -15,13 +15,6 @@
 		android:textSize="@dimen/abc_text_size_display_2_material"
 		android:textColor="@color/colorBlack"
 		android:text="Twoje zadania" />
-	<mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
-		android:layout_below="@id/title"
-		android:id="@+id/taskList"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		local:MvxItemTemplate="@layout/tasklistitem"
-		local:MvxBind="ItemsSource TaskItems" />
     <android.support.design.widget.FloatingActionButton
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -114,6 +107,14 @@
 			local:MvxBind="ItemsSource SortItems; SelectedItem SortValue"/>
 
     </LinearLayout>
+	<mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
+		android:layout_below="@id/title"
+        android:layout_above="@id/bottomOptions"
+		android:id="@+id/taskList"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		local:MvxItemTemplate="@layout/tasklistitem"
+		local:MvxBind="ItemsSource TaskItems" />
     <!--
     <View style="@style/Divider"
           android:layout_above="@id/bottomOptions" />-->

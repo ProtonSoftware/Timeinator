@@ -32,8 +32,11 @@ namespace Timeinator.Mobile.Android
         {
             base.OnStart();
 
+            // Find main page view
+            var pageView = FindViewById(Resource.Id.addTaskPage);
+
             // Find the priority seekbar
-            var prioritySeekBar = (DiscreteSeekBar)FindViewById(Resource.Id.prioritySeekBar);
+            var prioritySeekBar = (DiscreteSeekBar)pageView.FindViewById(Resource.Id.prioritySeekBar);
             
             // Set initial progress value
             prioritySeekBar.Progress = CurrentViewModel.TaskPrioritySliderValue;
@@ -42,7 +45,7 @@ namespace Timeinator.Mobile.Android
             prioritySeekBar.ProgressChanged += PrioritySeekBar_ProgressChanged;
 
             // Find the time text view
-            var timeText = (TextView)FindViewById(Resource.Id.taskTimeText);
+            var timeText = (TextView)pageView.FindViewById(Resource.Id.taskTimeText);
 
             // Attach on-click event
             timeText.Click += TimeText_Click;
