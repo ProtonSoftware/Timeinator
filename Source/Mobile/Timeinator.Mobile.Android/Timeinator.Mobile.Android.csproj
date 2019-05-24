@@ -152,6 +152,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\layout\AlarmPage.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
     <AndroidResource Include="Resources\layout\LoginPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -393,11 +398,6 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\TaskSessionItem.axml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\AlarmPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
