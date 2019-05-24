@@ -2,6 +2,7 @@
 using Acr.UserDialogs;
 using Android.App;
 using Android.OS;
+using Android.Views;
 using Microsoft.Extensions.DependencyInjection;
 using MvvmCross;
 using MvvmCross.Platforms.Android;
@@ -21,6 +22,8 @@ namespace Timeinator.Mobile.Android
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+
+            Window.AddFlags(WindowManagerFlags.Fullscreen);
             SetContentView(Resource.Layout.LoginPage);
 
             OverridePendingTransition(Resource.Animation.abc_fade_in, Resource.Animation.abc_fade_out);
@@ -53,7 +56,11 @@ namespace Timeinator.Mobile.Android
                     // Change application's page to continue session
                     DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
                 }
-
+                else
+                {
+                    // For now the application doesn't have login features, so simply go to the next page
+                    DI.Application.GoToPageAsync(ApplicationPage.TasksList);
+                }
             });
         }
     }
