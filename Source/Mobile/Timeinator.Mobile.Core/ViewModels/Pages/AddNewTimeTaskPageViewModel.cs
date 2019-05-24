@@ -157,8 +157,7 @@ namespace Timeinator.Mobile.Core
         private bool ValidateUserInput()
         {
             // If task's name is too short
-            if (TaskName.Length < 3
-                ||
+            if (TaskName.Length < 3 ||
             // Or if user selected constant time but didn't provide one
             TaskHasConstantTime && TaskConstantTime == TimeSpan.Zero)
                 // Show an error
