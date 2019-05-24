@@ -104,6 +104,9 @@ namespace Timeinator.Mobile.Core
             FinishTaskCommand = new RelayCommand(FinishTaskAsync);
             EndSessionCommand = new RelayCommand(EndSessionAsync);
 
+            // Connect Service requests
+            mTimeTasksService.OnFinishRequested += FinishCurrentTask;
+
             // Get injected DI services
             mTimeTasksService = timeTasksService;
             mSessionNotificationService = sessionNotificationService;
@@ -236,11 +239,6 @@ namespace Timeinator.Mobile.Core
         private async void TaskTimeFinishAsync()
         {
             await DI.Application.GoToPageAsync(ApplicationPage.Alarm);
-
-            // If he agreed...
-                //FinishCurrentTask();
-            // Otherwise...
-                //mTimeTasksService.StartBreak();
         }
 
         /// <summary>

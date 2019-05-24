@@ -58,7 +58,11 @@ namespace Timeinator.Mobile.Android
         {
             // Check and handle any incoming action
             HandleMessage(intent);
-            Elapsed = () => { };
+            Elapsed = () => {
+                var alarmintent = new Intent(Application.Context, typeof(AlarmPage));
+                alarmintent.SetAction(IntentActions.ACTION_SHOW).AddFlags(ActivityFlags.FromBackground);
+                var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, alarmintent, PendingIntentFlags.Immutable);
+            };
             RequestHandler = (a) => { };
             Binder = new TaskServiceBinder(this);
             return Binder;
@@ -74,7 +78,7 @@ namespace Timeinator.Mobile.Android
         public Notification GetNotification()
         {
             // Prepare Intent opening App
-            var intent = new Intent(Application.Context, typeof(LoginPage)); // LoginPage or SessionPage directly ???
+            var intent = new Intent(Application.Context, typeof(TasksSessionPage));
             intent.SetAction(IntentActions.ACTION_GOSESSION).AddFlags(ActivityFlags.ClearTop);
             var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
 
@@ -215,7 +219,6 @@ namespace Timeinator.Mobile.Android
             ParamTime = t;
             ParamRecentProgress = p;
         }
-
 
         /// <summary>
         /// Execute when task time is over
