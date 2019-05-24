@@ -34,9 +34,14 @@ namespace Timeinator.Mobile.Core
         public string TaskTag { get; set; }
 
         /// <summary>
-        /// Constant unit of time defined by user
+        /// The constant amount of time provided by user for this task
         /// </summary>
         public TimeSpan TaskConstantTime { get; set; }
+
+        /// <summary>
+        /// Indicates if user wants this task to take contant amount of time instead of being calculated
+        /// </summary>
+        public bool TaskHasConstantTime { get; set; }
 
         /// <summary>
         /// Indicates if new task should have important flag
@@ -112,7 +117,7 @@ namespace Timeinator.Mobile.Core
                 Description = TaskDescription,
                 Tag = TaskTag,
                 AssignedTime = TaskConstantTime,
-                HasConstantTime = TaskConstantTime != default,
+                HasConstantTime = TaskHasConstantTime,
                 IsImportant = TaskImportance,
                 IsImmortal = TaskImmortality,
                 Priority = (Priority)TaskPrioritySliderValue,
@@ -152,7 +157,10 @@ namespace Timeinator.Mobile.Core
         private bool ValidateUserInput()
         {
             // If task's name is too short
-            if (TaskName.Length < 1)
+            if (TaskName.Length < 3
+                ||
+            // Or if user selected constant time but didn't provide one
+            TaskHasConstantTime && TaskConstantTime == TimeSpan.Zero)
                 // Show an error
                 return false;
 
