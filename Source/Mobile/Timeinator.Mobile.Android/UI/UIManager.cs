@@ -4,6 +4,8 @@ using MvvmCross.Base;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 using System;
+using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using Timeinator.Mobile.Core;
 
@@ -105,8 +107,8 @@ namespace Timeinator.Mobile.Android
 
         public void ChangeLanguage(string langCode)
         {
-            // TODO: Implement this
-            throw new System.NotImplementedException();
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(langCode);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(langCode);
         }
 
         #endregion

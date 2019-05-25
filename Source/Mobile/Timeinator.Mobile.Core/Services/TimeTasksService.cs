@@ -276,7 +276,7 @@ namespace Timeinator.Mobile.Core
         private void ValidateTasks()
         {
             // Tasks must be set and we need at least one of them
-            if (mCurrentTasks == null || mCurrentTasks.Count < 1)
+            if (mCurrentTasks?.WholeList == null || mCurrentTasks.WholeList.Count < 1)
             {
                 // Throw exception because it should not ever happen in the code, so something needs a fix
                 throw new Exception("Attempted to calculate tasks without providing them.");
@@ -289,7 +289,7 @@ namespace Timeinator.Mobile.Core
         private bool ValidateTime(TimeSpan time)
         {
             // Calculate what time we need for current session
-            var neededTime = mTimeTasksCalculator.CalculateMinimumTimeForTasks(mCurrentTasks);
+            var neededTime = mTimeTasksCalculator.CalculateMinimumTimeForTasks(mCurrentTasks.WholeList);
 
             // Time must be greater or equal to minimum needed
             return time >= neededTime;

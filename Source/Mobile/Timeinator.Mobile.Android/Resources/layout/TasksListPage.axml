@@ -14,6 +14,7 @@
 		android:textAlignment="center"
 		android:textSize="@dimen/abc_text_size_display_2_material"
 		android:textColor="@color/colorBlack"
+        local:MvxBind='Text String("TaskListTitle")'
 		android:text="Twoje zadania" />
     <android.support.design.widget.FloatingActionButton
 		android:layout_width="wrap_content"
