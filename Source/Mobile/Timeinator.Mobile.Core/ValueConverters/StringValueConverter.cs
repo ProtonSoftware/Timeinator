@@ -11,8 +11,11 @@ namespace Timeinator.Mobile.Core
     /// </summary>
     public class StringValueConverter : IMvxValueConverter
     {
-        private static ResourceManager ResourceManager = new ResourceManager(typeof(LocalizationResource));
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => ResourceManager.GetString(value.ToString(), culture);
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var resourceManager = new ResourceManager(typeof(LocalizationResource));
+            return resourceManager.GetString(value.ToString());
+        }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
