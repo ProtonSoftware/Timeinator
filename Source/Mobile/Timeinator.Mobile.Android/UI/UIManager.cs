@@ -7,6 +7,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Timeinator.Core;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android
@@ -105,11 +106,7 @@ namespace Timeinator.Mobile.Android
             await mMainThreadDispatcher.ExecuteOnMainThreadAsync(action);
         }
 
-        public void ChangeLanguage(string langCode)
-        {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo(langCode);
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(langCode);
-        }
+        public void ChangeLanguage(string langCode) => LocalizationResource.Culture = new CultureInfo(langCode);
 
         #endregion
     }
