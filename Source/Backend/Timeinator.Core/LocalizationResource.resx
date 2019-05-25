@@ -120,6 +120,9 @@
   <data name="InvalidData" xml:space="preserve">
     <value>Invalid data</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
   <data name="NextTask" xml:space="preserve">
     <value>Next task</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="TaskFinished" xml:space="preserve">
     <value>Task finished</value>
+  </data>
+  <data name="TaskListTitle" xml:space="preserve">
+    <value>Your tasks</value>
   </data>
   <data name="TimeRanOut" xml:space="preserve">
     <value>Time has ran out</value>

@@ -1,6 +1,7 @@
 ﻿
 using Acr.UserDialogs;
 using Android.App;
+using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,9 @@ namespace Timeinator.Mobile.Android
             SetContentView(Resource.Layout.LoginPage);
 
             OverridePendingTransition(Resource.Animation.abc_fade_in, Resource.Animation.abc_fade_out);
+
+            // Set application's font to Lato
+            _ = Typeface.CreateFromAsset(Application.Context.Assets, "fonts/Lato-Regular.ttf");
 
             // Run configuration on a different thread
             // So UI thread isn't blocked

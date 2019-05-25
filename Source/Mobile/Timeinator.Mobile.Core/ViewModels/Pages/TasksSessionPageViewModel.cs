@@ -322,7 +322,6 @@ namespace Timeinator.Mobile.Core
             mSessionNotificationService.StartNewTask(CurrentTask);
         }
 
-
         /// <summary>
         /// Sets specified task from the list to the current one, also removing it from the remaining list
         /// </summary>

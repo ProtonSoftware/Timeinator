@@ -70,6 +70,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next task.
         /// </summary>
         public static string NextTask {
@@ -156,6 +165,15 @@ namespace Timeinator.Core {
         public static string TaskFinished {
             get {
                 return ResourceManager.GetString("TaskFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your tasks.
+        /// </summary>
+        public static string TaskListTitle {
+            get {
+                return ResourceManager.GetString("TaskListTitle", resourceCulture);
             }
         }
         
