@@ -117,11 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Alphabetical" xml:space="preserve">
+    <value>Alfabetycznie</value>
+  </data>
+  <data name="AreYouCertainToDeleteTaskQuestion" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąc zadanie: {0}?</value>
+  </data>
+  <data name="AttemptToCalculateNoTasks" xml:space="preserve">
+    <value>Próba obliczenia czasu zadań bez ich wcześniejszego dostarczenia</value>
+  </data>
+  <data name="AttemptToCalculateNoTime" xml:space="preserve">
+    <value>Próba obliczenia czasu zadań bez podania czasu sesji</value>
+  </data>
+  <data name="AttemptToReorderTasksNoPosition" xml:space="preserve">
+    <value>Próba zamiany miejsc zadań bez poprawnie podanych pozycji</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>Po dacie dodania</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Błąd</value>
+  </data>
+  <data name="EstimatedSessionTimeSemicolon" xml:space="preserve">
+    <value>Przewidywany czas sesji: </value>
+  </data>
+  <data name="Finish" xml:space="preserve">
+    <value>Zakończ</value>
+  </data>
   <data name="InvalidData" xml:space="preserve">
     <value>Niepoprawne dane</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Ładowanie...</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Następny</value>
   </data>
   <data name="NextTask" xml:space="preserve">
     <value>Następne zadanie</value>
@@ -129,8 +159,20 @@
   <data name="No" xml:space="preserve">
     <value>Nie</value>
   </data>
+  <data name="NoTaskSelected" xml:space="preserve">
+    <value>Nie wybrałeś żadnego taska!</value>
+  </data>
+  <data name="NotEnoughTimeForSession" xml:space="preserve">
+    <value>Wybrany czas jest niewystarczający, by zacząc sesję</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pauza</value>
+  </data>
+  <data name="ProvidedListNotPopulated" xml:space="preserve">
+    <value>Podana lista jest pusta</value>
+  </data>
   <data name="ProvidedTaskDataInvalid" xml:space="preserve">
-    <value>Podane informacje o tasku nie spełniają wymagań.</value>
+    <value>Podane informacje o tasku nie spełniają wymagań</value>
   </data>
   <data name="QuestionAreYouSureToFinishSession" xml:space="preserve">
     <value>Na pewno chcesz zakończyć sesję?</value>
@@ -141,14 +183,23 @@
   <data name="QuestionTimeRanOutWhatToDo" xml:space="preserve">
     <value>Skończył się czas na zadanie, co chcesz teraz zrobić?</value>
   </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Wznów</value>
+  </data>
   <data name="SessionFinished" xml:space="preserve">
     <value>Koniec sesji</value>
+  </data>
+  <data name="SessionPausedWithProgress" xml:space="preserve">
+    <value>Sesja wstrzymana ({0}%)</value>
   </data>
   <data name="SessionTitle" xml:space="preserve">
     <value>Sesja</value>
   </data>
   <data name="StartBreak" xml:space="preserve">
     <value>Nie, chcę przerwę</value>
+  </data>
+  <data name="TaskDeletion" xml:space="preserve">
+    <value>Usuwanie zadania</value>
   </data>
   <data name="TaskFinished" xml:space="preserve">
     <value>Koniec zadania</value>

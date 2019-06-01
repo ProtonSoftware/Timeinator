@@ -203,7 +203,7 @@ namespace Timeinator.Mobile.Core
             if (mSessionTime == default || !ValidateTime(mSessionTime))
             {
                 // Throw exception because it should not ever happen in the code (time should be checked before), so something needs a fix
-                throw new Exception("Attempted to calculate tasks without proper time set.");
+                throw new Exception(LocalizationResource.AttemptToCalculateNoTime);
             }
 
             // Everything is nice and set, calculate our session
@@ -279,7 +279,7 @@ namespace Timeinator.Mobile.Core
             if (mCurrentTasks?.WholeList == null || mCurrentTasks.WholeList.Count < 1)
             {
                 // Throw exception because it should not ever happen in the code, so something needs a fix
-                throw new Exception("Attempted to calculate tasks without providing them.");
+                throw new Exception(LocalizationResource.AttemptToCalculateNoTasks);
             }
         }
 

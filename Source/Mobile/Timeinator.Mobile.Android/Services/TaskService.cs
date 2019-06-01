@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Support.V4.App;
 using System;
+using Timeinator.Core;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android
@@ -87,7 +88,7 @@ namespace Timeinator.Mobile.Android
                     .SetOngoing(true)
                     .SetContentIntent(pendingIntent)
                     .SetSmallIcon(Resource.Mipmap.logo)
-                    .SetTicker("Timeinator Session");
+                    .SetTicker("Timeinator Session"); // TODO: Decide if this should be localized ? (Sesja for polish, session for english)
             }
 
             // Set information on Notification
@@ -100,23 +101,23 @@ namespace Timeinator.Mobile.Android
             // Task finished notification
             if (progress == 100)
             {
-                NotificationBuilder.SetContentText("Task finished").SetProgress(0, 0, false);
-                AddButton(4, "Next", IntentActions.ACTION_NEXTTASK);
+                NotificationBuilder.SetContentText(LocalizationResource.TaskFinished).SetProgress(0, 0, false);
+                AddButton(4, LocalizationResource.Next, IntentActions.ACTION_NEXTTASK);
             }
             // Task in progress notification
             else
             {
                 NotificationBuilder.SetProgress(100, (int)progress, false);
-                AddButton(1, "Finish", IntentActions.ACTION_NEXTTASK);
+                AddButton(1, LocalizationResource.Finish, IntentActions.ACTION_NEXTTASK);
                 if (Running)
                 {
                     NotificationBuilder.SetContentText(string.Format("{0:hh\\:mm\\:ss} ({1}%)", ParamTime - timePassed, progress));
-                    AddButton(2, "Pause", IntentActions.ACTION_PAUSETASK);
+                    AddButton(2, LocalizationResource.Pause, IntentActions.ACTION_PAUSETASK);
                 }
                 else
                 {
-                    NotificationBuilder.SetContentText(string.Format("Session paused ({0}%)", progress));
-                    AddButton(3, "Resume", IntentActions.ACTION_RESUMETASK);
+                    NotificationBuilder.SetContentText(string.Format(LocalizationResource.SessionPausedWithProgress, progress));
+                    AddButton(3, LocalizationResource.Resume, IntentActions.ACTION_RESUMETASK);
                 }
             }
 

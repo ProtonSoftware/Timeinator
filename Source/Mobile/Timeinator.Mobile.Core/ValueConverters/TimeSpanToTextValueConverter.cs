@@ -1,6 +1,7 @@
 ﻿using MvvmCross.Converters;
 using System;
 using System.Globalization;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile.Core
 {
@@ -16,7 +17,7 @@ namespace Timeinator.Mobile.Core
             var timespan = (TimeSpan)value;
 
             if (parameter != null)
-                prependSentence = "Przewidywany czas sesji: ";
+                prependSentence = LocalizationResource.EstimatedSessionTimeSemicolon;
 
             return $"{prependSentence}{timespan.Hours}h {timespan.Minutes}m {timespan.Seconds}s";
         }

@@ -54,7 +54,7 @@ namespace Timeinator.Core
             if (listData.Count == 0)
             {
                 // Throw an exception to inform about bad usage of this helper class
-                throw new Exception("Provided list isn't populated");
+                throw new Exception(LocalizationResource.ProvidedListNotPopulated);
             }
 
             // Set the inside list
