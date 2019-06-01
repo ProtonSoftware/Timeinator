@@ -177,7 +177,6 @@ namespace Timeinator.Mobile.Core
             pageVM.TaskId = taskVM.Id;
             pageVM.TaskName = taskVM.Name;
             pageVM.TaskDescription = taskVM.Description;
-            pageVM.TaskTag = taskVM.Tag;
             pageVM.TaskConstantTime = taskVM.AssignedTime;
             pageVM.TaskImmortality = taskVM.IsImmortal;
             pageVM.TaskPrioritySliderValue = (int)taskVM.Priority;
