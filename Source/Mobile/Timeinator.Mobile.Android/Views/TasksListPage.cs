@@ -13,6 +13,7 @@ using MvvmCross.Platforms.Android.Views;
 using System.Linq;
 using Timeinator.Core;
 using Timeinator.Mobile.Core;
+using static Android.Widget.TextView;
 
 namespace Timeinator.Mobile.Android
 {
@@ -49,12 +50,12 @@ namespace Timeinator.Mobile.Android
                 // Don't do any operations to avoid multiple bindings
                 return;
 
-            textViewSettings.SetText(Resource.String.action_settings);
+            textViewSettings.SetText(LocalizationResource.Settings, BufferType.Normal);
             var imageViewSettings = settingsIcon.FindViewById(Resource.Id.icon) as ImageView;
             imageViewSettings.SetImageResource(Resource.Drawable.ic_settings_black_24dp);
 
             var textViewAbout = aboutIcon.FindViewById(Resource.Id.smallLabel) as TextView;
-            textViewAbout.SetText(Resource.String.action_about);
+            textViewAbout.SetText(LocalizationResource.AboutUs, BufferType.Normal);
             var imageViewAbout = aboutIcon.FindViewById(Resource.Id.icon) as ImageView;
             imageViewAbout.SetImageResource(Resource.Drawable.ic_info_black_24dp);
 

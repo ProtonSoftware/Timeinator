@@ -14,15 +14,5 @@ namespace Timeinator.Mobile.Android
         ScreenOrientation = ScreenOrientation.Portrait)]
     public class SplashScreen : MvxSplashScreenAppCompatActivity<MvxAppCompatSetup<App>, App>
     {
-        public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
-        {
-            base.OnCreate(savedInstanceState, persistentState);
-
-            // Set back main application theme after the application is loaded and splash screen can disappear
-            SetTheme(Resource.Style.AppTheme);
-
-            // Set application's font to Lato
-            //_ = Typeface.CreateFromAsset(Application.Context.Assets, "fonts/Lato-Regular.ttf");
-        }
     }
 }

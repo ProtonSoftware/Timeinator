@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 using Timeinator.Mobile.DataAccess;
 
 namespace Timeinator.Mobile.Core
@@ -32,6 +33,8 @@ namespace Timeinator.Mobile.Core
                 config.CreateMap<TimeTask, TimeTaskContext>()
                       // Map the HasConstantTime flag based on whether entity has specified assigned time or not
                       .ForMember(context => context.HasConstantTime, options => options.MapFrom(ent => ent.AssignedTime != default))
+                      // Map the Tags list from entity's collection
+                      .ForMember(context => context.Tags, options => options.MapFrom(ent => ent.Tags.ToList()))
                       // And the other way around
                       .ReverseMap();
                 // Create TimeTaskContext to TimeTaskViewModel map

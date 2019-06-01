@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Timeinator.Core;
 
 namespace Timeinator.Mobile.Core
@@ -19,12 +20,12 @@ namespace Timeinator.Mobile.Core
         public int OrderId { get; set; }
 
         /// <summary>
-        /// Name of the task
+        /// The name of this task
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Shows priority of the task
+        /// The priority of this task
         /// </summary>
         public Priority Priority { get; set; }
 
@@ -49,7 +50,7 @@ namespace Timeinator.Mobile.Core
         public TimeSpan AssignedTime { get; set; }
 
         /// <summary>
-        /// Whether task has constant user-defined assigned time
+        /// Indicates if this task has constant user-defined assigned time
         /// </summary>
         public bool HasConstantTime { get; set; }
 
@@ -65,8 +66,8 @@ namespace Timeinator.Mobile.Core
         public bool HasStarted => Progress > 0;
 
         /// <summary>
-        /// Tag set by user that helps finding the task
+        /// List of tags set by user that help finding this task
         /// </summary>
-        public string Tag { get; set; }
+        public List<string> Tags { get; set; }
     }
 }

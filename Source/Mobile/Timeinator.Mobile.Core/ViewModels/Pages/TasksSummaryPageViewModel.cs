@@ -120,7 +120,7 @@ namespace Timeinator.Mobile.Core
             if (!(param is Tuple<int, int> positions))
             {
                 // Throw an exception because we explicitely say its Tuple in the code, so something must've gone seriously wrong
-                throw new Exception("Attempted to reorder tasks without providing the positions correctly.");
+                throw new Exception(LocalizationResource.AttemptToReorderTasksNoPosition);
             }
 
             // Extract from and to positions from the tuple
