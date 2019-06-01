@@ -61,20 +61,38 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About us.
+        /// </summary>
+        public static string AboutUs {
+            get {
+                return ResourceManager.GetString("AboutUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new task.
+        /// </summary>
+        public static string AddNewTask {
+            get {
+                return ResourceManager.GetString("AddNewTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alphabetical.
         /// </summary>
         public static string Alphabetical {
             get {
                 return ResourceManager.GetString("Alphabetical", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete task: {0}?.
-        /// </summary>
-        public static string AreYouCertainToDeleteTaskQuestion {
-            get {
-                return ResourceManager.GetString("AreYouCertainToDeleteTaskQuestion", resourceCulture);
             }
         }
         
@@ -106,11 +124,38 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string Begin {
+            get {
+                return ResourceManager.GetString("Begin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created date.
         /// </summary>
         public static string CreatedDate {
             get {
                 return ResourceManager.GetString("CreatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creators.
+        /// </summary>
+        public static string Creators {
+            get {
+                return ResourceManager.GetString("Creators", resourceCulture);
             }
         }
         
@@ -147,6 +192,15 @@ namespace Timeinator.Core {
         public static string InvalidData {
             get {
                 return ResourceManager.GetString("InvalidData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last update.
+        /// </summary>
+        public static string LastUpdate {
+            get {
+                return ResourceManager.GetString("LastUpdate", resourceCulture);
             }
         }
         
@@ -214,6 +268,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Priority.
+        /// </summary>
+        public static string Priority {
+            get {
+                return ResourceManager.GetString("Priority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Provided list isn&apos;t populated.
         /// </summary>
         public static string ProvidedListNotPopulated {
@@ -228,6 +291,15 @@ namespace Timeinator.Core {
         public static string ProvidedTaskDataInvalid {
             get {
                 return ResourceManager.GetString("ProvidedTaskDataInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete task: {0}?.
+        /// </summary>
+        public static string QuestionAreYouCertainToDeleteTask {
+            get {
+                return ResourceManager.GetString("QuestionAreYouCertainToDeleteTask", resourceCulture);
             }
         }
         
@@ -268,6 +340,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Session.
+        /// </summary>
+        public static string Session {
+            get {
+                return ResourceManager.GetString("Session", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Session finished.
         /// </summary>
         public static string SessionFinished {
@@ -286,11 +367,11 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Session.
+        ///   Looks up a localized string similar to Settings.
         /// </summary>
-        public static string SessionTitle {
+        public static string Settings {
             get {
-                return ResourceManager.GetString("SessionTitle", resourceCulture);
+                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
         
@@ -331,11 +412,29 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name of the task.
+        /// </summary>
+        public static string TaskName {
+            get {
+                return ResourceManager.GetString("TaskName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time has ran out.
         /// </summary>
         public static string TimeRanOut {
             get {
                 return ResourceManager.GetString("TimeRanOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
         

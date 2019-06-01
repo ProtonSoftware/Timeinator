@@ -199,7 +199,7 @@ namespace Timeinator.Mobile.Core
             var popupViewModel = new PopupMessageViewModel
                 (
                     LocalizationResource.TaskDeletion,
-                    string.Format(LocalizationResource.AreYouCertainToDeleteTaskQuestion, taskVM.Name),
+                    string.Format(LocalizationResource.QuestionAreYouCertainToDeleteTask, taskVM.Name),
                     LocalizationResource.Yes,
                     LocalizationResource.No
                 );

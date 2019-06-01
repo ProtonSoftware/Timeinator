@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutUs" xml:space="preserve">
+    <value>About us</value>
+  </data>
+  <data name="AddNewTask" xml:space="preserve">
+    <value>Add new task</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
   <data name="Alphabetical" xml:space="preserve">
     <value>Alphabetical</value>
-  </data>
-  <data name="AreYouCertainToDeleteTaskQuestion" xml:space="preserve">
-    <value>Are you sure you want to delete task: {0}?</value>
   </data>
   <data name="AttemptToCalculateNoTasks" xml:space="preserve">
     <value>Attempted to calculate tasks without providing them</value>
@@ -132,8 +138,17 @@
   <data name="AttemptToReorderTasksNoPosition" xml:space="preserve">
     <value>Attempted to reorder tasks without providing the positions correctly</value>
   </data>
+  <data name="Begin" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>Created date</value>
+  </data>
+  <data name="Creators" xml:space="preserve">
+    <value>Creators</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -146,6 +161,9 @@
   </data>
   <data name="InvalidData" xml:space="preserve">
     <value>Invalid data</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Last update</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Loading...</value>
@@ -168,11 +186,17 @@
   <data name="Pause" xml:space="preserve">
     <value>Pause</value>
   </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
   <data name="ProvidedListNotPopulated" xml:space="preserve">
     <value>Provided list isn't populated</value>
   </data>
   <data name="ProvidedTaskDataInvalid" xml:space="preserve">
     <value>The data provided for the task doesn't meet requirements</value>
+  </data>
+  <data name="QuestionAreYouCertainToDeleteTask" xml:space="preserve">
+    <value>Are you sure you want to delete task: {0}?</value>
   </data>
   <data name="QuestionAreYouSureToFinishSession" xml:space="preserve">
     <value>Are you sure you want to finish the session?</value>
@@ -186,14 +210,17 @@
   <data name="Resume" xml:space="preserve">
     <value>Resume</value>
   </data>
+  <data name="Session" xml:space="preserve">
+    <value>Session</value>
+  </data>
   <data name="SessionFinished" xml:space="preserve">
     <value>Session finished</value>
   </data>
   <data name="SessionPausedWithProgress" xml:space="preserve">
     <value>Session paused ({0}%)</value>
   </data>
-  <data name="SessionTitle" xml:space="preserve">
-    <value>Session</value>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="StartBreak" xml:space="preserve">
     <value>Start break</value>
@@ -207,8 +234,14 @@
   <data name="TaskListTitle" xml:space="preserve">
     <value>Your tasks</value>
   </data>
+  <data name="TaskName" xml:space="preserve">
+    <value>Name of the task</value>
+  </data>
   <data name="TimeRanOut" xml:space="preserve">
     <value>Time has ran out</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
