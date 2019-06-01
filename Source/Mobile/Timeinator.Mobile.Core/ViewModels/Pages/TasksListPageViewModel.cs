@@ -49,9 +49,8 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public ObservableCollection<string> SortItems { get; set; } = new ObservableCollection<string>
         {
-            // TODO: Localization
-            "Alfabetycznie",
-            "Po dacie dodania"
+            LocalizationResource.Alphabetical,
+            LocalizationResource.CreatedDate
         };
 
         /// <summary>
@@ -200,10 +199,10 @@ namespace Timeinator.Mobile.Core
             // Ask the user if he is certain
             var popupViewModel = new PopupMessageViewModel
                 (
-                    "Usuwanie zadania",
-                    "Czy na pewno chcesz usunąc zadanie: " + taskVM.Name + "?",
-                    "Tak",
-                    "Nie"
+                    LocalizationResource.TaskDeletion,
+                    string.Format(LocalizationResource.AreYouCertainToDeleteTaskQuestion, taskVM.Name),
+                    LocalizationResource.Yes,
+                    LocalizationResource.No
                 );
             var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
 
@@ -236,7 +235,7 @@ namespace Timeinator.Mobile.Core
             if (taskContexts.Count == 0)
             {
                 // Show user an error
-                await mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Nie wybrałes żadnego taska!"));
+                await mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel(LocalizationResource.Error, LocalizationResource.NoTaskSelected));
 
                 // Don't do any further actions
                 return;

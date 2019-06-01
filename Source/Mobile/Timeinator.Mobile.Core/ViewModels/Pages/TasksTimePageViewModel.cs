@@ -74,7 +74,7 @@ namespace Timeinator.Mobile.Core
             if (!result)
             {
                 // Show user an error
-                await mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Wybrany czas jest niewystarczający, by zacząc sesję!"));
+                await mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel(LocalizationResource.Error, LocalizationResource.NotEnoughTimeForSession));
 
                 // Don't do any further actions
                 return;
