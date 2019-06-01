@@ -1,5 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Timeinator.Core;
 
@@ -28,12 +29,12 @@ namespace Timeinator.Mobile.Core
         public int OrderId { get; set; }
 
         /// <summary>
-        /// Shows priority of the task
+        /// The priority of this task
         /// </summary>
         public Priority Priority { get; set; }
         
         /// <summary>
-        /// Shows progress of the task
+        /// Current progress of this task
         /// </summary>
         public double Progress { get; set; }
 
@@ -43,9 +44,9 @@ namespace Timeinator.Mobile.Core
         public string Description { get; set; }
 
         /// <summary>
-        /// The tag of this task
+        /// The list of tags for this task
         /// </summary>
-        public string Tag { get; set; }
+        public List<string> Tags { get; set; }
 
         /// <summary>
         /// Indicates if this task is important
@@ -53,7 +54,7 @@ namespace Timeinator.Mobile.Core
         public bool IsImportant { get; set; }
 
         /// <summary>
-        /// Shows if task is intended to be done in the next session
+        /// Indicates if task is intended to be done in the next session
         /// </summary>
         public bool IsEnabled { get; set; } = true;
 

@@ -1,5 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 using System;
+using System.Collections.Generic;
 using Timeinator.Core;
 
 namespace Timeinator.Mobile.Core
@@ -35,9 +36,9 @@ namespace Timeinator.Mobile.Core
         public string Description { get; set; }
 
         /// <summary>
-        /// The tag of this task
+        /// The list of tags for this task
         /// </summary>
-        public string Tag { get; set; }
+        public List<string> Tags { get; set; }
 
         /// <summary>
         /// Indicates if this task is important
