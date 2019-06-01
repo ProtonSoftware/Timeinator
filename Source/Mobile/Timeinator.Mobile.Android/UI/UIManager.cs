@@ -4,7 +4,10 @@ using MvvmCross.Base;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 using System;
+using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
+using Timeinator.Core;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android
@@ -103,11 +106,7 @@ namespace Timeinator.Mobile.Android
             await mMainThreadDispatcher.ExecuteOnMainThreadAsync(action);
         }
 
-        public void ChangeLanguage(string langCode)
-        {
-            // TODO: Implement this
-            throw new System.NotImplementedException();
-        }
+        public void ChangeLanguage(string langCode) => LocalizationResource.Culture = new CultureInfo(langCode);
 
         #endregion
     }

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Timeinator.Core;
 
 namespace Timeinator.Mobile.DataAccess
@@ -34,9 +37,30 @@ namespace Timeinator.Mobile.DataAccess
         public string Description { get; set; }
 
         /// <summary>
-        /// Tag set by user that helps finding the task
+        /// The collection of every tag associated with this task
+        /// This collection is not directly stored in the databased, it's rather created based on TagsString
         /// </summary>
-        public string Tag { get; set; }
+        [NotMapped]
+        public ICollection<string> Tags { get; set; }
+
+        /// <summary>
+        /// The collection of tags put together as string to save it in the database
+        /// </summary>
+        public string TagsString
+        {
+            get
+            {
+                if (Tags != null)
+                    return string.Join("\n", Tags);
+                else
+                    return null;
+            }
+            set
+            {
+                if (value != null)
+                    Tags = value.Split('\n').ToList();
+            }
+        }
 
         /// <summary>
         /// Indicates if this task should still be saved after its done

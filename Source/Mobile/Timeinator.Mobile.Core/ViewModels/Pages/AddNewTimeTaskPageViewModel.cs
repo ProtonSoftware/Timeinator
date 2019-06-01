@@ -31,7 +31,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The tag attached to this task
         /// </summary>
-        public string TaskTag { get; set; }
+        public string TaskTag { get; set; } // TODO: Rework it for list-string corelation
 
         /// <summary>
         /// The constant amount of time provided by user for this task
@@ -115,7 +115,6 @@ namespace Timeinator.Mobile.Core
                 Id = TaskId,
                 Name = TaskName,
                 Description = TaskDescription,
-                Tag = TaskTag,
                 AssignedTime = TaskConstantTime,
                 HasConstantTime = TaskHasConstantTime,
                 IsImportant = TaskImportance,
@@ -157,8 +156,7 @@ namespace Timeinator.Mobile.Core
         private bool ValidateUserInput()
         {
             // If task's name is too short
-            if (TaskName.Length < 3
-                ||
+            if (TaskName.Length < 3 ||
             // Or if user selected constant time but didn't provide one
             TaskHasConstantTime && TaskConstantTime == TimeSpan.Zero)
                 // Show an error

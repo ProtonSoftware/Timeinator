@@ -40,7 +40,7 @@ namespace Timeinator.Mobile.Core
         public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<TimeTaskViewModel>();
 
         /// <summary>
-        /// The list of every tag that are associated with current list of tags
+        /// The list of every tag that are associated with current list of tasks
         /// </summary>
         public ObservableCollection<string> TaskTags { get; set; } = new ObservableCollection<string>();
 
@@ -49,9 +49,8 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public ObservableCollection<string> SortItems { get; set; } = new ObservableCollection<string>
         {
-            // TODO: Localization
-            "Alfabetycznie",
-            "Po dacie dodania"
+            LocalizationResource.Alphabetical,
+            LocalizationResource.CreatedDate
         };
 
         /// <summary>
@@ -178,7 +177,6 @@ namespace Timeinator.Mobile.Core
             pageVM.TaskId = taskVM.Id;
             pageVM.TaskName = taskVM.Name;
             pageVM.TaskDescription = taskVM.Description;
-            pageVM.TaskTag = taskVM.Tag;
             pageVM.TaskConstantTime = taskVM.AssignedTime;
             pageVM.TaskImmortality = taskVM.IsImmortal;
             pageVM.TaskPrioritySliderValue = (int)taskVM.Priority;
@@ -200,10 +198,10 @@ namespace Timeinator.Mobile.Core
             // Ask the user if he is certain
             var popupViewModel = new PopupMessageViewModel
                 (
-                    "Usuwanie zadania",
-                    "Czy na pewno chcesz usunąc zadanie: " + taskVM.Name + "?",
-                    "Tak",
-                    "Nie"
+                    LocalizationResource.TaskDeletion,
+                    string.Format(LocalizationResource.QuestionAreYouCertainToDeleteTask, taskVM.Name),
+                    LocalizationResource.Yes,
+                    LocalizationResource.No
                 );
             var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
 
@@ -236,7 +234,7 @@ namespace Timeinator.Mobile.Core
             if (taskContexts.Count == 0)
             {
                 // Show user an error
-                await mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel("Error", "Nie wybrałes żadnego taska!"));
+                await mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel(LocalizationResource.Error, LocalizationResource.NoTaskSelected));
 
                 // Don't do any further actions
                 return;
@@ -254,20 +252,25 @@ namespace Timeinator.Mobile.Core
         #region Private Helpers
 
         /// <summary>
-        /// Looks up in every task for it's tag and lists them as strings
+        /// Looks up in every task for it's tags and lists them as strings
         /// </summary>
         private void GetEveryTaskTags()
         {
             // For every task in the list
             foreach (var task in TaskItems)
             {
-                // Get it's tag
-                var tag = task.Tag;
+                // Skip no-tags tasks
+                if (task.Tags == null || task.Tags.Count < 1)
+                    continue;
 
-                // If its not in the list
-                if (tag != null && !TaskTags.Contains(tag))
-                    // Add it
-                    TaskTags.Add(tag);
+                // For each task's tag...
+                foreach (var tag in task.Tags)
+                {
+                    // If its not in the list
+                    if (!TaskTags.Contains(tag))
+                        // Add it
+                        TaskTags.Add(tag);
+                }
             }
         }
 
