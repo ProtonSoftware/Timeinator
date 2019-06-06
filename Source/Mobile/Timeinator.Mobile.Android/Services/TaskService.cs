@@ -233,9 +233,9 @@ namespace Timeinator.Mobile.Android
         {
             Elapsed.Invoke();
             // Open alarm page with intent
-            var intent = new Intent(Application.Context, typeof(AlarmPage));
-            intent.SetAction(IntentActions.ACTION_TIMEOUT).AddFlags(ActivityFlags.NewTask | ActivityFlags.ClearTop);
-            StartActivity(intent);
+            //var intent = new Intent(Application.Context, typeof(AlarmPage));
+            //intent.SetAction(IntentActions.ACTION_TIMEOUT).AddFlags(ActivityFlags.NewTask | ActivityFlags.ClearTop);
+            //StartActivity(intent);
             ReNotify();
         }
 

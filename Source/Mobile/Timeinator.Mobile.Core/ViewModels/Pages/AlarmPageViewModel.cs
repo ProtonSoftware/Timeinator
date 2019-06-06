@@ -70,8 +70,8 @@ namespace Timeinator.Mobile.Core
 
         public void InitializeButtons(Action pause, Action next)
         {
-            PauseCommand = new RelayCommand(() => { pause.Invoke(); DI.Application.GoToPageAsync(ApplicationPage.TasksSession); });
-            FinishCommand = new RelayCommand(() => { next.Invoke(); DI.Application.GoToPageAsync(ApplicationPage.TasksSession); });
+            PauseCommand = new RelayCommand(() => { pause.Invoke(); DI.Application.GoToPage(ApplicationPage.TasksSession); });
+            FinishCommand = new RelayCommand(() => { next.Invoke(); DI.Application.GoToPage(ApplicationPage.TasksSession); });
         }
 
         #region Command Methods
