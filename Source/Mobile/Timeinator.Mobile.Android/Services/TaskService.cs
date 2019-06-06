@@ -4,6 +4,7 @@ using Android.Media;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V4.App;
+using Dna;
 using System;
 using Timeinator.Core;
 using Timeinator.Mobile.Core;
@@ -97,7 +98,7 @@ namespace Timeinator.Mobile.Android
 
             // Set information on Notification
             var timePassed = DateTime.Now.Subtract(ParamStart);
-            var progress = DI.TimeTaskService.CurrentTaskCalculatedProgress * 100;
+            var progress = Framework.Service<ITimeTasksService>().CurrentTaskCalculatedProgress * 100;
             NotificationBuilder.SetContentTitle(ParamName);
 
             // Remove all buttons and add new ones

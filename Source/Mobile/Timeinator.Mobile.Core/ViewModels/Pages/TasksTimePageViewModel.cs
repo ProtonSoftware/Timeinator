@@ -47,14 +47,14 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksTimePageViewModel(IUIManager uiManager)
+        public TasksTimePageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager)
         {
             // Create commands
             CalculateSessionCommand = new RelayCommand(async () => await CalculateSessionAsync());
             CancelCommand = new RelayCommand(Cancel);
 
             // Get injected DI services
-            mTimeTasksService = DI.TimeTaskService;
+            mTimeTasksService = timeTasksService;
             mUIManager = uiManager;
         }
 
