@@ -17,7 +17,6 @@ namespace Timeinator.Mobile.Core
         #region Private Members
 
         private readonly ITimeTasksService mTimeTasksService;
-        private readonly ISessionNotificationService mSessionNotificationService;
 
         #endregion
 
@@ -59,11 +58,10 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AlarmPageViewModel(ITimeTasksService timeTasksService, ISessionNotificationService sessionNotificationService)
+        public AlarmPageViewModel(ITimeTasksService timeTasksService)
         {
             // Get injected DI services
             mTimeTasksService = timeTasksService;
-            mSessionNotificationService = sessionNotificationService;
         }
 
         #endregion

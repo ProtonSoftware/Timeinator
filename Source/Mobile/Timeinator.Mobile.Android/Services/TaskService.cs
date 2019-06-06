@@ -23,7 +23,7 @@ namespace Timeinator.Mobile.Android
 
         #region Private members
 
-        private class NotificationTimer : CountDownTimer
+        /* private class NotificationTimer : CountDownTimer
         {
             private TaskService mParent;
 
@@ -35,16 +35,16 @@ namespace Timeinator.Mobile.Android
             public override void OnTick(long millisUntilFinished) => mParent.ReNotify();
 
             public override void OnFinish() => mParent.TimeOut();
-        }
+        } */
 
         private NotificationCompat.Builder NotificationBuilder { get; set; }
         private NotificationManager NManager => Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
 
-        private NotificationTimer TaskTimer { get; set; }
+        // private NotificationTimer TaskTimer { get; set; }
 
         #endregion
 
-        #region Public methods
+        #region Public Service
 
         public IBinder Binder { get; private set; }
 
@@ -61,11 +61,11 @@ namespace Timeinator.Mobile.Android
         {
             // Check and handle any incoming action
             HandleMessage(intent);
-            Elapsed = () => {
+            /*Elapsed = () => {
                 var alarmintent = new Intent(Application.Context, typeof(AlarmPage));
                 alarmintent.SetAction(IntentActions.ACTION_SHOW).AddFlags(ActivityFlags.FromBackground);
                 var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, alarmintent, PendingIntentFlags.Immutable);
-            };
+            };*/
             RequestHandler = (a) => { };
             Binder = new TaskServiceBinder(this);
             return Binder;
@@ -103,27 +103,18 @@ namespace Timeinator.Mobile.Android
 
             // Remove all buttons and add new ones
             NotificationBuilder.MActions.Clear();
-            // Task finished notification
-            if (progress == 100)
-            {
-                NotificationBuilder.SetContentText(LocalizationResource.TaskFinished).SetProgress(0, 0, false);
-                AddButton(4, LocalizationResource.Next, IntentActions.ACTION_NEXTTASK);
-            }
             // Task in progress notification
+            NotificationBuilder.SetProgress(100, (int)progress, false);
+            AddButton(1, LocalizationResource.Finish, IntentActions.ACTION_NEXTTASK);
+            if (Running)
+            {
+                NotificationBuilder.SetContentText(string.Format("{0:hh\\:mm\\:ss} ({1}%)", ParamTime - timePassed, progress));
+                AddButton(2, LocalizationResource.Pause, IntentActions.ACTION_PAUSETASK);
+            }
             else
             {
-                NotificationBuilder.SetProgress(100, (int)progress, false);
-                AddButton(1, LocalizationResource.Finish, IntentActions.ACTION_NEXTTASK);
-                if (Running)
-                {
-                    NotificationBuilder.SetContentText(string.Format("{0:hh\\:mm\\:ss} ({1}%)", ParamTime - timePassed, progress));
-                    AddButton(2, LocalizationResource.Pause, IntentActions.ACTION_PAUSETASK);
-                }
-                else
-                {
-                    NotificationBuilder.SetContentText(string.Format(LocalizationResource.SessionPausedWithProgress, progress));
-                    AddButton(3, LocalizationResource.Resume, IntentActions.ACTION_RESUMETASK);
-                }
+                NotificationBuilder.SetContentText(string.Format(LocalizationResource.SessionPausedWithProgress, progress));
+                AddButton(3, LocalizationResource.Resume, IntentActions.ACTION_RESUMETASK);
             }
 
             return NotificationBuilder.Build();
@@ -152,15 +143,21 @@ namespace Timeinator.Mobile.Android
 
         #endregion
 
-        public bool Running => TaskTimer != null;
+        #region Public Properties
 
-        public event Action Elapsed = () => { }, Tick = () => { };
+        public bool Running { get; set; }
+
+        // public event Action Elapsed = () => { }, Tick = () => { };
         public event Action<AppAction> RequestHandler;
 
         public string ParamName { get; set; } = "None";
         public DateTime ParamStart { get; set; } = DateTime.Now;
         public TimeSpan ParamTime { get; set; } = TimeSpan.Zero;
         public double ParamRecentProgress { get; set; } = 0;
+
+        #endregion
+
+        #region Public methods
 
         /// <summary>
         /// Call any action supported by Service
@@ -186,7 +183,7 @@ namespace Timeinator.Mobile.Android
         /// </summary>
         public void ReNotify()
         {
-            Tick.Invoke();
+            // Tick.Invoke();
             NManager.Notify(NOTIFICATION_ID, GetNotification());
         }
 
@@ -195,13 +192,15 @@ namespace Timeinator.Mobile.Android
         /// </summary>
         public void Stop()
         {
+            Running = false;
+            /*
             if (Running)
             {
                 TaskTimer.Cancel();
                 TaskTimer.Dispose();
                 TaskTimer = null;
                 ReNotify();
-            }
+            }*/
         }
 
         /// <summary>
@@ -209,12 +208,28 @@ namespace Timeinator.Mobile.Android
         /// </summary>
         public void Start()
         {
-            if (ParamTime.Ticks <= 0)
+            Running = true;
+            /*if (ParamTime.Ticks <= 0)
                 return;
             Stop();
             TaskTimer = new NotificationTimer((long)ParamTime.TotalMilliseconds, REFRESH_RATE, this);
-            TaskTimer.Start();
+            TaskTimer.Start();*/
         }
+
+        /*
+        /// <summary>
+        /// Execute when task time is over
+        /// </summary>
+        public void TimeOut()
+        {
+            Elapsed.Invoke();
+            // Open alarm page with intent
+            //var intent = new Intent(Application.Context, typeof(AlarmPage));
+            //intent.SetAction(IntentActions.ACTION_TIMEOUT).AddFlags(ActivityFlags.NewTask | ActivityFlags.ClearTop);
+            //StartActivity(intent);
+            ReNotify();
+        }
+        */
 
         /// <summary>
         /// Update information about current Task
@@ -228,21 +243,10 @@ namespace Timeinator.Mobile.Android
         }
 
         /// <summary>
-        /// Execute when task time is over
-        /// </summary>
-        public void TimeOut()
-        {
-            Elapsed.Invoke();
-            // Open alarm page with intent
-            //var intent = new Intent(Application.Context, typeof(AlarmPage));
-            //intent.SetAction(IntentActions.ACTION_TIMEOUT).AddFlags(ActivityFlags.NewTask | ActivityFlags.ClearTop);
-            //StartActivity(intent);
-            ReNotify();
-        }
-
-        /// <summary>
         /// Stops service immediately
         /// </summary>
         public void KillService() => StopSelf();
+
+        #endregion
     }
 }

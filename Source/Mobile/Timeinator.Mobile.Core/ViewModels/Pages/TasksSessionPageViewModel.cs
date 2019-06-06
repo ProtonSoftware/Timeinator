@@ -222,7 +222,7 @@ namespace Timeinator.Mobile.Core
             mSessionNotificationService.AttachClickCommands(NotificationButtonClick);
 
             // Start new session providing required actions and get all the tasks
-            var contexts = mTimeTasksService.StartSession(UpdateSessionProperties, TaskTimeFinish);
+            var contexts = mTimeTasksService.StartSession(() => { UpdateSessionProperties(); mSessionNotificationService.UpdateNotification(); }, TaskTimeFinish);
 
             // At the start of the session, first task in the list is always current one, so set it accordingly
             SetCurrentTask(0, mTimeTasksMapper.ListMap(contexts.WholeList));
