@@ -11,6 +11,11 @@
         DoNothing,
 
         /// <summary>
+        /// Time has run out action
+        /// </summary>
+        TimeOut,
+
+        /// <summary>
         /// Opens app and heads to session page
         /// </summary>
         GoToSession,

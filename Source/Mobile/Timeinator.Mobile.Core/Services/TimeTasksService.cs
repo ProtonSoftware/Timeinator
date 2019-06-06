@@ -91,6 +91,7 @@ namespace Timeinator.Mobile.Core
 
         #region Interface Implementation
 
+        #region Database
         /// <summary>
         /// Saves new task to the database and adds it to the application's task list
         /// </summary>
@@ -149,6 +150,7 @@ namespace Timeinator.Mobile.Core
             // Return every found task
             return result;
         }
+        #endregion
 
         /// <summary>
         /// Sets provided tasks in our internal task list

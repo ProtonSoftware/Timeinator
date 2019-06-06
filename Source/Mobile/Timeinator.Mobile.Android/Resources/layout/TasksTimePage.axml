@@ -14,7 +14,6 @@
 		android:textColor="@color/colorBlack"
 		android:text="Wybierz czas trwania sesji" />
 	<TimePicker android:layout_below="@id/title"
-		local:MvxBind="Value UserTime"
         android:id="@+id/pickerSession"
 		android:layout_margin="@dimen/abc_action_bar_content_inset_material"
         android:layout_width="match_parent"

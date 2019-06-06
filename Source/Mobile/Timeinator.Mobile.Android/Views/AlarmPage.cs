@@ -25,6 +25,14 @@ namespace Timeinator.Mobile.Android
 
             OverridePendingTransition(Resource.Animation.abc_fade_in, Resource.Animation.abc_fade_out);
 
+            Window.AddFlags(
+                WindowManagerFlags.ShowWhenLocked |
+                WindowManagerFlags.DismissKeyguard |
+                WindowManagerFlags.KeepScreenOn |
+                WindowManagerFlags.TurnScreenOn |
+                WindowManagerFlags.AllowLockWhileScreenOn
+                );
+
             // Play ringtone and store it for later cancellation
             mAlarmSound = RingtoneManager.GetRingtone(ApplicationContext, RingtoneManager.GetDefaultUri(RingtoneType.Alarm));
             mAlarmSound.Play();
