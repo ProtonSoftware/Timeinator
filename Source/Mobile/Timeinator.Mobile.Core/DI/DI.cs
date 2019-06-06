@@ -24,7 +24,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// A shortcut to access the <see cref="ITimeTasksService"/>
         /// </summary>
-        public static ITimeTasksService TimeTaskService => Framework.Service<ITimeTasksService>();
+        public static ITimeTasksService TimeTaskService; 
 
         /// <summary>
         /// A shortcut to access the <see cref="IUIManager"/>
@@ -44,11 +44,14 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Sets up the DI and binds initial view models to that
         /// </summary>
-        public static void InitialSetup() => Framework.Construct<DefaultFrameworkConstruction>()
-                                                      .AddFileLogger()
-                                                      .AddTimeinatorViewModels()
-                                                      .AddDbContext()
-                                                      .Build();
+        public static void InitialSetup()
+        {
+            Framework.Construct<DefaultFrameworkConstruction>()
+                                                .AddFileLogger()
+                                                .AddTimeinatorViewModels()
+                                                .AddDbContext()
+                                                .Build();
+        }
 
         #endregion
     }
