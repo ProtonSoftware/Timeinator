@@ -69,6 +69,13 @@ namespace Timeinator.Mobile.Android
             RecentProgress = progressT;
         }
 
+        public void Update()
+        {
+            if (!IsConnected)
+                return;
+            Binder.Service.ReNotify();
+        }
+
         public void Interval(TimeSpan assignedT)
         {
             if (!IsConnected)

@@ -76,6 +76,11 @@ namespace Timeinator.Mobile.Android
         /// </summary>
         public void RemoveNotification() => mTaskServiceConnection.Kill();
 
+        /// <summary>
+        /// Updates notification state
+        /// </summary>
+        public void UpdateNotification() => mTaskServiceConnection.Update();
+
         #endregion
     }
 }
