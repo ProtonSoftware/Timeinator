@@ -58,12 +58,12 @@ namespace Timeinator.Mobile.Android
                 if (Intent.Action == IntentActions.ACTION_GOSESSION)
                 {
                     // Change application's page to continue session
-                    DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
+                    DI.Application.GoToPage(ApplicationPage.TasksSession);
                 }
                 else
                 {
                     // For now the application doesn't have login features, so simply go to the next page
-                    DI.Application.GoToPageAsync(ApplicationPage.TasksList);
+                    DI.Application.GoToPage(ApplicationPage.TasksList);
                 }
             });
         }

@@ -25,7 +25,7 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         /// <param name="page">The page to go to</param>
         /// <param name="viewModel">The view model to set initially on page (if provided)</param>
-        public async Task GoToPageAsync(ApplicationPage page, MvxViewModel viewModel = null)
+        public void GoToPage(ApplicationPage page, MvxViewModel viewModel = null)
         {
             // Change current page to specified one
             CurrentPage = page;
@@ -36,7 +36,7 @@ namespace Timeinator.Mobile.Core
                 viewModel = page.GetViewModel();
 
             // Change the page on application
-            await DI.UI.GoToViewModelPage(viewModel);
+            DI.UI.GoToViewModelPage(viewModel);
         }
 
         #endregion
