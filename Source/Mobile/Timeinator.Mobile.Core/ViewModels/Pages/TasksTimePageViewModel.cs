@@ -1,4 +1,5 @@
-﻿using MvvmCross.ViewModels;
+﻿using Dna;
+using MvvmCross.ViewModels;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -46,14 +47,14 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksTimePageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager)
+        public TasksTimePageViewModel(IUIManager uiManager)
         {
             // Create commands
             CalculateSessionCommand = new RelayCommand(async () => await CalculateSessionAsync());
             CancelCommand = new RelayCommand(Cancel);
 
             // Get injected DI services
-            mTimeTasksService = timeTasksService;
+            mTimeTasksService = DI.TimeTaskService;
             mUIManager = uiManager;
         }
 
@@ -69,6 +70,7 @@ namespace Timeinator.Mobile.Core
         {
             // Try to set user's selected time as session time
             var result = mTimeTasksService.SetSessionTime(UserTime);
+            //var result = mTimeTasksService.SetSessionTime(UserTime);
 
             // If user's selected time is not enough to start a session...
             if (!result)
@@ -81,7 +83,7 @@ namespace Timeinator.Mobile.Core
             }
 
             // Otherwise, go to next page which shows a summary of calculated user session
-            await DI.Application.GoToPageAsync(ApplicationPage.TasksSummary);
+            DI.Application.GoToPage(ApplicationPage.TasksSummary);
         }
 
         /// <summary>
