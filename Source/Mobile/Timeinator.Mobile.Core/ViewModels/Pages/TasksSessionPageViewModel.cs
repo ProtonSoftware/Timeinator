@@ -238,7 +238,7 @@ namespace Timeinator.Mobile.Core
         {
             var vm = Framework.Service<AlarmPageViewModel>();
             vm.InitializeButtons(PauseTask, FinishTaskAsync);
-            DI.Application.GoToPage(ApplicationPage.Alarm);
+            DI.Application.GoToPage(ApplicationPage.Alarm, vm);
         }
 
         /// <summary>

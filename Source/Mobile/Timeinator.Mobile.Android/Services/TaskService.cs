@@ -65,7 +65,6 @@ namespace Timeinator.Mobile.Android
                 alarmintent.SetAction(IntentActions.ACTION_SHOW).AddFlags(ActivityFlags.FromBackground);
                 var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, alarmintent, PendingIntentFlags.Immutable);
             };
-            Tick = () => { };
             RequestHandler = (a) => { };
             Binder = new TaskServiceBinder(this);
             return Binder;
@@ -98,7 +97,7 @@ namespace Timeinator.Mobile.Android
 
             // Set information on Notification
             var timePassed = DateTime.Now.Subtract(ParamStart);
-            var progress = Dna.Framework.Service<ITimeTasksService>().CurrentTaskCalculatedProgress * 100;
+            var progress = DI.TimeTaskService.CurrentTaskCalculatedProgress * 100;
             NotificationBuilder.SetContentTitle(ParamName);
 
             // Remove all buttons and add new ones
@@ -154,7 +153,7 @@ namespace Timeinator.Mobile.Android
 
         public bool Running => TaskTimer != null;
 
-        public event Action Elapsed, Tick;
+        public event Action Elapsed = () => { }, Tick = () => { };
         public event Action<AppAction> RequestHandler;
 
         public string ParamName { get; set; } = "None";
@@ -212,8 +211,8 @@ namespace Timeinator.Mobile.Android
             if (ParamTime.Ticks <= 0)
                 return;
             Stop();
-            //TaskTimer = new NotificationTimer((long)ParamTime.TotalMilliseconds, REFRESH_RATE, this);
-            //TaskTimer.Start();
+            TaskTimer = new NotificationTimer((long)ParamTime.TotalMilliseconds, REFRESH_RATE, this);
+            TaskTimer.Start();
         }
 
         /// <summary>

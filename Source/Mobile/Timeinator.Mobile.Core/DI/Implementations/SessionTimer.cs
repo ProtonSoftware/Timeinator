@@ -135,11 +135,11 @@ namespace Timeinator.Mobile.Core
             // If the task finished already...
             if (CurrentTaskTimeLeft <= TimeSpan.FromSeconds(0))
             {
-                // Inform everyone about it
-                TaskFinished.Invoke();
-
                 // Stop the timer
                 mSecondsTicker.Stop();
+
+                // Inform everyone about it
+                TaskFinished.Invoke();
             }
         }
 
