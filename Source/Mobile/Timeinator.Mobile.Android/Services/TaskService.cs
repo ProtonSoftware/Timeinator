@@ -211,8 +211,8 @@ namespace Timeinator.Mobile.Android
             if (ParamTime.Ticks <= 0)
                 return;
             Stop();
-            TaskTimer = new NotificationTimer((long)ParamTime.TotalMilliseconds, REFRESH_RATE, this);
-            TaskTimer.Start();
+            //TaskTimer = new NotificationTimer((long)ParamTime.TotalMilliseconds, REFRESH_RATE, this);
+            //TaskTimer.Start();
         }
 
         /// <summary>
