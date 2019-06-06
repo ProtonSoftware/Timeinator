@@ -53,6 +53,7 @@ namespace Timeinator.Mobile.Android
                     // Build new DI
                     Dna.Framework.Construction.Build();
                 }
+                DI.TimeTaskService = Dna.Framework.Service<ITimeTasksService>();
 
                 // If we get there by session intent from notification
                 if (Intent.Action == IntentActions.ACTION_GOSESSION)

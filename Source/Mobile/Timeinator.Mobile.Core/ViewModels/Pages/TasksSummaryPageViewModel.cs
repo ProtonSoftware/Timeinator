@@ -59,7 +59,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSummaryPageViewModel(ITimeTasksService timeTasksService, ISessionNotificationService sessionNotificationService, TimeTasksMapper tasksMapper, IUIManager uiManager)
+        public TasksSummaryPageViewModel(ISessionNotificationService sessionNotificationService, TimeTasksMapper tasksMapper, IUIManager uiManager)
         {
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);
@@ -67,7 +67,7 @@ namespace Timeinator.Mobile.Core
             ReorderCommand = new RelayParameterizedCommand(Reorder);
 
             // Get injected DI services
-            mTimeTasksService = timeTasksService;
+            mTimeTasksService = DI.TimeTaskService;
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 

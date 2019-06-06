@@ -70,7 +70,6 @@ namespace Timeinator.Mobile.Core
         {
             // Try to set user's selected time as session time
             var result = mTimeTasksService.SetSessionTime(UserTime);
-            //var result = mTimeTasksService.SetSessionTime(UserTime);
 
             // If user's selected time is not enough to start a session...
             if (!result)
