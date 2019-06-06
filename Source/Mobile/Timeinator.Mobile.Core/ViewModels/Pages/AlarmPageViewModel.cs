@@ -79,7 +79,7 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void PauseTask()
         {
-            mTimeTasksService.StartBreakBroadcast();
+            //mTimeTasksService.StartBreakBroadcast();
             DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
         }
 
@@ -88,7 +88,7 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void FinishTask()
         {
-            mTimeTasksService.FinishBroadcast();
+            //mTimeTasksService.FinishBroadcast();
             DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
         }
 
