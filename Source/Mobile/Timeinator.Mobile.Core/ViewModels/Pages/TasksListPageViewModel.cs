@@ -131,18 +131,18 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksListPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
+        public TasksListPageViewModel(IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
-            AddNewTaskCommand = new RelayCommand(async () => await DI.Application.GoToPageAsync(ApplicationPage.AddNewTask));
+            AddNewTaskCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.AddNewTask));
             EditTaskCommand = new RelayParameterizedCommand(EditTask);
             DeleteTaskCommand = new RelayParameterizedCommand(async (param) => await uiManager.ExecuteOnMainThread(async () => await DeleteTaskAsync(param)));
-            UserReadyCommand = new RelayCommand(async () => await UserReadyAsync());
-            OpenSettingsCommand = new RelayCommand(async () => await DI.Application.GoToPageAsync(ApplicationPage.Settings));
-            OpenAboutCommand = new RelayCommand(async () => await DI.Application.GoToPageAsync(ApplicationPage.About));
+            UserReadyCommand = new RelayCommand(() => UserReadyAsync());
+            OpenSettingsCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.Settings));
+            OpenAboutCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.About));
 
             // Get injected DI services
-            mTimeTasksService = timeTasksService;
+            mTimeTasksService = DI.TimeTaskService;
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 
@@ -241,7 +241,7 @@ namespace Timeinator.Mobile.Core
             }
 
             // Change the page
-            await DI.Application.GoToPageAsync(ApplicationPage.TasksTime);
+            DI.Application.GoToPage(ApplicationPage.TasksTime);
 
             // Send task contexts to the service
             mTimeTasksService.SetSessionTasks(taskContexts);

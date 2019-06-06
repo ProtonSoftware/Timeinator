@@ -94,7 +94,7 @@ namespace Timeinator.Mobile.Core
             mTimeTasksService.SetSessionTasks(taskContexts);
 
             // Change the page afterwards
-            DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
+            DI.Application.GoToPage(ApplicationPage.TasksSession);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Timeinator.Mobile.Core
 
             // TODO: Find better way
             // Go back to task list
-            DI.Application.GoToPageAsync(ApplicationPage.TasksList);
+            DI.Application.GoToPage(ApplicationPage.TasksList);
         }
 
         /// <summary>

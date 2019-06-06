@@ -97,7 +97,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSessionPageViewModel(ITimeTasksService timeTasksService, ISessionNotificationService sessionNotificationService, IUIManager uiManager, TimeTasksMapper tasksMapper)
+        public TasksSessionPageViewModel(ISessionNotificationService sessionNotificationService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
             PauseCommand = new RelayCommand(PauseTask);
@@ -106,7 +106,7 @@ namespace Timeinator.Mobile.Core
             EndSessionCommand = new RelayCommand(EndSessionAsync);
 
             // Get injected DI services
-            mTimeTasksService = timeTasksService;
+            mTimeTasksService = DI.TimeTaskService;
             mSessionNotificationService = sessionNotificationService;
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
@@ -222,7 +222,7 @@ namespace Timeinator.Mobile.Core
             mSessionNotificationService.AttachClickCommands(NotificationButtonClick);
 
             // Start new session providing required actions and get all the tasks
-            var contexts = mTimeTasksService.StartSession(UpdateSessionProperties, TaskTimeFinishAsync);
+            var contexts = mTimeTasksService.StartSession(UpdateSessionProperties, TaskTimeFinish);
 
             // At the start of the session, first task in the list is always current one, so set it accordingly
             SetCurrentTask(0, mTimeTasksMapper.ListMap(contexts.WholeList));
@@ -234,11 +234,11 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Called when current task's time runs out
         /// </summary>
-        private async void TaskTimeFinishAsync()
+        private void TaskTimeFinish()
         {
             var vm = Framework.Service<AlarmPageViewModel>();
             vm.InitializeButtons(PauseTask, FinishTaskAsync);
-            await DI.Application.GoToPageAsync(ApplicationPage.Alarm);
+            DI.Application.GoToPage(ApplicationPage.Alarm);
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Timeinator.Mobile.Core
             mSessionNotificationService.RemoveNotification();
 
             // Go to first page
-            DI.Application.GoToPageAsync(ApplicationPage.TasksList);
+            DI.Application.GoToPage(ApplicationPage.TasksList);
         }
 
         #endregion
