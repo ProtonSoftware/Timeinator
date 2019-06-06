@@ -61,10 +61,6 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public AlarmPageViewModel(ITimeTasksService timeTasksService, ISessionNotificationService sessionNotificationService)
         {
-            // Create commands
-            PauseCommand = new RelayCommand(PauseTask);
-            FinishCommand = new RelayCommand(FinishTask);
-
             // Get injected DI services
             mTimeTasksService = timeTasksService;
             mSessionNotificationService = sessionNotificationService;
@@ -72,26 +68,13 @@ namespace Timeinator.Mobile.Core
 
         #endregion
 
+        public void InitializeButtons(Action pause, Action next)
+        {
+            PauseCommand = new RelayCommand(() => { pause.Invoke(); DI.Application.GoToPageAsync(ApplicationPage.TasksSession); });
+            FinishCommand = new RelayCommand(() => { next.Invoke(); DI.Application.GoToPageAsync(ApplicationPage.TasksSession); });
+        }
+
         #region Command Methods
-
-        /// <summary>
-        /// Pause session after finished task
-        /// </summary>
-        private void PauseTask()
-        {
-            //mTimeTasksService.StartBreakBroadcast();
-            DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
-        }
-
-        /// <summary>
-        /// Finish task and go back to SessionPage
-        /// </summary>
-        private void FinishTask()
-        {
-            //mTimeTasksService.FinishBroadcast();
-            DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
-        }
-
         #endregion
     }
 }

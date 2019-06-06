@@ -153,7 +153,7 @@ namespace Timeinator.Mobile.Android
 
         public bool Running => TaskTimer != null;
 
-        public event Action Elapsed;
+        public event Action Elapsed, Tick;
         public event Action<AppAction> RequestHandler;
 
         public string ParamName { get; set; } = "None";
@@ -183,7 +183,11 @@ namespace Timeinator.Mobile.Android
         /// <summary>
         /// Refresh notification
         /// </summary>
-        public void ReNotify() => NManager.Notify(NOTIFICATION_ID, GetNotification());
+        public void ReNotify()
+        {
+            Tick.Invoke();
+            NManager.Notify(NOTIFICATION_ID, GetNotification());
+        }
 
         /// <summary>
         /// Stops Timer countdown
@@ -228,6 +232,10 @@ namespace Timeinator.Mobile.Android
         public void TimeOut()
         {
             Elapsed.Invoke();
+            // Open alarm page with intent
+            var intent = new Intent(Application.Context, typeof(AlarmPage));
+            intent.SetAction(IntentActions.ACTION_TIMEOUT).AddFlags(ActivityFlags.NewTask | ActivityFlags.ClearTop);
+            StartActivity(intent);
             ReNotify();
         }
 

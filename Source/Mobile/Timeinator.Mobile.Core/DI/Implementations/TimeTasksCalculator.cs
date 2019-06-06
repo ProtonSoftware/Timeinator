@@ -40,7 +40,10 @@ namespace Timeinator.Mobile.Core
             var calculatedTasks = CalculateAssignedTimes(contexts, sessionTime);
 
             // Return them in order
-            return calculatedTasks.OrderBy(x => x.OrderId).ToList();
+            if (DI.Settings.HighestPrioritySetAsFirst)
+                return calculatedTasks.OrderBy(x => x.Priority).ToList();
+            else
+                return calculatedTasks;
         }
 
         #endregion
