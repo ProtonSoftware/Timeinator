@@ -33,6 +33,7 @@ namespace Timeinator.Mobile.Core
             construction.Services.AddSingleton<TasksTimePageViewModel>();
             construction.Services.AddSingleton<TasksSummaryPageViewModel>();
             construction.Services.AddSingleton<TasksSessionPageViewModel>();
+            construction.Services.AddSingleton<AlarmPageViewModel>();
             construction.Services.AddSingleton<LoginPageViewModel>();
             construction.Services.AddSingleton<AboutPageViewModel>();
             construction.Services.AddSingleton<AddNewTimeTaskPageViewModel>();

@@ -22,7 +22,7 @@ namespace Timeinator.Mobile.Core
             var taskConstantTime = contexts.GetConstant().SumTimes();
 
             // Calculate time for remaining tasks
-            var taskPrioritiesTime = TimeSpan.FromMinutes(contexts.GetConstant(true).SumPriorities());
+            var taskPrioritiesTime = TimeSpan.FromMinutes(contexts.GetConstant(true).SumPriorities() * DI.Settings.MinimumTaskTime);
 
             // Sum the times and return
             return taskConstantTime + taskPrioritiesTime;

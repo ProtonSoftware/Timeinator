@@ -83,6 +83,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public bool RecalculateTasksAfterBreak { get; set; } = true;
 
+        /// <summary>
+        /// Minutes multiplier for minimum task time
+        /// </summary>
+        public double MinimumTaskTime { get; set; } = 0.1;
+
         #endregion
 
         #region Constructor

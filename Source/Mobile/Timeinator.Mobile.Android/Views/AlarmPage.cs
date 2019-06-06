@@ -21,7 +21,7 @@ namespace Timeinator.Mobile.Android
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            SetContentView(Resource.Layout.TasksSessionPage);
+            SetContentView(Resource.Layout.AlarmPage);
 
             OverridePendingTransition(Resource.Animation.abc_fade_in, Resource.Animation.abc_fade_out);
 
