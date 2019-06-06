@@ -73,7 +73,6 @@
         android:layout_height = "wrap_content"
         android:ellipsize="marquee"
         android:singleLine="true"
-        local:MvxBind="Text Tag"
         style="@style/TextSecondaryGray"
         tools:text = "This is the third line"/>
 </LinearLayout>
