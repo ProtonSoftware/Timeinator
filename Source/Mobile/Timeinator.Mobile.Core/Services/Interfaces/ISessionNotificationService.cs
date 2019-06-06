@@ -13,5 +13,6 @@ namespace Timeinator.Mobile.Core
         void StartNewTask(TimeTaskViewModel timeTaskViewModel);
         void StopCurrentTask();
         void RemoveNotification();
+        void UpdateNotification();
     }
 }

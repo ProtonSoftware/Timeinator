@@ -14,7 +14,7 @@ namespace Timeinator.Mobile.Android
 
         public TaskServiceConnection()
         {
-            TimerElapsed = () => { };
+            //TimerElapsed = () => { };
             Request = (a) => { };
             IsConnected = false;
             Binder = null;
@@ -35,7 +35,7 @@ namespace Timeinator.Mobile.Android
             IsConnected = Binder != null;
             if (IsConnected)
             {
-                Binder.Service.Elapsed += () => TimerElapsed.Invoke();
+                //Binder.Service.Elapsed += () => TimerElapsed.Invoke();
                 Binder.Service.RequestHandler += (a) => Request.Invoke(a);
             }
         }
@@ -60,13 +60,20 @@ namespace Timeinator.Mobile.Android
                     return Binder.Service.Running;
             }
         }
-        public event Action TimerElapsed, TimerTick;
+        // public event Action TimerElapsed, TimerTick;
         public event Action<AppAction> Request;
 
         public void Details(string nameT, double progressT)
         {
             TaskName = nameT;
             RecentProgress = progressT;
+        }
+
+        public void Update()
+        {
+            if (!IsConnected)
+                return;
+            Binder.Service.ReNotify();
         }
 
         public void Interval(TimeSpan assignedT)
