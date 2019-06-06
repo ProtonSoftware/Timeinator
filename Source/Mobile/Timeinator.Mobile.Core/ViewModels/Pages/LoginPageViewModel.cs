@@ -27,7 +27,7 @@ namespace Timeinator.Mobile.Core
         public LoginPageViewModel()
         {
             // Create commands
-            EnterWithoutLoginCommand = new RelayCommand(async () => await ChangePageWithoutLoginAsync());
+            EnterWithoutLoginCommand = new RelayCommand(() => ChangePageWithoutLogin());
         }
 
         #endregion
@@ -37,10 +37,10 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Changes the page without users' logging in
         /// </summary>
-        public async Task ChangePageWithoutLoginAsync()
+        public void ChangePageWithoutLogin()
         {
             // Simply go to main task list page
-            await DI.Application.GoToPageAsync(ApplicationPage.TasksList);
+            DI.Application.GoToPage(ApplicationPage.TasksList);
         }
 
         #endregion

@@ -35,7 +35,7 @@ namespace Timeinator.Mobile.Core
             construction.Services.AddSingleton<TasksSessionPageViewModel>();
             construction.Services.AddSingleton<LoginPageViewModel>();
             construction.Services.AddSingleton<AboutPageViewModel>();
-            construction.Services.AddTransient<AddNewTimeTaskPageViewModel>();
+            construction.Services.AddSingleton<AddNewTimeTaskPageViewModel>();
 
             // Return the construction for chaining
             return construction;

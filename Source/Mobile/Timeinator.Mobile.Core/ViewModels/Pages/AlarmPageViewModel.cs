@@ -80,7 +80,7 @@ namespace Timeinator.Mobile.Core
         private void PauseTask()
         {
             // send pause command to sessionPage
-            DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
+            DI.Application.GoToPage(ApplicationPage.TasksSession);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Timeinator.Mobile.Core
         private void FinishTask()
         {
             // send finish command to sessionPage
-            DI.Application.GoToPageAsync(ApplicationPage.TasksSession);
+            DI.Application.GoToPage(ApplicationPage.TasksSession);
         }
 
         #endregion
