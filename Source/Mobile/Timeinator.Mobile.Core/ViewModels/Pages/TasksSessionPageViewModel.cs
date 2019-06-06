@@ -1,4 +1,5 @@
-﻿using MvvmCross.ViewModels;
+﻿using Dna;
+using MvvmCross.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -235,6 +236,8 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private async void TaskTimeFinishAsync()
         {
+            var vm = Framework.Service<AlarmPageViewModel>();
+            vm.InitializeButtons(PauseTask, FinishTaskAsync);
             await DI.Application.GoToPageAsync(ApplicationPage.Alarm);
         }
 

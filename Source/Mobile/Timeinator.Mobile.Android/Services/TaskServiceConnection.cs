@@ -60,7 +60,7 @@ namespace Timeinator.Mobile.Android
                     return Binder.Service.Running;
             }
         }
-        public event Action TimerElapsed;
+        public event Action TimerElapsed, TimerTick;
         public event Action<AppAction> Request;
 
         public void Details(string nameT, double progressT)

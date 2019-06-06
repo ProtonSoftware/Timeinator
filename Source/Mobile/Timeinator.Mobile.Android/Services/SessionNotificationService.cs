@@ -26,6 +26,9 @@ namespace Timeinator.Mobile.Android
         /// </summary>
         public void Setup()
         {
+            // Do not setup for testing purposes
+            return;
+
             // If the service is already connected...
             if (mTaskServiceConnection.IsConnected)
                 // Don't do anything
