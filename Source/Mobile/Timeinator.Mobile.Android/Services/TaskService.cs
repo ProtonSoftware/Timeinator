@@ -228,10 +228,6 @@ namespace Timeinator.Mobile.Android
         public void TimeOut()
         {
             Elapsed.Invoke();
-            using (var r = RingtoneManager.GetRingtone(ApplicationContext, RingtoneManager.GetDefaultUri(RingtoneType.Notification)))
-            {
-                r.Play();
-            }
             ReNotify();
         }
 

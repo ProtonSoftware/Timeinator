@@ -5,6 +5,7 @@ namespace Timeinator.Mobile.Android
     public class IntentActions
     {
         public const string ACTION_NOTHING = "com.gummybearstudio.NOTHING";
+        public const string ACTION_TIMEOUT = "com.gummybearstudio.TIMEOUT";
         public const string ACTION_SHOW = "com.gummybearstudio.SHOW";
         public const string ACTION_GOSESSION = "com.gummybearstudio.GOSESSION";
         public const string ACTION_NEXTTASK = "com.gummybearstudio.NEXTTASK";
@@ -18,6 +19,8 @@ namespace Timeinator.Mobile.Android
             {
                 case AppAction.DoNothing:
                     return ACTION_SHOW;
+                case AppAction.TimeOut:
+                    return ACTION_TIMEOUT;
                 case AppAction.GoToSession:
                     return ACTION_GOSESSION;
                 case AppAction.NextSessionTask:
