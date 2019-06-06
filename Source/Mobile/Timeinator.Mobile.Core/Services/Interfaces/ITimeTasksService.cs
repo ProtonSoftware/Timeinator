@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile.Core
 {
@@ -33,7 +34,7 @@ namespace Timeinator.Mobile.Core
         void SetSessionTasks(List<TimeTaskContext> contexts);
         bool SetSessionTime(TimeSpan userTime);
         void ClearSessionTasks();
-        List<TimeTaskContext> StartSession(Action timerAction, Action taskAction);
+        HeadList<TimeTaskContext> StartSession(Action timerAction, Action taskAction);
         void StartNextTask(TimeTaskContext context);
         void StartBreak();
         void EndBreak();
