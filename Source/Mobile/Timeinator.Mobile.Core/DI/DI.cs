@@ -22,11 +22,6 @@ namespace Timeinator.Mobile.Core
         public static SettingsPageViewModel Settings => Framework.Service<SettingsPageViewModel>();
 
         /// <summary>
-        /// A shortcut to access the <see cref="ITimeTasksService"/>
-        /// </summary>
-        public static ITimeTasksService TimeTaskService; 
-
-        /// <summary>
         /// A shortcut to access the <see cref="IUIManager"/>
         /// </summary>
         public static IUIManager UI => Framework.Service<IUIManager>();

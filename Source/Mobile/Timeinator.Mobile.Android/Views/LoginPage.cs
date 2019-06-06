@@ -32,6 +32,17 @@ namespace Timeinator.Mobile.Android
             // Set application's font to Lato
             _ = Typeface.CreateFromAsset(Application.Context.Assets, "fonts/Lato-Regular.ttf");
 
+            // If there is no DI setup yet, i.e. IUIManager is not injected
+            if (!Dna.Framework.Construction.Services.Any(x => x.ServiceType == typeof(IUIManager) && x.ImplementationType == typeof(UIManager)))
+            {
+                // Add Android-specific dependency injection implementations
+                Dna.Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
+                Dna.Framework.Construction.Services.AddSingleton<ISessionNotificationService, SessionNotificationService>();
+
+                // Build new DI
+                Dna.Framework.Construction.Build();
+            }
+
             // Run configuration on a different thread
             // So UI thread isn't blocked
             // And App can keep starting up
@@ -42,18 +53,6 @@ namespace Timeinator.Mobile.Android
 
                 // Add dialogs library to Mvx DI
                 Mvx.IoCProvider.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
-
-                // If there is no DI setup yet, i.e. IUIManager is not injected
-                if (!Dna.Framework.Construction.Services.Any(x => x.ServiceType == typeof(IUIManager) && x.ImplementationType == typeof(UIManager)))
-                {
-                    // Add Android-specific dependency injection implementations
-                    Dna.Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
-                    Dna.Framework.Construction.Services.AddSingleton<ISessionNotificationService, SessionNotificationService>();
-
-                    // Build new DI
-                    Dna.Framework.Construction.Build();
-                }
-                DI.TimeTaskService = Dna.Framework.Service<ITimeTasksService>();
 
                 // If we get there by session intent from notification
                 if (Intent.Action == IntentActions.ACTION_GOSESSION)

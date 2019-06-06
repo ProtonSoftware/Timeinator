@@ -131,7 +131,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksListPageViewModel(IUIManager uiManager, TimeTasksMapper tasksMapper)
+        public TasksListPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
             AddNewTaskCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.AddNewTask));
@@ -142,7 +142,7 @@ namespace Timeinator.Mobile.Core
             OpenAboutCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.About));
 
             // Get injected DI services
-            mTimeTasksService = DI.TimeTaskService;
+            mTimeTasksService = timeTasksService;
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 

@@ -14,6 +14,13 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public override void Initialize()
         {
+            // If there is no DI setup yet
+            if (Dna.Framework.Construction == null)
+            {
+                // Setup brand-new DI
+                DI.InitialSetup();
+            }
+
             // Run the initialization on a different thread
             // So it doesn't block UI thread
             // And as a result the App will startup faster
@@ -27,13 +34,6 @@ namespace Timeinator.Mobile.Core
                     .EndingWith("Service")
                     .AsInterfaces()
                     .RegisterAsLazySingleton();
-
-                // If there is no DI setup yet
-                if (Dna.Framework.Construction == null)
-                {
-                    // Setup brand-new DI
-                    DI.InitialSetup();
-                }
             });
         }
     }
