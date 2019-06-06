@@ -24,12 +24,6 @@ namespace Timeinator.Mobile.Core
 
         #endregion
 
-        event Action OnStartedBreak, OnEndedBreak, OnFinishRequested, OnNextRequested;
-        void StartBreakBroadcast();
-        void EndBreakBroadcast();
-        void FinishBroadcast();
-        void NextBroadcast();
-
         List<TimeTaskContext> GetCalculatedTasks();
         void SetSessionTasks(List<TimeTaskContext> contexts);
         bool SetSessionTime(TimeSpan userTime);

@@ -89,12 +89,6 @@ namespace Timeinator.Mobile.Core
 
         #endregion
 
-        #region Public events
-
-        public event Action OnStartedBreak = () => { }, OnEndedBreak = () => { }, OnFinishRequested = () => { }, OnNextRequested = () => { };
-
-        #endregion
-
         #region Interface Implementation
 
         #region Database
@@ -156,24 +150,6 @@ namespace Timeinator.Mobile.Core
             // Return every found task
             return result;
         }
-        #endregion
-
-        #region Broadcasted actions
-        public void StartBreakBroadcast()
-        {
-            StartBreak();
-            OnStartedBreak.Invoke();
-        }
-
-        public void EndBreakBroadcast()
-        {
-            EndBreak();
-            OnEndedBreak.Invoke();
-        }
-
-        public void FinishBroadcast() => OnFinishRequested.Invoke();
-
-        public void NextBroadcast() => OnNextRequested.Invoke();
         #endregion
 
         /// <summary>

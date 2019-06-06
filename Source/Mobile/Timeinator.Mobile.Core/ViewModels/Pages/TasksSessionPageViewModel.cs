@@ -104,9 +104,6 @@ namespace Timeinator.Mobile.Core
             FinishTaskCommand = new RelayCommand(FinishTaskAsync);
             EndSessionCommand = new RelayCommand(EndSessionAsync);
 
-            // Connect Service requests
-            mTimeTasksService.OnFinishRequested += FinishCurrentTask;
-
             // Get injected DI services
             mTimeTasksService = timeTasksService;
             mSessionNotificationService = sessionNotificationService;
