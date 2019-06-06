@@ -65,6 +65,7 @@ namespace Timeinator.Mobile.Android
                 alarmintent.SetAction(IntentActions.ACTION_SHOW).AddFlags(ActivityFlags.FromBackground);
                 var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, alarmintent, PendingIntentFlags.Immutable);
             };
+            Tick = () => { };
             RequestHandler = (a) => { };
             Binder = new TaskServiceBinder(this);
             return Binder;
