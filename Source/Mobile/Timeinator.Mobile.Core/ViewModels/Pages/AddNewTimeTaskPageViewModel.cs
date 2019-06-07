@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using Timeinator.Core;
 
@@ -29,9 +30,10 @@ namespace Timeinator.Mobile.Core
         public string TaskDescription { get; set; }
 
         /// <summary>
-        /// The tag attached to this task
+        /// The tags that are attached to this task
+        /// This string is directly bound to the input field, the result tags are made by splitting this
         /// </summary>
-        public string TaskTag { get; set; } // TODO: Rework it for list-string corelation
+        public string TaskTagsString { get; set; }
 
         /// <summary>
         /// The constant amount of time provided by user for this task
@@ -115,6 +117,7 @@ namespace Timeinator.Mobile.Core
                 Id = TaskId,
                 Name = TaskName,
                 Description = TaskDescription,
+                Tags = TaskTagsString.SplitTagsString(),
                 AssignedTime = TaskConstantTime,
                 HasConstantTime = TaskHasConstantTime,
                 IsImportant = TaskImportance,
