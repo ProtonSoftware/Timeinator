@@ -219,6 +219,18 @@
   <data name="SessionPausedWithProgress" xml:space="preserve">
     <value>Session paused ({0}%)</value>
   </data>
+  <data name="SettingHighestPriorityDescription" xml:space="preserve">
+    <value>Highest priority tasks as first</value>
+  </data>
+  <data name="SettingHighestPriorityName" xml:space="preserve">
+    <value>Prioritizing tasks</value>
+  </data>
+  <data name="SettingRecalculateTasksDescription" xml:space="preserve">
+    <value>Recalculate tasks to match session time after breaks</value>
+  </data>
+  <data name="SettingRecalculateTasksName" xml:space="preserve">
+    <value>Adjust tasks</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>

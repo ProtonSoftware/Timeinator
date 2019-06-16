@@ -367,6 +367,42 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Highest priority tasks as first.
+        /// </summary>
+        public static string SettingHighestPriorityDescription {
+            get {
+                return ResourceManager.GetString("SettingHighestPriorityDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prioritizing tasks.
+        /// </summary>
+        public static string SettingHighestPriorityName {
+            get {
+                return ResourceManager.GetString("SettingHighestPriorityName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recalculate tasks to match session time after breaks.
+        /// </summary>
+        public static string SettingRecalculateTasksDescription {
+            get {
+                return ResourceManager.GetString("SettingRecalculateTasksDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust tasks.
+        /// </summary>
+        public static string SettingRecalculateTasksName {
+            get {
+                return ResourceManager.GetString("SettingRecalculateTasksName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string Settings {
