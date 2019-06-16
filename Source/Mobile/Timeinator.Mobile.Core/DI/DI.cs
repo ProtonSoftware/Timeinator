@@ -22,11 +22,6 @@ namespace Timeinator.Mobile.Core
         public static SettingsPageViewModel Settings => Framework.Service<SettingsPageViewModel>();
 
         /// <summary>
-        /// A shortcut to access the <see cref="IUIManager"/>
-        /// </summary>
-        public static IUIManager UI => Framework.Service<IUIManager>();
-
-        /// <summary>
         /// A shortcut to get appropriate view model for page with injected dependiencies by DI
         /// </summary>
         /// <typeparam name="T">Any view model that inherites <see cref="MvxViewModel"/></typeparam>
