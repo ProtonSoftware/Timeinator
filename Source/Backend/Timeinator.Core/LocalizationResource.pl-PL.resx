@@ -219,11 +219,23 @@
   <data name="SessionPausedWithProgress" xml:space="preserve">
     <value>Sesja wstrzymana ({0}%)</value>
   </data>
+  <data name="SettingChangeLanguageDescription" xml:space="preserve">
+    <value>Język wyświetlany w aplikacji</value>
+  </data>
+  <data name="SettingChangeLanguageName" xml:space="preserve">
+    <value>Język</value>
+  </data>
+  <data name="SettingDarkModeDescription" xml:space="preserve">
+    <value>Ciemny motyw w aplikacji dla oszczędzania oczu</value>
+  </data>
+  <data name="SettingDarkModeName" xml:space="preserve">
+    <value>Tryb ciemny</value>
+  </data>
   <data name="SettingHighestPriorityDescription" xml:space="preserve">
     <value>Zadania z najwyższym priorytetem jako pierwsze</value>
   </data>
   <data name="SettingHighestPriorityName" xml:space="preserve">
-    <value>Priorytetyowanie zadań</value>
+    <value>Priorytetyzowanie zadań</value>
   </data>
   <data name="SettingRecalculateTasksDescription" xml:space="preserve">
     <value>Przelicz czas zadań po przerwie, by dostosować do czasu sesji</value>

@@ -219,6 +219,18 @@
   <data name="SessionPausedWithProgress" xml:space="preserve">
     <value>Session paused ({0}%)</value>
   </data>
+  <data name="SettingChangeLanguageDescription" xml:space="preserve">
+    <value>Language shown in the app</value>
+  </data>
+  <data name="SettingChangeLanguageName" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SettingDarkModeDescription" xml:space="preserve">
+    <value>Dark theme to save your eyes</value>
+  </data>
+  <data name="SettingDarkModeName" xml:space="preserve">
+    <value>Dark mode</value>
+  </data>
   <data name="SettingHighestPriorityDescription" xml:space="preserve">
     <value>Highest priority tasks as first</value>
   </data>
