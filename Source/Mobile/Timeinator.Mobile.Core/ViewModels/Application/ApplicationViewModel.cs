@@ -1,5 +1,4 @@
 ﻿using MvvmCross.ViewModels;
-using System.Threading.Tasks;
 
 namespace Timeinator.Mobile.Core
 {
@@ -8,12 +7,30 @@ namespace Timeinator.Mobile.Core
     /// </summary>
     public class ApplicationViewModel : MvxViewModel
     {
+        #region Private Members
+
+        private readonly IUIManager mUIManager;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
         /// Indicates which page is shown currently in the application
         /// </summary>
         public ApplicationPage CurrentPage { get; private set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public ApplicationViewModel(IUIManager uiManager)
+        {
+            mUIManager = uiManager;
+        }
 
         #endregion
 
@@ -36,7 +53,7 @@ namespace Timeinator.Mobile.Core
                 viewModel = page.GetViewModel();
 
             // Change the page on application
-            DI.UI.GoToViewModelPage(viewModel);
+            mUIManager.GoToViewModelPage(viewModel);
         }
 
         #endregion
