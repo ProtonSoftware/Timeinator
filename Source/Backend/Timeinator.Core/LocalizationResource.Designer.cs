@@ -367,6 +367,42 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language shown in the app.
+        /// </summary>
+        public static string SettingChangeLanguageDescription {
+            get {
+                return ResourceManager.GetString("SettingChangeLanguageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string SettingChangeLanguageName {
+            get {
+                return ResourceManager.GetString("SettingChangeLanguageName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark theme to save your eyes.
+        /// </summary>
+        public static string SettingDarkModeDescription {
+            get {
+                return ResourceManager.GetString("SettingDarkModeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark mode.
+        /// </summary>
+        public static string SettingDarkModeName {
+            get {
+                return ResourceManager.GetString("SettingDarkModeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Highest priority tasks as first.
         /// </summary>
         public static string SettingHighestPriorityDescription {

@@ -10,13 +10,6 @@ namespace Timeinator.Mobile.Android
     /// </summary>
     public class SettingsCheckboxFragment : Fragment
     {
-        #region Private Members
-
-        private string mName;
-        private string mDescription;
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>
@@ -36,8 +29,15 @@ namespace Timeinator.Mobile.Android
         /// <param name="description">The description of this setting</param>
         public SettingsCheckboxFragment(string name, string description)
         {
-            mName = name;
-            mDescription = description;
+            // Create a bundle that will be accessible later when view is created
+            var bundle = new Bundle();
+            
+            // Put here all the data
+            bundle.PutString("Name", name);
+            bundle.PutString("Description", description);
+
+            // Save it to the arguments
+            Arguments = bundle;
         }
 
         #endregion
@@ -61,8 +61,8 @@ namespace Timeinator.Mobile.Android
             CheckBoxView = view.FindViewById(Resource.Id.settingCheckbox) as CheckBox;
 
             // Set texts to provided data
-            settingName.Text = mName;
-            settingDescription.Text = mDescription;
+            settingName.Text = Arguments.GetString("Name");
+            settingDescription.Text = Arguments.GetString("Description");
         }
 
         #endregion
