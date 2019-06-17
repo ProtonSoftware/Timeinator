@@ -6,7 +6,6 @@ using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
 using System.Linq;
 using Timeinator.Core;
-using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android
 {
@@ -26,26 +25,41 @@ namespace Timeinator.Mobile.Android
         {
             base.OnStart();
 
-            var viewModel = BindingContext.DataContext as SettingsPageViewModel;
-            var binder = Mvx.IoCProvider.Resolve<IMvxBinder>();
-
             // Create a fragment for every setting that will be shown in this page
-            var settingHighestPriorityFragment = new SettingsCheckboxFragment(LocalizationResource.SettingHighestPriorityName, LocalizationResource.SettingHighestPriorityDescription);
-            var settingRecalculateTasksFragment = new SettingsCheckboxFragment(LocalizationResource.SettingRecalculateTasksName, LocalizationResource.SettingRecalculateTasksDescription);
+            var settingHighestPriorityFragment = new SettingsFragment(LocalizationResource.SettingHighestPriorityName, LocalizationResource.SettingHighestPriorityDescription, SettingType.Toggleable);
+            var settingRecalculateTasksFragment = new SettingsFragment(LocalizationResource.SettingRecalculateTasksName, LocalizationResource.SettingRecalculateTasksDescription, SettingType.Toggleable);
+            var settingChangeLanguageFragment = new SettingsFragment(LocalizationResource.SettingChangeLanguageName, LocalizationResource.SettingChangeLanguageDescription, SettingType.MultipleValues);
 
             // Show them in the view
             FragmentManager.BeginTransaction()
                 .Replace(Resource.Id.settingHighestPriority, settingHighestPriorityFragment)
                 .Replace(Resource.Id.settingRecalculateTasks, settingRecalculateTasksFragment)
+                .Replace(Resource.Id.settingChangeLanguage, settingChangeLanguageFragment)
                 .AddToBackStack(null)
                 .Commit();
             FragmentManager.ExecutePendingTransactions();
 
-            var bindingHighestPriority = binder.Bind(viewModel, settingHighestPriorityFragment.CheckBoxView, "Checked HighestPrioritySetAsFirst").First();
-            BindingContext.RegisterBinding(settingHighestPriorityFragment.CheckBoxView, bindingHighestPriority);
-
-            var bindingRecalculateTasks = binder.Bind(viewModel, settingRecalculateTasksFragment.CheckBoxView, "Checked RecalculateTasksAfterBreak").First();
-            BindingContext.RegisterBinding(settingRecalculateTasksFragment.CheckBoxView, bindingRecalculateTasks);
+            // Setup bindings for every fragment
+            SetupBindingForSettingEntry(settingHighestPriorityFragment, "Checked HighestPrioritySetAsFirst");
+            SetupBindingForSettingEntry(settingRecalculateTasksFragment, "Checked RecalculateTasksAfterBreak");
+            SetupBindingForSettingEntry(settingChangeLanguageFragment, "ItemsSource LanguageItems; SelectedItem LanguageValue");
         }
+
+        #region Private Helpers
+
+        /// <summary>
+        /// A helper that setups Mvx binding for specified setting fragment
+        /// </summary>
+        /// <param name="setting">The setting fragment to bind</param>
+        /// <param name="bindingString">The Mvx-Bind string</param>
+        private void SetupBindingForSettingEntry(SettingsFragment setting, string bindingString)
+        {
+            var binder = Mvx.IoCProvider.Resolve<IMvxBinder>();
+
+            var bindingRecalculateTasks = binder.Bind(BindingContext.DataContext, setting.SettableView, bindingString).First();
+            BindingContext.RegisterBinding(setting.SettableView, bindingRecalculateTasks);
+        }
+
+        #endregion
     }
 }

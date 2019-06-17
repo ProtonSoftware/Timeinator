@@ -81,7 +81,7 @@
     <Compile Include="UI\UIManager.cs" />
     <Compile Include="Views\AboutPage.cs" />
     <Compile Include="Views\AddNewTimeTaskPage.cs" />
-    <Compile Include="Views\SettingsCheckboxFragment.cs" />
+    <Compile Include="Views\SettingsFragment.cs" />
     <Compile Include="Views\SettingsPage.cs" />
     <Compile Include="Views\TasksSessionPage.cs" />
     <Compile Include="Views\TasksSummaryPage.cs" />
@@ -435,6 +435,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\SettingsCheckboxFragment.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\SettingsDropdownFragment.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
