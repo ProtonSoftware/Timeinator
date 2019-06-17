@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Timeinator.Mobile.Core
 {
+    /// <summary>
+    /// TODO: Get rid of this class, all the tasks methods are used exclusively by calculator, others are not needed here, so this shouldnt exist
+    /// </summary>
     public static class TaskListHelpers
     {
         /// <summary>
@@ -51,5 +54,8 @@ namespace Timeinator.Mobile.Core
         public static event Action RefreshUITasks;
 
         public static void RaiseRefreshEvent() => RefreshUITasks.Invoke();
+
+        public static List<string> SplitTagsString(this string tagsString) => tagsString.Split(' ').ToList();
+        public static string CreateTagsString(this List<string> tagsList) => string.Join(" ", tagsList);
     }
 }
