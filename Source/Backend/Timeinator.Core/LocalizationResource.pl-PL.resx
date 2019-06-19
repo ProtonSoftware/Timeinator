@@ -144,6 +144,9 @@
   <data name="Confirm" xml:space="preserve">
     <value>Zatwierdź</value>
   </data>
+  <data name="ConstantTime" xml:space="preserve">
+    <value>Przypisany czas stały</value>
+  </data>
   <data name="CreatedDate" xml:space="preserve">
     <value>Po dacie dodania</value>
   </data>
@@ -158,6 +161,12 @@
   </data>
   <data name="Finish" xml:space="preserve">
     <value>Zakończ</value>
+  </data>
+  <data name="ImmortalTask" xml:space="preserve">
+    <value>Zadanie wielokrotne</value>
+  </data>
+  <data name="ImportantTask" xml:space="preserve">
+    <value>Zadanie ważne</value>
   </data>
   <data name="InvalidData" xml:space="preserve">
     <value>Niepoprawne dane</value>
@@ -235,7 +244,7 @@
     <value>Ustawienia</value>
   </data>
   <data name="StartBreak" xml:space="preserve">
-    <value>Nie, chcę przerwę</value>
+    <value>Zrób przerwę</value>
   </data>
   <data name="TaskDeletion" xml:space="preserve">
     <value>Usuwanie zadania</value>

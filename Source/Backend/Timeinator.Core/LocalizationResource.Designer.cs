@@ -142,6 +142,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Constant time set.
+        /// </summary>
+        public static string ConstantTime {
+            get {
+                return ResourceManager.GetString("ConstantTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created date.
         /// </summary>
         public static string CreatedDate {
@@ -183,6 +192,24 @@ namespace Timeinator.Core {
         public static string Finish {
             get {
                 return ResourceManager.GetString("Finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repetitive task.
+        /// </summary>
+        public static string ImmortalTask {
+            get {
+                return ResourceManager.GetString("ImmortalTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Important task.
+        /// </summary>
+        public static string ImportantTask {
+            get {
+                return ResourceManager.GetString("ImportantTask", resourceCulture);
             }
         }
         
@@ -412,7 +439,7 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start break.
+        ///   Looks up a localized string similar to Take a break.
         /// </summary>
         public static string StartBreak {
             get {
