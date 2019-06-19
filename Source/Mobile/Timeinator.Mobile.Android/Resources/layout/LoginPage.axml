@@ -5,10 +5,16 @@
     android:layout_height="match_parent">
 
 	<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/full_logo" />
 
         <ProgressBar
             android:layout_width="wrap_content"
@@ -19,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             local:MvxBind='Text String("Loading")'
+            android:layout_gravity="center"
             android:text="Ładowanie..."
             style="@style/TextMainBlack" />
 
