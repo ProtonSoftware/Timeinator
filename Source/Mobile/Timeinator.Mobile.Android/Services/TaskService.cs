@@ -92,7 +92,7 @@ namespace Timeinator.Mobile.Android
                     .SetOnlyAlertOnce(true)
                     .SetOngoing(true)
                     .SetContentIntent(pendingIntent)
-                    .SetSmallIcon(Resource.Mipmap.logo)
+                    .SetSmallIcon(Resource.Drawable.logo)
                     .SetTicker("Timeinator Session"); // TODO: Decide if this should be localized ? (Sesja for polish, session for english)
             }
 
@@ -138,7 +138,7 @@ namespace Timeinator.Mobile.Android
             var intent = new Intent(Application.Context, typeof(TaskService));
             intent.SetAction(action).AddFlags(ActivityFlags.FromBackground);
             var pendingIntent = PendingIntent.GetService(this, id, intent, PendingIntentFlags.Immutable);
-            NotificationBuilder.AddAction(Resource.Mipmap.ic_launcher_round, title, pendingIntent);
+            NotificationBuilder.AddAction(Resource.Drawable.logo, title, pendingIntent);
         }
 
         #endregion
