@@ -8620,8 +8620,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a0040
 			public const int SYM = 2131361856;
 			
-			// aapt resource value: 0x7f0a00d8
-			public const int aboutIcon = 2131362008;
+			// aapt resource value: 0x7f0a00d9
+			public const int aboutIcon = 2131362009;
 			
 			// aapt resource value: 0x7f0a008f
 			public const int action_bar = 2131361935;
@@ -8701,8 +8701,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a004f
 			public const int auto = 2131361871;
 			
-			// aapt resource value: 0x7f0a00ce
-			public const int avatar = 2131361998;
+			// aapt resource value: 0x7f0a00cf
+			public const int avatar = 2131361999;
 			
 			// aapt resource value: 0x7f0a0038
 			public const int beginning = 2131361848;
@@ -8716,14 +8716,14 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a00a9
 			public const int bottomNavigation = 2131361961;
 			
-			// aapt resource value: 0x7f0a00d9
-			public const int bottomOptions = 2131362009;
+			// aapt resource value: 0x7f0a00da
+			public const int bottomOptions = 2131362010;
+			
+			// aapt resource value: 0x7f0a00e6
+			public const int breakTime = 2131362022;
 			
 			// aapt resource value: 0x7f0a00e5
-			public const int breakTime = 2131362021;
-			
-			// aapt resource value: 0x7f0a00e4
-			public const int breakTimeTitle = 2131362020;
+			public const int breakTimeTitle = 2131362021;
 			
 			// aapt resource value: 0x7f0a0074
 			public const int buttonPanel = 2131361908;
@@ -8761,14 +8761,14 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a0077
 			public const int contentPanel = 2131361911;
 			
-			// aapt resource value: 0x7f0a00d2
-			public const int contextMenu = 2131362002;
+			// aapt resource value: 0x7f0a00d3
+			public const int contextMenu = 2131362003;
 			
 			// aapt resource value: 0x7f0a00ad
 			public const int coordinator = 2131361965;
 			
-			// aapt resource value: 0x7f0a00db
-			public const int currentTaskTitle = 2131362011;
+			// aapt resource value: 0x7f0a00dc
+			public const int currentTaskTitle = 2131362012;
 			
 			// aapt resource value: 0x7f0a007e
 			public const int custom = 2131361918;
@@ -8821,8 +8821,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a0087
 			public const int expanded_menu = 2131361927;
 			
-			// aapt resource value: 0x7f0a00d4
-			public const int favourite = 2131362004;
+			// aapt resource value: 0x7f0a00d5
+			public const int favourite = 2131362005;
 			
 			// aapt resource value: 0x7f0a0060
 			public const int fill = 2131361888;
@@ -8836,8 +8836,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a0061
 			public const int filled = 2131361889;
 			
-			// aapt resource value: 0x7f0a00cf
-			public const int first_line = 2131361999;
+			// aapt resource value: 0x7f0a00d0
+			public const int first_line = 2131362000;
 			
 			// aapt resource value: 0x7f0a005e
 			public const int @fixed = 2131361886;
@@ -8929,8 +8929,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a00b9
 			public const int loadingProgressWheel = 2131361977;
 			
-			// aapt resource value: 0x7f0a00ec
-			public const int masked = 2131362028;
+			// aapt resource value: 0x7f0a00ed
+			public const int masked = 2131362029;
 			
 			// aapt resource value: 0x7f0a009e
 			public const int message = 2131361950;
@@ -8941,8 +8941,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a005b
 			public const int mini = 2131361883;
 			
-			// aapt resource value: 0x7f0a00d3
-			public const int minor_info = 2131362003;
+			// aapt resource value: 0x7f0a00d4
+			public const int minor_info = 2131362004;
 			
 			// aapt resource value: 0x7f0a0014
 			public const int mtrl_child_content_container = 2131361812;
@@ -8986,8 +8986,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a000b
 			public const int parent_matrix = 2131361803;
 			
-			// aapt resource value: 0x7f0a00ea
-			public const int pickerSession = 2131362026;
+			// aapt resource value: 0x7f0a00eb
+			public const int pickerSession = 2131362027;
 			
 			// aapt resource value: 0x7f0a005a
 			public const int pin = 2131361882;
@@ -8995,14 +8995,14 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a00a8
 			public const int prioritySeekBar = 2131361960;
 			
-			// aapt resource value: 0x7f0a00dc
-			public const int progressLayout = 2131362012;
-			
 			// aapt resource value: 0x7f0a00dd
-			public const int progressRing = 2131362013;
+			public const int progressLayout = 2131362013;
 			
 			// aapt resource value: 0x7f0a00de
-			public const int progressText = 2131362014;
+			public const int progressRing = 2131362014;
+			
+			// aapt resource value: 0x7f0a00df
+			public const int progressText = 2131362015;
 			
 			// aapt resource value: 0x7f0a0006
 			public const int progress_circular = 2131361798;
@@ -9013,11 +9013,11 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a0089
 			public const int radio = 2131361929;
 			
-			// aapt resource value: 0x7f0a00e2
-			public const int remainingTimeIcon = 2131362018;
+			// aapt resource value: 0x7f0a00e3
+			public const int remainingTimeIcon = 2131362019;
 			
-			// aapt resource value: 0x7f0a00e1
-			public const int remainingTimeTitle = 2131362017;
+			// aapt resource value: 0x7f0a00e2
+			public const int remainingTimeTitle = 2131362018;
 			
 			// aapt resource value: 0x7f0a0057
 			public const int right = 2131361879;
@@ -9085,8 +9085,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a009c
 			public const int search_voice_btn = 2131361948;
 			
-			// aapt resource value: 0x7f0a00d0
-			public const int second_line = 2131362000;
+			// aapt resource value: 0x7f0a00d1
+			public const int second_line = 2131362001;
 			
 			// aapt resource value: 0x7f0a009d
 			public const int select_dialog_listview = 2131361949;
@@ -9094,14 +9094,17 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a0051
 			public const int selected = 2131361873;
 			
-			// aapt resource value: 0x7f0a00e0
-			public const int sessionTimeIcon = 2131362016;
+			// aapt resource value: 0x7f0a00e1
+			public const int sessionTimeIcon = 2131362017;
 			
-			// aapt resource value: 0x7f0a00df
-			public const int sessionTimeTitle = 2131362015;
+			// aapt resource value: 0x7f0a00e0
+			public const int sessionTimeTitle = 2131362016;
+			
+			// aapt resource value: 0x7f0a00ce
+			public const int settingChangeLanguage = 2131361998;
 			
 			// aapt resource value: 0x7f0a00cb
-			public const int settingCheckbox = 2131361995;
+			public const int settingControl = 2131361995;
 			
 			// aapt resource value: 0x7f0a00ca
 			public const int settingDescription = 2131361994;
@@ -9118,8 +9121,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a00c8
 			public const int settingView = 2131361992;
 			
-			// aapt resource value: 0x7f0a00d7
-			public const int settingsIcon = 2131362007;
+			// aapt resource value: 0x7f0a00d8
+			public const int settingsIcon = 2131362008;
 			
 			// aapt resource value: 0x7f0a0085
 			public const int shortcut = 2131361925;
@@ -9187,26 +9190,26 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a0020
 			public const int tag_unhandled_key_listeners = 2131361824;
 			
-			// aapt resource value: 0x7f0a00e3
-			public const int taskContainer = 2131362019;
-			
-			// aapt resource value: 0x7f0a00e7
-			public const int taskDescription = 2131362023;
-			
-			// aapt resource value: 0x7f0a00da
-			public const int taskList = 2131362010;
-			
-			// aapt resource value: 0x7f0a00d6
-			public const int taskListPage = 2131362006;
-			
-			// aapt resource value: 0x7f0a00e6
-			public const int taskName = 2131362022;
-			
-			// aapt resource value: 0x7f0a00e9
-			public const int taskSummaryPage = 2131362025;
+			// aapt resource value: 0x7f0a00e4
+			public const int taskContainer = 2131362020;
 			
 			// aapt resource value: 0x7f0a00e8
-			public const int taskTime = 2131362024;
+			public const int taskDescription = 2131362024;
+			
+			// aapt resource value: 0x7f0a00db
+			public const int taskList = 2131362011;
+			
+			// aapt resource value: 0x7f0a00d7
+			public const int taskListPage = 2131362007;
+			
+			// aapt resource value: 0x7f0a00e7
+			public const int taskName = 2131362023;
+			
+			// aapt resource value: 0x7f0a00ea
+			public const int taskSummaryPage = 2131362026;
+			
+			// aapt resource value: 0x7f0a00e9
+			public const int taskTime = 2131362025;
 			
 			// aapt resource value: 0x7f0a00a4
 			public const int taskTimeText = 2131361956;
@@ -9241,14 +9244,14 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a001a
 			public const int textinput_helper_text = 2131361818;
 			
-			// aapt resource value: 0x7f0a00d1
-			public const int third_line = 2131362001;
+			// aapt resource value: 0x7f0a00d2
+			public const int third_line = 2131362002;
 			
 			// aapt resource value: 0x7f0a00c3
 			public const int time = 2131361987;
 			
-			// aapt resource value: 0x7f0a00d5
-			public const int time_info = 2131362005;
+			// aapt resource value: 0x7f0a00d6
+			public const int time_info = 2131362006;
 			
 			// aapt resource value: 0x7f0a0023
 			public const int title = 2131361827;
@@ -9298,8 +9301,8 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0a001b
 			public const int view_offset_helper = 2131361819;
 			
-			// aapt resource value: 0x7f0a00eb
-			public const int visible = 2131362027;
+			// aapt resource value: 0x7f0a00ec
+			public const int visible = 2131362028;
 			
 			// aapt resource value: 0x7f0a0045
 			public const int withText = 2131361861;
@@ -9590,31 +9593,34 @@ namespace Timeinator.Mobile.Android
 			public const int SettingsCheckboxFragment = 2130968637;
 			
 			// aapt resource value: 0x7f04003e
-			public const int SettingsPage = 2130968638;
+			public const int SettingsDropdownFragment = 2130968638;
 			
 			// aapt resource value: 0x7f04003f
-			public const int support_simple_spinner_dropdown_item = 2130968639;
+			public const int SettingsPage = 2130968639;
 			
 			// aapt resource value: 0x7f040040
-			public const int TaskListItem = 2130968640;
+			public const int support_simple_spinner_dropdown_item = 2130968640;
 			
 			// aapt resource value: 0x7f040041
-			public const int TaskSessionItem = 2130968641;
+			public const int TaskListItem = 2130968641;
 			
 			// aapt resource value: 0x7f040042
-			public const int TasksListPage = 2130968642;
+			public const int TaskSessionItem = 2130968642;
 			
 			// aapt resource value: 0x7f040043
-			public const int TasksSessionPage = 2130968643;
+			public const int TasksListPage = 2130968643;
 			
 			// aapt resource value: 0x7f040044
-			public const int TasksSummaryPage = 2130968644;
+			public const int TasksSessionPage = 2130968644;
 			
 			// aapt resource value: 0x7f040045
-			public const int TasksTimePage = 2130968645;
+			public const int TasksSummaryPage = 2130968645;
 			
 			// aapt resource value: 0x7f040046
-			public const int TaskSummaryItem = 2130968646;
+			public const int TasksTimePage = 2130968646;
+			
+			// aapt resource value: 0x7f040047
+			public const int TaskSummaryItem = 2130968647;
 			
 			static Layout()
 			{
