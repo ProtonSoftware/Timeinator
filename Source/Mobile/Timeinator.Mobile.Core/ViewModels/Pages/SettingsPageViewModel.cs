@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Timeinator.Core;
 using Timeinator.Mobile.DataAccess;
@@ -16,11 +17,11 @@ namespace Timeinator.Mobile.Core
         private readonly ISettingsRepository mSettingsRepository;
 
         /// <summary>
-        /// Index of the language used in this application
+        /// The current language used in this application
         /// 0 - Polish
         /// 1 - English
         /// </summary>
-        private int mLanguageIndex = 0;
+        private string mLanguageValue;
 
         #endregion
 
@@ -39,22 +40,31 @@ namespace Timeinator.Mobile.Core
         #endregion
 
         #region Public Properties
-        
+
         /// <summary>
-        /// Index of the language used in this application
+        /// The list of possible task list items sorting methods
+        /// </summary>
+        public ObservableCollection<string> LanguageItems { get; set; } = new ObservableCollection<string>
+        {
+            "Polski",
+            "Angielski"
+        };
+
+        /// <summary>
+        /// The language used in this application
         /// 0 - Polish
         /// 1 - English
         /// </summary>
-        public int LanguageIndex
+        public string SortValue
         {
-            get => mLanguageIndex;
+            get => mLanguageValue;
             set
             {
                 // Set new value
-                mLanguageIndex = value;
+                mLanguageValue = value;
 
                 // Change app's language based on that
-                switch (mLanguageIndex)
+                switch (LanguageItems.IndexOf(mLanguageValue))
                 {
                     case 1:
                         mUIManager.ChangeLanguage("en-US");

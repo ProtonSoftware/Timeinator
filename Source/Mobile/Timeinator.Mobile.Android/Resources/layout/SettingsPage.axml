@@ -55,6 +55,11 @@
             android:textSize="16dp"
             android:text="Aplikacja" />
 
+        <RelativeLayout
+            android:id="@+id/settingChangeLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </RelativeLayout>
