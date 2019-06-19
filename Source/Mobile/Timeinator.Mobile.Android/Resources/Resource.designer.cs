@@ -5504,17 +5504,11 @@ namespace Timeinator.Mobile.Android
 			// aapt resource value: 0x7f0101e2
 			public const int MvxDropDownItemTemplate = 2130772450;
 			
-			// aapt resource value: 0x7f010203
-			public const int MvxDropDownItemTemplateSelector = 2130772483;
-			
 			// aapt resource value: 0x7f0101e3
 			public const int MvxGroupItemTemplate = 2130772451;
 			
 			// aapt resource value: 0x7f0101e1
 			public const int MvxItemTemplate = 2130772449;
-			
-			// aapt resource value: 0x7f010202
-			public const int MvxItemTemplateSelector = 2130772482;
 			
 			// aapt resource value: 0x7f0101df
 			public const int MvxLang = 2130772447;
@@ -13573,24 +13567,6 @@ namespace Timeinator.Mobile.Android
 			
 			// aapt resource value: 0
 			public const int MvxRecyclerView_MvxTemplateSelector = 0;
-			
-			public static int[] MvxSpinner = new int[] {
-					2130772449,
-					2130772450,
-					2130772482,
-					2130772483};
-			
-			// aapt resource value: 1
-			public const int MvxSpinner_MvxDropDownItemTemplate = 1;
-			
-			// aapt resource value: 3
-			public const int MvxSpinner_MvxDropDownItemTemplateSelector = 3;
-			
-			// aapt resource value: 0
-			public const int MvxSpinner_MvxItemTemplate = 0;
-			
-			// aapt resource value: 2
-			public const int MvxSpinner_MvxItemTemplateSelector = 2;
 			
 			public static int[] NavigationView = new int[] {
 					16842964,
