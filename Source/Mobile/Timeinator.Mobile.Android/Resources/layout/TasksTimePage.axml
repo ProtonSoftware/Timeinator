@@ -12,6 +12,7 @@
 		android:textAlignment="center"
 		android:textSize="@dimen/abc_text_size_display_1_material"
 		android:textColor="@color/colorBlack"
+        local:MvxBind='Text String("PickSessionTime")'
 		android:text="Wybierz czas trwania sesji" />
 	<TimePicker android:layout_below="@id/title"
         android:id="@+id/pickerSession"
@@ -33,7 +34,7 @@
             android:layout_marginRight="4dp"
             android:text="Oblicz sesję"
             style="@style/AccentButton"
-            local:MvxBind="Click CalculateSessionCommand"/>
+            local:MvxBind='Text String("CalcSession");Click CalculateSessionCommand'/>
 
         <Button
             android:layout_width="0dp"
@@ -42,7 +43,7 @@
             android:layout_marginLeft="4dp"
             android:text="Przerwij"
             style="@style/DangerButton"
-            local:MvxBind="Click CancelCommand" />
+            local:MvxBind='Text String("Abort");Click CancelCommand' />
 
     </LinearLayout>
 </RelativeLayout>

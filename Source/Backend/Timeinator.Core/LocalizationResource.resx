@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Abort" xml:space="preserve">
+    <value>Abort</value>
+  </data>
   <data name="AboutUs" xml:space="preserve">
     <value>About us</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Alphabetical" xml:space="preserve">
     <value>Alphabetical</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>Application</value>
   </data>
   <data name="AttemptToCalculateNoTasks" xml:space="preserve">
     <value>Attempted to calculate tasks without providing them</value>
@@ -141,6 +147,12 @@
   <data name="Begin" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="BreakDuration" xml:space="preserve">
+    <value>Break duration</value>
+  </data>
+  <data name="CalcSession" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
@@ -153,6 +165,9 @@
   <data name="Creators" xml:space="preserve">
     <value>Creators</value>
   </data>
+  <data name="CurrentTask" xml:space="preserve">
+    <value>Current task</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -161,6 +176,15 @@
   </data>
   <data name="Finish" xml:space="preserve">
     <value>Finish</value>
+  </data>
+  <data name="FinishSess" xml:space="preserve">
+    <value>Finish session</value>
+  </data>
+  <data name="FinishTask" xml:space="preserve">
+    <value>Finish task</value>
+  </data>
+  <data name="Functions" xml:space="preserve">
+    <value>Functionalities</value>
   </data>
   <data name="ImmortalTask" xml:space="preserve">
     <value>Repetitive task</value>
@@ -195,6 +219,9 @@
   <data name="Pause" xml:space="preserve">
     <value>Pause</value>
   </data>
+  <data name="PickSessionTime" xml:space="preserve">
+    <value>Pick session duration</value>
+  </data>
   <data name="Priority" xml:space="preserve">
     <value>Priority</value>
   </data>
@@ -216,6 +243,9 @@
   <data name="QuestionTimeRanOutWhatToDo" xml:space="preserve">
     <value>Time has ran out, what do you want to do?</value>
   </data>
+  <data name="RemainingTime" xml:space="preserve">
+    <value>Time remaining</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>Resume</value>
   </data>
@@ -225,8 +255,14 @@
   <data name="SessionFinished" xml:space="preserve">
     <value>Session finished</value>
   </data>
+  <data name="SessionLasts" xml:space="preserve">
+    <value>Session lasts</value>
+  </data>
   <data name="SessionPausedWithProgress" xml:space="preserve">
     <value>Session paused ({0}%)</value>
+  </data>
+  <data name="SessSummary" xml:space="preserve">
+    <value>Current session</value>
   </data>
   <data name="SettingChangeLanguageDescription" xml:space="preserve">
     <value>Language shown in the app</value>

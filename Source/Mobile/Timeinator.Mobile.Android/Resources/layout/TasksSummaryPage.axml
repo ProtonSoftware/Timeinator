@@ -13,6 +13,7 @@
 		android:textAlignment="center"
 		android:textSize="@dimen/abc_text_size_display_2_material"
 		android:textColor="@color/colorBlack"
+        local:MvxBind='Text String("SessSummary")'
 		android:text="Wybrana sesja" />
 	<mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
 		android:layout_below="@id/title"
@@ -45,7 +46,7 @@
             android:layout_marginLeft="4dp"
             android:text="Przerwij"
             style="@style/DangerButton"
-            local:MvxBind="Click CancelCommand" />
+            local:MvxBind='Text String("Abort");Click CancelCommand' />
 
     </LinearLayout>
     <LinearLayout
