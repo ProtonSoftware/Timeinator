@@ -27,13 +27,13 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The description of a task that is being created
         /// </summary>
-        public string TaskDescription { get; set; }
+        public string TaskDescription { get; set; } = string.Empty;
 
         /// <summary>
         /// The tags that are attached to this task
         /// This string is directly bound to the input field, the result tags are made by splitting this
         /// </summary>
-        public string TaskTagsString { get; set; }
+        public string TaskTagsString { get; set; } = string.Empty;
 
         /// <summary>
         /// The constant amount of time provided by user for this task
