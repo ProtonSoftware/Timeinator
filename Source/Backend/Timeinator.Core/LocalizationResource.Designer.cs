@@ -61,6 +61,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abort.
+        /// </summary>
+        public static string Abort {
+            get {
+                return ResourceManager.GetString("Abort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About us.
         /// </summary>
         public static string AboutUs {
@@ -93,6 +102,15 @@ namespace Timeinator.Core {
         public static string Alphabetical {
             get {
                 return ResourceManager.GetString("Alphabetical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application.
+        /// </summary>
+        public static string Application {
+            get {
+                return ResourceManager.GetString("Application", resourceCulture);
             }
         }
         
@@ -133,6 +151,24 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Break duration.
+        /// </summary>
+        public static string BreakDuration {
+            get {
+                return ResourceManager.GetString("BreakDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calculate.
+        /// </summary>
+        public static string CalcSession {
+            get {
+                return ResourceManager.GetString("CalcSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         public static string Confirm {
@@ -169,6 +205,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current task.
+        /// </summary>
+        public static string CurrentTask {
+            get {
+                return ResourceManager.GetString("CurrentTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -192,6 +237,33 @@ namespace Timeinator.Core {
         public static string Finish {
             get {
                 return ResourceManager.GetString("Finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finish session.
+        /// </summary>
+        public static string FinishSess {
+            get {
+                return ResourceManager.GetString("FinishSess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finish task.
+        /// </summary>
+        public static string FinishTask {
+            get {
+                return ResourceManager.GetString("FinishTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Functionalities.
+        /// </summary>
+        public static string Functions {
+            get {
+                return ResourceManager.GetString("Functions", resourceCulture);
             }
         }
         
@@ -295,6 +367,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pick session duration.
+        /// </summary>
+        public static string PickSessionTime {
+            get {
+                return ResourceManager.GetString("PickSessionTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Priority.
         /// </summary>
         public static string Priority {
@@ -358,6 +439,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Time remaining.
+        /// </summary>
+        public static string RemainingTime {
+            get {
+                return ResourceManager.GetString("RemainingTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resume.
         /// </summary>
         public static string Resume {
@@ -385,11 +475,29 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Session lasts.
+        /// </summary>
+        public static string SessionLasts {
+            get {
+                return ResourceManager.GetString("SessionLasts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Session paused ({0}%).
         /// </summary>
         public static string SessionPausedWithProgress {
             get {
                 return ResourceManager.GetString("SessionPausedWithProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current session.
+        /// </summary>
+        public static string SessSummary {
+            get {
+                return ResourceManager.GetString("SessSummary", resourceCulture);
             }
         }
         

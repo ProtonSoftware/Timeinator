@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Abort" xml:space="preserve">
+    <value>Przerwij</value>
+  </data>
   <data name="AboutUs" xml:space="preserve">
     <value>O nas</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Alphabetical" xml:space="preserve">
     <value>Alfabetycznie</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>Aplikacja</value>
   </data>
   <data name="AttemptToCalculateNoTasks" xml:space="preserve">
     <value>Próba obliczenia czasu zadań bez ich wcześniejszego dostarczenia</value>
@@ -141,6 +147,12 @@
   <data name="Begin" xml:space="preserve">
     <value>Rozpocznij</value>
   </data>
+  <data name="BreakDuration" xml:space="preserve">
+    <value>Czas trwania przerwy</value>
+  </data>
+  <data name="CalcSession" xml:space="preserve">
+    <value>Oblicz sesję</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Zatwierdź</value>
   </data>
@@ -153,6 +165,9 @@
   <data name="Creators" xml:space="preserve">
     <value>Autorzy</value>
   </data>
+  <data name="CurrentTask" xml:space="preserve">
+    <value>Aktualne zadanie</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Błąd</value>
   </data>
@@ -161,6 +176,15 @@
   </data>
   <data name="Finish" xml:space="preserve">
     <value>Zakończ</value>
+  </data>
+  <data name="FinishSess" xml:space="preserve">
+    <value>Zakończ sesję</value>
+  </data>
+  <data name="FinishTask" xml:space="preserve">
+    <value>Zakończ zadanie</value>
+  </data>
+  <data name="Functions" xml:space="preserve">
+    <value>Funkcjonalności</value>
   </data>
   <data name="ImmortalTask" xml:space="preserve">
     <value>Zadanie wielokrotne</value>
@@ -195,6 +219,9 @@
   <data name="Pause" xml:space="preserve">
     <value>Pauza</value>
   </data>
+  <data name="PickSessionTime" xml:space="preserve">
+    <value>Wybierz czas sesji</value>
+  </data>
   <data name="Priority" xml:space="preserve">
     <value>Priorytet</value>
   </data>
@@ -216,6 +243,9 @@
   <data name="QuestionTimeRanOutWhatToDo" xml:space="preserve">
     <value>Skończył się czas na zadanie, co chcesz teraz zrobić?</value>
   </data>
+  <data name="RemainingTime" xml:space="preserve">
+    <value>Pozostały czas</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>Wznów</value>
   </data>
@@ -225,8 +255,14 @@
   <data name="SessionFinished" xml:space="preserve">
     <value>Koniec sesji</value>
   </data>
+  <data name="SessionLasts" xml:space="preserve">
+    <value>Sesja trwa</value>
+  </data>
   <data name="SessionPausedWithProgress" xml:space="preserve">
     <value>Sesja wstrzymana ({0}%)</value>
+  </data>
+  <data name="SessSummary" xml:space="preserve">
+    <value>Wybrana sesja</value>
   </data>
   <data name="SettingChangeLanguageDescription" xml:space="preserve">
     <value>Język wyświetlany w aplikacji</value>
