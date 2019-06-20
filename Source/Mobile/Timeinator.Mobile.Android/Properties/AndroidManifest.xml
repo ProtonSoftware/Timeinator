@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="28" android:versionName="1.0" package="com.gummybearstudio.Timeinator" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="30" android:versionName="1.01" package="com.gummybearstudio.Timeinator" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="28" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 	<application android:allowBackup="true" android:icon="@drawable/logo" android:label="@string/app_name" android:roundIcon="@drawable/logo" android:supportsRtl="true" android:theme="@style/AppTheme"></application>
 </manifest>
