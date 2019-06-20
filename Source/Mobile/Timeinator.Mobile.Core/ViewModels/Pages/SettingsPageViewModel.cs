@@ -18,10 +18,8 @@ namespace Timeinator.Mobile.Core
 
         /// <summary>
         /// The current language used in this application
-        /// 0 - Polish
-        /// 1 - English
         /// </summary>
-        private string mLanguageValue;
+        private string mLanguageValue = "Polski";
 
         #endregion
 
@@ -52,10 +50,8 @@ namespace Timeinator.Mobile.Core
 
         /// <summary>
         /// The language used in this application
-        /// 0 - Polish
-        /// 1 - English
         /// </summary>
-        public string SortValue
+        public string LanguageValue
         {
             get => mLanguageValue;
             set
