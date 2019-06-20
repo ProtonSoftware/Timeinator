@@ -102,7 +102,7 @@ namespace Timeinator.Mobile.Core
             // Create commands
             PauseCommand = new RelayCommand(PauseTask);
             ResumeCommand = new RelayCommand(ResumeTask);
-            FinishTaskCommand = new RelayCommand(FinishTaskAsync);
+            FinishTaskCommand = new RelayCommand(FinishCurrentTask);
             EndSessionCommand = new RelayCommand(EndSessionAsync);
 
             // Get injected DI services
@@ -160,29 +160,6 @@ namespace Timeinator.Mobile.Core
         }
 
         /// <summary>
-        /// Finishes the current task by removing it and goes to the next one
-        /// </summary>
-        private async void FinishTaskAsync()
-        {
-            // Ask the user if he's certain to finish the task before it ends
-            var popupViewModel = new PopupMessageViewModel
-                (
-                    LocalizationResource.TaskFinished,
-                    LocalizationResource.QuestionAreYouSureToFinishTask,
-                    LocalizationResource.Yes,
-                    LocalizationResource.No
-                );
-            var userResponse = await mUIManager.DisplayPopupMessageAsync(popupViewModel);
-
-            // If he agreed...
-            if (userResponse)
-            {
-                // Finish task
-                FinishCurrentTask();
-            }
-        }
-
-        /// <summary>
         /// Ends current user session, if he decides to
         /// </summary>
         private async void EndSessionAsync()
@@ -237,7 +214,7 @@ namespace Timeinator.Mobile.Core
         private void TaskTimeFinish()
         {
             var vm = Framework.Service<AlarmPageViewModel>();
-            vm.InitializeButtons(PauseTask, FinishTaskAsync);
+            vm.InitializeButtons(PauseTask, FinishCurrentTask);
             DI.Application.GoToPage(ApplicationPage.Alarm, vm);
         }
 

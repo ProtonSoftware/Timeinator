@@ -38,8 +38,15 @@ namespace Timeinator.Mobile.Android
             mAlarmSound.Play();
         }
 
+        public override bool OnKeyDown([GeneratedEnum] Keycode keyCode, KeyEvent e)
+        {
+            mAlarmSound.Stop();
+            return base.OnKeyDown(keyCode, e);
+        }
+
         protected override void OnDestroy()
         {
+            // Does not get called - FIX ME
             mAlarmSound.Stop();
             base.OnDestroy();
         }
