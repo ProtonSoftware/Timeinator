@@ -13,15 +13,16 @@
 		android:textAlignment="center"
 		android:textSize="@dimen/abc_text_size_display_2_material"
 		android:textColor="@color/colorBlack"
-		android:text="Alarm" />
+		android:text="Alarm"
+        local:MvxBind='Text String("QuestionTimeRanOutWhatToDo")' />
 
     <LinearLayout
-        android:id="@+id/bottomNavigation"
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
         android:elevation="@dimen/abc_action_bar_elevation_material"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
 		local:MvxBind="Visibility PausedBoolToVisibility(Paused)"
         android:orientation="horizontal">
 
@@ -32,7 +33,7 @@
             android:layout_marginRight="4dp"
             android:text="PRZERWA"
             style="@style/AccentButton"
-            local:MvxBind="Click StopCommand" />
+            local:MvxBind='Text String("StartBreak");Click PauseCommand' />
 
         <Button
             android:layout_width="0dp"
@@ -40,14 +41,9 @@
             android:layout_weight="1"
             android:layout_marginLeft="4dp"
             android:text="NASTĘPNE"
-            android:background="@color/colorPrimary"
-            local:MvxBind="Click FinishCommand" />
+            style="@style/DangerButton"
+            local:MvxBind='Text String("NextTask");Click FinishCommand' />
 
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@id/bottomNavigation"
-        android:background="@android:color/darker_gray"/>
 
 </RelativeLayout>

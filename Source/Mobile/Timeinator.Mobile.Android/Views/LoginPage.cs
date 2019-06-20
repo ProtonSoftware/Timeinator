@@ -38,34 +38,29 @@ namespace Timeinator.Mobile.Android
                 // Add Android-specific dependency injection implementations
                 Dna.Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
                 Dna.Framework.Construction.Services.AddSingleton<ISessionNotificationService, SessionNotificationService>();
+                Dna.Framework.Construction.Services.AddSingleton<IRingtonePlayer, RingtonePlayer>();
 
                 // Build new DI
                 Dna.Framework.Construction.Build();
             }
 
-            // Run configuration on a different thread
-            // So UI thread isn't blocked
-            // And App can keep starting up
-            Task.Run(() =>
+            // Initialize dialogs library
+            UserDialogs.Init(() => Mvx.IoCProvider.Resolve<IMvxAndroidCurrentTopActivity>().Activity);
+
+            // Add dialogs library to Mvx DI
+            Mvx.IoCProvider.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
+
+            // If we get there by session intent from notification
+            if (Intent.Action == IntentActions.ACTION_GOSESSION)
             {
-                // Initialize dialogs library
-                UserDialogs.Init(() => Mvx.IoCProvider.Resolve<IMvxAndroidCurrentTopActivity>().Activity);
-
-                // Add dialogs library to Mvx DI
-                Mvx.IoCProvider.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
-
-                // If we get there by session intent from notification
-                if (Intent.Action == IntentActions.ACTION_GOSESSION)
-                {
-                    // Change application's page to continue session
-                    DI.Application.GoToPage(ApplicationPage.TasksSession);
-                }
-                else
-                {
-                    // For now the application doesn't have login features, so simply go to the next page
-                    DI.Application.GoToPage(ApplicationPage.TasksList);
-                }
-            });
+                // Change application's page to continue session
+                DI.Application.GoToPage(ApplicationPage.TasksSession);
+            }
+            else
+            {
+                // For now the application doesn't have login features, so simply go to the next page
+                DI.Application.GoToPage(ApplicationPage.TasksList);
+            }
         }
     }
 }
