@@ -17,6 +17,7 @@ namespace Timeinator.Mobile.Core
         #region Private Members
 
         private readonly ITimeTasksService mTimeTasksService;
+        private readonly IRingtonePlayer mRingtonePlayer;
 
         #endregion
 
@@ -58,18 +59,20 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AlarmPageViewModel(ITimeTasksService timeTasksService)
+        public AlarmPageViewModel(ITimeTasksService timeTasksService, IRingtonePlayer ringtonePlayer)
         {
             // Get injected DI services
             mTimeTasksService = timeTasksService;
+            mRingtonePlayer = ringtonePlayer;
         }
 
         #endregion
 
         public void InitializeButtons(Action pause, Action next)
         {
-            PauseCommand = new RelayCommand(() => { pause.Invoke(); DI.Application.GoToPage(ApplicationPage.TasksSession); });
-            FinishCommand = new RelayCommand(() => { next.Invoke(); DI.Application.GoToPage(ApplicationPage.TasksSession); });
+            mRingtonePlayer.Play();
+            PauseCommand = new RelayCommand(() => { mRingtonePlayer.Stop(); pause.Invoke(); DI.Application.GoToPage(ApplicationPage.TasksSession); });
+            FinishCommand = new RelayCommand(() => { mRingtonePlayer.Stop(); next.Invoke(); DI.Application.GoToPage(ApplicationPage.TasksSession); });
         }
 
         #region Command Methods
