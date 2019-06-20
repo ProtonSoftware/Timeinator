@@ -315,4 +315,10 @@
   <data name="Yes" xml:space="preserve">
     <value>Tak</value>
   </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Jesteś pewien?</value>
+  </data>
+  <data name="UnsavedChanges" xml:space="preserve">
+    <value>Niezapisane zmiany</value>
+  </data>
 </root>
