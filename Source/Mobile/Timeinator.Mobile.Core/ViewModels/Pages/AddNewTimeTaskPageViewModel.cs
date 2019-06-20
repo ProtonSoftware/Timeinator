@@ -85,7 +85,7 @@ namespace Timeinator.Mobile.Core
         {
             // Create commands
             AddTaskCommand = new RelayCommand(AddNewTask);
-            GoBackCommand = new RelayCommand(CancelAndBack);
+            GoBackCommand = new RelayCommand(CancelAndBackAsync);
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
@@ -139,13 +139,16 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Cancels current task creation and goes back to previous page
         /// </summary>
-        private void CancelAndBack()
+        private async void CancelAndBackAsync()
         {
-            // TODO: Warn user about unsaved changes
+            // Warn user about unsaved changes
+            var Uresponse = await mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel(LocalizationResource.UnsavedChanges, LocalizationResource.AreYouSure, LocalizationResource.Yes, LocalizationResource.No));
 
-
-            // Go back to previous page
-            mUIManager.GoBackToPreviousPage(this);
+            if (Uresponse)
+            {
+                // Go back to previous page
+                mUIManager.GoBackToPreviousPage(this);
+            }
         }
 
         #endregion
