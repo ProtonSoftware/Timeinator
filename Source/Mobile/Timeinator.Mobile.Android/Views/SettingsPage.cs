@@ -1,11 +1,14 @@
 ﻿using Android.App;
 using Android.OS;
+using Android.Widget;
 using MvvmCross;
 using MvvmCross.Binding.Binders;
+using MvvmCross.Platforms.Android.Binding.Views;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
 using System.Linq;
 using Timeinator.Core;
+using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android
 {
@@ -43,6 +46,11 @@ namespace Timeinator.Mobile.Android
             SetupBindingForSettingEntry(settingHighestPriorityFragment, "Checked HighestPrioritySetAsFirst");
             SetupBindingForSettingEntry(settingRecalculateTasksFragment, "Checked RecalculateTasksAfterBreak");
             SetupBindingForSettingEntry(settingChangeLanguageFragment, "ItemsSource LanguageItems; SelectedItem LanguageValue");
+
+            // For dropdown, make manual binding for selected item because automatic one doesn't work
+            var initialValuePosition = (BindingContext.DataContext as SettingsPageViewModel).LanguageItems.IndexOf((BindingContext.DataContext as SettingsPageViewModel).LanguageValue);
+            (settingChangeLanguageFragment.SettableView as MvxSpinner).ItemSelected += MvxSpinner_ItemSelected;
+            (settingChangeLanguageFragment.SettableView as MvxSpinner).SetSelection(initialValuePosition);
         }
 
         #region Private Helpers
@@ -59,6 +67,12 @@ namespace Timeinator.Mobile.Android
             var bindingRecalculateTasks = binder.Bind(BindingContext.DataContext, setting.SettableView, bindingString).First();
             BindingContext.RegisterBinding(setting.SettableView, bindingRecalculateTasks);
         }
+
+        /// <summary>
+        /// Updates the selected dropdown item in the view model
+        /// </summary>
+        private void MvxSpinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+            => (BindingContext.DataContext as SettingsPageViewModel).LanguageValue = (e.View as TextView).Text;
 
         #endregion
     }
