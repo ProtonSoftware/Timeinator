@@ -54,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextMainBlack"
+            local:MvxBind='Text String("VersionName")'
             android:text="2.0.0" />
 
         <TextView
@@ -69,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextMainBlack"
+            local:MvxBind='Text String("LastUpdateValue")'
             android:text="Czerwiec 2019" />
 
         <TextView
@@ -96,16 +98,16 @@
             android:layout_height="wrap_content"
             style="@style/TextMainBlack"
             android:layout_marginTop="24dp"
-            android:text="W trosce o wygodę użytkowania, 
-aplikacja jest darmowa i bez reklam." />
+            local:MvxBind='Text String("PromoAds")'
+            android:text="W trosce o wygodę użytkowania, aplikacja jest darmowa i bez ofensywnych reklam." />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextMainBlack"
             android:layout_marginTop="4dp"
-            android:text="Jeśli chcesz nas wspomóc, przyjmujemy
-dotacje PayPal pod adresem:" />
+            local:MvxBind='Text String("PromoPay")'
+            android:text="Jeśli chcesz nas wspomóc, przyjmujemy dotacje PayPal pod adresem:" />
 
         <TextView
             android:layout_width="match_parent"
@@ -119,9 +121,8 @@ dotacje PayPal pod adresem:" />
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextMainBlack"
-            android:text="Jeśli masz jakieś pytania lub propozycje
-nowych funkcjonalności, zapraszamy
-do kontaktu, chętnie pomożemy :)" />
+            local:MvxBind='Text String("PromoContact")'
+            android:text="Jeśli masz jakieś pytania lub propozycje nowych funkcjonalności, zapraszamy do kontaktu, chętnie pomożemy :)" />
 
     </LinearLayout>
 

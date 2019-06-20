@@ -223,6 +223,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description (optional).
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -313,6 +322,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to June 2019.
+        /// </summary>
+        public static string LastUpdateValue {
+            get {
+                return ResourceManager.GetString("LastUpdateValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loading {
@@ -390,6 +408,33 @@ namespace Timeinator.Core {
         public static string Priority {
             get {
                 return ResourceManager.GetString("Priority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For the sake of Your comfort this application is free and does not include offensive adverts..
+        /// </summary>
+        public static string PromoAds {
+            get {
+                return ResourceManager.GetString("PromoAds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you have any questions or ideas for improvement, we invite you to contact us. We are happy to help :).
+        /// </summary>
+        public static string PromoContact {
+            get {
+                return ResourceManager.GetString("PromoContact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can help us by PayPal under this address:.
+        /// </summary>
+        public static string PromoPay {
+            get {
+                return ResourceManager.GetString("PromoPay", resourceCulture);
             }
         }
         
@@ -601,6 +646,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tags (optional, space delimited).
+        /// </summary>
+        public static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Task deletion.
         /// </summary>
         public static string TaskDeletion {
@@ -628,7 +682,7 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name of the task.
+        ///   Looks up a localized string similar to Task name.
         /// </summary>
         public static string TaskName {
             get {
@@ -660,6 +714,15 @@ namespace Timeinator.Core {
         public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.03 Good God.
+        /// </summary>
+        public static string VersionName {
+            get {
+                return ResourceManager.GetString("VersionName", resourceCulture);
             }
         }
         

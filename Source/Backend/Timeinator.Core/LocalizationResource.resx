@@ -304,7 +304,7 @@
     <value>Your tasks</value>
   </data>
   <data name="TaskName" xml:space="preserve">
-    <value>Name of the task</value>
+    <value>Task name</value>
   </data>
   <data name="TimeRanOut" xml:space="preserve">
     <value>Time has ran out</value>
@@ -320,5 +320,26 @@
   </data>
   <data name="UnsavedChanges" xml:space="preserve">
     <value>Unsaved changes</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description (optional)</value>
+  </data>
+  <data name="LastUpdateValue" xml:space="preserve">
+    <value>June 2019</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags (optional, space delimited)</value>
+  </data>
+  <data name="VersionName" xml:space="preserve">
+    <value>1.03 Good God</value>
+  </data>
+  <data name="PromoAds" xml:space="preserve">
+    <value>For the sake of Your comfort this application is free and does not include offensive adverts.</value>
+  </data>
+  <data name="PromoContact" xml:space="preserve">
+    <value>If you have any questions or ideas for improvement, we invite you to contact us. We are happy to help :)</value>
+  </data>
+  <data name="PromoPay" xml:space="preserve">
+    <value>You can help us by PayPal under this address:</value>
   </data>
 </root>
