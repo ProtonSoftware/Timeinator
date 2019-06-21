@@ -30,6 +30,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private bool mCheckAllBox = true;
 
+        /// <summary>
+        /// The current text input from the search bar
+        /// </summary>
+        public string mSearchText;
+
         #endregion
 
         #region Public Properties
@@ -87,6 +92,20 @@ namespace Timeinator.Mobile.Core
 
                 foreach (var task in TaskItems)
                     task.IsEnabled = mCheckAllBox;
+            }
+        }
+
+        /// <summary>
+        /// The current text input from the search bar
+        /// </summary>
+        public string SearchText
+        {
+            get => mSearchText;
+            set
+            {
+                mSearchText = value;
+
+                TaskListHelpers.RaiseRefreshEvent();
             }
         }
 
@@ -281,7 +300,7 @@ namespace Timeinator.Mobile.Core
         public void ReloadTasks()
         {
             // Load saved tasks in database
-            var tasks = mTimeTasksService.LoadStoredTasks();
+            var tasks = mTimeTasksService.LoadStoredTasks(SearchText);
 
             // Add them to the list as suitable view models
             TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tasks));

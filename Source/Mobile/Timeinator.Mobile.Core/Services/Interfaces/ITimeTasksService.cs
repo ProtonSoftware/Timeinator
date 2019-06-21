@@ -16,7 +16,7 @@ namespace Timeinator.Mobile.Core
 
         #region Database Interaction
 
-        List<TimeTaskContext> LoadStoredTasks();
+        List<TimeTaskContext> LoadStoredTasks(string queryString);
 
         void SaveTask(TimeTaskContext context);
         void RemoveTask(TimeTaskContext context);

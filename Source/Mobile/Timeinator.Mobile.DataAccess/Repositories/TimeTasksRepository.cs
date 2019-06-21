@@ -34,11 +34,27 @@ namespace Timeinator.Mobile.DataAccess
         /// Gets every time task that is saved in the database
         /// </summary>
         /// <returns>List of time task entities</returns>
-        public IEnumerable<TimeTask> GetSavedTasksForToday()
+        public IEnumerable<TimeTask> GetSavedTasksForToday(string queryString)
         {
-            // TODO: Logic when we are going for date tasks, for now - get literaly everything
+            // Get every saved task from the database
             var result = GetAll();
 
+            // If we have a query string to filter tasks...
+            if (!string.IsNullOrWhiteSpace(queryString))
+            {
+                // Get every word from the query separately
+                foreach (var word in queryString.Split(' '))
+                {
+                    // Skip empty words
+                    if (string.IsNullOrWhiteSpace(word))
+                        continue;
+
+                    // Filter the tasks for that specified word
+                    result = result.Where(x => x.Name.Contains(word) || x.TagsString.Contains(word));
+                }
+            }
+
+            // Return the result tasks
             return result;
         }
 

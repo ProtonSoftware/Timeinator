@@ -139,10 +139,10 @@ namespace Timeinator.Mobile.Core
         /// Loads every saved task from the database
         /// </summary>
         /// <returns>A list of found tasks as <see cref="TimeTaskContext"/></returns>
-        public List<TimeTaskContext> LoadStoredTasks()
+        public List<TimeTaskContext> LoadStoredTasks(string queryString)
         {
             // Get every task in the database
-            var dbTasks = mTimeTasksRepository.GetSavedTasksForToday();
+            var dbTasks = mTimeTasksRepository.GetSavedTasksForToday(queryString);
 
             // Map entities as contexts
             var result = mTimeTasksMapper.ListMap(dbTasks.ToList());

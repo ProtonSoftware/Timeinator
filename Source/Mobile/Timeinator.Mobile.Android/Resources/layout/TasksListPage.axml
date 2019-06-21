@@ -30,6 +30,14 @@
         android:background="@color/colorAccent"
         android:src="@drawable/ic_add_black_18dp"
         local:MvxBind="Click AddNewTaskCommand" />
+    <SearchView
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Wpisz nazwę lub tag"
+        android:iconifiedByDefault="false"
+        local:MvxBind="Query SearchText"
+        android:layout_below="@id/title" />
 	<LinearLayout
         android:id="@+id/bottomNavigation"
 		android:layout_width="match_parent"
@@ -110,7 +118,7 @@
 
     </LinearLayout>
 	<mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
-		android:layout_below="@id/title"
+		android:layout_below="@id/searchBar"
         android:layout_above="@id/bottomOptions"
 		android:id="@+id/taskList"
 		android:layout_width="match_parent"
