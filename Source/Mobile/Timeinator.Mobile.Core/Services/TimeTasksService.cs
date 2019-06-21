@@ -138,6 +138,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Loads every saved task from the database
         /// </summary>
+        /// <param name="queryString">The filter text for tasks</param>
         /// <returns>A list of found tasks as <see cref="TimeTaskContext"/></returns>
         public List<TimeTaskContext> LoadStoredTasks(string queryString)
         {

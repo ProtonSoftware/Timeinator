@@ -40,12 +40,12 @@ namespace Timeinator.Mobile.Core
         #region Public Properties
 
         /// <summary>
-        /// The list of possible task list items sorting methods
+        /// The list of possible languages in the app
         /// </summary>
         public ObservableCollection<string> LanguageItems { get; set; } = new ObservableCollection<string>
         {
             "Polski",
-            "Angielski"
+            "English"
         };
 
         /// <summary>

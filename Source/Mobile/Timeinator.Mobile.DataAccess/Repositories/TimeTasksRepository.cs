@@ -33,6 +33,7 @@ namespace Timeinator.Mobile.DataAccess
         /// <summary>
         /// Gets every time task that is saved in the database
         /// </summary>
+        /// <param name="queryString">The filter text for tasks</param>
         /// <returns>List of time task entities</returns>
         public IEnumerable<TimeTask> GetSavedTasksForToday(string queryString)
         {

@@ -511,6 +511,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type the name or tag.
+        /// </summary>
+        public static string SearchBarHint {
+            get {
+                return ResourceManager.GetString("SearchBarHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Session.
         /// </summary>
         public static string Session {
@@ -714,15 +723,6 @@ namespace Timeinator.Core {
         public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 1.03 Good God.
-        /// </summary>
-        public static string VersionName {
-            get {
-                return ResourceManager.GetString("VersionName", resourceCulture);
             }
         }
         

@@ -330,9 +330,6 @@
   <data name="Tags" xml:space="preserve">
     <value>Tags (optional, space delimited)</value>
   </data>
-  <data name="VersionName" xml:space="preserve">
-    <value>1.03 Good God</value>
-  </data>
   <data name="PromoAds" xml:space="preserve">
     <value>For the sake of Your comfort this application is free and does not include offensive adverts.</value>
   </data>
@@ -341,5 +338,8 @@
   </data>
   <data name="PromoPay" xml:space="preserve">
     <value>You can help us by PayPal under this address:</value>
+  </data>
+  <data name="SearchBarHint" xml:space="preserve">
+    <value>Type the name or tag</value>
   </data>
 </root>
