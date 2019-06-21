@@ -1,5 +1,4 @@
-﻿
-using Android.App;
+﻿using Android.App;
 using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Support.V7.Widget.Helper;
@@ -66,7 +65,7 @@ namespace Timeinator.Mobile.Android
             BindingContext.RegisterBinding(aboutIcon, bindingAbout);
 
             // Find task list container
-            var recyclerView = (MvxRecyclerView)page.FindViewById(Resource.Id.taskList);
+            var recyclerView = page.FindViewById(Resource.Id.taskList) as MvxRecyclerView;
 
             // Allow item swiping
             var callback = new SwipeRecyclerViewItemCallback(recyclerView.GetAdapter());

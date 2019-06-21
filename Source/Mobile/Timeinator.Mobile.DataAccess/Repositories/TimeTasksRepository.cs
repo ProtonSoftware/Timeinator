@@ -24,10 +24,7 @@ namespace Timeinator.Mobile.DataAccess
         /// Default constructor
         /// </summary>
         /// <param name="dbContext">The database context for this application</param>
-        public TimeTasksRepository(TimeinatorMobileDbContext dbContext) : base(dbContext)
-        {
-
-        }
+        public TimeTasksRepository(TimeinatorMobileDbContext dbContext) : base(dbContext) { }
 
         #endregion
 

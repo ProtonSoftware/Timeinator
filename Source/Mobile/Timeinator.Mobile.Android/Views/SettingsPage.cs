@@ -53,6 +53,9 @@ namespace Timeinator.Mobile.Android
             (settingChangeLanguageFragment.SettableView as MvxSpinner).SetSelection(initialValuePosition);
         }
 
+        public override void OnBackPressed() => (BindingContext.DataContext as SettingsPageViewModel).GoBackCommand.Execute(null);
+
+
         #region Private Helpers
 
         /// <summary>
