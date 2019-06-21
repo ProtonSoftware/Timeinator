@@ -1,4 +1,5 @@
-﻿using Timeinator.Core;
+﻿using System;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile.Core
 {
@@ -10,6 +11,15 @@ namespace Timeinator.Mobile.Core
         #region Private Members
 
         private readonly IUIManager mUIManager;
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// The version number string to show in the page
+        /// </summary>
+        public string VersionNumber { get; set; }
 
         #endregion
 
@@ -25,6 +35,9 @@ namespace Timeinator.Mobile.Core
 
             // Get injected DI services
             mUIManager = uiManager;
+
+            // Initialize the application assembly data
+            InitializeAppData();
         }
 
         #endregion
@@ -38,6 +51,19 @@ namespace Timeinator.Mobile.Core
         {
             // Close this page
             mUIManager.GoBackToPreviousPage(this);
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Loads the data about this application's assembly such as version number/updates/etc. 
+        /// </summary>
+        private void InitializeAppData()
+        {
+            var currentAssembly = typeof(App).Assembly.GetName();
+            VersionNumber = currentAssembly.Version.ToString();
         }
 
         #endregion

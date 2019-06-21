@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextMainBlack"
-            local:MvxBind='Text String("VersionName")'
+            local:MvxBind='Text VersionNumber'
             android:text="2.0.0" />
 
         <TextView
