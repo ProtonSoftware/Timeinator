@@ -29,14 +29,14 @@ namespace Timeinator.Mobile.Core
             construction.Services.AddSingleton<ISessionTimer, SessionTimer>();
 
             // Inject dependiencies into every page's view model
-            construction.Services.AddSingleton<TasksListPageViewModel>();
-            construction.Services.AddSingleton<TasksTimePageViewModel>();
-            construction.Services.AddSingleton<TasksSummaryPageViewModel>();
+            construction.Services.AddTransient<TasksListPageViewModel>();
+            construction.Services.AddTransient<TasksTimePageViewModel>();
+            construction.Services.AddTransient<TasksSummaryPageViewModel>();
             construction.Services.AddSingleton<TasksSessionPageViewModel>();
-            construction.Services.AddSingleton<AlarmPageViewModel>();
-            construction.Services.AddSingleton<LoginPageViewModel>();
-            construction.Services.AddSingleton<AboutPageViewModel>();
-            construction.Services.AddSingleton<AddNewTimeTaskPageViewModel>();
+            construction.Services.AddTransient<AlarmPageViewModel>();
+            construction.Services.AddTransient<LoginPageViewModel>();
+            construction.Services.AddTransient<AboutPageViewModel>();
+            construction.Services.AddTransient<AddNewTimeTaskPageViewModel>();
 
             // Return the construction for chaining
             return construction;
