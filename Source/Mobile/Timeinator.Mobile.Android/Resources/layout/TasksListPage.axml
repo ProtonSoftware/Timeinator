@@ -6,6 +6,7 @@
     android:id="@+id/taskListPage"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     android:clipToPadding="false">
 	<TextView
 		android:id="@+id/title"
@@ -36,6 +37,7 @@
         android:layout_height="wrap_content"
         android:queryHint="Wpisz nazwę lub tag"
         android:iconifiedByDefault="false"
+        android:focusedByDefault="false"
         local:MvxBind='Query SearchText; QueryHint String("SearchBarHint")'
         android:layout_below="@id/title" />
 	<LinearLayout
