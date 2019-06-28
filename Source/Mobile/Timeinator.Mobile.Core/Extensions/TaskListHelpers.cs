@@ -55,7 +55,7 @@ namespace Timeinator.Mobile.Core
 
         public static void RaiseRefreshEvent() => RefreshUITasks.Invoke();
 
-        public static List<string> SplitTagsString(this string tagsString) => tagsString.Split(' ').ToList();
+        public static List<string> SplitTagsString(this string tagsString) => string.IsNullOrWhiteSpace(tagsString) ? null : tagsString.Split(' ').ToList();
         public static string CreateTagsString(this List<string> tagsList) => string.Join(" ", tagsList);
     }
 }
