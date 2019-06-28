@@ -57,7 +57,7 @@ namespace Timeinator.Mobile.DataAccess
             }
             set
             {
-                if (value != null)
+                if (!string.IsNullOrWhiteSpace(value))
                     Tags = value.Split('\n').ToList();
             }
         }
