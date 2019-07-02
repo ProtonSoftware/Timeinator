@@ -3,7 +3,6 @@ using MvvmCross.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using Timeinator.Core;
@@ -293,7 +292,7 @@ namespace Timeinator.Mobile.Core
                 // Set the task at specified index
                 CurrentTask = viewModels.ElementAt(index);
             }
-            catch (ArgumentOutOfRangeException)
+            catch (ArgumentOutOfRangeException ex)
             {
                 // If we get here, the index is not in the list
                 // So the list is either empty...
@@ -305,7 +304,8 @@ namespace Timeinator.Mobile.Core
                 // Or something went wrong and we tried to start the task that doesn't exist
                 else
                 {
-                    Debugger.Break();
+                    // System.Diagnostics.Debugger.Break();
+                    throw ex;
                 }
             }
 
@@ -321,6 +321,9 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void EndSession()
         {
+            // Stop timer
+            mTimeTasksService.StartBreak();
+
             // Send finished tasks list for removal
             mTimeTasksService.RemoveFinishedTasks(mFinishedTasks);
 
