@@ -228,16 +228,13 @@ namespace Timeinator.Mobile.Core
         /// <param name="timerAction">The action that will be attached to the timer elapsed event</param>
         /// <param name="taskAction">The action that will be attached to the task finished event</param>
         /// <returns>List of every task in the session we start</returns>
-        public HeadList<TimeTaskContext> StartSession(Action timerAction, Action taskAction)
+        public void StartSession(Action timerAction, Action taskAction)
         {
             // Setup the timer session
             mSessionTimer.SetupSession(timerAction, taskAction);
 
             // Start first task
             StartNextTask(mCurrentTasks.Head);
-
-            // Return the task session list
-            return mCurrentTasks;
         }
 
         /// <summary>
@@ -268,6 +265,7 @@ namespace Timeinator.Mobile.Core
             {
                 // Reduce session duration
                 mSessionTime -= TaskDuration;
+                mSessionTime -= CurrentBreakDuration;
 
                 // Shrink tasks to new session time
                 SetSessionTasks(GetCalculatedTasks());
@@ -275,6 +273,11 @@ namespace Timeinator.Mobile.Core
             // Reset task with new time
             StartNextTask(mCurrentTasks.Head);
         }
+
+        /// <summary>
+        /// Get current task list
+        /// </summary>
+        public HeadList<TimeTaskContext> GetSessionTasks() => mCurrentTasks;
 
         #endregion
 
