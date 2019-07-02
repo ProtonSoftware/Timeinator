@@ -97,6 +97,7 @@ namespace Timeinator.Mobile.Core
             mIsOnBreak = false;
 
             // Reset duration
+            CurrentBreakDuration = TimeSpan.Zero;
             TaskDuration = TimeSpan.Zero;
 
             // Set provided time

@@ -28,7 +28,7 @@ namespace Timeinator.Mobile.Tests
             repository.SaveTask(mapper.ReverseMap(tasksList[1]));
             repository.SaveTask(mapper.ReverseMap(tasksList[2]));
 
-            var returnedList = repository.GetSavedTasksForToday().ToList();
+            var returnedList = repository.GetSavedTasksForToday("").ToList();
 
             // Assert
             Assert.True(returnedList.Count == tasksList.Count);
@@ -55,7 +55,7 @@ namespace Timeinator.Mobile.Tests
 
             repository.RemoveTasks(new List<int> { task.Id } );
 
-            var returnedList = repository.GetSavedTasksForToday().ToList();
+            var returnedList = repository.GetSavedTasksForToday("").ToList();
 
             // Assert
             Assert.True(returnedList.Count == tasksList.Count - 1);
