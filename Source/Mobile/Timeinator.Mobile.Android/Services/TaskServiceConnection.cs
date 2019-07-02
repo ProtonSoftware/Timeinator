@@ -10,18 +10,6 @@ namespace Timeinator.Mobile.Android
     /// </summary>
     public class TaskServiceConnection : Java.Lang.Object, IServiceConnection
     {
-        #region Constructor
-
-        public TaskServiceConnection()
-        {
-            //TimerElapsed = () => { };
-            Request = (a) => { };
-            IsConnected = false;
-            Binder = null;
-        }
-
-        #endregion
-
         #region Public Properties
 
         public bool IsConnected { get; private set; }
@@ -35,7 +23,6 @@ namespace Timeinator.Mobile.Android
             IsConnected = Binder != null;
             if (IsConnected)
             {
-                //Binder.Service.Elapsed += () => TimerElapsed.Invoke();
                 Binder.Service.RequestHandler += (a) => Request.Invoke(a);
             }
         }
@@ -46,22 +33,21 @@ namespace Timeinator.Mobile.Android
             IsConnected = false;
         }
 
-        #region SessionService Implementation
-
         private string TaskName { get; set; }
         private double RecentProgress { get; set; }
 
         public bool Active
         {
-            get {
+            get
+            {
                 if (!IsConnected)
                     return false;
-                else
-                    return Binder.Service.Running;
+
+                return Binder.Service.IsRunning;
             }
         }
-        // public event Action TimerElapsed, TimerTick;
-        public event Action<AppAction> Request;
+
+        public event Action<AppAction> Request = (a) => { };
 
         public void Details(string nameT, double progressT)
         {
@@ -80,32 +66,29 @@ namespace Timeinator.Mobile.Android
         {
             if (!IsConnected)
                 return;
-            Binder.Service.Stop();
-            Binder.Service.UpdateTask(TaskName, DateTime.Now, assignedT, RecentProgress);
+            Binder.Service.IsRunning = false;
+            Binder.Service.UpdateTask(TaskName, assignedT, RecentProgress);
         }
 
         public void Stop()
         {
             if (!IsConnected)
                 return;
-            Binder.Service.Stop();
+            Binder.Service.IsRunning = false;
         }
 
         public void Start()
         {
             if (!IsConnected)
                 return;
-            Binder.Service.ParamStart = DateTime.Now;
-            Binder.Service.Start();
+            Binder.Service.IsRunning = true;
         }
 
         public void Kill()
         {
             if (!IsConnected)
                 return;
-            Binder.Service.KillService();
+            Binder.Service.StopSelf();
         }
-
-        #endregion
     }
 }
