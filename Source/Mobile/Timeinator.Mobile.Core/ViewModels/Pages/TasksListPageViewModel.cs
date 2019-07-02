@@ -165,6 +165,9 @@ namespace Timeinator.Mobile.Core
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 
+            // Remove all outdated refresh events
+            TaskListHelpers.CleanRefreshEvent();
+
             // Attach reloading function to an event, so everytime tasks need update, it can be fired and updated
             TaskListHelpers.RefreshUITasks += ReloadTasks;
 

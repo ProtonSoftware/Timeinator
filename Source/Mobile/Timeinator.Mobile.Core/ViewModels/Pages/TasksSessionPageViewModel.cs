@@ -277,10 +277,12 @@ namespace Timeinator.Mobile.Core
             mTimeTasksService.StartBreak();
 
             // Update internal copy of tasks in Service
-            mTimeTasksService.SetSessionTasks(mTimeTasksMapper.ListReverseMap(RemainingTasks.ToList()));
+            var reducedList = mTimeTasksMapper.ListReverseMap(RemainingTasks.ToList());
+            mTimeTasksService.SetSessionTasks(reducedList);
 
             // Set next task on the list
-            SetCurrentTask(0, RemainingTasks.ToList());
+            if (SetCurrentTask(0, RemainingTasks.ToList()))
+                return;
 
             // Release session after changes
             mTimeTasksService.EndBreak();
@@ -294,7 +296,7 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         /// <param name="index">The index of the task to set as current</param>
         /// <param name="viewModels">The list of task view models</param>
-        private void SetCurrentTask(int index, List<TimeTaskViewModel> viewModels)
+        private bool SetCurrentTask(int index, List<TimeTaskViewModel> viewModels)
         {
             try
             {
@@ -305,10 +307,12 @@ namespace Timeinator.Mobile.Core
             {
                 // If we get here, the index is not in the list
                 // So the list is either empty...
-                if (viewModels.Count == 0)
+                if (viewModels.Count <= 0)
                 {
                     // Then we finish current session
                     EndSession();
+                    // Closing session
+                    return true;
                 }
                 // Or something went wrong and we tried to start the task that doesn't exist
                 else
@@ -323,6 +327,9 @@ namespace Timeinator.Mobile.Core
 
             // And set the remaining list tasks
             RemainingTasks = new ObservableCollection<TimeTaskViewModel>(viewModels);
+
+            // Did not finish session
+            return false;
         }
 
         /// <summary>

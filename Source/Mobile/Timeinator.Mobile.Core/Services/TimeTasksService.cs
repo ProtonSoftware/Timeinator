@@ -205,21 +205,28 @@ namespace Timeinator.Mobile.Core
         /// <returns>List of calculated <see cref="TimeTaskContext"/></returns>
         public List<TimeTaskContext> GetCalculatedTasks()
         {
-            // Check if task list is properly set
-            ValidateTasks();
-
-            // Check if time for session is properly set
-            if (mSessionTime == default || !ValidateTime(mSessionTime))
+            try
             {
-                // Throw exception because it should not ever happen in the code (time should be checked before), so something needs a fix
-                throw new Exception(LocalizationResource.AttemptToCalculateNoTime);
+                // Check if task list is properly set
+                ValidateTasks();
+
+                // Check if time for session is properly set
+                if (mSessionTime == default || !ValidateTime(mSessionTime))
+                {
+                    // Throw exception because it should not ever happen in the code (time should be checked before), so something needs a fix
+                    throw new Exception(LocalizationResource.AttemptToCalculateNoTime);
+                }
+
+                // Everything is nice and set, calculate our session
+                var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(mCurrentTasks.WholeList, mSessionTime);
+
+                // Return the tasks
+                return calculatedTasks;
             }
-
-            // Everything is nice and set, calculate our session
-            var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(mCurrentTasks.WholeList, mSessionTime);
-
-            // Return the tasks
-            return calculatedTasks;
+            catch
+            {
+                return new List<TimeTaskContext>();
+            }
         }
 
         /// <summary>
@@ -270,8 +277,9 @@ namespace Timeinator.Mobile.Core
                 // Shrink tasks to new session time
                 SetSessionTasks(GetCalculatedTasks());
             }
-            // Reset task with new time
-            StartNextTask(mCurrentTasks.Head);
+            if (mCurrentTasks.WholeList.Count > 0)
+                // Reset task with new time
+                StartNextTask(mCurrentTasks.Head);
         }
 
         /// <summary>
