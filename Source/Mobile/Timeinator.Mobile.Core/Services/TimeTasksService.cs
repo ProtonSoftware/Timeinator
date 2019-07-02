@@ -43,6 +43,11 @@ namespace Timeinator.Mobile.Core
         public TimeSpan SessionDuration => mSessionTimer.SessionDuration;
 
         /// <summary>
+        /// Gets task duration of recent task from session timer
+        /// </summary>
+        public TimeSpan TaskDuration => mSessionTimer.TaskDuration;
+
+        /// <summary>
         /// Gets time left to complete current task from session timer
         /// </summary>
         public TimeSpan CurrentTaskTimeLeft => mSessionTimer.CurrentTaskTimeLeft;
@@ -189,6 +194,7 @@ namespace Timeinator.Mobile.Core
         public void ClearSessionTasks()
         {
             // Simply nullify the properties, so the service state is exactly the same as when before the use
+            mCurrentTasks.WholeList.Clear();
             mCurrentTasks = null;
             mSessionTime = default;
         }
@@ -228,8 +234,7 @@ namespace Timeinator.Mobile.Core
             mSessionTimer.SetupSession(timerAction, taskAction);
 
             // Start first task
-            var firstTask = mCurrentTasks.Head;
-            StartNextTask(firstTask);
+            StartNextTask(mCurrentTasks.Head);
 
             // Return the task session list
             return mCurrentTasks;
@@ -241,9 +246,6 @@ namespace Timeinator.Mobile.Core
         /// <param name="context">The task context to start</param>
         public void StartNextTask(TimeTaskContext context)
         {
-            // Add previous' task time to this one
-            context.AssignedTime += mSessionTimer.CurrentTaskTimeLeft;
-
             // Pass task's time to the timer to start
             mSessionTimer.StartNextTask(context.AssignedTime);
 
@@ -264,9 +266,14 @@ namespace Timeinator.Mobile.Core
             // If we should recalculate provided tasks...
             if (DI.Settings.RecalculateTasksAfterBreak)
             {
-                // TODO: Logic here
+                // Reduce session duration
+                mSessionTime -= TaskDuration;
+
+                // Shrink tasks to new session time
+                SetSessionTasks(GetCalculatedTasks());
             }
-            mSessionTimer.EndBreak();
+            // Reset task with new time
+            StartNextTask(mCurrentTasks.Head);
         }
 
         #endregion

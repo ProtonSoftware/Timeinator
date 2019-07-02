@@ -12,6 +12,11 @@ namespace Timeinator.Mobile.Core
         #region Private Members
 
         /// <summary>
+        /// One second duration TimeSpan
+        /// </summary>
+        private static readonly TimeSpan OneSecond = TimeSpan.FromSeconds(1);
+
+        /// <summary>
         /// The timer that elapses every second so everything related to time can update everytime it ticks
         /// </summary>
         private Timer mSecondsTicker;
@@ -28,7 +33,12 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The duration of the whole current session
         /// </summary>
-        public TimeSpan SessionDuration { get; private set; } = new TimeSpan(0);
+        public TimeSpan SessionDuration { get; private set; }
+
+        /// <summary>
+        /// The duration of recent task
+        /// </summary>
+        public TimeSpan TaskDuration { get; private set; }
 
         /// <summary>
         /// The time that left in current session task
@@ -60,6 +70,10 @@ namespace Timeinator.Mobile.Core
         /// <param name="taskAction">The action to fire when task's time finishes</param>
         public void SetupSession(Action timerAction, Action taskAction)
         {
+            // Reset session
+            SessionDuration = TimeSpan.Zero;
+            TaskDuration = TimeSpan.Zero;
+
             // Timer ticks every second
             mSecondsTicker = new Timer(1000);
 
@@ -79,6 +93,12 @@ namespace Timeinator.Mobile.Core
         /// <param name="taskTime">The provided task's time we set and count from</param>
         public void StartNextTask(TimeSpan taskTime)
         {
+            // Set session as not paused
+            mIsOnBreak = false;
+
+            // Reset duration
+            TaskDuration = TimeSpan.Zero;
+
             // Set provided time
             CurrentTaskTimeLeft = taskTime;
 
@@ -92,19 +112,10 @@ namespace Timeinator.Mobile.Core
         public void StartBreak()
         {
             // Erase any previous break time 
-            CurrentBreakDuration = new TimeSpan(0);
+            CurrentBreakDuration = TimeSpan.Zero;
 
             // Set the indicator
             mIsOnBreak = true;
-        }
-
-        /// <summary>
-        /// Ends the break time
-        /// </summary>
-        public void EndBreak()
-        {
-            // Set the indicator
-            mIsOnBreak = false;
         }
 
         #endregion
@@ -117,23 +128,24 @@ namespace Timeinator.Mobile.Core
         private void SecondsTicker_Elapsed(object sender, ElapsedEventArgs e)
         {
             // Add one second to the session duration
-            SessionDuration += TimeSpan.FromSeconds(1);
+            SessionDuration += OneSecond;
 
             // If break time is on...
             if (mIsOnBreak)
             {
                 // Add one second to the break duration
-                CurrentBreakDuration += TimeSpan.FromSeconds(1);
+                CurrentBreakDuration += OneSecond;
 
                 // Don't do anything else while on break
                 return;
             }
 
             // Substract one second from the task time
-            CurrentTaskTimeLeft -= TimeSpan.FromSeconds(1);
+            CurrentTaskTimeLeft -= OneSecond;
+            TaskDuration += OneSecond;
 
             // If the task finished already...
-            if (CurrentTaskTimeLeft <= TimeSpan.FromSeconds(0))
+            if (CurrentTaskTimeLeft <= TimeSpan.Zero)
             {
                 // Stop the timer
                 mSecondsTicker.Stop();
