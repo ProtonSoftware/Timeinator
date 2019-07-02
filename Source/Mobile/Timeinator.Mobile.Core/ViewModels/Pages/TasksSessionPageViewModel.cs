@@ -223,6 +223,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void UpdateSessionProperties()
         {
+            // Gather updated tasks
+            var contexts = mTimeTasksService.GetSessionTasks();
+            // At the start of the session, first task in the list is always current one, so set it accordingly
+            SetCurrentTask(0, mTimeTasksMapper.ListMap(contexts.WholeList));
+
             // Simply use the helper to fire every property's change event, for now it works just fine
             // Potentially in the future, update only required properties, not everything
             RaiseAllPropertiesChanged();
@@ -268,14 +273,17 @@ namespace Timeinator.Mobile.Core
             // Add finished task to the list for future reference
             mFinishedTasks.Add(finishedTask);
 
+            // Pause session for operation
+            mTimeTasksService.StartBreak();
+
+            // Update internal copy of tasks in Service
+            mTimeTasksService.SetSessionTasks(mTimeTasksMapper.ListReverseMap(RemainingTasks.ToList()));
+
             // Set next task on the list
             SetCurrentTask(0, RemainingTasks.ToList());
 
-            // Get new task's context
-            var newTask = mTimeTasksMapper.ReverseMap(CurrentTask);
-
-            // And start it in the session
-            mTimeTasksService.StartNextTask(newTask);
+            // Release session after changes
+            mTimeTasksService.EndBreak();
 
             // Inform the notification
             mSessionNotificationService.StartNewTask(CurrentTask);
