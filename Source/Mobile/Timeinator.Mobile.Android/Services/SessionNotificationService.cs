@@ -59,8 +59,7 @@ namespace Timeinator.Mobile.Android
             mTaskServiceConnection.Stop();
 
             // Setup provided details
-            mTaskServiceConnection.Details(timeTaskViewModel.Name, timeTaskViewModel.Progress);
-            mTaskServiceConnection.Interval(timeTaskViewModel.AssignedTime);
+            mTaskServiceConnection.SetNewTask(timeTaskViewModel.Name);
 
             // Start the task
             mTaskServiceConnection.Start();
