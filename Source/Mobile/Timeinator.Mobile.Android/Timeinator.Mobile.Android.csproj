@@ -143,6 +143,7 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\AndroidNotificationManager.cs" />
     <Compile Include="Services\RingtonePlayer.cs" />
     <Compile Include="Views\AlarmPage.cs" />
     <Compile Include="Helpers\MovementRecyclerViewItemCallback.cs" />

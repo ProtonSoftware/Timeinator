@@ -33,9 +33,6 @@ namespace Timeinator.Mobile.Android
             IsConnected = false;
         }
 
-        private string TaskName { get; set; }
-        private double RecentProgress { get; set; }
-
         public bool Active
         {
             get
@@ -49,10 +46,9 @@ namespace Timeinator.Mobile.Android
 
         public event Action<AppAction> Request = (a) => { };
 
-        public void Details(string nameT, double progressT)
+        public void SetNewTask(string name)
         {
-            TaskName = nameT;
-            RecentProgress = progressT;
+            Binder.Service.NotificationTitle = name;
         }
 
         public void Update()
@@ -60,14 +56,6 @@ namespace Timeinator.Mobile.Android
             if (!IsConnected)
                 return;
             Binder.Service.ReNotify();
-        }
-
-        public void Interval(TimeSpan assignedT)
-        {
-            if (!IsConnected)
-                return;
-            Binder.Service.IsRunning = false;
-            Binder.Service.UpdateTask(TaskName, assignedT, RecentProgress);
         }
 
         public void Stop()
