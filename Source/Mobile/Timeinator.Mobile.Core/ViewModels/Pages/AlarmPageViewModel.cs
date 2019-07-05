@@ -16,27 +16,7 @@ namespace Timeinator.Mobile.Core
     {
         #region Private Members
 
-        private readonly ITimeTasksService mTimeTasksService;
         private readonly IRingtonePlayer mRingtonePlayer;
-
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        /// Current session length from the start of it
-        /// </summary>
-        public TimeSpan SessionDuration => mTimeTasksService.SessionDuration;
-
-        /// <summary>
-        /// The remaining time left of current task
-        /// </summary>
-        public TimeSpan TimeRemaining => mTimeTasksService.CurrentTaskTimeLeft;
-
-        /// <summary>
-        /// Current break duration, displayed only when break indicator is true
-        /// </summary>
-        public TimeSpan BreakDuration => mTimeTasksService.CurrentBreakDuration;
 
         #endregion
 
@@ -59,10 +39,9 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AlarmPageViewModel(ITimeTasksService timeTasksService, IRingtonePlayer ringtonePlayer)
+        public AlarmPageViewModel(IRingtonePlayer ringtonePlayer)
         {
             // Get injected DI services
-            mTimeTasksService = timeTasksService;
             mRingtonePlayer = ringtonePlayer;
         }
 
@@ -74,8 +53,5 @@ namespace Timeinator.Mobile.Core
             PauseCommand = new RelayCommand(() => { mRingtonePlayer.Stop(); pause.Invoke(); DI.Application.GoToPage(ApplicationPage.TasksSession); });
             FinishCommand = new RelayCommand(() => { mRingtonePlayer.Stop(); next.Invoke(); DI.Application.GoToPage(ApplicationPage.TasksSession); });
         }
-
-        #region Command Methods
-        #endregion
     }
 }
