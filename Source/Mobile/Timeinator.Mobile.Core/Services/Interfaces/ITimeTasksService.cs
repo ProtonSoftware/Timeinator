@@ -10,6 +10,7 @@ namespace Timeinator.Mobile.Core
     public interface ITimeTasksService
     {
         TimeSpan SessionDuration { get; }
+        TimeSpan TaskDuration { get; }
         TimeSpan CurrentTaskTimeLeft { get; }
         TimeSpan CurrentBreakDuration { get; }
         double CurrentTaskCalculatedProgress { get; }
@@ -28,9 +29,10 @@ namespace Timeinator.Mobile.Core
         void SetSessionTasks(List<TimeTaskContext> contexts);
         bool SetSessionTime(TimeSpan userTime);
         void ClearSessionTasks();
-        HeadList<TimeTaskContext> StartSession(Action timerAction, Action taskAction);
+        void StartSession(Action timerAction, Action taskAction);
         void StartNextTask(TimeTaskContext context);
         void StartBreak();
         void EndBreak();
+        HeadList<TimeTaskContext> GetSessionTasks();
     }
 }

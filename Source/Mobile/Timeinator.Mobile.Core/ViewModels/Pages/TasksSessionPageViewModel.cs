@@ -3,7 +3,6 @@ using MvvmCross.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using Timeinator.Core;
@@ -199,7 +198,8 @@ namespace Timeinator.Mobile.Core
             mSessionNotificationService.AttachClickCommands(NotificationButtonClick);
 
             // Start new session providing required actions and get all the tasks
-            var contexts = mTimeTasksService.StartSession(() => { UpdateSessionProperties(); mSessionNotificationService.UpdateNotification(); }, TaskTimeFinish);
+            mTimeTasksService.StartSession(() => { UpdateSessionProperties(); mSessionNotificationService.UpdateNotification(); }, TaskTimeFinish);
+            var contexts = mTimeTasksService.GetSessionTasks();
 
             // At the start of the session, first task in the list is always current one, so set it accordingly
             SetCurrentTask(0, mTimeTasksMapper.ListMap(contexts.WholeList));
@@ -223,6 +223,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void UpdateSessionProperties()
         {
+            // Gather updated tasks
+            var contexts = mTimeTasksService.GetSessionTasks();
+            // At the start of the session, first task in the list is always current one, so set it accordingly
+            SetCurrentTask(0, mTimeTasksMapper.ListMap(contexts.WholeList));
+
             // Simply use the helper to fire every property's change event, for now it works just fine
             // Potentially in the future, update only required properties, not everything
             RaiseAllPropertiesChanged();
@@ -268,14 +273,19 @@ namespace Timeinator.Mobile.Core
             // Add finished task to the list for future reference
             mFinishedTasks.Add(finishedTask);
 
+            // Pause session for operation
+            mTimeTasksService.StartBreak();
+
+            // Update internal copy of tasks in Service
+            var reducedList = mTimeTasksMapper.ListReverseMap(RemainingTasks.ToList());
+            mTimeTasksService.SetSessionTasks(reducedList);
+
             // Set next task on the list
-            SetCurrentTask(0, RemainingTasks.ToList());
+            if (SetCurrentTask(0, RemainingTasks.ToList()))
+                return;
 
-            // Get new task's context
-            var newTask = mTimeTasksMapper.ReverseMap(CurrentTask);
-
-            // And start it in the session
-            mTimeTasksService.StartNextTask(newTask);
+            // Release session after changes
+            mTimeTasksService.EndBreak();
 
             // Inform the notification
             mSessionNotificationService.StartNewTask(CurrentTask);
@@ -286,26 +296,29 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         /// <param name="index">The index of the task to set as current</param>
         /// <param name="viewModels">The list of task view models</param>
-        private void SetCurrentTask(int index, List<TimeTaskViewModel> viewModels)
+        private bool SetCurrentTask(int index, List<TimeTaskViewModel> viewModels)
         {
             try
             {
                 // Set the task at specified index
                 CurrentTask = viewModels.ElementAt(index);
             }
-            catch (ArgumentOutOfRangeException)
+            catch (ArgumentOutOfRangeException ex)
             {
                 // If we get here, the index is not in the list
                 // So the list is either empty...
-                if (viewModels.Count == 0)
+                if (viewModels.Count <= 0)
                 {
                     // Then we finish current session
                     EndSession();
+                    // Closing session
+                    return true;
                 }
                 // Or something went wrong and we tried to start the task that doesn't exist
                 else
                 {
-                    Debugger.Break();
+                    // System.Diagnostics.Debugger.Break();
+                    throw ex;
                 }
             }
 
@@ -314,6 +327,9 @@ namespace Timeinator.Mobile.Core
 
             // And set the remaining list tasks
             RemainingTasks = new ObservableCollection<TimeTaskViewModel>(viewModels);
+
+            // Did not finish session
+            return false;
         }
 
         /// <summary>
@@ -321,6 +337,9 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void EndSession()
         {
+            // Stop timer
+            mTimeTasksService.StartBreak();
+
             // Send finished tasks list for removal
             mTimeTasksService.RemoveFinishedTasks(mFinishedTasks);
 

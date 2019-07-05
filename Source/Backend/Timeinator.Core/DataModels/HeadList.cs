@@ -24,6 +24,9 @@ namespace Timeinator.Core
         {
             get
             {
+                if (WholeList.Count <= 0)
+                    return new List<T>();
+
                 // Copy the list so we don't modify current properties
                 var listCopy = WholeList;
 
@@ -50,13 +53,6 @@ namespace Timeinator.Core
         /// <param name="listData">The whole list of <see cref="T"/></param>
         public HeadList(List<T> listData)
         {
-            // If the list doesn't have any elements...
-            if (listData.Count == 0)
-            {
-                // Throw an exception to inform about bad usage of this helper class
-                throw new Exception(LocalizationResource.ProvidedListNotPopulated);
-            }
-
             // Set the inside list
             WholeList = listData;
         }

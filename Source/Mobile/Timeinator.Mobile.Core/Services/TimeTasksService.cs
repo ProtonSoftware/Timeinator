@@ -43,6 +43,11 @@ namespace Timeinator.Mobile.Core
         public TimeSpan SessionDuration => mSessionTimer.SessionDuration;
 
         /// <summary>
+        /// Gets task duration of recent task from session timer
+        /// </summary>
+        public TimeSpan TaskDuration => mSessionTimer.TaskDuration;
+
+        /// <summary>
         /// Gets time left to complete current task from session timer
         /// </summary>
         public TimeSpan CurrentTaskTimeLeft => mSessionTimer.CurrentTaskTimeLeft;
@@ -189,6 +194,7 @@ namespace Timeinator.Mobile.Core
         public void ClearSessionTasks()
         {
             // Simply nullify the properties, so the service state is exactly the same as when before the use
+            mCurrentTasks.WholeList.Clear();
             mCurrentTasks = null;
             mSessionTime = default;
         }
@@ -199,21 +205,28 @@ namespace Timeinator.Mobile.Core
         /// <returns>List of calculated <see cref="TimeTaskContext"/></returns>
         public List<TimeTaskContext> GetCalculatedTasks()
         {
-            // Check if task list is properly set
-            ValidateTasks();
-
-            // Check if time for session is properly set
-            if (mSessionTime == default || !ValidateTime(mSessionTime))
+            try
             {
-                // Throw exception because it should not ever happen in the code (time should be checked before), so something needs a fix
-                throw new Exception(LocalizationResource.AttemptToCalculateNoTime);
+                // Check if task list is properly set
+                ValidateTasks();
+
+                // Check if time for session is properly set
+                if (mSessionTime == default || !ValidateTime(mSessionTime))
+                {
+                    // Throw exception because it should not ever happen in the code (time should be checked before), so something needs a fix
+                    throw new Exception(LocalizationResource.AttemptToCalculateNoTime);
+                }
+
+                // Everything is nice and set, calculate our session
+                var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(mCurrentTasks.WholeList, mSessionTime);
+
+                // Return the tasks
+                return calculatedTasks;
             }
-
-            // Everything is nice and set, calculate our session
-            var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(mCurrentTasks.WholeList, mSessionTime);
-
-            // Return the tasks
-            return calculatedTasks;
+            catch
+            {
+                return new List<TimeTaskContext>();
+            }
         }
 
         /// <summary>
@@ -222,17 +235,13 @@ namespace Timeinator.Mobile.Core
         /// <param name="timerAction">The action that will be attached to the timer elapsed event</param>
         /// <param name="taskAction">The action that will be attached to the task finished event</param>
         /// <returns>List of every task in the session we start</returns>
-        public HeadList<TimeTaskContext> StartSession(Action timerAction, Action taskAction)
+        public void StartSession(Action timerAction, Action taskAction)
         {
             // Setup the timer session
             mSessionTimer.SetupSession(timerAction, taskAction);
 
             // Start first task
-            var firstTask = mCurrentTasks.Head;
-            StartNextTask(firstTask);
-
-            // Return the task session list
-            return mCurrentTasks;
+            StartNextTask(mCurrentTasks.Head);
         }
 
         /// <summary>
@@ -241,9 +250,6 @@ namespace Timeinator.Mobile.Core
         /// <param name="context">The task context to start</param>
         public void StartNextTask(TimeTaskContext context)
         {
-            // Add previous' task time to this one
-            context.AssignedTime += mSessionTimer.CurrentTaskTimeLeft;
-
             // Pass task's time to the timer to start
             mSessionTimer.StartNextTask(context.AssignedTime);
 
@@ -264,10 +270,22 @@ namespace Timeinator.Mobile.Core
             // If we should recalculate provided tasks...
             if (DI.Settings.RecalculateTasksAfterBreak)
             {
-                // TODO: Logic here
+                // Reduce session duration
+                mSessionTime -= TaskDuration;
+                mSessionTime -= CurrentBreakDuration;
+
+                // Shrink tasks to new session time
+                SetSessionTasks(GetCalculatedTasks());
             }
-            mSessionTimer.EndBreak();
+            if (mCurrentTasks.WholeList.Count > 0)
+                // Reset task with new time
+                StartNextTask(mCurrentTasks.Head);
         }
+
+        /// <summary>
+        /// Get current task list
+        /// </summary>
+        public HeadList<TimeTaskContext> GetSessionTasks() => mCurrentTasks;
 
         #endregion
 
