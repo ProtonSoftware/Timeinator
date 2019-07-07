@@ -40,6 +40,9 @@ namespace Timeinator.Mobile.Core
                 case ApplicationPage.TasksSession:
                     return DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
 
+                case ApplicationPage.Alarm:
+                    return DI.GetInjectedPageViewModel<AlarmPageViewModel>();
+
                 default:
                     // Alert developer of an issue
                     Debugger.Break();

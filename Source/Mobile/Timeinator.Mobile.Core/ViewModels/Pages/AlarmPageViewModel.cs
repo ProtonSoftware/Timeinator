@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using MvvmCross.ViewModels;
 using System.Windows.Input;
 using Timeinator.Core;
-using MvvmCross.ViewModels;
 
 namespace Timeinator.Mobile.Core
 {
@@ -41,17 +36,76 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public AlarmPageViewModel(IRingtonePlayer ringtonePlayer)
         {
+            // Create commands
+            StartBreakCommand = new RelayCommand(StartBreak);
+            FinishCommand = new RelayCommand(FinishTask);
+
             // Get injected DI services
             mRingtonePlayer = ringtonePlayer;
         }
 
         #endregion
 
-        public void InitializeButtons(Action pause, Action next)
+        #region Override Methods
+
+        /// <summary>
+        /// Called whenever the view for this view model appears on screen
+        /// </summary>
+        public override void ViewAppeared()
         {
+            // Do base stuff
+            base.ViewAppeared();
+
+            // Play the sound for this screen
             mRingtonePlayer.Play();
-            PauseCommand = new RelayCommand(() => { mRingtonePlayer.Stop(); pause.Invoke(); DI.Application.GoToPage(ApplicationPage.TasksSession); });
-            FinishCommand = new RelayCommand(() => { mRingtonePlayer.Stop(); next.Invoke(); DI.Application.GoToPage(ApplicationPage.TasksSession); });
         }
+
+        /// <summary>
+        /// Called whenever the view for this view model appears on screen
+        /// </summary>
+        public override void ViewDisappearing()
+        {
+            // Do base stuff
+            base.ViewDisappearing();
+
+            // Stop the sound
+            mRingtonePlayer.Stop();
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Starts the break in current session
+        /// </summary>
+        private void StartBreak()
+        {
+            // Get current session view model
+            var viewModel = DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
+
+            // Go back to session page
+            DI.Application.GoToPage(ApplicationPage.TasksSession, viewModel);
+
+            // Start the break
+            viewModel.PauseCommand.Execute(null);
+        }
+
+        /// <summary>
+        /// Finishes current task in the session
+        /// </summary>
+        private void FinishTask()
+        {
+            // Get current session view model
+            var viewModel = DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
+
+            // Go back to session page
+            DI.Application.GoToPage(ApplicationPage.TasksSession, viewModel);
+
+            // Finish task
+            viewModel.FinishTaskCommand.Execute(null);
+        }
+
+        #endregion
     }
 }
