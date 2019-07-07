@@ -38,7 +38,7 @@ namespace Timeinator.Mobile.Core
         #region Public Properties
 
         /// <summary>
-        /// Gets session duration time from session timer
+        /// The session duration time from session timer
         /// </summary>
         public TimeSpan SessionDuration => mSessionTimer.SessionDuration;
 
@@ -48,12 +48,12 @@ namespace Timeinator.Mobile.Core
         public TimeSpan TaskDuration => mSessionTimer.TaskDuration;
 
         /// <summary>
-        /// Gets time left to complete current task from session timer
+        /// The time left to complete current task from session timer
         /// </summary>
         public TimeSpan CurrentTaskTimeLeft => mSessionTimer.CurrentTaskTimeLeft;
 
         /// <summary>
-        /// Gets current break duration from session timer
+        /// The current break duration from session timer
         /// </summary>
         public TimeSpan CurrentBreakDuration => mSessionTimer.CurrentBreakDuration;
 

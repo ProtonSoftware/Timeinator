@@ -90,7 +90,7 @@ namespace Timeinator.Mobile.Core
         public bool RecalculateTasksAfterBreak { get; set; } = true;
 
         /// <summary>
-        /// Minutes multiplier for minimum task time
+        /// The minimum amount of time in minutes that is required for every task in the session
         /// </summary>
         public double MinimumTaskTime { get; set; } = 0.1;
 

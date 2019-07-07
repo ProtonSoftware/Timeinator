@@ -33,7 +33,7 @@
             android:layout_marginRight="4dp"
             android:text="PRZERWA"
             style="@style/AccentButton"
-            local:MvxBind='Text String("StartBreak");Click PauseCommand' />
+            local:MvxBind='Text String("StartBreak");Click StartBreakCommand' />
 
         <Button
             android:layout_width="0dp"

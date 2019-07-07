@@ -23,9 +23,9 @@ namespace Timeinator.Mobile.Core
         #region Commands
 
         /// <summary>
-        /// The command to pause current task
+        /// The command to take a break in current session
         /// </summary>
-        public ICommand PauseCommand { get; private set; }
+        public ICommand StartBreakCommand { get; private set; }
 
         /// <summary>
         /// The command to finish current task and go for the next one
