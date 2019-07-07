@@ -70,7 +70,7 @@ namespace Timeinator.Mobile.Core
         /// <param name="taskAction">The action to fire when task's time finishes</param>
         public void SetupSession(Action timerAction, Action taskAction)
         {
-            // Reset session
+            // Reset any previous sessions
             SessionDuration = TimeSpan.Zero;
             TaskDuration = TimeSpan.Zero;
 
@@ -96,7 +96,7 @@ namespace Timeinator.Mobile.Core
             // Set session as not paused
             mIsOnBreak = false;
 
-            // Reset duration
+            // Reset break duration
             CurrentBreakDuration = TimeSpan.Zero;
             TaskDuration = TimeSpan.Zero;
 
