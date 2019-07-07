@@ -9,7 +9,6 @@ namespace Timeinator.Mobile.Core
     public interface ISessionTimer
     {
         TimeSpan SessionDuration { get; }
-        TimeSpan TaskDuration { get; }
         TimeSpan CurrentTaskTimeLeft { get; }
         TimeSpan CurrentBreakDuration { get; }
 

@@ -43,11 +43,6 @@ namespace Timeinator.Mobile.Core
         public TimeSpan SessionDuration => mSessionTimer.SessionDuration;
 
         /// <summary>
-        /// Gets task duration of recent task from session timer
-        /// </summary>
-        public TimeSpan TaskDuration => mSessionTimer.TaskDuration;
-
-        /// <summary>
         /// The time left to complete current task from session timer
         /// </summary>
         public TimeSpan CurrentTaskTimeLeft => mSessionTimer.CurrentTaskTimeLeft;
@@ -271,7 +266,7 @@ namespace Timeinator.Mobile.Core
             if (DI.Settings.RecalculateTasksAfterBreak)
             {
                 // Reduce session duration
-                mSessionTime -= TaskDuration;
+                mSessionTime -= mCurrentTasks.Head.AssignedTime - CurrentTaskTimeLeft;
                 mSessionTime -= CurrentBreakDuration;
 
                 // Shrink tasks to new session time
