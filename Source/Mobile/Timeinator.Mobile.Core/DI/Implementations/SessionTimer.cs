@@ -36,11 +36,6 @@ namespace Timeinator.Mobile.Core
         public TimeSpan SessionDuration { get; private set; }
 
         /// <summary>
-        /// The duration of recent task
-        /// </summary>
-        public TimeSpan TaskDuration { get; private set; }
-
-        /// <summary>
         /// The time that left in current session task
         /// </summary>
         public TimeSpan CurrentTaskTimeLeft { get; private set; }
@@ -72,7 +67,6 @@ namespace Timeinator.Mobile.Core
         {
             // Reset any previous sessions
             SessionDuration = TimeSpan.Zero;
-            TaskDuration = TimeSpan.Zero;
 
             // Timer ticks every second
             mSecondsTicker = new Timer(1000);
@@ -98,7 +92,6 @@ namespace Timeinator.Mobile.Core
 
             // Reset break duration
             CurrentBreakDuration = TimeSpan.Zero;
-            TaskDuration = TimeSpan.Zero;
 
             // Set provided time
             CurrentTaskTimeLeft = taskTime;
@@ -143,7 +136,6 @@ namespace Timeinator.Mobile.Core
 
             // Substract one second from the task time
             CurrentTaskTimeLeft -= OneSecond;
-            TaskDuration += OneSecond;
 
             // If the task finished already...
             if (CurrentTaskTimeLeft <= TimeSpan.Zero)

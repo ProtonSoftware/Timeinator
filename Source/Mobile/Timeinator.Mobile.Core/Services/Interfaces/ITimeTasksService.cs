@@ -10,7 +10,6 @@ namespace Timeinator.Mobile.Core
     public interface ITimeTasksService
     {
         TimeSpan SessionDuration { get; }
-        TimeSpan TaskDuration { get; }
         TimeSpan CurrentTaskTimeLeft { get; }
         TimeSpan CurrentBreakDuration { get; }
         double CurrentTaskCalculatedProgress { get; }
