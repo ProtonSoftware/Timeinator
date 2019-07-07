@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Timers;
 
 namespace Timeinator.Mobile.Core
@@ -12,9 +11,9 @@ namespace Timeinator.Mobile.Core
         #region Private Members
 
         /// <summary>
-        /// One second duration TimeSpan
+        /// The amount of time for every timer tick
         /// </summary>
-        private static readonly TimeSpan OneSecond = TimeSpan.FromSeconds(1);
+        private readonly TimeSpan mOneTick = TimeSpan.FromSeconds(DI.Settings.TimerTickRate / 1000);
 
         /// <summary>
         /// The timer that elapses every second so everything related to time can update everytime it ticks
@@ -69,7 +68,7 @@ namespace Timeinator.Mobile.Core
             SessionDuration = TimeSpan.Zero;
 
             // Timer ticks every second
-            mSecondsTicker = new Timer(1000);
+            mSecondsTicker = new Timer(DI.Settings.TimerTickRate);
 
             // Run our elapsed function every time timer ticks
             mSecondsTicker.Elapsed += SecondsTicker_Elapsed;
@@ -121,21 +120,21 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void SecondsTicker_Elapsed(object sender, ElapsedEventArgs e)
         {
-            // Add one second to the session duration
-            SessionDuration += OneSecond;
+            // Add one tick to the session duration
+            SessionDuration += mOneTick;
 
             // If break time is on...
             if (mIsOnBreak)
             {
-                // Add one second to the break duration
-                CurrentBreakDuration += OneSecond;
+                // Add one tick to the break duration
+                CurrentBreakDuration += mOneTick;
 
                 // Don't do anything else while on break
                 return;
             }
 
-            // Substract one second from the task time
-            CurrentTaskTimeLeft -= OneSecond;
+            // Substract one tick from the task time
+            CurrentTaskTimeLeft -= mOneTick;
 
             // If the task finished already...
             if (CurrentTaskTimeLeft <= TimeSpan.Zero)

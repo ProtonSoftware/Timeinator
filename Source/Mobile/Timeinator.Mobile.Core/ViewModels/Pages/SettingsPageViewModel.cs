@@ -94,6 +94,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public double MinimumTaskTime { get; set; } = 0.1;
 
+        /// <summary>
+        /// The session timer tick rate in miliseconds
+        /// </summary>
+        public int TimerTickRate { get; set; } = 1000;
+
         #endregion
 
         #region Constructor
