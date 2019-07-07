@@ -28,10 +28,9 @@ namespace Timeinator.Mobile.Core
         void SetSessionTasks(List<TimeTaskContext> contexts);
         bool SetSessionTime(TimeSpan userTime);
         void ClearSessionTasks();
-        void StartSession(Action timerAction, Action taskAction);
+        HeadList<TimeTaskContext> StartSession(Action timerAction, Action taskAction);
         void StartNextTask(TimeTaskContext context);
         void StartBreak();
         void EndBreak();
-        HeadList<TimeTaskContext> GetSessionTasks();
     }
 }
