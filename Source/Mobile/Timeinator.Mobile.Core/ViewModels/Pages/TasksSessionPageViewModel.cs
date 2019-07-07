@@ -213,9 +213,8 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void TaskTimeFinish()
         {
-            var vm = Framework.Service<AlarmPageViewModel>();
-            vm.InitializeButtons(PauseTask, FinishCurrentTask);
-            DI.Application.GoToPage(ApplicationPage.Alarm, vm);
+            // Go to alarm page that handles this action
+            DI.Application.GoToPage(ApplicationPage.Alarm);
         }
 
         /// <summary>
