@@ -700,6 +700,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Timeinator Session.
+        /// </summary>
+        public static string TimeinatorSessionTitle {
+            get {
+                return ResourceManager.GetString("TimeinatorSessionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time has ran out.
         /// </summary>
         public static string TimeRanOut {

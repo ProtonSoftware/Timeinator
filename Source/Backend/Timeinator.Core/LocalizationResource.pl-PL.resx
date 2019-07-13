@@ -342,4 +342,7 @@
   <data name="SearchBarHint" xml:space="preserve">
     <value>Wpisz nazwę lub tag</value>
   </data>
+  <data name="TimeinatorSessionTitle" xml:space="preserve">
+    <value>Timeinator Sesja</value>
+  </data>
 </root>
