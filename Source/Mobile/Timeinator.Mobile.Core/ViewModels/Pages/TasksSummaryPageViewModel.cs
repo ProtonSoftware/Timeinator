@@ -93,8 +93,12 @@ namespace Timeinator.Mobile.Core
             // Pass it to the service
             mTimeTasksService.SetSessionTasks(taskContexts);
 
-            // Change the page afterwards
-            DI.Application.GoToPage(ApplicationPage.TasksSession);
+            // Create brand-new view model for session page
+            var sessionViewModel = DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
+            sessionViewModel.InitializeSessionCommand.Execute(null);
+
+            // Change to session page
+            DI.Application.GoToPage(ApplicationPage.TasksSession, sessionViewModel);
         }
 
         /// <summary>

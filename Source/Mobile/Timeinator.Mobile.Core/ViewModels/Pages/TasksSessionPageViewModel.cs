@@ -1,5 +1,4 @@
 ﻿using Dna;
-using Microsoft.Extensions.DependencyInjection;
 using MvvmCross.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,15 +17,15 @@ namespace Timeinator.Mobile.Core
     {
         #region Private Members
 
-        private readonly TimeTasksMapper mTimeTasksMapper;
-        private readonly ITimeTasksService mTimeTasksService;
-        private readonly ISessionNotificationService mSessionNotificationService;
-        private readonly IUIManager mUIManager;
+        private TimeTasksMapper mTimeTasksMapper;
+        private ITimeTasksService mTimeTasksService;
+        private ISessionNotificationService mSessionNotificationService;
+        private IUIManager mUIManager;
 
         /// <summary>
         /// Stores the list of already finished tasks in this session
         /// </summary>
-        private List<TimeTaskContext> mFinishedTasks = new List<TimeTaskContext>();
+        private List<TimeTaskContext> mFinishedTasks;
 
         #endregion
 
@@ -35,7 +34,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The list of time tasks for current session that are not the current one
         /// </summary>
-        public ObservableCollection<TimeTaskViewModel> RemainingTasks { get; set; } = new ObservableCollection<TimeTaskViewModel>();
+        public ObservableCollection<TimeTaskViewModel> RemainingTasks { get; set; }
 
         /// <summary>
         /// The current task the user is doing on the session
@@ -72,6 +71,11 @@ namespace Timeinator.Mobile.Core
         #region Commands
 
         /// <summary>
+        /// The command to initialize new session in this page
+        /// </summary>
+        public ICommand InitializeSessionCommand { get; private set; }
+
+        /// <summary>
         /// The command to pause current task
         /// </summary>
         public ICommand PauseCommand { get; private set; }
@@ -98,22 +102,14 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSessionPageViewModel(ITimeTasksService timeTasksService, ISessionNotificationService sessionNotificationService, IUIManager uiManager, TimeTasksMapper tasksMapper)
+        public TasksSessionPageViewModel()
         {
             // Create commands
+            InitializeSessionCommand = new RelayCommand(InitializeSession);
             PauseCommand = new RelayCommand(PauseTask);
             ResumeCommand = new RelayCommand(ResumeTask);
             FinishTaskCommand = new RelayCommand(FinishCurrentTask);
             EndSessionCommand = new RelayCommand(EndSessionAsync);
-
-            // Get injected DI services
-            mTimeTasksService = timeTasksService;
-            mSessionNotificationService = sessionNotificationService;
-            mTimeTasksMapper = tasksMapper;
-            mUIManager = uiManager;
-
-            // Initialize this session
-            InitializeSession();
         }
 
         #endregion
@@ -196,6 +192,13 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void InitializeSession()
         {
+            // Set default values to key properties to start fresh session
+            mFinishedTasks = new List<TimeTaskContext>();
+            RemainingTasks = new ObservableCollection<TimeTaskViewModel>();
+
+            // Get latest instances of every needed DI services
+            InjectLatestDIServices();
+
             // Initialize notification service
             mSessionNotificationService.AttachClickCommands(NotificationButtonClick);
 
@@ -207,6 +210,18 @@ namespace Timeinator.Mobile.Core
 
             // Start the task in the notification as well
             mSessionNotificationService.StartNewTask(CurrentTask);
+        }
+
+        /// <summary>
+        /// Injects latest implementations of DI services into this view model
+        /// </summary>
+        private void InjectLatestDIServices()
+        {
+            // Get every service from DI
+            mTimeTasksService = Framework.Service<ITimeTasksService>();
+            mSessionNotificationService = Framework.Service<ISessionNotificationService>();
+            mUIManager = Framework.Service<IUIManager>();
+            mTimeTasksMapper = Framework.Service<TimeTasksMapper>();
         }
 
         /// <summary>
