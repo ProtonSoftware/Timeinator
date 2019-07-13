@@ -228,7 +228,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/breakTimeTitle"
                 local:MvxBind="Text TimeSpanToText(BreakDuration)"
-                android:text="Czas trwania przerwy" />
+                android:text="0h 19m 0s" />
 
         </RelativeLayout>
 

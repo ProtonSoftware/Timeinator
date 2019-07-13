@@ -17,12 +17,12 @@ namespace Timeinator.Mobile.Android
         /// <summary>
         /// Native android notification builder
         /// </summary>
-        private NotificationCompat.Builder mNotificationBuilder;
+        private readonly NotificationCompat.Builder mNotificationBuilder;
 
         /// <summary>
         /// Native android notification manager
         /// </summary>
-        private NotificationManager mNotificationManager;
+        private readonly NotificationManager mNotificationManager;
 
         #endregion
 
