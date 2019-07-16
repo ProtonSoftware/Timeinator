@@ -86,12 +86,6 @@ namespace Timeinator.Mobile.Core
         /// <param name="taskTime">The provided task's time we set and count from</param>
         public void StartNextTask(TimeSpan taskTime)
         {
-            // Set session as not paused
-            mIsOnBreak = false;
-
-            // Reset break duration
-            CurrentBreakDuration = TimeSpan.Zero;
-
             // Set provided time
             CurrentTaskTimeLeft = taskTime;
 
@@ -109,6 +103,15 @@ namespace Timeinator.Mobile.Core
 
             // Set the indicator
             mIsOnBreak = true;
+        }
+
+        /// <summary>
+        /// Ends the break time
+        /// </summary>
+        public void EndBreak()
+        {
+            // Set the indicator
+            mIsOnBreak = false;
         }
 
         #endregion

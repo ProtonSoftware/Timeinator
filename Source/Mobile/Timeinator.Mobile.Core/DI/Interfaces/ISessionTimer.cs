@@ -17,5 +17,6 @@ namespace Timeinator.Mobile.Core
         void SetupSession(Action timerAction, Action taskAction);
         void StartNextTask(TimeSpan taskTime);
         void StartBreak();
+        void EndBreak();
     }
 }

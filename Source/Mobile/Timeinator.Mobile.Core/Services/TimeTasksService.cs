@@ -92,6 +92,7 @@ namespace Timeinator.Mobile.Core
         #region Interface Implementation
 
         #region Database
+
         /// <summary>
         /// Saves new task to the database and adds it to the application's task list
         /// </summary>
@@ -151,6 +152,7 @@ namespace Timeinator.Mobile.Core
             // Return every found task
             return result;
         }
+
         #endregion
 
         /// <summary>
@@ -256,22 +258,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Ends the break time
         /// </summary>
-        public void EndBreak()
-        {
-            // If we should recalculate provided tasks...
-            if (DI.Settings.RecalculateTasksAfterBreak)
-            {
-                // Reduce session duration
-                mSessionTime -= mCurrentTasks.Head.AssignedTime - CurrentTaskTimeLeft;
-                mSessionTime -= CurrentBreakDuration;
-
-                // Shrink tasks to new session time
-                SetSessionTasks(GetCalculatedTasks());
-            }
-            if (mCurrentTasks.WholeList.Count > 0)
-                // Reset task with new time
-                StartNextTask(mCurrentTasks.Head);
-        }
+        public void EndBreak() => mSessionTimer.EndBreak();
 
         #endregion
 

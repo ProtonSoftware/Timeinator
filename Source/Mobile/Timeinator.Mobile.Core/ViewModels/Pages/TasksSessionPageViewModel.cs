@@ -146,14 +146,61 @@ namespace Timeinator.Mobile.Core
             // Stop the break
             mTimeTasksService.EndBreak();
 
-            // Inform the notification
-            mSessionNotificationService.StartNewTask(CurrentTask);
-
             // Set the indicator
             Paused = false;
 
+            // If option is true
+            if (DI.Settings.RecalculateTasksAfterBreak)
+            {
+                // Recalculate remaining tasks after break
+                RecalculateTasksAfterBreak();
+            }
+
+            // If current task is already finished... (the case when user opted for break when task's time ended)
+            if (TimeRemaining <= TimeSpan.Zero)
+            {
+                // Fire finish command
+                FinishTaskCommand.Execute(null);
+                return;
+            }
+
+            // Inform the notification
+            mSessionNotificationService.StartNewTask(CurrentTask);
+
             // Update properties immediately instead of waiting for the timer for better UX
             UpdateSessionProperties();
+        }
+
+        /// <summary>
+        /// Finishes current displayed task
+        /// </summary>
+        private void FinishCurrentTask()
+        {
+            // Get finished task's context
+            var finishedTask = mTimeTasksMapper.ReverseMap(CurrentTask);
+
+            // Add finished task to the list for future reference
+            mFinishedTasks.Add(finishedTask);
+
+            // If there are no tasks left
+            if (RemainingTasks.Count <= 0)
+            {
+                // Session is finished at this point
+                EndSession();
+                return;
+            }
+
+            // Set next task on the list
+            SetCurrentTask(0, RemainingTasks.ToList());
+
+            // Get new task's context
+            var newTask = mTimeTasksMapper.ReverseMap(CurrentTask);
+
+            // And start it in the session
+            mTimeTasksService.StartNextTask(newTask);
+
+            // Inform the notification
+            mSessionNotificationService.StartNewTask(CurrentTask);
         }
 
         /// <summary>
@@ -225,6 +272,27 @@ namespace Timeinator.Mobile.Core
         }
 
         /// <summary>
+        /// Recalculates remaining tasks after break to compensate for lost time
+        /// </summary>
+        private void RecalculateTasksAfterBreak()
+        {
+            // Calculate how much time we should substract from every task
+            var breakDurationPerTask = BreakDuration.TotalSeconds / RemainingTasks.Count;
+            var timeToSubstract = TimeSpan.FromSeconds(breakDurationPerTask);
+
+            // For each task in the remaining list...
+            foreach (var task in RemainingTasks)
+            {
+                // Skip tasks that would be too short after substraction, we still want to keep minimum time requirement for them 
+                if ((task.AssignedTime - timeToSubstract) < TimeSpan.FromMinutes(DI.Settings.MinimumTaskTime))
+                    continue;
+                
+                // Substract the time from task
+                task.AssignedTime -= timeToSubstract;
+            }
+        }
+
+        /// <summary>
         /// Called when current task's time runs out
         /// </summary>
         private void TaskTimeFinish()
@@ -273,38 +341,6 @@ namespace Timeinator.Mobile.Core
                         EndSessionCommand.Execute(null);
                     } break;
             }
-        }
-
-        /// <summary>
-        /// Finishes current displayed task
-        /// </summary>
-        private void FinishCurrentTask()
-        {
-            // Get finished task's context
-            var finishedTask = mTimeTasksMapper.ReverseMap(CurrentTask);
-
-            // Add finished task to the list for future reference
-            mFinishedTasks.Add(finishedTask);
-
-            // If there are no tasks left
-            if (RemainingTasks.Count <= 0)
-            {
-                // Session is finished at this point
-                EndSession();
-                return;
-            }
-
-            // Set next task on the list
-            SetCurrentTask(0, RemainingTasks.ToList());
-
-            // Get new task's context
-            var newTask = mTimeTasksMapper.ReverseMap(CurrentTask);
-
-            // And start it in the session
-            mTimeTasksService.StartNextTask(newTask);
-
-            // Inform the notification
-            mSessionNotificationService.StartNewTask(CurrentTask);
         }
 
         /// <summary>
