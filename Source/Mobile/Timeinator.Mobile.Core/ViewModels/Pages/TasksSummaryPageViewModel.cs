@@ -16,8 +16,8 @@ namespace Timeinator.Mobile.Core
         #region Private Members
 
         private readonly TimeTasksMapper mTimeTasksMapper;
+        private readonly ISessionNotificationService mSessionNotificationService;
         private readonly ITimeTasksService mTimeTasksService;
-        private readonly IUIManager mUIManager;
 
         #endregion
 
@@ -59,7 +59,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSummaryPageViewModel(ITimeTasksService timeTasksService, ISessionNotificationService sessionNotificationService, TimeTasksMapper tasksMapper, IUIManager uiManager)
+        public TasksSummaryPageViewModel(ITimeTasksService timeTasksService, ISessionNotificationService sessionNotificationService, TimeTasksMapper tasksMapper)
         {
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);
@@ -68,14 +68,14 @@ namespace Timeinator.Mobile.Core
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
+            mSessionNotificationService = sessionNotificationService;
             mTimeTasksMapper = tasksMapper;
-            mUIManager = uiManager;
 
             // Load tasks from the manager to this page
             LoadTaskList();
 
             // Prepare notification service for the up-coming session
-            sessionNotificationService.Setup();
+            mSessionNotificationService.Setup();
         }
 
         #endregion
@@ -168,8 +168,9 @@ namespace Timeinator.Mobile.Core
             var contexts = mTimeTasksService.GetCalculatedTasks();
 
             // Map the list as suitable view models
-            TaskItems = new ObservableCollection<SummaryTimeTaskItemViewModel>(mTimeTasksMapper.ListMapCal(contexts));
+            TaskItems = new ObservableCollection<SummaryTimeTaskItemViewModel>(mTimeTasksMapper.ListMapToSummary(contexts));
 
+            // Calculate session time
             SessionTime = contexts.SumTimes();
         }
 
