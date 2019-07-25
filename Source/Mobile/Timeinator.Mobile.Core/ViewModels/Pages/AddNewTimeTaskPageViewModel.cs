@@ -123,6 +123,7 @@ namespace Timeinator.Mobile.Core
                 IsImportant = TaskImportance,
                 IsImmortal = TaskImmortality,
                 Priority = (Priority)TaskPrioritySliderValue,
+                CreationDate = DateTime.Now,
                 Progress = 0
             };
 
