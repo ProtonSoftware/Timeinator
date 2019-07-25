@@ -306,7 +306,7 @@ namespace Timeinator.Mobile.Core
             var tasks = mTimeTasksService.LoadStoredTasks(SearchText);
 
             // Add them to the list as suitable view models
-            TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(mTimeTasksMapper.ListMap(tasks));
+            TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(mTimeTasksMapper.ListMapToList(tasks));
         }
 
         #endregion

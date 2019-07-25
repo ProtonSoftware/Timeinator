@@ -126,18 +126,18 @@ namespace Timeinator.Mobile.Core
         public TimeTask ReverseMap(TimeTaskContext context) => mMapper.Map<TimeTask>(context);
 
         /// <summary>
-        /// Maps a <see cref="TimeTaskViewModel"/> to a <see cref="TimeTaskContext"/> object
+        /// Maps a <see cref="ListTimeTaskItemViewModel"/> to a <see cref="TimeTaskContext"/> object
         /// </summary>
-        /// <param name="viewmodel">The <see cref="TimeTaskViewModel"/> to map</param>
+        /// <param name="viewmodel">The <see cref="ListTimeTaskItemViewModel"/> to map</param>
         /// <returns><see cref="TimeTaskContext"/></returns>
-        public TimeTaskContext ReverseMap(TimeTaskViewModel viewmodel) => mMapper.Map<TimeTaskContext>(viewmodel);
+        public TimeTaskContext ReverseMap(ListTimeTaskItemViewModel viewmodel) => mMapper.Map<TimeTaskContext>(viewmodel);
 
         /// <summary>
-        /// Maps a list of <see cref="TimeTaskViewModel"/> to a list of <see cref="TimeTaskContext"/> objects
+        /// Maps a list of <see cref="ListTimeTaskItemViewModel"/> to a list of <see cref="TimeTaskContext"/> objects
         /// </summary>
-        /// <param name="viewmodels">The list of <see cref="TimeTaskViewModel"/> to map</param>
+        /// <param name="viewmodels">The list of <see cref="ListTimeTaskItemViewModel"/> to map</param>
         /// <returns>The list of <see cref="TimeTaskContext"/></returns>
-        public List<TimeTaskContext> ListReverseMap(List<TimeTaskViewModel> viewmodels) => mMapper.Map<List<TimeTaskContext>>(viewmodels);
+        public List<TimeTaskContext> ListReverseMap(List<ListTimeTaskItemViewModel> viewmodels) => mMapper.Map<List<TimeTaskContext>>(viewmodels);
 
         /// <summary>
         /// Maps a <see cref="SummaryTimeTaskItemViewModel"/> to a <see cref="TimeTaskContext"/> object
@@ -152,6 +152,20 @@ namespace Timeinator.Mobile.Core
         /// <param name="viewmodels">The list of <see cref="SummaryTimeTaskItemViewModel"/> to map</param>
         /// <returns>The list of <see cref="TimeTaskContext"/></returns>
         public List<TimeTaskContext> ListReverseMap(List<SummaryTimeTaskItemViewModel> viewmodels) => mMapper.Map<List<TimeTaskContext>>(viewmodels);
+
+        /// <summary>
+        /// Maps a <see cref="SessionTimeTaskItemViewModel"/> to a <see cref="TimeTaskContext"/> object
+        /// </summary>
+        /// <param name="viewmodel">The <see cref="SessionTimeTaskItemViewModel"/> to map</param>
+        /// <returns><see cref="TimeTaskContext"/></returns>
+        public TimeTaskContext ReverseMap(SessionTimeTaskItemViewModel viewmodel) => mMapper.Map<TimeTaskContext>(viewmodel);
+
+        /// <summary>
+        /// Maps a list of <see cref="SessionTimeTaskItemViewModel"/> to a list of <see cref="TimeTaskContext"/> objects
+        /// </summary>
+        /// <param name="viewmodels">The list of <see cref="SessionTimeTaskItemViewModel"/> to map</param>
+        /// <returns>The list of <see cref="TimeTaskContext"/></returns>
+        public List<TimeTaskContext> ListReverseMap(List<SessionTimeTaskItemViewModel> viewmodels) => mMapper.Map<List<TimeTaskContext>>(viewmodels);
 
         #endregion
     }
