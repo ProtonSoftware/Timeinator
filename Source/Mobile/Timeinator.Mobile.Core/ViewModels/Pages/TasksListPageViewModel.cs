@@ -42,7 +42,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The list of time tasks for current session to show in this page
         /// </summary>
-        public ObservableCollection<TimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<TimeTaskViewModel>();
+        public ObservableCollection<ListTimeTaskItemViewModel> TaskItems { get; set; } = new ObservableCollection<ListTimeTaskItemViewModel>();
 
         /// <summary>
         /// The list of every tag that are associated with current list of tasks
@@ -71,10 +71,10 @@ namespace Timeinator.Mobile.Core
                 switch (SortItems.IndexOf(mSortValue))
                 {
                     case 0:
-                        TaskItems = new ObservableCollection<TimeTaskViewModel>(TaskItems.OrderBy(x => x.Name));
+                        TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(TaskItems.OrderBy(x => x.Name));
                         break;
                     case 1:
-                        TaskItems = new ObservableCollection<TimeTaskViewModel>(TaskItems.OrderBy(x => x.CreationDate));
+                        TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(TaskItems.OrderBy(x => x.CreationDate));
                         break;
                 }
             }
@@ -192,7 +192,7 @@ namespace Timeinator.Mobile.Core
         private void EditTask(object param)
         {
             // Get the task view model
-            var taskVM = param as TimeTaskViewModel;
+            var taskVM = param as ListTimeTaskItemViewModel;
 
             // Create edit page's view model based on that
             var pageVM = DI.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>();
@@ -216,7 +216,7 @@ namespace Timeinator.Mobile.Core
         private async Task DeleteTaskAsync(object param)
         {
             // Get the task view model
-            var taskVM = param as TimeTaskViewModel;
+            var taskVM = param as ListTimeTaskItemViewModel;
 
             // Ask the user if he is certain
             var popupViewModel = new PopupMessageViewModel
@@ -306,7 +306,7 @@ namespace Timeinator.Mobile.Core
             var tasks = mTimeTasksService.LoadStoredTasks(SearchText);
 
             // Add them to the list as suitable view models
-            TaskItems = new ObservableCollection<TimeTaskViewModel>(mTimeTasksMapper.ListMap(tasks));
+            TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(mTimeTasksMapper.ListMap(tasks));
         }
 
         #endregion
