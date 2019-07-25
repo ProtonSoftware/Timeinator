@@ -61,13 +61,13 @@ namespace Timeinator.Mobile.Core
         public bool IsImmortal { get; set; }
 
         /// <summary>
-        /// Indicates whether task has started
-        /// </summary>
-        public bool HasStarted => Progress > 0;
-
-        /// <summary>
         /// List of tags set by user that help finding this task
         /// </summary>
         public List<string> Tags { get; set; }
+
+        /// <summary>
+        /// The date when this task was initially created
+        /// </summary>
+        public DateTime CreationDate { get; set; }
     }
 }

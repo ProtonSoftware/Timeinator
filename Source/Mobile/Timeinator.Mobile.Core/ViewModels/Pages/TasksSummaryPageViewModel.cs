@@ -26,7 +26,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The list of time tasks for current session to show in this page
         /// </summary>
-        public ObservableCollection<CalculatedTimeTaskViewModel> TaskItems { get; set; } = new ObservableCollection<CalculatedTimeTaskViewModel>();
+        public ObservableCollection<SummaryTimeTaskItemViewModel> TaskItems { get; set; } = new ObservableCollection<SummaryTimeTaskItemViewModel>();
 
         /// <summary>
         /// The time needed for current session
@@ -152,7 +152,7 @@ namespace Timeinator.Mobile.Core
             var reorderedList = orderList.Select(item => TaskItems.ElementAt(item)).ToList();
 
             // Replace old list with reordered one
-            TaskItems = new ObservableCollection<CalculatedTimeTaskViewModel>(reorderedList);
+            TaskItems = new ObservableCollection<SummaryTimeTaskItemViewModel>(reorderedList);
         }
 
         #endregion
@@ -168,7 +168,7 @@ namespace Timeinator.Mobile.Core
             var contexts = mTimeTasksService.GetCalculatedTasks();
 
             // Map the list as suitable view models
-            TaskItems = new ObservableCollection<CalculatedTimeTaskViewModel>(mTimeTasksMapper.ListMapCal(contexts));
+            TaskItems = new ObservableCollection<SummaryTimeTaskItemViewModel>(mTimeTasksMapper.ListMapCal(contexts));
 
             SessionTime = contexts.SumTimes();
         }

@@ -10,7 +10,7 @@ namespace Timeinator.Mobile.Core
         void Setup();
         void AttachClickCommands(Action<AppAction> notificationButtonClick);
 
-        void StartNewTask(TimeTaskViewModel timeTaskViewModel);
+        void StartNewTask(SessionTimeTaskItemViewModel viewModel);
         void StopCurrentTask();
         void RemoveNotification();
         void UpdateNotification();

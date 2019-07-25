@@ -34,12 +34,12 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The list of time tasks for current session that are not the current one
         /// </summary>
-        public ObservableCollection<TimeTaskViewModel> RemainingTasks { get; set; }
+        public ObservableCollection<SessionTimeTaskItemViewModel> RemainingTasks { get; set; }
 
         /// <summary>
         /// The current task the user is doing on the session
         /// </summary>
-        public TimeTaskViewModel CurrentTask { get; set; }
+        public SessionTimeTaskItemViewModel CurrentTask { get; set; }
 
         /// <summary>
         /// Progress of current task shown in the progress bar on UI
@@ -241,7 +241,7 @@ namespace Timeinator.Mobile.Core
         {
             // Set default values to key properties to start fresh session
             mFinishedTasks = new List<TimeTaskContext>();
-            RemainingTasks = new ObservableCollection<TimeTaskViewModel>();
+            RemainingTasks = new ObservableCollection<SessionTimeTaskItemViewModel>();
 
             // Get latest instances of every needed DI services
             InjectLatestDIServices();
@@ -348,7 +348,7 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         /// <param name="index">The index of the task to set as current</param>
         /// <param name="viewModels">The list of task view models</param>
-        private void SetCurrentTask(int index, List<TimeTaskViewModel> viewModels)
+        private void SetCurrentTask(int index, List<SessionTimeTaskItemViewModel> viewModels)
         {
             try
             {
@@ -373,7 +373,7 @@ namespace Timeinator.Mobile.Core
             viewModels.Remove(CurrentTask);
 
             // And set the remaining list tasks
-            RemainingTasks = new ObservableCollection<TimeTaskViewModel>(viewModels);
+            RemainingTasks = new ObservableCollection<SessionTimeTaskItemViewModel>(viewModels);
         }
 
         /// <summary>

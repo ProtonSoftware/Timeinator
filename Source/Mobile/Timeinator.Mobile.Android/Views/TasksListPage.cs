@@ -97,7 +97,7 @@ namespace Timeinator.Mobile.Android
             recyclerView.ItemClick = new RelayParameterizedCommand((s) =>
             {
                 // Enable/disable it as if checkbox was clicked - provides better UX
-                var itemVM = s as TimeTaskViewModel;
+                var itemVM = s as ListTimeTaskItemViewModel;
 
                 // Handle it only when context menu is hidden
                 if (itemVM.IsContextMenuVisible == false)
@@ -108,7 +108,7 @@ namespace Timeinator.Mobile.Android
             recyclerView.ItemLongClick = new RelayParameterizedCommand((s) => 
             {
                 // Show context menu with edit/delete buttons
-                var itemVM = s as TimeTaskViewModel;
+                var itemVM = s as ListTimeTaskItemViewModel;
                 itemVM.IsContextMenuVisible ^= true;
 
                 // Subscribe to context menu events so action can be performed after clicks
