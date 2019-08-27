@@ -1,5 +1,4 @@
 ﻿using MvvmCross.ViewModels;
-using System.Diagnostics;
 
 namespace Timeinator.Mobile.Core
 {
@@ -45,7 +44,7 @@ namespace Timeinator.Mobile.Core
 
                 default:
                     // Alert developer of an issue
-                    Debugger.Break();
+                    // Debugger.Break();
                     return null;
             }
         }
