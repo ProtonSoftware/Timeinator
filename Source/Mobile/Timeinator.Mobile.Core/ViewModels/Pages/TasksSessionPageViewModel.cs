@@ -3,7 +3,6 @@ using MvvmCross.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using Timeinator.Core;
@@ -366,7 +365,7 @@ namespace Timeinator.Mobile.Core
                     return;
                 }
                 // Or something went wrong and we tried to start the task that doesn't exist
-                Debugger.Break();
+                // Debugger.Break();
             }
 
             // Delete current task from the list
