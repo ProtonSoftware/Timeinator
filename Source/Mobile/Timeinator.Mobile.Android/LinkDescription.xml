@@ -1,0 +1,10 @@
+<linker>
+  <assembly fullname="Timeinator.Mobile.Core">
+    <namespace fullname="Timeinator.Mobile.Core" />
+    <namespace fullname="Dna" />
+  </assembly>
+  <assembly fullname="Timeinator.Mobile.Android">
+    <namespace fullname="Timeinator.Mobile.Android" />
+    <namespace fullname="Dna" />
+  </assembly>
+</linker>
