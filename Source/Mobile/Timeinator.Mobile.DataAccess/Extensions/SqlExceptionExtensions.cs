@@ -17,11 +17,9 @@ namespace Timeinator.Mobile.DataAccess
 
         public static bool ForeginKeyViolation(this DbUpdateException ex)
         {
-            var uEx = ex.InnerException as DbUpdateException;
-            if(uEx != null)
+            if (ex.InnerException is DbUpdateException uEx)
             {
-                var sqlEx = uEx.InnerException as SqlException;
-                return sqlEx != null && sqlEx.ForeginKeyViolation();
+                return uEx.InnerException is SqlException sqlEx && sqlEx.ForeginKeyViolation();
             }
 
             return false;
