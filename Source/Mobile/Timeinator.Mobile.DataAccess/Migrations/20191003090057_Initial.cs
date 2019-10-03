@@ -1,9 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
+using System.Collections.Generic;
 
 namespace Timeinator.Mobile.DataAccess.Migrations
 {
-    public partial class TaskDatesAndSettingsType : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,14 +29,15 @@ namespace Timeinator.Mobile.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    AssignedTime = table.Column<TimeSpan>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    IsImmortal = table.Column<bool>(nullable: false),
+                    IsImportant = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Priority = table.Column<int>(nullable: false),
-                    IsImportant = table.Column<bool>(nullable: false),
                     Progress = table.Column<float>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Tag = table.Column<string>(nullable: true),
-                    IsImmortal = table.Column<bool>(nullable: false),
-                    CreationDate = table.Column<DateTime>(nullable: false),
+                    TagsString = table.Column<string>(nullable: true),
                     TargetStartDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
