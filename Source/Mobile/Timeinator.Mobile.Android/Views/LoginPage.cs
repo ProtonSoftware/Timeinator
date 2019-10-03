@@ -10,7 +10,6 @@ using MvvmCross.Platforms.Android;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
 using System.Linq;
-using System.Threading.Tasks;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android

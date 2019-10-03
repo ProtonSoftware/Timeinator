@@ -1,9 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
-using Android.Media;
 using Android.OS;
 using Android.Runtime;
-using Android.Support.V4.App;
 using Dna;
 using System;
 using Timeinator.Core;

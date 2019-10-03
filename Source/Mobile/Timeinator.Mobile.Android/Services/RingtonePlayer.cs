@@ -7,22 +7,13 @@ namespace Timeinator.Mobile.Android
 {
     public class RingtonePlayer : IRingtonePlayer
     {
-        #region Private members
+        #region Private Members
 
-        private Ringtone mSound;
-
-        #endregion
-
-        #region Constructor
-
-        public RingtonePlayer()
-        {
-            mSound = RingtoneManager.GetRingtone(Application.Context, RingtoneManager.GetDefaultUri(RingtoneType.Alarm));
-        }
+        private readonly Ringtone mSound = RingtoneManager.GetRingtone(Application.Context, RingtoneManager.GetDefaultUri(RingtoneType.Alarm));
 
         #endregion
 
-        #region Interface implementation
+        #region Interface Implementation
 
         public void Play() => mSound.Play();
 
