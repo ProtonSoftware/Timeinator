@@ -1,0 +1,29 @@
++POLONAISE
+£atwo i szybko zaplanuj czas wolny.
+------------------------------------
+Dla kogo zosta³a stworzona ta aplikacja?
+Jeœli jesteœ ambitny, masz wiele rzeczy do zrobienia, zawsze o czymœ zapominasz, albo wszystko to razem to znaczy, ¿e jesteœ taki jak my i ta aplikacja jest dla Ciebie.
+
+Jak to dzia³a?
+Wpisujesz zadania jakie chcesz robiæ z pomoc¹ aplikacji, nastêpnie korzystaj¹c z szerokich opcji zadania konfigurujesz jak bêdziesz je wykonywa³.
+Nastêpnie wybierasz zadania które Ciê aktualnie interesuj¹, mo¿esz skorzystaæ z wygodnych opcji filtrowania, ¿eby poradziæ sobie z d³ug¹ list¹ zadañ.
+Podajesz ile masz czasu do powrotu do obowi¹zków, a Nasza aplikacja przeliczy czas na ka¿de wybrane zadanie, zaproponuje zmianê kolejnoœci jeœli chcesz i mo¿esz dzia³aæ, a kiedy skoñczy siê czas dostaniesz powiadomienie z opcj¹ do rozpoczêcia kolejnego zadania lub odpoczynku.
+Aplikacja zadba abyœ zacz¹³ wszystkie zadania w wyznaczonym przez siebie czasie.
+To ¿eby wszystkie zadania zmieœci³y siê w wybranym przedziale czasowym jest priorytetem, wiêc odpoczynek wi¹¿e siê ze skróceniem czasu na wszystkie zadania w odpowiedni sposób.
+
+Stworzyliœmy t¹ aplikacjê po to, ¿eby ka¿dy móg³ znaleŸæ czas na zrobienie projektu, obejrzenia serialu i przeczytania ksi¹¿ki bez zaniedbywania innych obowi¹zków.
+
++ANGLAIS
+Easy and fast leisure time managing.
+------------------------------------
+For whom has this app been created?
+If you are ambitious and have a lot of tasks to accomplish and you always forget something, then you are just like us and this app is made for you.
+
+How does it work?
+Simply enter any task you want to do and configure it using wide variety of options.
+Next pick few tasks that you are interested to start at the moment. You can use convenient filtering options to navigate on your big task list.
+Set time that you can spend before going back to your duties, so the app can calculate time for each of the selected tasks. It will ask whether yoou want to reorder some task or use default ordering. When time runs out you will be notified and asked if you need a break or go straight to your next assignment.
+Our app will make sure that all of your tasks are started in desired time.
+It is our priority to have all assignments fitted in specified time, what means that the longer breaks you take the shorter the duration of your tasks.
+
+This tool has been created as a solution to manage time in a way that allows you to work on a project, watch a soap opera and read a book in an effective and controlled manner.
