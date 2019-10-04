@@ -101,8 +101,8 @@
     <AndroidSupportedAbis>x86_64;arm64-v8a</AndroidSupportedAbis>
     <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
-    <AndroidLinkSkip>SQLitePCLRaw.bundle_e_sqlite3;Microsoft.Data.Sqlite.Core;Microsoft.DotNet.PlatformAbstractions;Microsoft.Extensions.DependencyModel;mscorlib;System.Core;System.Data;System.Xml.Linq;System.Transactions;System;Microsoft.CSharp;Mono.Data.Sqlite;Microsoft.EntityFrameworkCore;Microsoft.EntityFrameworkCore.Relational;Microsoft.EntityFrameworkCore.Sqlite;Remotion.Linq;Microsoft.Data.Sqlite.Core;Microsoft.EntityFrameworkCore.Sqlite.Core;Microsoft.Extensions.DependencyInjection.Abstractions;Microsoft.Extensions.DependencyInjection;Microsoft.Extensions.Logging.Abstractions;Microsoft.Extensions.Logging;Microsoft.Extensions.Caching.Abstractions;Microsoft.Extensions.Caching.Memory;Microsoft.Extensions.Options;Microsoft.Extensions.Primitives;System.Reflection;System.Reflection.Primitives;System.Linq;System.Linq.Expressions;System.Linq.Queryable</AndroidLinkSkip>
-    <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
+    <AndroidLinkSkip>SQLitePCLRaw.bundle_e_sqlite3;Microsoft.Data.Sqlite.Core;Microsoft.DotNet.PlatformAbstractions;Microsoft.Extensions.DependencyModel;mscorlib;System.Core;System.Data;System.Xml.Linq;System.Transactions;System;Microsoft.CSharp;Mono.Data.Sqlite;Microsoft.Extensions.Options;Microsoft.Extensions.Primitives;System.Reflection;System.Reflection.Primitives;System.Linq;System.Linq.Expressions;System.Linq.Queryable</AndroidLinkSkip>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
