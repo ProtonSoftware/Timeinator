@@ -1,5 +1,4 @@
-﻿using Dna;
-using MvvmCross.ViewModels;
+﻿using MvvmCross.ViewModels;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;

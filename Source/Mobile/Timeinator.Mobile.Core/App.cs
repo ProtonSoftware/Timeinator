@@ -14,7 +14,7 @@ namespace Timeinator.Mobile.Core
         public override void Initialize()
         {
             // If there is no DI setup yet
-            if (Dna.Framework.Construction == null)
+            if (DI.Container == null)
             {
                 // Setup brand-new DI
                 DI.InitialSetup();

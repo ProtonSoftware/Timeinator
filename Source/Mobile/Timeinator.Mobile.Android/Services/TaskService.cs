@@ -2,7 +2,6 @@
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Dna;
 using System;
 using Timeinator.Core;
 using Timeinator.Mobile.Core;
@@ -20,7 +19,7 @@ namespace Timeinator.Mobile.Android
         private static readonly int NotificationId = 3333;
         private static readonly string ChannelId = "com.gummybearstudio.timeinator";
 
-        private readonly ITimeTasksService mTimeTasksService = Framework.Service<ITimeTasksService>();
+        private readonly ITimeTasksService mTimeTasksService = DI.Container.GetInstance<ITimeTasksService>();
         private readonly AndroidNotificationManager mNotificationManager = new AndroidNotificationManager(ChannelId);
 
         #endregion

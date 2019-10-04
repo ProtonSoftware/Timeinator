@@ -1,7 +1,8 @@
-﻿using MvvmCross.ViewModels;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using MvvmCross.ViewModels;
 using System.Windows.Input;
 using Timeinator.Core;
+using Timeinator.Mobile.DataAccess;
 
 namespace Timeinator.Mobile.Core
 {

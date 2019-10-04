@@ -1,6 +1,7 @@
-﻿using Dna;
-using MvvmCross;
+﻿using Microsoft.EntityFrameworkCore;
 using MvvmCross.ViewModels;
+using SimpleInjector;
+using Timeinator.Mobile.DataAccess;
 
 namespace Timeinator.Mobile.Core
 {
@@ -9,23 +10,28 @@ namespace Timeinator.Mobile.Core
     /// </summary>
     public static class DI
     {
-        #region Public Shortcuts
+        #region Public Properties
+
+        /// <summary>
+        /// The underlying container from which the dependencies are retrieved
+        /// </summary>
+        public static Container Container { get; private set; }
 
         /// <summary>
         /// A shortcut to access the <see cref="ApplicationViewModel"/>
         /// </summary>
-        public static ApplicationViewModel Application => Framework.Service<ApplicationViewModel>();
+        public static ApplicationViewModel Application => Container.GetInstance<ApplicationViewModel>();
 
         /// <summary>
         /// A shortcut to access the <see cref="SettingsPageViewModel"/>
         /// </summary>
-        public static SettingsPageViewModel Settings => Framework.Service<SettingsPageViewModel>();
+        public static SettingsPageViewModel Settings => Container.GetInstance<SettingsPageViewModel>();
 
         /// <summary>
         /// A shortcut to get appropriate view model for page with injected dependiencies by DI
         /// </summary>
         /// <typeparam name="T">Any view model that inherites <see cref="MvxViewModel"/></typeparam>
-        public static T GetInjectedPageViewModel<T>() where T : MvxViewModel => Framework.Service<T>();
+        public static T GetInjectedPageViewModel<T>() where T : MvxViewModel => Container.GetInstance<T>();
 
         #endregion
 
@@ -36,11 +42,17 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public static void InitialSetup()
         {
-            Framework.Construct<DefaultFrameworkConstruction>()
-                                                .AddFileLogger()
-                                                .AddTimeinatorViewModels()
-                                                .AddDbContext()
-                                                .Build();
+            // Initialize brand-new DI container
+            Container = new Container().AddTimeinatorServices();
+        }
+
+        /// <summary>
+        /// Creates the database and applies all the migrations
+        /// </summary>
+        public static void MigrateDatabase()
+        {
+            // Migrate the database
+            Container.GetInstance<TimeinatorMobileDbContext>().Database.Migrate();
         }
 
         #endregion
