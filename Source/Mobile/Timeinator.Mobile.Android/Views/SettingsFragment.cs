@@ -4,7 +4,6 @@ using Android.Widget;
 using MvvmCross.Platforms.Android.Binding.BindingContext;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views.Fragments;
-using System.Diagnostics;
 using Timeinator.Core;
 using Timeinator.Mobile.Core;
 
@@ -83,7 +82,7 @@ namespace Timeinator.Mobile.Android
 
                 default:
                     // We shouldn't get there at all, so something went wrong in the code
-                    Debugger.Break();
+                    // Debugger.Break();
                     return null;
             }
         }
