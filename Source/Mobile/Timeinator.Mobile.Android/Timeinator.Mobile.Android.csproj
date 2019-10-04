@@ -101,9 +101,10 @@
     <AndroidSupportedAbis>x86_64;arm64-v8a</AndroidSupportedAbis>
     <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
-    <AndroidLinkSkip>SQLitePCLRaw.bundle_e_sqlite3;Microsoft.Data.Sqlite.Core;Microsoft.DotNet.PlatformAbstractions;Microsoft.Extensions.DependencyModel;mscorlib;System.Core;System.Data;System.Xml.Linq;System.Transactions;System;Microsoft.CSharp;Mono.Data.Sqlite;Microsoft.Extensions.Options;Microsoft.Extensions.Primitives;System.Reflection;System.Reflection.Primitives;System.Linq;System.Linq.Expressions;System.Linq.Queryable</AndroidLinkSkip>
+    <AndroidLinkSkip>SQLitePCLRaw.bundle_e_sqlite3;Microsoft.Data.Sqlite.Core;mscorlib;System.Core;System.Xml.Linq;Mono.Data.Sqlite;System.Reflection</AndroidLinkSkip>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <DebugSymbols>false</DebugSymbols>
+    <MandroidI18n />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
