@@ -4,12 +4,11 @@ using Android.App;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
-using Microsoft.Extensions.DependencyInjection;
 using MvvmCross;
 using MvvmCross.Platforms.Android;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using MvvmCross.Platforms.Android.Views;
-using System.Linq;
+using SimpleInjector;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android
@@ -31,23 +30,19 @@ namespace Timeinator.Mobile.Android
             // Set application's font to Lato
             _ = Typeface.CreateFromAsset(Application.Context.Assets, "fonts/Lato-Regular.ttf");
 
-            // If there is no DI setup yet, i.e. IUIManager is not injected
-            if (!Dna.Framework.Construction.Services.Any(x => x.ServiceType == typeof(IUIManager) && x.ImplementationType == typeof(UIManager)))
-            {
-                // Add Android-specific dependency injection implementations
-                Dna.Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
-                Dna.Framework.Construction.Services.AddSingleton<ISessionNotificationService, SessionNotificationService>();
-                Dna.Framework.Construction.Services.AddSingleton<IRingtonePlayer, RingtonePlayer>();
-
-                // Build new DI
-                Dna.Framework.Construction.Build();
-            }
-
             // Initialize dialogs library
             UserDialogs.Init(() => Mvx.IoCProvider.Resolve<IMvxAndroidCurrentTopActivity>().Activity);
 
             // Add dialogs library to Mvx DI
             Mvx.IoCProvider.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
+
+            // Add Android-specific dependency injection implementations
+            DI.Container.Register<IUIManager, UIManager>(Lifestyle.Singleton);
+            DI.Container.Register<ISessionNotificationService, SessionNotificationService>(Lifestyle.Singleton);
+            DI.Container.Register<IRingtonePlayer, RingtonePlayer>(Lifestyle.Singleton);
+
+            // Migrate the database
+            DI.MigrateDatabase();
 
             // If we get there by session intent from notification
             if (Intent.Action == IntentActions.ACTION_GOSESSION)

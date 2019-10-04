@@ -1,5 +1,4 @@
-﻿using Dna;
-using MvvmCross.ViewModels;
+﻿using MvvmCross.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -264,10 +263,10 @@ namespace Timeinator.Mobile.Core
         private void InjectLatestDIServices()
         {
             // Get every service from DI
-            mTimeTasksService = Framework.Service<ITimeTasksService>();
-            mSessionNotificationService = Framework.Service<ISessionNotificationService>();
-            mUIManager = Framework.Service<IUIManager>();
-            mTimeTasksMapper = Framework.Service<TimeTasksMapper>();
+            mTimeTasksService = DI.Container.GetInstance<ITimeTasksService>();
+            mSessionNotificationService = DI.Container.GetInstance<ISessionNotificationService>();
+            mUIManager = DI.Container.GetInstance<IUIManager>();
+            mTimeTasksMapper = DI.Container.GetInstance<TimeTasksMapper>();
         }
 
         /// <summary>
