@@ -274,6 +274,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void RecalculateTasksAfterBreak()
         {
+            // If we have no remaining tasks...
+            if (RemainingTasks.Count == 0)
+                // Then we can't really recalculate anything, so just do nothing
+                return;
+
             // Calculate how much time we should substract from every task
             var breakDurationPerTask = BreakDuration.TotalSeconds / RemainingTasks.Count;
             var timeToSubstract = TimeSpan.FromSeconds(breakDurationPerTask);
