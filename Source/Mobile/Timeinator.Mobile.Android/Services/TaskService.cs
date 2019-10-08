@@ -56,6 +56,15 @@ namespace Timeinator.Mobile.Android
             return Binder;
         }
 
+        public new void StopSelf()
+        {
+            // Kill the notification
+            mNotificationManager.Kill();
+
+            // Do base service stopping stuff
+            base.StopSelf();
+        }
+
         #endregion
 
         #region Public Methods

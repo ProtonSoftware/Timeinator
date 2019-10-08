@@ -149,6 +149,19 @@ namespace Timeinator.Mobile.Android
             mNotificationBuilder.AddAction(Resource.Drawable.logo, title, pendingIntent);
         }
 
+        /// <summary>
+        /// Kills the notification
+        /// </summary>
+        public void Kill()
+        {
+            // Delete notification channel
+            // TODO: Take this string from settings
+            mNotificationManager.DeleteNotificationChannel("com.gummybearstudio.timeinator");
+
+            // Cancel out all shown notifications
+            mNotificationManager.CancelAll();
+        }
+
         #endregion
     }
 }
