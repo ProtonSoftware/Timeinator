@@ -16,14 +16,8 @@ namespace Timeinator.Mobile.Core
         #region Private Members
 
         private TimeTasksMapper mTimeTasksMapper;
-        private ITimeTasksService mTimeTasksService;
-        private ISessionNotificationService mSessionNotificationService;
         private IUIManager mUIManager;
-
-        /// <summary>
-        /// Stores the list of already finished tasks in this session
-        /// </summary>
-        private List<TimeTaskContext> mFinishedTasks;
+        private ISessionTimer mSessionTimer;
 
         #endregion
 
@@ -42,22 +36,22 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Progress of current task shown in the progress bar on UI
         /// </summary>
-        public double TaskProgress => mTimeTasksService.CurrentTaskCalculatedProgress;
+        public double TaskProgress => mSessionTimer.CurrentTaskCalculatedProgress;
 
         /// <summary>
         /// Current session length from the start of it
         /// </summary>
-        public TimeSpan SessionDuration => mTimeTasksService.SessionDuration;
+        public TimeSpan SessionDuration => mSessionTimer.SessionDuration;
 
         /// <summary>
         /// The remaining time left of current task
         /// </summary>
-        public TimeSpan TimeRemaining => mTimeTasksService.CurrentTaskTimeLeft;
+        public TimeSpan TimeRemaining => mSessionTimer.CurrentTimeLeft;
 
         /// <summary>
         /// Current break duration, displayed only when break indicator is true
         /// </summary>
-        public TimeSpan BreakDuration => mTimeTasksService.CurrentBreakDuration;
+        public TimeSpan BreakDuration => mSessionTimer.CurrentBreakDuration;
 
         /// <summary>
         /// Indicates if user has paused current task
@@ -104,102 +98,15 @@ namespace Timeinator.Mobile.Core
         {
             // Create commands
             InitializeSessionCommand = new RelayCommand(InitializeSession);
-            PauseCommand = new RelayCommand(PauseTask);
-            ResumeCommand = new RelayCommand(ResumeTask);
-            FinishTaskCommand = new RelayCommand(FinishCurrentTask);
+            PauseCommand = new RelayCommand(mSessionTimer.Pause);
+            ResumeCommand = new RelayCommand(mSessionTimer.Resume);
+            FinishTaskCommand = new RelayCommand(mSessionTimer.Finish);
             EndSessionCommand = new RelayCommand(EndSessionAsync);
         }
 
         #endregion
 
         #region Command Methods
-
-        /// <summary>
-        /// Pauses current task and starts the break
-        /// </summary>
-        private void PauseTask()
-        {
-            // Save current task's progress
-            CurrentTask.AssignedTime = mTimeTasksService.CurrentTaskTimeLeft;
-            CurrentTask.Progress = mTimeTasksService.CurrentTaskCalculatedProgress;
-
-            // Start the break
-            mTimeTasksService.StartBreak();
-
-            // Inform the notification
-            mSessionNotificationService.StopCurrentTask();
-
-            // Set the indicator
-            Paused = true;
-
-            // Update properties immediately instead of waiting for the timer for better UX
-            UpdateSessionProperties();
-        }
-
-        /// <summary>
-        /// Finishes the break and resumes current task
-        /// </summary>
-        private void ResumeTask()
-        {
-            // Stop the break
-            mTimeTasksService.EndBreak();
-
-            // Set the indicator
-            Paused = false;
-
-            // If option is true
-            if (DI.Settings.RecalculateTasksAfterBreak)
-            {
-                // Recalculate remaining tasks after break
-                RecalculateTasksAfterBreak();
-            }
-
-            // If current task is already finished... (the case when user opted for break when task's time ended)
-            if (TimeRemaining <= TimeSpan.Zero)
-            {
-                // Fire finish command
-                FinishTaskCommand.Execute(null);
-                return;
-            }
-
-            // Inform the notification
-            mSessionNotificationService.StartNewTask(CurrentTask);
-
-            // Update properties immediately instead of waiting for the timer for better UX
-            UpdateSessionProperties();
-        }
-
-        /// <summary>
-        /// Finishes current displayed task
-        /// </summary>
-        private void FinishCurrentTask()
-        {
-            // Get finished task's context
-            var finishedTask = mTimeTasksMapper.ReverseMap(CurrentTask);
-
-            // Add finished task to the list for future reference
-            mFinishedTasks.Add(finishedTask);
-
-            // If there are no tasks left
-            if (RemainingTasks.Count <= 0)
-            {
-                // Session is finished at this point
-                EndSession();
-                return;
-            }
-
-            // Set next task on the list
-            SetCurrentTask(0, RemainingTasks.ToList());
-
-            // Get new task's context
-            var newTask = mTimeTasksMapper.ReverseMap(CurrentTask);
-
-            // And start it in the session
-            mTimeTasksService.StartNextTask(newTask);
-
-            // Inform the notification
-            mSessionNotificationService.StartNewTask(CurrentTask);
-        }
 
         /// <summary>
         /// Ends current user session, if he decides to
@@ -219,12 +126,9 @@ namespace Timeinator.Mobile.Core
             // If he agreed...
             if (userResponse)
             {
-                // Save current task as finished one
-                var finishedTask = mTimeTasksMapper.ReverseMap(CurrentTask);
-                mFinishedTasks.Add(finishedTask);
-
                 // End the session
-                EndSession();
+                mSessionTimer.EndSession();
+                QuitSession();
             }
         }
 
@@ -238,23 +142,19 @@ namespace Timeinator.Mobile.Core
         private void InitializeSession()
         {
             // Set default values to key properties to start fresh session
-            mFinishedTasks = new List<TimeTaskContext>();
             RemainingTasks = new ObservableCollection<SessionTimeTaskItemViewModel>();
 
             // Get latest instances of every needed DI services
             InjectLatestDIServices();
 
-            // Initialize notification service
-            mSessionNotificationService.AttachClickCommands(NotificationButtonClick);
+            // Start new session providing required actions
+            mSessionTimer.SetupSession(UpdateSessionProperties, TaskTimeFinish);
 
-            // Start new session providing required actions and get all the tasks
-            var contexts = mTimeTasksService.StartSession(UpdateSessionProperties, TaskTimeFinish);
+            // Retrieve tasks
+            var contexts = mSessionTimer.GetTasks();
 
             // At the start of the session, first task in the list is always current one, so set it accordingly
             SetCurrentTask(0, mTimeTasksMapper.ListMapToSession(contexts.WholeList));
-
-            // Start the task in the notification as well
-            mSessionNotificationService.StartNewTask(CurrentTask);
         }
 
         /// <summary>
@@ -263,36 +163,9 @@ namespace Timeinator.Mobile.Core
         private void InjectLatestDIServices()
         {
             // Get every service from DI
-            mTimeTasksService = DI.Container.GetInstance<ITimeTasksService>();
-            mSessionNotificationService = DI.Container.GetInstance<ISessionNotificationService>();
+            mSessionTimer = DI.Container.GetInstance<ISessionTimer>();
             mUIManager = DI.Container.GetInstance<IUIManager>();
             mTimeTasksMapper = DI.Container.GetInstance<TimeTasksMapper>();
-        }
-
-        /// <summary>
-        /// Recalculates remaining tasks after break to compensate for lost time
-        /// </summary>
-        private void RecalculateTasksAfterBreak()
-        {
-            // If we have no remaining tasks...
-            if (RemainingTasks.Count == 0)
-                // Then we can't really recalculate anything, so just do nothing
-                return;
-
-            // Calculate how much time we should substract from every task
-            var breakDurationPerTask = BreakDuration.TotalSeconds / RemainingTasks.Count;
-            var timeToSubstract = TimeSpan.FromSeconds(breakDurationPerTask);
-
-            // For each task in the remaining list...
-            foreach (var task in RemainingTasks)
-            {
-                // Skip tasks that would be too short after substraction, we still want to keep minimum time requirement for them 
-                if ((task.AssignedTime - timeToSubstract) < TimeSpan.FromMinutes(DI.Settings.MinimumTaskTime))
-                    continue;
-                
-                // Substract the time from task
-                task.AssignedTime -= timeToSubstract;
-            }
         }
 
         /// <summary>
@@ -312,38 +185,6 @@ namespace Timeinator.Mobile.Core
             // Simply use the helper to fire every property's change event, for now it works just fine
             // Potentially in the future, update only required properties, not everything
             RaiseAllPropertiesChanged();
-
-            // Update the notification as well
-            mSessionNotificationService.UpdateNotification();
-        }
-
-        /// <summary>
-        /// Called when user interacted with session notification
-        /// </summary>
-        /// <param name="action">The action user has made</param>
-        private void NotificationButtonClick(AppAction action)
-        {
-            // Fire proper command based on the action
-            // So clicking on the notification has the exact same effect as clicking on the page
-            switch (action)
-            {
-                case AppAction.NextSessionTask:
-                    {
-                        FinishTaskCommand.Execute(null);
-                    } break;
-                case AppAction.PauseSession:
-                    {
-                        PauseCommand.Execute(null);
-                    } break;
-                case AppAction.ResumeSession:
-                    {
-                        ResumeCommand.Execute(null);
-                    } break;
-                case AppAction.StopSession:
-                    {
-                        EndSessionCommand.Execute(null);
-                    } break;
-            }
         }
 
         /// <summary>
@@ -365,7 +206,7 @@ namespace Timeinator.Mobile.Core
                 if (viewModels.Count <= 0)
                 {
                     // Then we finish current session
-                    EndSession();
+                    mSessionTimer.EndSession();
                     return;
                 }
                 // Or something went wrong and we tried to start the task that doesn't exist
@@ -382,17 +223,8 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Ends this session completely
         /// </summary>
-        private void EndSession()
+        private void QuitSession()
         {
-            // Stop timer
-            mTimeTasksService.StartBreak();
-
-            // Send finished tasks list for removal
-            mTimeTasksService.RemoveFinishedTasks(mFinishedTasks);
-
-            // Remove the notification
-            mSessionNotificationService.RemoveNotification();
-
             // Go to first page
             DI.Application.GoToPage(ApplicationPage.TasksList);
         }

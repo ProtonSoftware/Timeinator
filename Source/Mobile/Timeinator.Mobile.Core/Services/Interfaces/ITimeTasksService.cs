@@ -9,28 +9,10 @@ namespace Timeinator.Mobile.Core
     /// </summary>
     public interface ITimeTasksService
     {
-        TimeSpan SessionDuration { get; }
-        TimeSpan CurrentTaskTimeLeft { get; }
-        TimeSpan CurrentBreakDuration { get; }
-        double CurrentTaskCalculatedProgress { get; }
-
-        #region Database Interaction
-
         List<TimeTaskContext> LoadStoredTasks(string queryString);
 
         void SaveTask(TimeTaskContext context);
         void RemoveTask(TimeTaskContext context);
         void RemoveFinishedTasks(List<TimeTaskContext> contexts);
-
-        #endregion
-
-        List<TimeTaskContext> GetCalculatedTasks();
-        void SetSessionTasks(List<TimeTaskContext> contexts);
-        bool SetSessionTime(TimeSpan userTime);
-        void ClearSessionTasks();
-        HeadList<TimeTaskContext> StartSession(Action timerAction, Action taskAction);
-        void StartNextTask(TimeTaskContext context);
-        void StartBreak();
-        void EndBreak();
     }
 }
