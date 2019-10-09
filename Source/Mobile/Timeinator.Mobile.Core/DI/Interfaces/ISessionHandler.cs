@@ -7,7 +7,7 @@ namespace Timeinator.Mobile.Core
     /// <summary>
     /// The interface for handling everything related to time in task session
     /// </summary>
-    public interface ISessionTimer
+    public interface ISessionHandler
     {
         double CurrentTaskCalculatedProgress { get; }
         bool Paused { get; }
