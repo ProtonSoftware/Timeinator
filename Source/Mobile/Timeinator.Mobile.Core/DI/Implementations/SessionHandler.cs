@@ -8,7 +8,7 @@ namespace Timeinator.Mobile.Core
     /// <summary>
     /// User session handler
     /// </summary>
-    public class SessionTimer : ISessionTimer
+    public class SessionHandler : ISessionHandler
     {
         #region Private Members
 
@@ -57,7 +57,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public SessionTimer(ITimeTasksService timeTasksService, ITimeTasksCalculator timeTasksCalculator, ISessionNotificationService sessionNotificationService)
+        public SessionHandler(ITimeTasksService timeTasksService, ITimeTasksCalculator timeTasksCalculator, ISessionNotificationService sessionNotificationService)
         {
             mTimeTasksService = timeTasksService;
             mTimeTasksCalculator = timeTasksCalculator;
