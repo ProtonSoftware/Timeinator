@@ -52,14 +52,14 @@ namespace Timeinator.Mobile.Android
         /// <summary>
         /// Starts new task in the notification
         /// </summary>
-        /// <param name="viewModel">The provided task's view model to start</param>
-        public void StartNewTask(SessionTimeTaskItemViewModel viewModel)
+        /// <param name="context">The provided task's view model to start</param>
+        public void StartNewTask(TimeTaskContext context)
         {
             // Stop any previous tasks
             mTaskServiceConnection.Stop();
 
             // Setup provided details
-            mTaskServiceConnection.SetNewTask(viewModel.Name);
+            mTaskServiceConnection.SetNewTask(context.Name);
 
             // Start the task
             mTaskServiceConnection.Start();

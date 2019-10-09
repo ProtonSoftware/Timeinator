@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Timeinator.Core;
 
 namespace Timeinator.Mobile.Core
@@ -19,10 +20,9 @@ namespace Timeinator.Mobile.Core
         #region Kernel
 
         void SetupSession(Action timerAction, Action taskAction);
-
+        bool UpdateDuration(TimeSpan duration);
+        void UpdateTasks(List<TimeTaskContext> tasks);
         void StartNextTask(TimeTaskContext context);
-        void StartBreak();
-        void EndBreak();
 
         #endregion
 
@@ -32,5 +32,6 @@ namespace Timeinator.Mobile.Core
         void EndSession();
 
         HeadList<TimeTaskContext> GetTasks();
+        TimeTaskContext GetCurrentTask();
     }
 }

@@ -22,7 +22,7 @@ namespace Timeinator.Mobile.Core
             container.Register<ISettingsRepository, SettingsRepository>(Lifestyle.Singleton);
             container.Register<ITimeTasksService, TimeTasksService>(Lifestyle.Singleton);
             container.Register<ITimeTasksCalculator, TimeTasksCalculator>(Lifestyle.Singleton);
-            container.Register<ISessionTimer, SessionTimer>(Lifestyle.Singleton);
+            container.Register<ISessionHandler, SessionHandler>(Lifestyle.Singleton);
 
             // Inject dependiencies into every page's view model
             container.Register<TasksListPageViewModel>(Lifestyle.Transient);

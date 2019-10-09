@@ -17,7 +17,7 @@ namespace Timeinator.Mobile.Core
 
         private TimeTasksMapper mTimeTasksMapper;
         private IUIManager mUIManager;
-        private ISessionTimer mSessionTimer;
+        private ISessionHandler mSessionTimer;
 
         #endregion
 
@@ -52,11 +52,6 @@ namespace Timeinator.Mobile.Core
         /// Current break duration, displayed only when break indicator is true
         /// </summary>
         public TimeSpan BreakDuration => mSessionTimer.CurrentBreakDuration;
-
-        /// <summary>
-        /// Indicates if user has paused current task
-        /// </summary>
-        public bool Paused { get; set; }
 
         #endregion
 
@@ -163,7 +158,7 @@ namespace Timeinator.Mobile.Core
         private void InjectLatestDIServices()
         {
             // Get every service from DI
-            mSessionTimer = DI.Container.GetInstance<ISessionTimer>();
+            mSessionTimer = DI.Container.GetInstance<ISessionHandler>();
             mUIManager = DI.Container.GetInstance<IUIManager>();
             mTimeTasksMapper = DI.Container.GetInstance<TimeTasksMapper>();
         }
