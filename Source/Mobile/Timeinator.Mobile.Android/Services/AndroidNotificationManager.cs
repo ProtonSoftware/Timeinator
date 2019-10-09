@@ -156,7 +156,8 @@ namespace Timeinator.Mobile.Android
         {
             // Delete notification channel
             // TODO: Take this string from settings
-            mNotificationManager.DeleteNotificationChannel("com.gummybearstudio.timeinator");
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+                mNotificationManager.DeleteNotificationChannel("com.gummybearstudio.timeinator");
 
             // Cancel out all shown notifications
             mNotificationManager.CancelAll();
