@@ -5,7 +5,7 @@ using Xunit;
 namespace Timeinator.Mobile.Tests
 {
     /// <summary>
-    /// Tests for <see cref="SessionTimer"/>
+    /// Tests for <see cref="SessionHandler"/>
     /// </summary>
     public class TestSessionTimer
     {
@@ -13,7 +13,7 @@ namespace Timeinator.Mobile.Tests
         public void SessionTimer_()
         {
             // Arrange
-            var timer = new SessionTimer();
+            var timer = new SessionHandler();
             var tasksList = TestTaskListProvider.GetMockTimeTaskContexts(1);
             tasksList[0].AssignedTime = new TimeSpan(1, 0, 0);
             tasksList[1].AssignedTime = new TimeSpan(1, 0, 0);
