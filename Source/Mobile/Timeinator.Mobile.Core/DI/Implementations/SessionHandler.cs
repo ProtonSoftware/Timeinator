@@ -329,6 +329,10 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void Reset()
         {
+            // Reset events
+            TaskFinished = () => { };
+            SessionFinished = () => { };
+
             // Update timestamp
             mStartTime = DateTime.Now;
 

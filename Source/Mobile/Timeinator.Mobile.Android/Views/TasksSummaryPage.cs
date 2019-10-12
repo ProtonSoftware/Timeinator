@@ -49,6 +49,9 @@ namespace Timeinator.Mobile.Android
                 // Reorder the task list
                 viewModel.ReorderCommand.Execute(parameter);
             };
+
+            // Launch SessionNotificationService
+            DI.Container.GetInstance<SessionNotificationService>();
         }
     }
 }
