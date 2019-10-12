@@ -38,7 +38,7 @@ namespace Timeinator.Mobile.Android
         /// <summary>
         /// Setups this service by connecting with the <see cref="TaskServiceConnection"/>
         /// </summary>
-        public void Initialise()
+        private void Initialise()
         {
             // If the service is already connected...
             if (mTaskServiceConnection.IsConnected)
