@@ -12,9 +12,10 @@ using Timeinator.Mobile.DataAccess;
 namespace Timeinator.Mobile.DataAccess.Migrations
 {
     [DbContext(typeof(TimeinatorMobileDbContext))]
-    partial class TimeinatorMobileDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191012113138_AddedTaskTypes")]
+    partial class AddedTaskTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
