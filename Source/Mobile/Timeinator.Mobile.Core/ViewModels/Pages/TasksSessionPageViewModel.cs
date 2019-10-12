@@ -39,6 +39,11 @@ namespace Timeinator.Mobile.Core
         public double TaskProgress => mSessionHandler.CurrentTaskCalculatedProgress;
 
         /// <summary>
+        /// State of session
+        /// </summary>
+        public bool Paused => mSessionHandler.Paused;
+
+        /// <summary>
         /// Current session length from the start of it
         /// </summary>
         public TimeSpan SessionDuration => mSessionHandler.SessionDuration;

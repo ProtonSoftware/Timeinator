@@ -41,6 +41,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private Timer mSecondsTicker;
 
+        /// <summary>
+        /// Timestamp for current session
+        /// </summary>
+        private DateTime mStartTime;
+
         #endregion
 
         #region Public Events
@@ -100,7 +105,12 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The duration of the whole current session
         /// </summary>
-        public TimeSpan SessionDuration { get; private set; } = default;
+        public TimeSpan SessionTime { get; private set; } = default;
+
+        /// <summary>
+        /// Time since session has started
+        /// </summary>
+        public TimeSpan SessionDuration => DateTime.Now - mStartTime;
 
         /// <summary>
         /// The time that left in current session task
@@ -138,7 +148,7 @@ namespace Timeinator.Mobile.Core
             if (ValidateTime(userTime))
             {
                 // It is proper one, so set it
-                SessionDuration = userTime;
+                SessionTime = userTime;
 
                 // And return success
                 return true;
@@ -188,7 +198,7 @@ namespace Timeinator.Mobile.Core
             // Simply nullify the properties, so the service state is exactly the same as when before the use
             mUserTasks.WholeList.Clear();
             mUserTasks = null;
-            SessionDuration = default;
+            SessionTime = default;
 
             // Reset state of Handler
             Reset();
@@ -205,6 +215,9 @@ namespace Timeinator.Mobile.Core
             // Launch session if has not been yet started
             if (!mSecondsTicker.Enabled)
             {
+                // Update timestamp
+                mStartTime = DateTime.Now;
+                // Start first task
                 StartNextTask(mCurrentTask);
                 // Do not perform any other action
                 return;
@@ -311,8 +324,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void Reset()
         {
+            // Update timestamp
+            mStartTime = DateTime.Now;
+
             // Reset any previous sessions
-            SessionDuration = TimeSpan.Zero;
+            SessionTime = TimeSpan.Zero;
 
             // Release old ticker
             if (mSecondsTicker != null)
@@ -341,14 +357,14 @@ namespace Timeinator.Mobile.Core
                 return default;
 
             // Check if time for session is properly set
-            if (SessionDuration == default || !ValidateTime(SessionDuration))
+            if (SessionTime == default || !ValidateTime(SessionTime))
             {
                 // Throw exception because it should not ever happen in the code (time should be checked before), so something needs a fix
                 throw new Exception(LocalizationResource.AttemptToCalculateNoTime);
             }
 
             // Everything is nice and set, calculate our session
-            var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(target, SessionDuration);
+            var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(target, SessionTime);
 
             // Return the tasks
             return calculatedTasks;
@@ -471,7 +487,7 @@ namespace Timeinator.Mobile.Core
         private void SecondsTicker_Elapsed(object sender, ElapsedEventArgs e)
         {
             // Add one tick to the session duration
-            SessionDuration += mOneTick;
+            SessionTime += mOneTick;
 
             // If break time is on...
             if (Paused)
