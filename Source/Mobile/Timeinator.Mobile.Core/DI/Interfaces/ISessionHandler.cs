@@ -17,23 +17,17 @@ namespace Timeinator.Mobile.Core
 
         event Action TaskFinished;
 
-        #region Kernel
-
         void SetupSession(Action timerAction, Action taskAction);
         bool UpdateDuration(TimeSpan duration);
         void UpdateTasks(List<TimeTaskContext> tasks);
-        void StartNextTask(TimeTaskContext context);
-
-        #endregion
+        void Calculate();
+        HeadList<TimeTaskContext> GetTasks();
+        TimeTaskContext GetCurrentTask();
+        void ClearSessionTasks();
 
         void Resume();
         void Pause();
         void Finish();
         void EndSession();
-
-        HeadList<TimeTaskContext> GetTasks();
-        TimeTaskContext GetCurrentTask();
-        void ClearSessionTasks();
-        List<TimeTaskContext> GetCalculatedTasks();
     }
 }
