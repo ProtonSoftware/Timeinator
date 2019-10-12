@@ -48,7 +48,8 @@ namespace Timeinator.Mobile.Android
 
         public void SetNewTask(string name)
         {
-            Binder.Service.NotificationTitle = name;
+            if (IsConnected)
+                Binder.Service.NotificationTitle = name;
         }
 
         public void Update()

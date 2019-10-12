@@ -16,7 +16,6 @@ namespace Timeinator.Mobile.Core
         #region Private Members
 
         private readonly TimeTasksMapper mTimeTasksMapper;
-        private readonly ISessionNotificationService mSessionNotificationService;
         private readonly ISessionHandler mSessionHandler;
 
         #endregion
@@ -59,7 +58,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSummaryPageViewModel(ISessionHandler sessionHandler, ISessionNotificationService sessionNotificationService, TimeTasksMapper tasksMapper)
+        public TasksSummaryPageViewModel(ISessionHandler sessionHandler, TimeTasksMapper tasksMapper)
         {
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);
@@ -68,14 +67,10 @@ namespace Timeinator.Mobile.Core
 
             // Get injected DI services
             mSessionHandler = sessionHandler;
-            mSessionNotificationService = sessionNotificationService;
             mTimeTasksMapper = tasksMapper;
 
             // Load tasks from the manager to this page
             LoadTaskList();
-
-            // Prepare notification service for the up-coming session
-            mSessionNotificationService.Setup();
         }
 
         #endregion
@@ -164,8 +159,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public void LoadTaskList()
         {
+            // Update tasks times
+            mSessionHandler.Calculate();
+
             // Calculate selected tasks and get the contexts
-            var contexts = mSessionHandler.GetCalculatedTasks();
+            var contexts = mSessionHandler.GetTasks().WholeList;
 
             // Map the list as suitable view models
             TaskItems = new ObservableCollection<SummaryTimeTaskItemViewModel>(mTimeTasksMapper.ListMapToSummary(contexts));

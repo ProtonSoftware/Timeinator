@@ -17,7 +17,7 @@ namespace Timeinator.Mobile.Core
 
         private TimeTasksMapper mTimeTasksMapper;
         private IUIManager mUIManager;
-        private ISessionHandler mSessionTimer;
+        private ISessionHandler mSessionHandler;
 
         #endregion
 
@@ -36,22 +36,22 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Progress of current task shown in the progress bar on UI
         /// </summary>
-        public double TaskProgress => mSessionTimer.CurrentTaskCalculatedProgress;
+        public double TaskProgress => mSessionHandler.CurrentTaskCalculatedProgress;
 
         /// <summary>
         /// Current session length from the start of it
         /// </summary>
-        public TimeSpan SessionDuration => mSessionTimer.SessionDuration;
+        public TimeSpan SessionDuration => mSessionHandler.SessionDuration;
 
         /// <summary>
         /// The remaining time left of current task
         /// </summary>
-        public TimeSpan TimeRemaining => mSessionTimer.CurrentTimeLeft;
+        public TimeSpan TimeRemaining => mSessionHandler.CurrentTimeLeft;
 
         /// <summary>
         /// Current break duration, displayed only when break indicator is true
         /// </summary>
-        public TimeSpan BreakDuration => mSessionTimer.CurrentBreakDuration;
+        public TimeSpan BreakDuration => mSessionHandler.CurrentBreakDuration;
 
         #endregion
 
@@ -93,10 +93,10 @@ namespace Timeinator.Mobile.Core
         {
             // Create commands
             InitializeSessionCommand = new RelayCommand(InitializeSession);
-            PauseCommand = new RelayCommand(mSessionTimer.Pause);
-            ResumeCommand = new RelayCommand(mSessionTimer.Resume);
-            FinishTaskCommand = new RelayCommand(mSessionTimer.Finish);
             EndSessionCommand = new RelayCommand(EndSessionAsync);
+            PauseCommand = new RelayCommand(() => mSessionHandler.Pause());
+            ResumeCommand = new RelayCommand(() => mSessionHandler.Resume());
+            FinishTaskCommand = new RelayCommand(() => mSessionHandler.Finish());
         }
 
         #endregion
@@ -122,7 +122,7 @@ namespace Timeinator.Mobile.Core
             if (userResponse)
             {
                 // End the session
-                mSessionTimer.EndSession();
+                mSessionHandler.EndSession();
                 QuitSession();
             }
         }
@@ -143,10 +143,13 @@ namespace Timeinator.Mobile.Core
             InjectLatestDIServices();
 
             // Start new session providing required actions
-            mSessionTimer.SetupSession(UpdateSessionProperties, TaskTimeFinish);
+            mSessionHandler.SetupSession(UpdateSessionProperties, TaskTimeFinish);
+
+            // Begin session
+            mSessionHandler.Resume();
 
             // Retrieve tasks
-            var contexts = mSessionTimer.GetTasks();
+            var contexts = mSessionHandler.GetTasks();
 
             // At the start of the session, first task in the list is always current one, so set it accordingly
             SetCurrentTask(0, mTimeTasksMapper.ListMapToSession(contexts.WholeList));
@@ -158,7 +161,7 @@ namespace Timeinator.Mobile.Core
         private void InjectLatestDIServices()
         {
             // Get every service from DI
-            mSessionTimer = DI.Container.GetInstance<ISessionHandler>();
+            mSessionHandler = DI.Container.GetInstance<ISessionHandler>();
             mUIManager = DI.Container.GetInstance<IUIManager>();
             mTimeTasksMapper = DI.Container.GetInstance<TimeTasksMapper>();
         }
@@ -201,7 +204,7 @@ namespace Timeinator.Mobile.Core
                 if (viewModels.Count <= 0)
                 {
                     // Then we finish current session
-                    mSessionTimer.EndSession();
+                    mSessionHandler.EndSession();
                     return;
                 }
                 // Or something went wrong and we tried to start the task that doesn't exist
