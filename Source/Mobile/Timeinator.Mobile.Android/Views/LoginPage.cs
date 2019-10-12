@@ -38,7 +38,7 @@ namespace Timeinator.Mobile.Android
 
             // Add Android-specific dependency injection implementations
             DI.Container.Register<IUIManager, UIManager>(Lifestyle.Singleton);
-            DI.Container.Register<ISessionNotificationService, SessionNotificationService>(Lifestyle.Singleton);
+            DI.Container.Register<SessionNotificationService>(Lifestyle.Singleton);
             DI.Container.Register<IRingtonePlayer, RingtonePlayer>(Lifestyle.Singleton);
 
             // Migrate the database

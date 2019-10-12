@@ -19,17 +19,17 @@ namespace Timeinator.Mobile.Android
         private static readonly int NotificationId = 3333;
         private static readonly string ChannelId = "com.gummybearstudio.timeinator";
 
-        private readonly ISessionHandler mSessionHandler = DI.Container.GetInstance<ISessionHandler>();
         private readonly AndroidNotificationManager mNotificationManager = new AndroidNotificationManager(ChannelId);
 
         #endregion
 
         #region Public Properties
 
-        public string NotificationTitle { get; set; } = LocalizationResource.TaskName;
+        public string Title { get; set; } = LocalizationResource.TaskName;
+        public TimeSpan Time { get; set; } = default;
+        public double Progress { get; set; }
 
         public bool IsRunning { get; set; }
-
         public event Action<AppAction> RequestHandler;
 
         #endregion
@@ -59,7 +59,7 @@ namespace Timeinator.Mobile.Android
         public new void StopSelf()
         {
             // Kill the notification
-            mNotificationManager.Kill();
+            StopForeground(true);
 
             // Do base service stopping stuff
             base.StopSelf();
@@ -75,10 +75,10 @@ namespace Timeinator.Mobile.Android
         public Notification GetNotification()
         {
             // Prepare data for notification
-            var progress = mSessionHandler.CurrentTaskCalculatedProgress * 100;
+            var progress = Progress * 100;
 
             // Create notification and return it
-            return mNotificationManager.CreateNotification(NotificationTitle, (int)progress, mSessionHandler.CurrentTimeLeft, this);
+            return mNotificationManager.CreateNotification(Title, (int)progress, Time, this);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Timeinator.Mobile.Android
         /// </summary>
         public void HandleMessage(Intent intent)
         {
-            var appAction = default(AppAction);
+            AppAction appAction;
             switch (intent.Action)
             {
                 case IntentActions.ACTION_NEXTTASK:

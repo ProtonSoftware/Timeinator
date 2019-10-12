@@ -33,6 +33,9 @@ namespace Timeinator.Mobile.Android
             IsConnected = false;
         }
 
+        /// <summary>
+        /// Tells whether service is up and running
+        /// </summary>
         public bool Active
         {
             get
@@ -44,14 +47,41 @@ namespace Timeinator.Mobile.Android
             }
         }
 
+        /// <summary>
+        /// Event to handle any request from notification
+        /// </summary>
         public event Action<AppAction> Request = (a) => { };
 
-        public void SetNewTask(string name)
+        /// <summary>
+        /// Update notification title text
+        /// </summary>
+        public void SetTitle(string txt)
         {
             if (IsConnected)
-                Binder.Service.NotificationTitle = name;
+                Binder.Service.Title = txt;
         }
 
+        /// <summary>
+        /// Update notification title text
+        /// </summary>
+        public void SetProgress(double p)
+        {
+            if (IsConnected)
+                Binder.Service.Progress = p;
+        }
+
+        /// <summary>
+        /// Update notification title text
+        /// </summary>
+        public void SetTime(TimeSpan t)
+        {
+            if (IsConnected)
+                Binder.Service.Time = t;
+        }
+
+        /// <summary>
+        /// Repaint notification
+        /// </summary>
         public void Update()
         {
             if (!IsConnected)
@@ -59,6 +89,9 @@ namespace Timeinator.Mobile.Android
             Binder.Service.ReNotify();
         }
 
+        /// <summary>
+        /// Set state of Service to paused
+        /// </summary>
         public void Stop()
         {
             if (!IsConnected)
@@ -66,6 +99,9 @@ namespace Timeinator.Mobile.Android
             Binder.Service.IsRunning = false;
         }
 
+        /// <summary>
+        /// Set state of Service to running
+        /// </summary>
         public void Start()
         {
             if (!IsConnected)
@@ -73,6 +109,19 @@ namespace Timeinator.Mobile.Android
             Binder.Service.IsRunning = true;
         }
 
+        /// <summary>
+        /// Set state of Service
+        /// </summary>
+        public void SetState(bool running)
+        {
+            if (!IsConnected)
+                return;
+            Binder.Service.IsRunning = running;
+        }
+
+        /// <summary>
+        /// Remove timeinator service
+        /// </summary>
         public void Kill()
         {
             if (!IsConnected)

@@ -8,7 +8,7 @@ namespace Timeinator.Mobile.Android
     /// <summary>
     /// The service to handle all notification interactions in a session
     /// </summary>
-    public class SessionNotificationService : ISessionNotificationService
+    public class SessionNotificationService
     {
         #region Private Members
 
@@ -17,14 +17,28 @@ namespace Timeinator.Mobile.Android
         /// </summary>
         private readonly TaskServiceConnection mTaskServiceConnection = new TaskServiceConnection();
 
+        /// <summary>
+        /// Handler to communicate with and control session status
+        /// </summary>
+        private ISessionHandler mSessionHandler;
+
         #endregion
 
-        #region Interface Implementation
+        #region Constructor
+
+        public SessionNotificationService(ISessionHandler sessionHandler)
+        {
+            mSessionHandler = sessionHandler;
+
+            mSessionHandler.SessionStarted += Initialise;
+        }
+
+        #endregion
 
         /// <summary>
         /// Setups this service by connecting with the <see cref="TaskServiceConnection"/>
         /// </summary>
-        public void Setup()
+        public void Initialise()
         {
             // If the service is already connected...
             if (mTaskServiceConnection.IsConnected)
@@ -37,49 +51,71 @@ namespace Timeinator.Mobile.Android
             // Setup android foreground service
             Application.Context.StartService(intent);
             Application.Context.BindService(intent, mTaskServiceConnection, Bind.WaivePriority);
-        }
 
-        /// <summary>
-        /// Attaches provided action to the notification interactions
-        /// </summary>
-        /// <param name="notificationButtonClick">The action to fire whenever notification interaction happens</param>
-        public void AttachClickCommands(Action<AppAction> notificationButtonClick)
-        {
             // Attach provided notification interaction action
-            mTaskServiceConnection.Request += notificationButtonClick;
+            mTaskServiceConnection.Request += NotificationRequest;
+
+            // Init communication with handler
+            mSessionHandler.SetupSession(TickNotification, TaskNotification, mTaskServiceConnection.Kill);
+            TaskNotification();
         }
 
         /// <summary>
-        /// Starts new task in the notification
+        /// Notification operations every tick
         /// </summary>
-        /// <param name="context">The provided task's view model to start</param>
-        public void StartNewTask(TimeTaskContext context)
+        private void TickNotification()
         {
-            // Stop any previous tasks
-            mTaskServiceConnection.Stop();
+            // Get state
+            var paused = mSessionHandler.Paused;
+            // Get progress
+            var progress = mSessionHandler.CurrentTaskCalculatedProgress;
+            // Get time left
+            var time = mSessionHandler.CurrentTimeLeft;
 
-            // Setup provided details
-            mTaskServiceConnection.SetNewTask(context.Name);
-
-            // Start the task
-            mTaskServiceConnection.Start();
+            // Apply changes
+            mTaskServiceConnection.SetState(paused);
+            mTaskServiceConnection.SetProgress(progress);
+            mTaskServiceConnection.SetTime(time);
+            mTaskServiceConnection.Update();
         }
 
         /// <summary>
-        /// Stops current task
+        /// Notification operations every task
         /// </summary>
-        public void StopCurrentTask() => mTaskServiceConnection.Stop();
+        private void TaskNotification()
+        {
+            // Update title
+            var name = mSessionHandler.GetCurrentTask().Name;
+            mTaskServiceConnection.SetTitle(name);
+        }
 
         /// <summary>
-        /// Removes the notification from the phone
+        /// Called when user interacted with session notification
         /// </summary>
-        public void RemoveNotification() => mTaskServiceConnection.Kill();
-
-        /// <summary>
-        /// Updates notification state
-        /// </summary>
-        public void UpdateNotification() => mTaskServiceConnection.Update();
-
-        #endregion
+        /// <param name="action">The action user has made</param>
+        private void NotificationRequest(AppAction action)
+        {
+            // Fire proper command based on the action
+            // So clicking on the notification has the exact same effect as clicking on the page
+            switch (action)
+            {
+                case AppAction.NextSessionTask:
+                    {
+                        mSessionHandler.Finish();
+                    } break;
+                case AppAction.PauseSession:
+                    {
+                        mSessionHandler.Pause();
+                    } break;
+                case AppAction.ResumeSession:
+                    {
+                        mSessionHandler.Resume();
+                    } break;
+                case AppAction.StopSession:
+                    {
+                        mSessionHandler.EndSession();
+                    } break;
+            }
+        }
     }
 }
