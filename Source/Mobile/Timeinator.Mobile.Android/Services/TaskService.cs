@@ -19,7 +19,7 @@ namespace Timeinator.Mobile.Android
         private static readonly int NotificationId = 3333;
         private static readonly string ChannelId = "com.gummybearstudio.timeinator";
 
-        private readonly ITimeTasksService mTimeTasksService = DI.Container.GetInstance<ITimeTasksService>();
+        private readonly ISessionHandler mSessionHandler = DI.Container.GetInstance<ISessionHandler>();
         private readonly AndroidNotificationManager mNotificationManager = new AndroidNotificationManager(ChannelId);
 
         #endregion
@@ -75,10 +75,10 @@ namespace Timeinator.Mobile.Android
         public Notification GetNotification()
         {
             // Prepare data for notification
-            var progress = mTimeTasksService.CurrentTaskCalculatedProgress * 100;
+            var progress = mSessionHandler.CurrentTaskCalculatedProgress * 100;
 
             // Create notification and return it
-            return mNotificationManager.CreateNotification(NotificationTitle, (int)progress, mTimeTasksService.CurrentTaskTimeLeft, this);
+            return mNotificationManager.CreateNotification(NotificationTitle, (int)progress, mSessionHandler.CurrentTimeLeft, this);
         }
 
         /// <summary>

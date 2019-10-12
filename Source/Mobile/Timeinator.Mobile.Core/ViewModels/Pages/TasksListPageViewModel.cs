@@ -17,6 +17,7 @@ namespace Timeinator.Mobile.Core
 
         private readonly TimeTasksMapper mTimeTasksMapper;
         private readonly ITimeTasksService mTimeTasksService;
+        private readonly ISessionHandler mSessionHandler;
         private readonly IUIManager mUIManager;
 
         /// <summary>
@@ -150,7 +151,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksListPageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager, TimeTasksMapper tasksMapper)
+        public TasksListPageViewModel(ITimeTasksService timeTasksService, ISessionHandler sessionHandler, IUIManager uiManager, TimeTasksMapper tasksMapper)
         {
             // Create commands
             AddNewTaskCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.AddNewTask));
@@ -162,6 +163,7 @@ namespace Timeinator.Mobile.Core
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
+            mSessionHandler = sessionHandler;
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
 
@@ -267,7 +269,7 @@ namespace Timeinator.Mobile.Core
             DI.Application.GoToPage(ApplicationPage.TasksTime);
 
             // Send task contexts to the service
-            mTimeTasksService.SetSessionTasks(taskContexts);
+            mSessionHandler.UpdateTasks(taskContexts);
         }
 
         #endregion

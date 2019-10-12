@@ -17,7 +17,7 @@ namespace Timeinator.Mobile.Core
 
         private readonly TimeTasksMapper mTimeTasksMapper;
         private readonly ISessionNotificationService mSessionNotificationService;
-        private readonly ITimeTasksService mTimeTasksService;
+        private readonly ISessionHandler mSessionHandler;
 
         #endregion
 
@@ -59,7 +59,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSummaryPageViewModel(ITimeTasksService timeTasksService, ISessionNotificationService sessionNotificationService, TimeTasksMapper tasksMapper)
+        public TasksSummaryPageViewModel(ISessionHandler sessionHandler, ISessionNotificationService sessionNotificationService, TimeTasksMapper tasksMapper)
         {
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);
@@ -67,7 +67,7 @@ namespace Timeinator.Mobile.Core
             ReorderCommand = new RelayParameterizedCommand(Reorder);
 
             // Get injected DI services
-            mTimeTasksService = timeTasksService;
+            mSessionHandler = sessionHandler;
             mSessionNotificationService = sessionNotificationService;
             mTimeTasksMapper = tasksMapper;
 
@@ -91,7 +91,7 @@ namespace Timeinator.Mobile.Core
             var taskContexts = mTimeTasksMapper.ListReverseMap(TaskItems.ToList());
 
             // Pass it to the service
-            mTimeTasksService.SetSessionTasks(taskContexts);
+            mSessionHandler.UpdateTasks(taskContexts);
 
             // Create brand-new view model for session page
             var sessionViewModel = DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
@@ -107,7 +107,7 @@ namespace Timeinator.Mobile.Core
         private void Cancel()
         {
             // Clear task list in service
-            mTimeTasksService.ClearSessionTasks();
+            mSessionHandler.ClearSessionTasks();
 
             // TODO: Find better way
             // Go back to task list
@@ -165,7 +165,7 @@ namespace Timeinator.Mobile.Core
         public void LoadTaskList()
         {
             // Calculate selected tasks and get the contexts
-            var contexts = mTimeTasksService.GetCalculatedTasks();
+            var contexts = mSessionHandler.GetCalculatedTasks();
 
             // Map the list as suitable view models
             TaskItems = new ObservableCollection<SummaryTimeTaskItemViewModel>(mTimeTasksMapper.ListMapToSummary(contexts));

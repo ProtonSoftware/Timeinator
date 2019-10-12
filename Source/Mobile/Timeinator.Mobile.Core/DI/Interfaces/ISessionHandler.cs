@@ -33,5 +33,7 @@ namespace Timeinator.Mobile.Core
 
         HeadList<TimeTaskContext> GetTasks();
         TimeTaskContext GetCurrentTask();
+        void ClearSessionTasks();
+        List<TimeTaskContext> GetCalculatedTasks();
     }
 }

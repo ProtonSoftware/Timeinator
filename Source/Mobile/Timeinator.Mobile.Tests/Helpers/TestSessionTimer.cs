@@ -7,7 +7,7 @@ namespace Timeinator.Mobile.Tests
     /// <summary>
     /// Tests for <see cref="SessionHandler"/>
     /// </summary>
-    public class TestSessionTimer
+    /*public class TestSessionTimer
     {
         [Fact]
         public void SessionTimer_()
@@ -25,5 +25,5 @@ namespace Timeinator.Mobile.Tests
             // Assert
             Assert.True(timer.SessionDuration.Minutes > 0);
         }
-    }
+    }*/
 }
