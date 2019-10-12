@@ -79,10 +79,12 @@ namespace Timeinator.Mobile.DataAccess
                 // Set every property for new values
                 dbEntity.Name = entity.Name;
                 dbEntity.Description = entity.Description;
+                dbEntity.Type = entity.Type;
                 dbEntity.IsImmortal = entity.IsImmortal;
                 dbEntity.IsImportant = entity.IsImportant;
                 dbEntity.Priority = entity.Priority;
                 dbEntity.Progress = entity.Progress;
+                dbEntity.MaxProgress = entity.MaxProgress;
                 dbEntity.Tags = entity.Tags;
                 dbEntity.AssignedTime = entity.AssignedTime;
                 dbEntity.CreationDate = entity.CreationDate;
