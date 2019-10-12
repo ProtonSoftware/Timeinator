@@ -73,7 +73,7 @@ namespace Timeinator.Mobile.Android
             var time = mSessionHandler.CurrentTimeLeft;
 
             // Apply changes
-            mTaskServiceConnection.SetState(paused);
+            mTaskServiceConnection.SetState(!paused);
             mTaskServiceConnection.SetProgress(progress);
             mTaskServiceConnection.SetTime(time);
             mTaskServiceConnection.Update();
