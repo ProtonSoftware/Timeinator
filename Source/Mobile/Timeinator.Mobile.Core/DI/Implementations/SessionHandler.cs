@@ -14,7 +14,6 @@ namespace Timeinator.Mobile.Core
 
         private readonly ITimeTasksService mTimeTasksService;
         private readonly ITimeTasksCalculator mTimeTasksCalculator;
-        private readonly ISessionNotificationService mSessionNotificationService;
 
         /// <summary>
         /// The amount of time for every timer tick
@@ -55,6 +54,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public event Action TaskFinished = () => { };
 
+        /// <summary>
+        /// Event called when all tasks are finished
+        /// </summary>
+        public event Action SessionFinished = () => { };
+
         #endregion
 
         #region Constructors
@@ -62,11 +66,10 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public SessionHandler(ITimeTasksService timeTasksService, ITimeTasksCalculator timeTasksCalculator, ISessionNotificationService sessionNotificationService)
+        public SessionHandler(ITimeTasksService timeTasksService, ITimeTasksCalculator timeTasksCalculator)
         {
             mTimeTasksService = timeTasksService;
             mTimeTasksCalculator = timeTasksCalculator;
-            mSessionNotificationService = sessionNotificationService;
 
             Reset();
         }
@@ -163,13 +166,16 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         /// <param name="timerAction">The action to fire along with timer ticks</param>
         /// <param name="taskAction">The action to fire when task's time finishes</param>
-        public void SetupSession(Action timerAction, Action taskAction)
+        public void SetupSession(Action timerAction, Action taskAction, Action sessionAction)
         {
             // Attach provided action as well
             mSecondsTicker.Elapsed += (s, e) => timerAction.Invoke();
 
             // Attach provided task action to the task finished event
             TaskFinished += taskAction;
+
+            // Attach provided session action
+            SessionFinished += sessionAction;
         }
 
         /// <summary>
@@ -237,9 +243,6 @@ namespace Timeinator.Mobile.Core
                 Finish();
                 return;
             }
-
-            // Inform the notification
-            mSessionNotificationService.StartNewTask(mCurrentTask);
         }
 
         /// <summary>
@@ -253,9 +256,6 @@ namespace Timeinator.Mobile.Core
 
             // Start the break
             StartBreak();
-
-            // Inform the notification
-            mSessionNotificationService.StopCurrentTask();
         }
 
         /// <summary>
@@ -292,8 +292,8 @@ namespace Timeinator.Mobile.Core
             // Send finished tasks list for removal
             mTimeTasksService.RemoveFinishedTasks(mFinishedTasks);
 
-            // Remove the notification
-            mSessionNotificationService.RemoveNotification();
+            // Fire event, session over
+            SessionFinished.Invoke();
         }
 
         #endregion
@@ -315,9 +315,6 @@ namespace Timeinator.Mobile.Core
 
             // Save it for progress calculations
             mCurrentTask.AssignedTime = context.AssignedTime;
-
-            // Inform the notification
-            mSessionNotificationService.StartNewTask(mCurrentTask);
         }
 
         /// <summary>
@@ -343,12 +340,6 @@ namespace Timeinator.Mobile.Core
 
             // Run our elapsed function every time timer ticks
             mSecondsTicker.Elapsed += SecondsTicker_Elapsed;
-
-            // Setup notification service
-            mSessionNotificationService.Setup();
-
-            // Initialize notification service
-            mSessionNotificationService.AttachClickCommands(NotificationButtonClick);
         }
         #endregion
 

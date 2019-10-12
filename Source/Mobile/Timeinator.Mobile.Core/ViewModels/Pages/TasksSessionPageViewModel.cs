@@ -101,12 +101,50 @@ namespace Timeinator.Mobile.Core
             EndSessionCommand = new RelayCommand(EndSessionAsync);
             PauseCommand = new RelayCommand(() => mSessionHandler.Pause());
             ResumeCommand = new RelayCommand(() => mSessionHandler.Resume());
-            FinishTaskCommand = new RelayCommand(() => mSessionHandler.Finish());
+            FinishTaskCommand = new RelayCommand(FinishTask);
         }
 
         #endregion
 
         #region Command Methods
+
+        /// <summary>
+        /// Finish task action, tell handler to finish and reload task list
+        /// </summary>
+        private void FinishTask()
+        {
+            mSessionHandler.Finish();
+
+            // Retrieve tasks
+            var contexts = mSessionHandler.GetTasks();
+
+            // At the start of the session, first task in the list is always current one, so set it accordingly
+            SetCurrentTask(0, mTimeTasksMapper.ListMapToSession(contexts.WholeList));
+        }
+
+        /// <summary>
+        /// Initializes the session on this page
+        /// </summary>
+        private void InitializeSession()
+        {
+            // Set default values to key properties to start fresh session
+            RemainingTasks = new ObservableCollection<SessionTimeTaskItemViewModel>();
+
+            // Get latest instances of every needed DI services
+            InjectLatestDIServices();
+
+            // Start new session providing required actions
+            mSessionHandler.SetupSession(UpdateSessionProperties, TaskTimeFinish, QuitSession);
+
+            // Begin session
+            mSessionHandler.Resume();
+
+            // Retrieve tasks
+            var contexts = mSessionHandler.GetTasks();
+
+            // At the start of the session, first task in the list is always current one, so set it accordingly
+            SetCurrentTask(0, mTimeTasksMapper.ListMapToSession(contexts.WholeList));
+        }
 
         /// <summary>
         /// Ends current user session, if he decides to
@@ -135,30 +173,6 @@ namespace Timeinator.Mobile.Core
         #endregion
 
         #region Private Helpers
-
-        /// <summary>
-        /// Initializes the session on this page
-        /// </summary>
-        private void InitializeSession()
-        {
-            // Set default values to key properties to start fresh session
-            RemainingTasks = new ObservableCollection<SessionTimeTaskItemViewModel>();
-
-            // Get latest instances of every needed DI services
-            InjectLatestDIServices();
-
-            // Start new session providing required actions
-            mSessionHandler.SetupSession(UpdateSessionProperties, TaskTimeFinish);
-
-            // Begin session
-            mSessionHandler.Resume();
-
-            // Retrieve tasks
-            var contexts = mSessionHandler.GetTasks();
-
-            // At the start of the session, first task in the list is always current one, so set it accordingly
-            SetCurrentTask(0, mTimeTasksMapper.ListMapToSession(contexts.WholeList));
-        }
 
         /// <summary>
         /// Injects latest implementations of DI services into this view model
@@ -202,18 +216,16 @@ namespace Timeinator.Mobile.Core
                 // Set the task at specified index
                 CurrentTask = viewModels.ElementAt(index);
             }
-            catch
+            catch (Exception e)
             {
                 // If we get here, the index is not in the list
                 // So the list is either empty...
                 if (viewModels.Count <= 0)
-                {
                     // Then we finish current session
                     mSessionHandler.EndSession();
-                    return;
-                }
-                // Or something went wrong and we tried to start the task that doesn't exist
-                // Debugger.Break();
+                else
+                    // Or something went wrong and we tried to start the task that doesn't exist
+                    throw e;
             }
 
             // Delete current task from the list

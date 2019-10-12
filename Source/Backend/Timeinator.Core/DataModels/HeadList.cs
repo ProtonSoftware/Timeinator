@@ -28,7 +28,7 @@ namespace Timeinator.Core
                     return new List<T>();
 
                 // Copy the list so we don't modify current properties
-                var listCopy = WholeList;
+                var listCopy = new List<T>(WholeList);
 
                 // Remove head element from the beginning
                 listCopy.RemoveAt(0);
