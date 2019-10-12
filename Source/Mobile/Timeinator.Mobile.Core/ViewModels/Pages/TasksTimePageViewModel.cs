@@ -13,7 +13,7 @@ namespace Timeinator.Mobile.Core
     {
         #region Private Members
 
-        private readonly ITimeTasksService mTimeTasksService;
+        private readonly ISessionHandler mSessionHandler;
         private readonly IUIManager mUIManager;
 
         #endregion
@@ -46,14 +46,14 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksTimePageViewModel(ITimeTasksService timeTasksService, IUIManager uiManager)
+        public TasksTimePageViewModel(ISessionHandler sessionHandler, IUIManager uiManager)
         {
             // Create commands
             CalculateSessionCommand = new RelayCommand(async () => await CalculateSessionAsync());
             CancelCommand = new RelayCommand(Cancel);
 
             // Get injected DI services
-            mTimeTasksService = timeTasksService;
+            mSessionHandler = sessionHandler;
             mUIManager = uiManager;
         }
 
@@ -68,7 +68,7 @@ namespace Timeinator.Mobile.Core
         private async Task CalculateSessionAsync()
         {
             // Try to set user's selected time as session time
-            var result = mTimeTasksService.SetSessionTime(UserTime);
+            var result = mSessionHandler.UpdateDuration(UserTime);
 
             // If user's selected time is not enough to start a session...
             if (!result)
@@ -90,7 +90,7 @@ namespace Timeinator.Mobile.Core
         private void Cancel()
         {
             // Clear task list in service
-            mTimeTasksService.ClearSessionTasks();
+            mSessionHandler.ClearSessionTasks();
 
             // Go back to task list
             mUIManager.GoBackToPreviousPage(this);

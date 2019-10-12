@@ -276,6 +276,43 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public TimeTaskContext GetCurrentTask() => mCurrentTask;
         
+        /// <summary>
+        /// Empties the task list in manager
+        /// </summary>
+        public void ClearSessionTasks()
+        {
+            // Simply nullify the properties, so the service state is exactly the same as when before the use
+            mUserTasks.WholeList.Clear();
+            mUserTasks = null;
+            SessionDuration = default;
+        }
+
+        /// <summary>
+        /// Gets a list of calculated tasks for the session
+        /// </summary>
+        /// <returns>List of calculated <see cref="TimeTaskContext"/></returns>
+        public List<TimeTaskContext> GetCalculatedTasks()
+        {
+            // TODO:
+            // Remove this function and make session tasks recalc automatically as needed
+
+            // Check if task list is properly set
+            ValidateTasks();
+
+            // Check if time for session is properly set
+            if (SessionDuration == default || !ValidateTime(SessionDuration))
+            {
+                // Throw exception because it should not ever happen in the code (time should be checked before), so something needs a fix
+                throw new Exception(LocalizationResource.AttemptToCalculateNoTime);
+            }
+
+            // Everything is nice and set, calculate our session
+            var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(mUserTasks.WholeList, SessionDuration);
+
+            // Return the tasks
+            return calculatedTasks;
+        }
+
         #endregion
 
         #region Private Helpers
@@ -335,40 +372,6 @@ namespace Timeinator.Mobile.Core
                         EndSession();
                     } break;
             }
-        }
-
-        /// <summary>
-        /// Empties the task list in manager
-        /// </summary>
-        private void ClearSessionTasks()
-        {
-            // Simply nullify the properties, so the service state is exactly the same as when before the use
-            mUserTasks.WholeList.Clear();
-            mUserTasks = null;
-            SessionDuration = default;
-        }
-
-        /// <summary>
-        /// Gets a list of calculated tasks for the session
-        /// </summary>
-        /// <returns>List of calculated <see cref="TimeTaskContext"/></returns>
-        private List<TimeTaskContext> GetCalculatedTasks()
-        {
-            // Check if task list is properly set
-            ValidateTasks();
-
-            // Check if time for session is properly set
-            if (SessionDuration == default || !ValidateTime(SessionDuration))
-            {
-                // Throw exception because it should not ever happen in the code (time should be checked before), so something needs a fix
-                throw new Exception(LocalizationResource.AttemptToCalculateNoTime);
-            }
-
-            // Everything is nice and set, calculate our session
-            var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(mUserTasks.WholeList, SessionDuration);
-
-            // Return the tasks
-            return calculatedTasks;
         }
 
         /// <summary>
