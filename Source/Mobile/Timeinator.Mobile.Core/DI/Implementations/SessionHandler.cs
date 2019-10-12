@@ -278,7 +278,7 @@ namespace Timeinator.Mobile.Core
             }
 
             // Refresh tasks
-            UpdateTasks(CalculatedTasks(mUserTasks.RemainingList));
+            UpdateTasks(mUserTasks.RemainingList);
 
             // And start it in the session
             StartNextTask(mCurrentTask);
@@ -300,6 +300,7 @@ namespace Timeinator.Mobile.Core
 
         #region Private Helpers
 
+        #region Handler logic
         /// <summary>
         /// Starts new task in current session
         /// </summary>
@@ -330,6 +331,9 @@ namespace Timeinator.Mobile.Core
             // Reset any previous sessions
             SessionTime = TimeSpan.Zero;
 
+            // Prepare finished tasks list
+            mFinishedTasks = new List<TimeTaskContext>();
+
             // Release old ticker
             if (mSecondsTicker != null)
                 mSecondsTicker.Dispose();
@@ -346,7 +350,9 @@ namespace Timeinator.Mobile.Core
             // Initialize notification service
             mSessionNotificationService.AttachClickCommands(NotificationButtonClick);
         }
+        #endregion
 
+        #region Calculating time
         /// <summary>
         /// Gets a list of calculated tasks for the session
         /// </summary>
@@ -405,7 +411,9 @@ namespace Timeinator.Mobile.Core
                 task.AssignedTime -= timeToSubstract;
             }
         }
+        #endregion
 
+        #region UI logic
         /// <summary>
         /// Called when user interacted with session notification
         /// </summary>
@@ -457,31 +465,6 @@ namespace Timeinator.Mobile.Core
         }
 
         /// <summary>
-        /// Validates if we have proper tasks inside service
-        /// </summary>
-        private void ValidateTasks()
-        {
-            // Tasks must be set and we need at least one of them
-            if (mUserTasks?.WholeList == null || mUserTasks.WholeList.Count < 1)
-            {
-                // Throw exception because it should not ever happen in the code, so something needs a fix
-                throw new Exception(LocalizationResource.AttemptToCalculateNoTasks);
-            }
-        }
-
-        /// <summary>
-        /// Validates if session time is enough for current tasks
-        /// </summary>
-        private bool ValidateTime(TimeSpan time)
-        {
-            // Calculate what time we need for current session
-            var neededTime = mTimeTasksCalculator.CalculateMinimumTimeForTasks(mUserTasks.WholeList);
-
-            // Time must be greater or equal to minimum needed
-            return time >= neededTime;
-        }
-
-        /// <summary>
         /// Runs every time the timer ticks
         /// </summary>
         private void SecondsTicker_Elapsed(object sender, ElapsedEventArgs e)
@@ -512,6 +495,34 @@ namespace Timeinator.Mobile.Core
                 TaskFinished.Invoke();
             }
         }
+        #endregion
+
+        #region Validation
+        /// <summary>
+        /// Validates if we have proper tasks inside service
+        /// </summary>
+        private void ValidateTasks()
+        {
+            // Tasks must be set and we need at least one of them
+            if (mUserTasks?.WholeList == null || mUserTasks.WholeList.Count < 1)
+            {
+                // Throw exception because it should not ever happen in the code, so something needs a fix
+                throw new Exception(LocalizationResource.AttemptToCalculateNoTasks);
+            }
+        }
+
+        /// <summary>
+        /// Validates if session time is enough for current tasks
+        /// </summary>
+        private bool ValidateTime(TimeSpan time)
+        {
+            // Calculate what time we need for current session
+            var neededTime = mTimeTasksCalculator.CalculateMinimumTimeForTasks(mUserTasks.WholeList);
+
+            // Time must be greater or equal to minimum needed
+            return time >= neededTime;
+        }
+        #endregion
 
         #endregion
     }
