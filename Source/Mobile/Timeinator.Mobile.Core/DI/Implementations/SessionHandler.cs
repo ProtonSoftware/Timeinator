@@ -59,6 +59,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public event Action SessionFinished = () => { };
 
+        /// <summary>
+        /// Event called when new session is started
+        /// </summary>
+        public event Action SessionStarted = () => { };
+
         #endregion
 
         #region Constructors
@@ -221,6 +226,8 @@ namespace Timeinator.Mobile.Core
             // Launch session if has not been yet started
             if (!mSecondsTicker.Enabled)
             {
+                // Broadcast session is starting
+                SessionStarted.Invoke();
                 // Update timestamp
                 mStartTime = DateTime.Now;
                 // Start first task
@@ -405,35 +412,6 @@ namespace Timeinator.Mobile.Core
         #endregion
 
         #region UI logic
-        /// <summary>
-        /// Called when user interacted with session notification
-        /// </summary>
-        /// <param name="action">The action user has made</param>
-        private void NotificationButtonClick(AppAction action)
-        {
-            // Fire proper command based on the action
-            // So clicking on the notification has the exact same effect as clicking on the page
-            switch (action)
-            {
-                case AppAction.NextSessionTask:
-                    {
-                        Finish();
-                    } break;
-                case AppAction.PauseSession:
-                    {
-                        Pause();
-                    } break;
-                case AppAction.ResumeSession:
-                    {
-                        Resume();
-                    } break;
-                case AppAction.StopSession:
-                    {
-                        EndSession();
-                    } break;
-            }
-        }
-
         /// <summary>
         /// Starts the break time on current task
         /// </summary>
