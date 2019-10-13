@@ -345,4 +345,7 @@
   <data name="TimeinatorSessionTitle" xml:space="preserve">
     <value>Timeinator Session</value>
   </data>
+  <data name="ModeFinishTime" xml:space="preserve">
+    <value>Use as finish time</value>
+  </data>
 </root>
