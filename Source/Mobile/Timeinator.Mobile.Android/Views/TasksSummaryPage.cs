@@ -2,18 +2,17 @@
 using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Support.V7.Widget.Helper;
+using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Droid.Support.V7.RecyclerView;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
-using MvvmCross.Platforms.Android.Views;
 using System;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity(Label = "View for TasksSummaryPageViewModel",
-              NoHistory = true)]
-    public class TasksSummaryPage : MvxActivity
+    [Activity(NoHistory = true)]
+    public class TasksSummaryPage : MvxAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {

@@ -1,17 +1,16 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Widget;
+using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
-using MvvmCross.Platforms.Android.Views;
 using System;
 using Timeinator.Mobile.Core;
 
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity(Label = "View for TasksTimePageViewModel",
-              NoHistory = true)]
-    public class TasksTimePage : MvxActivity
+    [Activity(NoHistory = true)]
+    public class TasksTimePage : MvxAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -26,7 +25,7 @@ namespace Timeinator.Mobile.Android
             base.OnStop();
 
             // Find the timepicker on this page
-            var timepicker = (TimePicker)FindViewById(Resource.Id.pickerSession);
+            var timepicker = FindViewById<TimePicker>(Resource.Id.pickerSession);
 
             // Set default values (otherwise it would be current user time, which we don't want)
             timepicker.Hour = 0;
