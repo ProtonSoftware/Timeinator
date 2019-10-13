@@ -14,6 +14,11 @@ namespace Timeinator.Mobile.Android
         public string Title { get; set; }
 
         /// <summary>
+        /// The icon for this fragment as resource id
+        /// </summary>
+        public int IconResourceId { get; set; }
+
+        /// <summary>
         /// The type of the fragment
         /// </summary>
         public Type FragmentType { get; set; }

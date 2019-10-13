@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Support.V4.View;
+using DK.Ostebaronen.Droid.ViewPagerIndicator;
 using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using System.Collections.Generic;
@@ -28,14 +29,16 @@ namespace Timeinator.Mobile.Android
             {
                 new MvxFragmentInfo
                 {
-                    FragmentType = typeof(AddNewTimeTaskFragment),
                     Title = TimeTaskType.Generic.ToString(),
+                    IconResourceId = Resource.Drawable.icon_type_generic,
+                    FragmentType = typeof(AddNewTimeTaskFragment),
                     ViewModel = viewModel
                 },
                 new MvxFragmentInfo
                 {
-                    FragmentType = typeof(AddNewTimeTaskFragment),
                     Title = TimeTaskType.Reading.ToString(),
+                    IconResourceId = Resource.Drawable.icon_type_reading,
+                    FragmentType = typeof(AddNewTimeTaskFragment),
                     ViewModel = viewModel
                 }
             };
@@ -45,6 +48,9 @@ namespace Timeinator.Mobile.Android
 
             // Set the content as fragments using our adapter
             viewPager.Adapter = new MvxFragmentStatePagerAdapter(BaseContext, SupportFragmentManager, fragments);
+
+            var indicator = FindViewById<IconPageIndicator>(Resource.Id.indicatorAdd);
+            indicator.SetViewPager(viewPager);
         }
     }
 }
