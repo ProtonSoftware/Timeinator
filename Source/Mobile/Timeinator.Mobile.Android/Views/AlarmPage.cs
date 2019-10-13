@@ -1,14 +1,14 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Views;
+using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
-using MvvmCross.Platforms.Android.Views;
 
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
     [Activity]
-    public class AlarmPage : MvxActivity
+    public class AlarmPage : MvxAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {

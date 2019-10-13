@@ -1,8 +1,8 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Widget;
+using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
-using MvvmCross.Platforms.Android.Views;
 using System;
 using Timeinator.Mobile.Core;
 
@@ -10,7 +10,7 @@ namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
     [Activity(NoHistory = true)]
-    public class TasksTimePage : MvxActivity
+    public class TasksTimePage : MvxAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {

@@ -6,9 +6,9 @@ using Android.Widget;
 using MvvmCross;
 using MvvmCross.Binding.Binders;
 using MvvmCross.Binding.Extensions;
+using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Droid.Support.V7.RecyclerView;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
-using MvvmCross.Platforms.Android.Views;
 using System.Linq;
 using Timeinator.Core;
 using Timeinator.Mobile.Core;
@@ -18,7 +18,7 @@ namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
     [Activity]
-    public class TasksListPage : MvxActivity
+    public class TasksListPage : MvxAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
