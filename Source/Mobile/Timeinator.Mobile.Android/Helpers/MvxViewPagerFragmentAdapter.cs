@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Runtime;
 using Android.Support.V4.App;
+using DK.Ostebaronen.Droid.ViewPagerIndicator.Interfaces;
 using Java.Lang;
 using MvvmCross.Droid.Support.V4;
 using System;
@@ -12,7 +13,7 @@ namespace Timeinator.Mobile.Android
     /// <summary>
     /// The adapter that supports MvxFragments and allows view pager to display provided fragments
     /// </summary>
-    public class MvxFragmentStatePagerAdapter : FragmentStatePagerAdapter
+    public class MvxFragmentStatePagerAdapter : FragmentStatePagerAdapter, IIconPageAdapter
     {
         #region Private Members
 
@@ -91,6 +92,13 @@ namespace Timeinator.Mobile.Android
         /// <param name="fragmentType">The type of fragment to get name from</param>
         /// <returns>Simple string</returns>
         protected static string FragmentJavaName(Type fragmentType) => Class.FromType(fragmentType).Name;
+
+        /// <summary>
+        /// Gets the icon resource from fragment at specified position
+        /// </summary>
+        /// <param name="index">The position of a fragment</param>
+        /// <returns>Resource id</returns>
+        public int GetIconResId(int index) => mFragments.ElementAt(index).IconResourceId;
 
         #endregion
     }
