@@ -46,6 +46,45 @@ namespace Timeinator.Mobile.Core
                 return calculatedTasks;
         }
 
+        /// <summary>
+        /// Recalculates assigned time according to break duration
+        /// </summary>
+        /// <param name="contexts">Tasks resumed</param>
+        /// <param name="breakTime">Duration of last break</param>
+        /// <returns>List of recalculated tasks</returns>
+        public List<TimeTaskContext> CalculateTasksAfterResume(List<TimeTaskContext> contexts, TimeSpan breakTime)
+        {
+            var tasksLeft = contexts.Count;
+
+            // If we have no remaining tasks...
+            if (tasksLeft <= 0)
+                // Then we can't really recalculate anything, so just do nothing
+                return contexts;
+
+            // TODO: this should not subtract time evenly but use priority parameter instead
+            // Calculate how much time we should substract from every task
+            var breakDurationPerTask = breakTime.TotalSeconds / tasksLeft;
+            var timeToSubstract = TimeSpan.FromSeconds(breakDurationPerTask);
+
+            // There was no break or it was so short we can ignore it
+            if (breakDurationPerTask <= 0.001)
+                return contexts;
+
+            // For each task in the remaining list...
+            foreach (var task in contexts)
+            {
+                // Skip tasks that would be too short after substraction, we still want to keep minimum time requirement for them 
+                if ((task.AssignedTime - timeToSubstract) < TimeSpan.FromMinutes(DI.Settings.MinimumTaskTime))
+                    continue;
+                
+                // Substract the time from task
+                task.AssignedTime -= timeToSubstract;
+            }
+
+            // Return ready list
+            return contexts;
+        }
+
         #endregion
 
         #region Private Helpers

@@ -356,7 +356,7 @@ namespace Timeinator.Mobile.Core
 
         #region Calculating time
         /// <summary>
-        /// Gets a list of calculated tasks for the session
+        /// Fit tasks in SessionTime
         /// </summary>
         /// <returns>List of calculated <see cref="TimeTaskContext"/></returns>
         private List<TimeTaskContext> CalculatedTasks(List<TimeTaskContext> target)
@@ -379,39 +379,12 @@ namespace Timeinator.Mobile.Core
         }
 
         /// <summary>
-        /// Recalculates remaining tasks after break, subtracts lost time
+        /// Optimized times update accordingly to break duration
         /// </summary>
         private void RecalculateTasksAfterBreak()
         {
-            // TODO:
-            // Verify and rework to get desired behavoiur
-
-            var tasksLeft = mUserTasks.WholeList.Count;
-
-            // If we have no remaining tasks...
-            if (tasksLeft <= 0)
-                // Then we can't really recalculate anything, so just do nothing
-                return;
-
-            // TODO: this should not subtract time evenly but use priority parameter instead
-            // Calculate how much time we should substract from every task
-            var breakDurationPerTask = CurrentBreakDuration.TotalSeconds / tasksLeft;
-            var timeToSubstract = TimeSpan.FromSeconds(breakDurationPerTask);
-
-            // There was no break or it was so short we can ignore it
-            if (breakDurationPerTask <= 0.001)
-                return;
-
-            // For each task in the remaining list...
-            foreach (var task in mUserTasks.WholeList)
-            {
-                // Skip tasks that would be too short after substraction, we still want to keep minimum time requirement for them 
-                if ((task.AssignedTime - timeToSubstract) < TimeSpan.FromMinutes(DI.Settings.MinimumTaskTime))
-                    continue;
-                
-                // Substract the time from task
-                task.AssignedTime -= timeToSubstract;
-            }
+            var updatedTasks = mTimeTasksCalculator.CalculateTasksAfterResume(mUserTasks.WholeList, CurrentBreakDuration);
+            UpdateTasks(updatedTasks);
         }
         #endregion
 
