@@ -9,6 +9,20 @@ namespace Timeinator.Mobile.Core
     /// </summary>
     public class TimeTaskContext
     {
+        #region Session temporary fields
+
+        /// <summary>
+        /// Stores progress of the task
+        /// </summary>
+        public double Progress { get; set; }
+
+        /// <summary>
+        /// Stores time assigned to the task
+        /// </summary>
+        public TimeSpan AssignedTime { get; set; }
+
+        #endregion
+
         /// <summary>
         /// Unique id number of the task
         /// </summary>
@@ -38,16 +52,6 @@ namespace Timeinator.Mobile.Core
         /// Accurate description of the task
         /// </summary>
         public string Description { get; set; }
-
-        /// <summary>
-        /// Stores progress of the task
-        /// </summary>
-        public double Progress { get; set; }
-
-        /// <summary>
-        /// Stores time assigned to the task
-        /// </summary>
-        public TimeSpan AssignedTime { get; set; }
 
         /// <summary>
         /// Indicates if this task has constant user-defined assigned time

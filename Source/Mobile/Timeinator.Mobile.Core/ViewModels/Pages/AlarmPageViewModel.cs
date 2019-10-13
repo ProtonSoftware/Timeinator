@@ -84,6 +84,13 @@ namespace Timeinator.Mobile.Core
             // Get current session view model
             var viewModel = DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
 
+            // Check if there are any other tasks
+            if (viewModel.SessionOver)
+            {
+                viewModel.QuitSession();
+                return;
+            }
+
             // Go back to session page
             DI.Application.GoToPage(ApplicationPage.TasksSession, viewModel);
 
@@ -98,6 +105,13 @@ namespace Timeinator.Mobile.Core
         {
             // Get current session view model
             var viewModel = DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
+
+            // Check if there are any other tasks
+            if (viewModel.SessionOver)
+            {
+                viewModel.QuitSession();
+                return;
+            }
 
             // Go back to session page
             DI.Application.GoToPage(ApplicationPage.TasksSession, viewModel);

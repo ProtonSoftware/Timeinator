@@ -38,7 +38,7 @@ namespace Timeinator.Mobile.Android
             mNotificationManager = Application.Context.GetSystemService(Context.NotificationService) as NotificationManager;
 
             // Prepare intent for opening app by notification click
-            var intent = new Intent(Application.Context, typeof(TasksSessionPage));
+            var intent = new Intent(Application.Context, typeof(LoginPage));
             intent.SetAction(IntentActions.ACTION_GOSESSION).AddFlags(ActivityFlags.ClearTop);
             var pendingIntent = PendingIntent.GetActivity(Application.Context, 0, intent, PendingIntentFlags.Immutable);
 

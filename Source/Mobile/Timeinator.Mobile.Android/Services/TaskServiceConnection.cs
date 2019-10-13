@@ -55,68 +55,84 @@ namespace Timeinator.Mobile.Android
         /// <summary>
         /// Update notification title text
         /// </summary>
-        public void SetTitle(string txt)
+        public bool SetTitle(string txt)
         {
             if (IsConnected)
+            {
                 Binder.Service.Title = txt;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
         /// Update notification title text
         /// </summary>
-        public void SetProgress(double p)
+        public bool SetProgress(double p)
         {
             if (IsConnected)
+            {
                 Binder.Service.Progress = p;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
         /// Update notification title text
         /// </summary>
-        public void SetTime(TimeSpan t)
+        public bool SetTime(TimeSpan t)
         {
             if (IsConnected)
+            {
                 Binder.Service.Time = t;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
         /// Repaint notification
         /// </summary>
-        public void Update()
+        public bool Update()
         {
             if (!IsConnected)
-                return;
+                return false;
             Binder.Service.ReNotify();
+            return true;
         }
 
         /// <summary>
         /// Set state of Service to paused
         /// </summary>
-        public void Stop()
+        public bool Stop()
         {
             if (!IsConnected)
-                return;
+                return false;
             Binder.Service.IsRunning = false;
+            return true;
         }
 
         /// <summary>
         /// Set state of Service to running
         /// </summary>
-        public void Start()
+        public bool Start()
         {
             if (!IsConnected)
-                return;
+                return false;
             Binder.Service.IsRunning = true;
+            return true;
         }
 
         /// <summary>
         /// Set state of Service
         /// </summary>
-        public void SetState(bool running)
+        public bool SetState(bool running)
         {
             if (!IsConnected)
-                return;
+                return false;
             Binder.Service.IsRunning = running;
+            return true;
         }
 
         /// <summary>
@@ -127,6 +143,7 @@ namespace Timeinator.Mobile.Android
             if (!IsConnected)
                 return;
             Binder.Service.StopSelf();
+            IsConnected = false;
         }
     }
 }
