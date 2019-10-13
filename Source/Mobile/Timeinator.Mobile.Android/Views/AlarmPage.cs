@@ -7,7 +7,7 @@ using MvvmCross.Platforms.Android.Views;
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity(Label = "View for AlarmPageViewModel")]
+    [Activity]
     public class AlarmPage : MvxActivity
     {
         protected override void OnCreate(Bundle bundle)

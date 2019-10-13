@@ -11,8 +11,7 @@ using Timeinator.Mobile.Core;
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity(Label = "View for TasksSummaryPageViewModel",
-              NoHistory = true)]
+    [Activity(NoHistory = true)]
     public class TasksSummaryPage : MvxActivity
     {
         protected override void OnCreate(Bundle bundle)
