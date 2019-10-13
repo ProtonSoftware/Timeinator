@@ -1,9 +1,9 @@
 ﻿using Android.OS;
 using Android.Views;
 using Android.Widget;
+using MvvmCross.Droid.Support.V4;
 using MvvmCross.Platforms.Android.Binding.BindingContext;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
-using MvvmCross.Platforms.Android.Views.Fragments;
 using Timeinator.Core;
 using Timeinator.Mobile.Core;
 
