@@ -3,9 +3,9 @@ using Android.OS;
 using Android.Widget;
 using MvvmCross;
 using MvvmCross.Binding.Binders;
+using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Platforms.Android.Binding.Views;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
-using MvvmCross.Platforms.Android.Views;
 using System.Linq;
 using Timeinator.Core;
 using Timeinator.Mobile.Core;
@@ -14,7 +14,7 @@ namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
     [Activity]
-    public class SettingsPage : MvxActivity
+    public class SettingsPage : MvxAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -34,13 +34,13 @@ namespace Timeinator.Mobile.Android
             var settingChangeLanguageFragment = new SettingsFragment(LocalizationResource.SettingChangeLanguageName, LocalizationResource.SettingChangeLanguageDescription, SettingType.MultipleValues);
 
             // Show them in the view
-            FragmentManager.BeginTransaction()
+            SupportFragmentManager.BeginTransaction()
                 .Replace(Resource.Id.settingHighestPriority, settingHighestPriorityFragment)
                 .Replace(Resource.Id.settingRecalculateTasks, settingRecalculateTasksFragment)
                 .Replace(Resource.Id.settingChangeLanguage, settingChangeLanguageFragment)
                 .AddToBackStack(null)
                 .Commit();
-            FragmentManager.ExecutePendingTransactions();
+            SupportFragmentManager.ExecutePendingTransactions();
 
             // Setup bindings for every fragment
             SetupBindingForSettingEntry(settingHighestPriorityFragment, "Checked HighestPrioritySetAsFirst");
