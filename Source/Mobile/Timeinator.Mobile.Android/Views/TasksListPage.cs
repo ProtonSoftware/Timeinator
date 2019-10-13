@@ -42,7 +42,7 @@ namespace Timeinator.Mobile.Android
             var aboutIcon = page.FindViewById(Resource.Id.aboutIcon);
 
             // Set their icons and texts accordingly (Maybe find XML way to do this in the future?)
-            var textViewSettings = settingsIcon.FindViewById(Resource.Id.smallLabel) as TextView;
+            var textViewSettings = settingsIcon.FindViewById<TextView>(Resource.Id.smallLabel);
 
             // TODO: Find a better way, but for now, when the icon has already been changed from default name...
             if (textViewSettings.Text != "Name")
@@ -50,12 +50,12 @@ namespace Timeinator.Mobile.Android
                 return;
 
             textViewSettings.SetText(LocalizationResource.Settings, BufferType.Normal);
-            var imageViewSettings = settingsIcon.FindViewById(Resource.Id.icon) as ImageView;
+            var imageViewSettings = settingsIcon.FindViewById<ImageView>(Resource.Id.icon);
             imageViewSettings.SetImageResource(Resource.Drawable.ic_settings_black_24dp);
 
-            var textViewAbout = aboutIcon.FindViewById(Resource.Id.smallLabel) as TextView;
+            var textViewAbout = aboutIcon.FindViewById<TextView>(Resource.Id.smallLabel);
             textViewAbout.SetText(LocalizationResource.AboutUs, BufferType.Normal);
-            var imageViewAbout = aboutIcon.FindViewById(Resource.Id.icon) as ImageView;
+            var imageViewAbout = aboutIcon.FindViewById<ImageView>(Resource.Id.icon);
             imageViewAbout.SetImageResource(Resource.Drawable.ic_info_black_24dp);
 
             // Bind their click events to proper commands in view model
@@ -65,7 +65,7 @@ namespace Timeinator.Mobile.Android
             BindingContext.RegisterBinding(aboutIcon, bindingAbout);
 
             // Find task list container
-            var recyclerView = page.FindViewById(Resource.Id.taskList) as MvxRecyclerView;
+            var recyclerView = page.FindViewById<MvxRecyclerView>(Resource.Id.taskList);
 
             // Subscribe to child view added event to populate tags list for task list items
             recyclerView.ChildViewAdded += RecyclerView_ChildViewAdded;
@@ -130,6 +130,8 @@ namespace Timeinator.Mobile.Android
         {
             // Get the actual view of the child
             var view = e.Child;
+
+            // TODO: Decide if we do this or not
         }
 
         #endregion
