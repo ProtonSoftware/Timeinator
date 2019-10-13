@@ -92,8 +92,8 @@ namespace Timeinator.Mobile.Android
             base.OnViewCreated(view, savedInstanceState);
 
             // Get all the views in the fragment
-            var settingName = view.FindViewById(Resource.Id.settingName) as TextView;
-            var settingDescription = view.FindViewById(Resource.Id.settingDescription) as TextView;
+            var settingName = view.FindViewById<TextView>(Resource.Id.settingName);
+            var settingDescription = view.FindViewById<TextView>(Resource.Id.settingDescription);
             SettableView = view.FindViewById(Resource.Id.settingControl);
 
             // Set texts to provided data

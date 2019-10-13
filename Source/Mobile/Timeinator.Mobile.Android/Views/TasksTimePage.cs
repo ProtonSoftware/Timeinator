@@ -26,7 +26,7 @@ namespace Timeinator.Mobile.Android
             base.OnStop();
 
             // Find the timepicker on this page
-            var timepicker = (TimePicker)FindViewById(Resource.Id.pickerSession);
+            var timepicker = FindViewById<TimePicker>(Resource.Id.pickerSession);
 
             // Set default values (otherwise it would be current user time, which we don't want)
             timepicker.Hour = 0;
