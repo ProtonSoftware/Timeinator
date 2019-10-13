@@ -340,6 +340,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use as finish time.
+        /// </summary>
+        public static string ModeFinishTime {
+            get {
+                return ResourceManager.GetString("ModeFinishTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
         public static string Next {

@@ -24,6 +24,12 @@ namespace Timeinator.Mobile.Android
         {
             base.OnStop();
 
+            // Find checkbox setting time picker mode
+            var modecheckbox = FindViewById<CheckBox>(Resource.Id.finishTimeMode);
+
+            // Listen for mode changed
+            modecheckbox.Click += Modecheckbox_Click;
+
             // Find the timepicker on this page
             var timepicker = FindViewById<TimePicker>(Resource.Id.pickerSession);
 
@@ -34,6 +40,31 @@ namespace Timeinator.Mobile.Android
 
             // Listen out for time changes
             timepicker.TimeChanged += Timepicker_TimeChanged;
+        }
+
+        /// <summary>
+        /// Fired when mode for time picker has been changed
+        /// </summary>
+        private void Modecheckbox_Click(object sender, EventArgs e)
+        {
+            // Get checkbox
+            var modecheckbox = sender as CheckBox;
+
+            // Get timepicker
+            var timepicker = FindViewById<TimePicker>(Resource.Id.pickerSession);
+
+            if (modecheckbox.Checked)
+            {
+                // Set time to Now
+                timepicker.Hour = DateTime.Now.Hour;
+                timepicker.Minute = DateTime.Now.Minute;
+            }
+            else
+            {
+                // Set time to 0
+                timepicker.Hour = 0;
+                timepicker.Minute = 0;
+            }
         }
 
         /// <summary>

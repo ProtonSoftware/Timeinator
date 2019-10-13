@@ -14,11 +14,22 @@
 		android:textColor="@color/colorBlack"
         local:MvxBind='Text String("PickSessionTime")'
 		android:text="Wybierz czas trwania sesji" />
-	<TimePicker android:layout_below="@id/title"
-        android:id="@+id/pickerSession"
-		android:layout_margin="@dimen/abc_action_bar_content_inset_material"
+    <CheckBox
+        android:text="Use as finish time"
+        local:MvxBind='Text String("ModeFinishTime");Checked FinishMode'
+        android:id="@+id/finishTimeMode"
+        android:layout_below="@id/title"
+        android:layout_marginHorizontal="@dimen/notification_big_circle_margin"
+		android:textSize="@dimen/abc_text_size_medium_material"
+		android:textColor="@color/colorBlack"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"/>
+    <TimePicker
+        android:id="@+id/pickerSession"
+        android:layout_below="@id/finishTimeMode"
+        android:layout_marginHorizontal="@dimen/design_bottom_navigation_margin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <LinearLayout
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"

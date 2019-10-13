@@ -25,6 +25,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public TimeSpan UserTime { get; set; }
 
+        /// <summary>
+        /// Flag whether to use provided value as finish time or duration
+        /// </summary>
+        public bool FinishMode { get; set; }
+
         #endregion
 
         #region Commands
@@ -67,8 +72,19 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private async Task CalculateSessionAsync()
         {
+            var time = UserTime;
+            // Alternative mode
+            if (FinishMode)
+            {
+                // Subtract Now converted to timespan
+                time -= DateTime.Now - DateTime.Today;
+                // If negative then it should be above 24 hours
+                if (time < TimeSpan.FromSeconds(-60))
+                    time += TimeSpan.FromHours(24);
+            }
+
             // Try to set user's selected time as session time
-            var result = mSessionHandler.UpdateDuration(UserTime);
+            var result = mSessionHandler.UpdateDuration(time);
 
             // If user's selected time is not enough to start a session...
             if (!result)
