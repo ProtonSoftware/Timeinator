@@ -22,6 +22,14 @@ namespace Timeinator.Mobile.Android
         {
             base.OnCreate(bundle);
 
+            // If we get there by session intent from notification
+            if (Intent.Action == IntentActions.ACTION_GOSESSION)
+            {
+                // Change application's page to continue session
+                DI.Application.GoToPage(ApplicationPage.TasksSession);
+                return;
+            }
+
             Window.AddFlags(WindowManagerFlags.Fullscreen);
             SetContentView(Resource.Layout.LoginPage);
 
@@ -44,17 +52,8 @@ namespace Timeinator.Mobile.Android
             // Migrate the database
             DI.MigrateDatabase();
 
-            // If we get there by session intent from notification
-            if (Intent.Action == IntentActions.ACTION_GOSESSION)
-            {
-                // Change application's page to continue session
-                DI.Application.GoToPage(ApplicationPage.TasksSession);
-            }
-            else
-            {
-                // For now the application doesn't have login features, so simply go to the next page
-                DI.Application.GoToPage(ApplicationPage.TasksList);
-            }
+            // For now the application doesn't have login features, so simply go to the next page
+            DI.Application.GoToPage(ApplicationPage.TasksList);
         }
     }
 }

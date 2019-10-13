@@ -44,6 +44,11 @@ namespace Timeinator.Mobile.Core
         public bool Paused => mSessionHandler.Paused;
 
         /// <summary>
+        /// Session finished event fired flag
+        /// </summary>
+        public bool SessionOver { get; set; }
+
+        /// <summary>
         /// Current session length from the start of it
         /// </summary>
         public TimeSpan SessionDuration => mSessionHandler.SessionDuration;
@@ -131,6 +136,9 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void InitializeSession()
         {
+            // Reset flag
+            SessionOver = false;
+
             // Set default values to key properties to start fresh session
             RemainingTasks = new ObservableCollection<SessionTimeTaskItemViewModel>();
 
@@ -170,7 +178,6 @@ namespace Timeinator.Mobile.Core
             {
                 // End the session
                 mSessionHandler.EndSession();
-                QuitSession();
             }
         }
 
@@ -194,11 +201,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void TaskTimeFinish()
         {
-            // Go to alarm page that handles this action
-            DI.Application.GoToPage(ApplicationPage.Alarm);
-
             // Update tasks, current should be removed
             UpdateList();
+
+            // Go to alarm page that handles this action
+            DI.Application.GoToPage(ApplicationPage.Alarm);
         }
 
         /// <summary>
@@ -228,8 +235,10 @@ namespace Timeinator.Mobile.Core
                 // If we get here, the index is not in the list
                 // So the list is either empty...
                 if (viewModels.Count <= 0)
+                {
                     // Then we finish current session
                     mSessionHandler.EndSession();
+                }
                 else
                     // Or something went wrong and we tried to start the task that doesn't exist
                     throw e;
@@ -242,15 +251,18 @@ namespace Timeinator.Mobile.Core
             RemainingTasks = new ObservableCollection<SessionTimeTaskItemViewModel>(viewModels);
         }
 
+        #endregion
+
         /// <summary>
-        /// Ends this session completely
+        /// Exits session View
         /// </summary>
-        private void QuitSession()
+        public void QuitSession()
         {
+            // We do not want to return here, set flag
+            SessionOver = true;
+
             // Go to first page
             DI.Application.GoToPage(ApplicationPage.TasksList);
         }
-
-        #endregion
     }
 }

@@ -265,11 +265,14 @@ namespace Timeinator.Mobile.Core
                 return;
             }
 
-            // Change the page
-            DI.Application.GoToPage(ApplicationPage.TasksTime);
+            // Reset handler to a clean state
+            mSessionHandler.ClearSessionTasks();
 
             // Send task contexts to the service
             mSessionHandler.UpdateTasks(taskContexts);
+
+            // Change the page
+            DI.Application.GoToPage(ApplicationPage.TasksTime);
         }
 
         #endregion

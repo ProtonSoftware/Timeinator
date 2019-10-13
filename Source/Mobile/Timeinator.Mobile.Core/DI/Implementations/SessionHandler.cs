@@ -206,9 +206,12 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public void ClearSessionTasks()
         {
-            // Simply nullify the properties, so the service state is exactly the same as when before the use
-            mUserTasks.WholeList.Clear();
-            mUserTasks = null;
+            if (mUserTasks != null)
+            {
+                // Simply nullify the properties, so the service state is exactly the same as when before the use
+                mUserTasks.WholeList.Clear();
+                mUserTasks = null;
+            }
             SessionTime = default;
 
             // Reset state of Handler
@@ -226,12 +229,12 @@ namespace Timeinator.Mobile.Core
             // Launch session if has not been yet started
             if (!mSecondsTicker.Enabled)
             {
-                // Broadcast session is starting
-                SessionStarted.Invoke();
                 // Update timestamp
                 mStartTime = DateTime.Now;
                 // Start first task
                 StartNextTask(mCurrentTask);
+                // Broadcast session is started
+                SessionStarted.Invoke();
                 // Do not perform any other action
                 return;
             }

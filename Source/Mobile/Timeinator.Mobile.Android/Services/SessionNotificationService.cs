@@ -22,6 +22,11 @@ namespace Timeinator.Mobile.Android
         /// </summary>
         private ISessionHandler mSessionHandler;
 
+        /// <summary>
+        /// Correct task name set flag
+        /// </summary>
+        private bool SuccesfulUpdate { get; set; } = false;
+
         #endregion
 
         #region Constructor
@@ -57,6 +62,8 @@ namespace Timeinator.Mobile.Android
 
             // Init communication with handler
             mSessionHandler.SetupSession(TickNotification, TaskNotification, mTaskServiceConnection.Kill);
+
+            // Update task name
             TaskNotification();
         }
 
@@ -72,6 +79,10 @@ namespace Timeinator.Mobile.Android
             // Get time left
             var time = mSessionHandler.CurrentTimeLeft;
 
+            // Try to set task name if previous attempt failed
+            if (!SuccesfulUpdate)
+                TaskNotification();
+
             // Apply changes
             mTaskServiceConnection.SetState(!paused);
             mTaskServiceConnection.SetProgress(progress);
@@ -86,7 +97,7 @@ namespace Timeinator.Mobile.Android
         {
             // Update title
             var name = mSessionHandler.GetCurrentTask().Name;
-            mTaskServiceConnection.SetTitle(name);
+            SuccesfulUpdate = mTaskServiceConnection.SetTitle(name);
         }
 
         /// <summary>
