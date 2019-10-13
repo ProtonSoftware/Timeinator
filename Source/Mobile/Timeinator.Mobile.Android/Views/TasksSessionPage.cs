@@ -1,14 +1,14 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
+using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
-using MvvmCross.Platforms.Android.Views;
 
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity(Label = "View for TasksSessionPageViewModel")]
-    public class TasksSessionPage : MvxActivity
+    [Activity]
+    public class TasksSessionPage : MvxAppCompatActivity
     {
         #region Private Members
 

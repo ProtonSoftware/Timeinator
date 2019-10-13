@@ -1,13 +1,13 @@
 ﻿using Android.App;
 using Android.OS;
+using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
-using MvvmCross.Platforms.Android.Views;
 
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity(Label = "View for AboutPageViewModel")]
-    public class AboutPage : MvxActivity
+    [Activity]
+    public class AboutPage : MvxAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
