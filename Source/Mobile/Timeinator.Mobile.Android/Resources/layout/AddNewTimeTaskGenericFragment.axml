@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:local="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+    android:id="@+id/addTaskLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<android.support.design.widget.TextInputLayout
+        android:id="@+id/inputName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+		android:paddingHorizontal="@dimen/abc_action_bar_overflow_padding_start_material"
+		local:counterEnabled="true"
+		local:counterMaxLength="50"
+        local:MvxBind='Hint String("TaskName")'
+        android:hint="Nazwa zadania">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            local:MvxBind="Text TaskName" />
+
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputName"
+		android:paddingHorizontal="@dimen/abc_action_bar_overflow_padding_start_material"
+		local:counterEnabled="true"
+		local:counterMaxLength="100"
+        local:MvxBind='Hint String("Description")'
+        android:hint="Opis (opcjonalny)">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            local:MvxBind="Text TaskDescription" />
+
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputTags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputDescription"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+        local:MvxBind='Hint String("Tags")'
+        android:hint="Tagi (opcjonalne, rozdzielane spacją)">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            local:MvxBind="Text TaskTagsString" />
+
+    </android.support.design.widget.TextInputLayout>
+    <RelativeLayout
+        android:id="@+id/inputTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputTags"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+            local:MvxBind='Text String("ConstantTime")'
+            android:text="Przypisany czas stały" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                local:MvxBind="Checked TaskHasConstantTime" />
+
+            <TextView
+                android:id="@+id/taskTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0h 0m 0s"
+                android:enabled="false"
+                local:MvxBind="Text TimeSpanToText(TaskConstantTime);Enabled TaskHasConstantTime" />
+
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/inputImportant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputTime"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+            local:MvxBind='Text String("ImportantTask")'
+            android:text="Zadanie ważne" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+            local:MvxBind="Checked TaskImportance" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/inputImmortal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputImportant"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+            local:MvxBind='Text String("ImmortalTask")'
+            android:text="Zadanie wielokrotne" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+            local:MvxBind="Checked TaskImmortality" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/inputPriority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputImmortal"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            local:MvxBind='Text String("Priority")'
+            android:text="Priorytet" />
+        <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+            android:id="@+id/prioritySeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            local:dsb_min="1"
+            local:dsb_max="5" />
+    </LinearLayout>
+	<LinearLayout
+        android:id="@+id/bottomNavigation"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+        style="@style/ElevatedCard"
+		android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+			
+		<Button 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+			android:layout_weight="2"
+			android:text="Zatwierdź"
+            style="@style/AccentButton"
+			local:MvxBind='Text String("Confirm");Click AddTaskCommand'/>
+
+    </LinearLayout>
+</RelativeLayout>

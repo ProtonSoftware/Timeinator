@@ -7,8 +7,34 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
+	<TextView
+		android:id="@+id/title"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:textAlignment="center"
+        android:layout_marginTop="6dp"
+		android:textSize="@dimen/abc_text_size_display_1_material"
+		android:textColor="@color/colorBlack"
+        local:MvxBind='Text String("AddNewTask")'
+		android:text="Dodaj nowe zadanie" />
+
+    <ImageView
+        style="@style/BackButton"
+        local:MvxBind="Click GoBackCommand" />
+
+    <dk.ostebaronen.droid.viewpagerindicator.IconPageIndicator
+        android:id="@+id/indicatorAdd"
+        android:layout_below="@id/title"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/colorBlack"
+        local:selectedColor="@color/colorPrimary"
+        local:selectedBold="true" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPagerAdd"
+        android:layout_below="@id/indicatorAdd"
         android:layout_width="match_parent"
         android:layout_height="fill_parent" />
 

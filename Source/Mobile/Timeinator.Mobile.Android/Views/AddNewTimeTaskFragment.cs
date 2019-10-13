@@ -70,12 +70,12 @@ namespace Timeinator.Mobile.Android
             {
                 case TimeTaskType.Generic:
                     // Create the view for generic task fragment
-                    view = this.BindingInflate(Resource.Layout.AddNewTimeTaskFragment, container, false);
+                    view = this.BindingInflate(Resource.Layout.AddNewTimeTaskGenericFragment, container, false);
                     break;
 
                 case TimeTaskType.Reading:
                     // Create the view for reading task fragment
-                    view = this.BindingInflate(Resource.Layout.AddNewTimeTaskFragment, container, false);
+                    view = this.BindingInflate(Resource.Layout.AddNewTimeTaskReadingFragment, container, false);
                     break;
 
                 default:
