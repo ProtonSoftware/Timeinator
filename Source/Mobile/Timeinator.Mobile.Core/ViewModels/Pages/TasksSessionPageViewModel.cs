@@ -114,7 +114,11 @@ namespace Timeinator.Mobile.Core
         private void FinishTask()
         {
             mSessionHandler.Finish();
+            UpdateList();
+        }
 
+        private void UpdateList()
+        {
             // Retrieve tasks
             var contexts = mSessionHandler.GetTasks();
 
@@ -192,6 +196,9 @@ namespace Timeinator.Mobile.Core
         {
             // Go to alarm page that handles this action
             DI.Application.GoToPage(ApplicationPage.Alarm);
+
+            // Update tasks, current should be removed
+            UpdateList();
         }
 
         /// <summary>
