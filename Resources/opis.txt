@@ -1,29 +1,37 @@
 +POLONAISE
-£atwo i szybko zaplanuj czas wolny.
+Wykorzystaj w pe³ni czas wolny.
 ------------------------------------
 Dla kogo zosta³a stworzona ta aplikacja?
 Jeœli jesteœ ambitny, masz wiele rzeczy do zrobienia, zawsze o czymœ zapominasz, albo wszystko to razem to znaczy, ¿e jesteœ taki jak my i ta aplikacja jest dla Ciebie.
 
+Tworz¹c t¹ aplikacjê kierowaliœmy siê dwiema zasadami:
+- Nasz umys³ jest najbardziej produktywny, kiedy dajemy mu odpocz¹æ od d³ugo wykonywanych czynnoœci - dlatego aplikacja przypomina o zmianie zadania.
+- ¯eby coœ osi¹gn¹æ wystarczy powtarzaæ dowoln¹ czynnoœæ systematycznie, a¿ dotrzemy do wyznaczonego celu - dlatego dajemy mo¿liwoœæ ustawiania celów d³ugofalowych, jest to uniwersalna i najskuteczniejsza metoda do rozwoju samego siebie.
+
 Jak to dzia³a?
+Nasza aplikacja oblicza czas po jakim powinieneœ zmieniæ aktualnie wykonywan¹ czynnoœæ, ¿eby mieæ czas na pozosta³e. Dziêki temu ka¿dego dnia mo¿esz w pe³ni wykorzystaæ swój potencja³.
+
+Krok po kroku
 Wpisujesz zadania jakie chcesz robiæ z pomoc¹ aplikacji, nastêpnie korzystaj¹c z szerokich opcji zadania konfigurujesz jak bêdziesz je wykonywa³.
 Nastêpnie wybierasz zadania które Ciê aktualnie interesuj¹, mo¿esz skorzystaæ z wygodnych opcji filtrowania, ¿eby poradziæ sobie z d³ug¹ list¹ zadañ.
 Podajesz ile masz czasu do powrotu do obowi¹zków, a Nasza aplikacja przeliczy czas na ka¿de wybrane zadanie, zaproponuje zmianê kolejnoœci jeœli chcesz i mo¿esz dzia³aæ, a kiedy skoñczy siê czas dostaniesz powiadomienie z opcj¹ do rozpoczêcia kolejnego zadania lub odpoczynku.
-Aplikacja zadba abyœ zacz¹³ wszystkie zadania w wyznaczonym przez siebie czasie.
-To ¿eby wszystkie zadania zmieœci³y siê w wybranym przedziale czasowym jest priorytetem, wiêc odpoczynek wi¹¿e siê ze skróceniem czasu na wszystkie zadania w odpowiedni sposób.
-
-Stworzyliœmy t¹ aplikacjê po to, ¿eby ka¿dy móg³ znaleŸæ czas na zrobienie projektu, obejrzenia serialu i przeczytania ksi¹¿ki bez zaniedbywania innych obowi¹zków.
+Aplikacja zadba abyœ zacz¹³ wszystkie zadania w wyznaczonym przez siebie czasie, chyba ¿e wy³¹czysz t¹ opcjê w ustawieniach i bêdziesz wykonywa³ zadania a¿ nad wszystkim spêdzisz docelow¹ iloœæ czasu.
 
 +ANGLAIS
-Easy and fast leisure time managing.
+Fully exploit your free time.
 ------------------------------------
 For whom has this app been created?
 If you are ambitious and have a lot of tasks to accomplish and you always forget something, then you are just like us and this app is made for you.
 
+When creating this app, we followed these two ideas:
+- Our mind is more creative if we give a rest from long, repetetive tasks - that's why our app reminds you to change your current job, so then you get better performance and can push your brain to the limits.
+- In order to achieve great things, all you need is to repeat any task systematically, whether it is learning a language, reading a thick book or anything else. Do it until you reach your dreamed goal - that is why we allow you to set long term objectives, it is an universal and most efficient way of self improvment.
+
 How does it work?
+Our app calculates when you should change your current assignment to have time for the rest of them. Thanks to that you can fully use your potential.
+
+Step by step
 Simply enter any task you want to do and configure it using wide variety of options.
 Next pick few tasks that you are interested to start at the moment. You can use convenient filtering options to navigate on your big task list.
-Set time that you can spend before going back to your duties, so the app can calculate time for each of the selected tasks. It will ask whether yoou want to reorder some task or use default ordering. When time runs out you will be notified and asked if you need a break or go straight to your next assignment.
-Our app will make sure that all of your tasks are started in desired time.
-It is our priority to have all assignments fitted in specified time, what means that the longer breaks you take the shorter the duration of your tasks.
-
-This tool has been created as a solution to manage time in a way that allows you to work on a project, watch a soap opera and read a book in an effective and controlled manner.
+Set time that you can spend before going back to your duties, so the app can calculate time for each of the selected tasks. It will ask whether you want to reorder some task or use default ordering. When time runs out you will be notified and asked if you need a break or go straight to your next assignment.
+Our app will make sure that all of your tasks are fit in desired time, unless you change settings to mark all jobs as finished only after you spend the exact amount of time on them without counting breaks.
