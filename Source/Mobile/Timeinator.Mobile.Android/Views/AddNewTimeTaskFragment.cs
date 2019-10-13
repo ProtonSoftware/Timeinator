@@ -20,8 +20,6 @@ namespace Timeinator.Mobile.Android
     /// But Mvx requires it, so it must be here
     [MvxFragmentPresentation(activityHostViewModelType: typeof(AddNewTimeTaskPageViewModel), 
                              fragmentContentId: Resource.Layout.SettingsCheckboxFragment)]
-    /// MvxFragment needs a view model, even if we don't use it, and since every view model is already taken by all the activities
-    /// We use dummy not-used base view model as a replacement and it works as intended
     public class AddNewTimeTaskFragment : MvxFragment, IOnTimeSetListener
     {
         #region Public Properties
