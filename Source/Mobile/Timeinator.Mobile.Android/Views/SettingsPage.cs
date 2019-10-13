@@ -13,7 +13,7 @@ using Timeinator.Mobile.Core;
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity(Label = "View for SettingsPageViewModel")]
+    [Activity]
     public class SettingsPage : MvxActivity
     {
         protected override void OnCreate(Bundle bundle)

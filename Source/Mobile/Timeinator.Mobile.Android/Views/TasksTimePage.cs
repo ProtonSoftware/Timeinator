@@ -9,8 +9,7 @@ using Timeinator.Mobile.Core;
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity(Label = "View for TasksTimePageViewModel",
-              NoHistory = true)]
+    [Activity(NoHistory = true)]
     public class TasksTimePage : MvxActivity
     {
         protected override void OnCreate(Bundle bundle)

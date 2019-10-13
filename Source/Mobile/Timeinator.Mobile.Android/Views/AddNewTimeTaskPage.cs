@@ -10,7 +10,7 @@ using Timeinator.Mobile.Core;
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity(Label = "View for AddNewTimeTaskPageViewModel")]
+    [Activity]
     public class AddNewTimeTaskPage : MvxAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)

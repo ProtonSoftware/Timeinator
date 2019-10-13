@@ -17,7 +17,7 @@ using static Android.Widget.TextView;
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity(Label = "View for TasksListPageViewModel")]
+    [Activity]
     public class TasksListPage : MvxActivity
     {
         protected override void OnCreate(Bundle bundle)
