@@ -29,7 +29,7 @@ namespace Timeinator.Mobile.Core
         }
 
         /// <summary>
-        /// Calculates and assigns the time for every provided task to fill the session
+        /// Fits tasks assigned times to session and resets dynamic time
         /// </summary>
         /// <param name="contexts">Tasks to calculate for</param>
         /// <param name="sessionTime">The user's time for session</param>
@@ -47,38 +47,41 @@ namespace Timeinator.Mobile.Core
         }
 
         /// <summary>
-        /// Recalculates assigned time according to break duration
+        /// Recalculates dynamic time according to break duration
         /// </summary>
         /// <param name="contexts">Tasks resumed</param>
-        /// <param name="breakTime">Duration of last break</param>
+        /// <param name="remainingTime">Duration of last break</param>
         /// <returns>List of recalculated tasks</returns>
-        public List<TimeTaskContext> CalculateTasksAfterResume(List<TimeTaskContext> contexts, TimeSpan breakTime)
+        public List<TimeTaskContext> CalculateTasksAfterResume(List<TimeTaskContext> contexts, TimeSpan remainingTime)
         {
             var tasksLeft = contexts.Count;
-
-            // If we have no remaining tasks...
+            // If we have no remaining tasks then do nothing
             if (tasksLeft <= 0)
-                // Then we can't really recalculate anything, so just do nothing
                 return contexts;
 
-            // TODO: this should not subtract time evenly but use priority parameter instead
-            // Calculate how much time we should substract from every task
-            var breakDurationPerTask = breakTime.TotalSeconds / tasksLeft;
-            var timeToSubstract = TimeSpan.FromSeconds(breakDurationPerTask);
+            // Get sum of non constant priorities
+            var sumOfPriorities = contexts.GetConstant(true).SumPriorities();
 
-            // There was no break or it was so short we can ignore it
-            if (breakDurationPerTask <= 0.001)
-                return contexts;
+            var constant = contexts.GetConstant();
+            var free = contexts.GetConstant(true);
+
+            // Iterate constant tasks
+            foreach (var task in constant)
+                // Shrink according to progress not priority
+                task.DynamicTime = ShrinkProgressedTask(task);
 
             // For each task in the remaining list...
-            foreach (var task in contexts)
+            foreach (var task in free)
             {
+                // Get new expected time
+                var newTime = Fit(task, remainingTime, sumOfPriorities);
+
                 // Skip tasks that would be too short after substraction, we still want to keep minimum time requirement for them 
-                if ((task.AssignedTime - timeToSubstract) < TimeSpan.FromMinutes(DI.Settings.MinimumTaskTime))
-                    continue;
+                if (newTime < TimeSpan.FromMinutes(DI.Settings.MinimumTaskTime))
+                    newTime = TimeSpan.FromMinutes(DI.Settings.MinimumTaskTime);
                 
                 // Substract the time from task
-                task.AssignedTime -= timeToSubstract;
+                task.DynamicTime = newTime;
             }
 
             // Return ready list
@@ -90,7 +93,21 @@ namespace Timeinator.Mobile.Core
         #region Private Helpers
 
         /// <summary>
-        /// Calculates assigned times for every provided task
+        /// Returns dynamic time according to task progress
+        /// </summary>
+        private TimeSpan ShrinkProgressedTask(TimeTaskContext constTask) => (constTask.AssignedTime * (1.0 - constTask.Progress));
+
+        private TimeSpan Fit(TimeTaskContext task, TimeSpan timeLeft, double sumPriority)
+        {
+            // Calculate how much overall time should it take based on priorities
+            var timePart = task.GetRealPriority() / sumPriority;
+
+            // Calculate and assign time to task
+            return TimeSpan.FromSeconds(Math.Ceiling(new TimeSpan((long)(timeLeft.Ticks * timePart)).TotalSeconds));
+        }
+
+        /// <summary>
+        /// Calculates assigned times for every task and copies it to dynamic time field
         /// </summary>
         /// <returns>List of tasks with calculated times</returns>
         private List<TimeTaskContext> CalculateAssignedTimes(List<TimeTaskContext> contexts, TimeSpan sessionTime)
@@ -110,11 +127,24 @@ namespace Timeinator.Mobile.Core
             // For every task
             foreach (var task in freeTasks)
             {
-                // Calculate how much overall time should it take based on priorities
-                var timePart = task.GetRealPriority() / prioritySum;
-
                 // Calculate and assign time to task
-                task.AssignedTime = TimeSpan.FromSeconds(Math.Ceiling(new TimeSpan((long)(timeLeft.Ticks * timePart)).TotalSeconds));
+                task.AssignedTime = Fit(task, timeLeft, prioritySum);
+
+                // Set dynamic time
+                task.DynamicTime = new TimeSpan(task.AssignedTime.Ticks);
+
+                // Reset progress
+                task.Progress = 0;
+            }
+
+            // For every constant task
+            foreach (var task in constantTasks)
+            {
+                // Set dynamic time
+                task.DynamicTime = new TimeSpan(task.AssignedTime.Ticks);
+
+                // Reset progress
+                task.Progress = 0;
             }
 
             // Return both task lists combined together 

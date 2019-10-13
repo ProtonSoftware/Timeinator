@@ -11,6 +11,6 @@ namespace Timeinator.Mobile.Core
         TimeSpan CalculateMinimumTimeForTasks(List<TimeTaskContext> contexts);
 
         List<TimeTaskContext> CalculateTasksForSession(List<TimeTaskContext> contexts, TimeSpan sessionTime);
-        List<TimeTaskContext> CalculateTasksAfterResume(List<TimeTaskContext> contexts, TimeSpan breakTime);
+        List<TimeTaskContext> CalculateTasksAfterResume(List<TimeTaskContext> contexts, TimeSpan remainingTime);
     }
 }

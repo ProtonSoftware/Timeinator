@@ -369,10 +369,8 @@ namespace Timeinator.Mobile.Core
 
             // Check if time for session is properly set
             if (SessionTime == default || !ValidateTime(SessionTime))
-            {
                 // Throw exception because it should not ever happen in the code (time should be checked before), so something needs a fix
                 throw new Exception(LocalizationResource.AttemptToCalculateNoTime);
-            }
 
             // Everything is nice and set, calculate our session
             var calculatedTasks = mTimeTasksCalculator.CalculateTasksForSession(target, SessionTime);
@@ -386,9 +384,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void RecalculateTasksAfterBreak()
         {
+            // If nothing to calculate then exit
             if (mUserTasks.WholeList.Count <= 0)
                 return;
 
+            // Update tasks using optimized algorithm
             var updatedTasks = mTimeTasksCalculator.CalculateTasksAfterResume(mUserTasks.WholeList, CurrentBreakDuration);
             UpdateTasks(updatedTasks);
         }
