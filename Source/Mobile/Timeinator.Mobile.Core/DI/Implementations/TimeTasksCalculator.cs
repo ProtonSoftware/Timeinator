@@ -70,6 +70,9 @@ namespace Timeinator.Mobile.Core
                 // Shrink according to progress not priority
                 task.DynamicTime = ShrinkProgressedTask(task);
 
+            // Subtract already used time
+            remainingTime -= constant.SumDynamicTimes();
+
             // For each task in the remaining list...
             foreach (var task in free)
             {
@@ -82,6 +85,10 @@ namespace Timeinator.Mobile.Core
                 
                 // Substract the time from task
                 task.DynamicTime = newTime;
+
+                // Extend AssignedTime if dynamically has been assigned more
+                if (newTime > task.AssignedTime)
+                    task.AssignedTime = newTime;
             }
 
             // Return ready list

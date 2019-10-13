@@ -50,6 +50,16 @@ namespace Timeinator.Mobile.Core
                 res += c.AssignedTime;
             return res;
         }
+        /// <summary>
+        /// Sums Assigned Times of every element
+        /// </summary>
+        public static TimeSpan SumDynamicTimes(this List<TimeTaskContext> l)
+        {
+            var res = new TimeSpan(0);
+            foreach (var c in l)
+                res += c.DynamicTime;
+            return res;
+        }
 
         public static event Action RefreshUITasks;
 

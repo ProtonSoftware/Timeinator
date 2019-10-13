@@ -86,7 +86,7 @@ namespace Timeinator.Mobile.Core
             var taskContexts = mTimeTasksMapper.ListReverseMap(TaskItems.ToList());
 
             // Pass it to the service
-            mSessionHandler.UpdateTasks(taskContexts);
+            mSessionHandler.UpdateTasks(taskContexts); // TODO: Find a better way than reposting remapped tasks
 
             // Create brand-new view model for session page
             var sessionViewModel = DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();

@@ -239,12 +239,8 @@ namespace Timeinator.Mobile.Core
                 return;
             }
 
-            // If option is true
-            if (DI.Settings.RecalculateTasksAfterBreak)
-            {
-                // Recalculate remaining tasks after break
-                RecalculateTasksAfterBreak();
-            }
+            // Recalculate remaining tasks after break
+            RecalculateTasksAfterBreak();
 
             // If current task is already finished... (the case when user opted for break when task's time ended)
             if (CurrentTimeLeft <= TimeSpan.Zero)
@@ -261,7 +257,7 @@ namespace Timeinator.Mobile.Core
         public void Pause()
         {
             // Save current task's progress
-            mCurrentTask.AssignedTime = CurrentTimeLeft;
+            mCurrentTask.DynamicTime = CurrentTimeLeft;
             mCurrentTask.Progress = CurrentTaskCalculatedProgress;
 
             // Start the break
@@ -273,6 +269,10 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public void Finish()
         {
+            // Save current task's progress
+            mCurrentTask.DynamicTime = CurrentTimeLeft;
+            mCurrentTask.Progress = CurrentTaskCalculatedProgress;
+
             // Get finished task's context
             var finishedTask = mCurrentTask;
 
@@ -289,6 +289,9 @@ namespace Timeinator.Mobile.Core
 
             // Refresh tasks
             UpdateTasks(mUserTasks.RemainingList);
+
+            // Recalculate remaining tasks after break
+            RecalculateTasksAfterBreak();
 
             // And start it in the session
             StartNextTask(mCurrentTask);
@@ -318,13 +321,13 @@ namespace Timeinator.Mobile.Core
         private void StartNextTask(TimeTaskContext context)
         {
             // Set provided time
-            CurrentTimeLeft = context.AssignedTime;
+            CurrentTimeLeft = context.DynamicTime;
+
+            // Save it for progress calculations
+            mCurrentTask.DynamicTime = CurrentTimeLeft;
 
             // Start the timer
             mSecondsTicker.Start();
-
-            // Save it for progress calculations
-            mCurrentTask.AssignedTime = context.AssignedTime;
         }
 
         /// <summary>
@@ -340,7 +343,7 @@ namespace Timeinator.Mobile.Core
             mStartTime = DateTime.Now;
 
             // Reset any previous sessions
-            SessionTime = TimeSpan.Zero;
+            SessionTime = default;
 
             // Prepare finished tasks list
             mFinishedTasks = new List<TimeTaskContext>();
@@ -384,12 +387,23 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void RecalculateTasksAfterBreak()
         {
+            // Do work only if enabled in settings
+            if (!DI.Settings.RecalculateTasksAfterBreak)
+                return;
+
             // If nothing to calculate then exit
             if (mUserTasks.WholeList.Count <= 0)
                 return;
 
+            // Get time left
+            var remaining = SessionTime - SessionDuration;
+
+            // Abort if remaining time is incorrect
+            if (remaining.TotalSeconds <= 0)
+                return;
+
             // Update tasks using optimized algorithm
-            var updatedTasks = mTimeTasksCalculator.CalculateTasksAfterResume(mUserTasks.WholeList, CurrentBreakDuration);
+            var updatedTasks = mTimeTasksCalculator.CalculateTasksAfterResume(mUserTasks.WholeList, remaining);
             UpdateTasks(updatedTasks);
         }
         #endregion
@@ -421,9 +435,6 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void SecondsTicker_Elapsed(object sender, ElapsedEventArgs e)
         {
-            // Add one tick to the session duration
-            SessionTime += mOneTick;
-
             // If break time is on...
             if (Paused)
             {
