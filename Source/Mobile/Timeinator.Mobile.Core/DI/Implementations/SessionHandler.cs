@@ -239,9 +239,6 @@ namespace Timeinator.Mobile.Core
                 return;
             }
 
-            // Recalculate remaining tasks after break
-            RecalculateTasksAfterBreak();
-
             // If current task is already finished... (the case when user opted for break when task's time ended)
             if (CurrentTimeLeft <= TimeSpan.Zero)
             {
@@ -249,6 +246,9 @@ namespace Timeinator.Mobile.Core
                 Finish();
                 return;
             }
+
+            // Recalculate remaining tasks after break
+            RecalculateTasksAfterBreak();
         }
 
         /// <summary>
@@ -405,6 +405,9 @@ namespace Timeinator.Mobile.Core
             // Update tasks using optimized algorithm
             var updatedTasks = mTimeTasksCalculator.CalculateTasksAfterResume(mUserTasks.WholeList, remaining);
             UpdateTasks(updatedTasks);
+
+            // Update work property
+            CurrentTimeLeft = mCurrentTask.DynamicTime;
         }
         #endregion
 
