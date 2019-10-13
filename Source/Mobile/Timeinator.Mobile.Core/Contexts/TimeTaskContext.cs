@@ -17,9 +17,14 @@ namespace Timeinator.Mobile.Core
         public double Progress { get; set; }
 
         /// <summary>
-        /// Stores time assigned to the task
+        /// Stores static time assigned to the task
         /// </summary>
         public TimeSpan AssignedTime { get; set; }
+
+        /// <summary>
+        /// Stores dynamic time assigned to the task
+        /// </summary>
+        public TimeSpan DynamicTime { get; set; }
 
         #endregion
 
