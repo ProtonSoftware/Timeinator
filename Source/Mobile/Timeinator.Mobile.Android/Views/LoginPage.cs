@@ -4,9 +4,9 @@ using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using MvvmCross;
+using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Platforms.Android;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
-using MvvmCross.Platforms.Android.Views;
 using SimpleInjector;
 using Timeinator.Mobile.Core;
 
@@ -14,7 +14,7 @@ namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
     [Activity(NoHistory = true)]
-    public class LoginPage : MvxActivity
+    public class LoginPage : MvxAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
