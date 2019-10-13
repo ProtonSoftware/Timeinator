@@ -7,6 +7,7 @@ using MvvmCross.Droid.Support.V4;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Timeinator.Core;
 
 namespace Timeinator.Mobile.Android
 {
@@ -73,6 +74,11 @@ namespace Timeinator.Mobile.Android
 
             // Set the view model of the fragment to use the one from info
             ((MvxFragment)fragment).ViewModel = fragmentInfo.ViewModel;
+
+            if (fragment is AddNewTimeTaskFragment timeTaskFragment)
+            {
+                timeTaskFragment.Type = (TimeTaskType)System.Enum.Parse(typeof(TimeTaskType), fragmentInfo.Title);
+            }
 
             // Return the fragment
             return fragment;
