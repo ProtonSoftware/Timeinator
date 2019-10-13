@@ -20,6 +20,11 @@ namespace Timeinator.Mobile.DataAccess
         /// Shows priority of the task
         /// </summary>
         public Priority Priority { get; set; }
+
+        /// <summary>
+        /// The type of this task
+        /// </summary>
+        public TimeTaskType Type { get; set; }
         
         /// <summary>
         /// Used by the user to mark as important (optional)
@@ -27,10 +32,16 @@ namespace Timeinator.Mobile.DataAccess
         public bool IsImportant { get; set; }
         
         /// <summary>
-        /// Shows progress of the task
+        /// The current progress of the task
+        /// This can be any value and is shared between different task types
         /// </summary>
-        public float Progress { get; set; }
-        
+        public double Progress { get; set; }
+
+        /// <summary>
+        /// The maximum possible progress of the task that once reached, finishes it
+        /// </summary>
+        public double MaxProgress { get; set; }
+
         /// <summary>
         /// Accurate description of the task
         /// </summary>
@@ -48,13 +59,7 @@ namespace Timeinator.Mobile.DataAccess
         /// </summary>
         public string TagsString
         {
-            get
-            {
-                if (Tags != null)
-                    return string.Join("\n", Tags);
-                else
-                    return null;
-            }
+            get => Tags != null ? string.Join("\n", Tags) : null;
             set
             {
                 if (!string.IsNullOrWhiteSpace(value))
