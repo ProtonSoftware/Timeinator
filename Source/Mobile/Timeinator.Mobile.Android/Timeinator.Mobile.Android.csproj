@@ -157,8 +157,10 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\MvxFragmentInfo.cs" />
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Services\AndroidNotificationManager.cs" />
+    <Compile Include="Helpers\MvxViewPagerFragmentAdapter.cs" />
     <Compile Include="Services\RingtonePlayer.cs" />
     <Compile Include="Views\AlarmPage.cs" />
     <Compile Include="Helpers\MovementRecyclerViewItemCallback.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="UI\UIManager.cs" />
     <Compile Include="Views\AboutPage.cs" />
     <Compile Include="Views\AddNewTimeTaskPage.cs" />
+    <Compile Include="Views\AddNewTimeTaskFragment.cs" />
     <Compile Include="Views\SettingsFragment.cs" />
     <Compile Include="Views\SettingsPage.cs" />
     <Compile Include="Views\TasksSessionPage.cs" />
@@ -529,6 +532,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\ChipView.axml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\AddNewTimeTaskFragment.axml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>

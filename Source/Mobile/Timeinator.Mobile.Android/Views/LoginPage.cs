@@ -1,5 +1,4 @@
-﻿
-using Acr.UserDialogs;
+﻿using Acr.UserDialogs;
 using Android.App;
 using Android.Graphics;
 using Android.OS;
