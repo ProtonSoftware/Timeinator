@@ -322,7 +322,7 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to June 2019.
+        ///   Looks up a localized string similar to October 2019.
         /// </summary>
         public static string LastUpdateValue {
             get {
