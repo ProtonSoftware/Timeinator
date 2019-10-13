@@ -87,9 +87,6 @@ namespace Timeinator.Mobile.Core
             // Go back to session page
             DI.Application.GoToPage(ApplicationPage.TasksSession, viewModel);
 
-            // Finish task
-            viewModel.FinishTaskCommand.Execute(null);
-
             // Start the break
             viewModel.PauseCommand.Execute(null);
         }
@@ -104,9 +101,6 @@ namespace Timeinator.Mobile.Core
 
             // Go back to session page
             DI.Application.GoToPage(ApplicationPage.TasksSession, viewModel);
-
-            // Finish task
-            viewModel.FinishTaskCommand.Execute(null);
         }
 
         #endregion

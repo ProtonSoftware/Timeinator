@@ -383,6 +383,9 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void RecalculateTasksAfterBreak()
         {
+            if (mUserTasks.WholeList.Count <= 0)
+                return;
+
             var updatedTasks = mTimeTasksCalculator.CalculateTasksAfterResume(mUserTasks.WholeList, CurrentBreakDuration);
             UpdateTasks(updatedTasks);
         }
@@ -434,8 +437,11 @@ namespace Timeinator.Mobile.Core
             // If the task finished already...
             if (CurrentTimeLeft <= TimeSpan.Zero)
             {
-                // Stop the timer
+                // Stop timer to avoid reentering this code
                 mSecondsTicker.Stop();
+
+                // Finish current task, it is done
+                Finish();
 
                 // Inform everyone about it
                 TaskFinished.Invoke();
