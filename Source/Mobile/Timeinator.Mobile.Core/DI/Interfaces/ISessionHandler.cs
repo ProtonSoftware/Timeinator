@@ -15,9 +15,9 @@ namespace Timeinator.Mobile.Core
         TimeSpan CurrentTimeLeft { get; }
         TimeSpan CurrentBreakDuration { get; set; }
 
-        event Action TaskFinished, SessionFinished, SessionStarted;
+        event Action TaskStarted, TaskFinished, SessionFinished, SessionStarted;
 
-        void SetupSession(Action timerAction, Action taskAction, Action sessionAction);
+        void SetupSession(Action timerAction);
         bool UpdateDuration(TimeSpan duration);
         void UpdateTasks(List<TimeTaskContext> tasks);
         void Calculate();

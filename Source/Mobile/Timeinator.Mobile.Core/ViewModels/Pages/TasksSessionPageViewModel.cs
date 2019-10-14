@@ -119,7 +119,6 @@ namespace Timeinator.Mobile.Core
         private void FinishTask()
         {
             mSessionHandler.Finish();
-            UpdateList();
         }
 
         private void UpdateList()
@@ -146,7 +145,10 @@ namespace Timeinator.Mobile.Core
             InjectLatestDIServices();
 
             // Start new session providing required actions
-            mSessionHandler.SetupSession(UpdateSessionProperties, TaskTimeFinish, QuitSession);
+            mSessionHandler.SetupSession(UpdateSessionProperties);
+            mSessionHandler.TaskFinished += TaskTimeFinish;
+            mSessionHandler.SessionFinished += QuitSession;
+            mSessionHandler.TaskStarted += UpdateList;
 
             // Begin session
             mSessionHandler.Resume();
@@ -201,9 +203,6 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void TaskTimeFinish()
         {
-            // Update tasks, current should be removed
-            UpdateList();
-
             // Go to alarm page that handles this action
             DI.Application.GoToPage(ApplicationPage.Alarm);
         }
