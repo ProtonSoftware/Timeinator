@@ -82,11 +82,11 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private void StartTaskSession()
         {
-            // Convert our collection to suitable list of contexts
-            var taskContexts = mTimeTasksMapper.ListReverseMap(TaskItems.ToList());
+            // Get tasks from Handler sorted like TaskItems
+            var taskContexts = mTimeTasksMapper.SortLike(TaskItems.Select(vm => vm as TimeTaskViewModel).ToList(), mSessionHandler.GetTasks().WholeList);
 
             // Pass it to the service
-            mSessionHandler.UpdateTasks(taskContexts); // TODO: Find a better way than reposting remapped tasks
+            mSessionHandler.UpdateTasks(taskContexts);
 
             // Create brand-new view model for session page
             var sessionViewModel = DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
