@@ -196,7 +196,7 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Created date.
+        ///   Looks up a localized string similar to Date of creation.
         /// </summary>
         public static string CreatedDate {
             get {
@@ -268,7 +268,7 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finish task.
+        ///   Looks up a localized string similar to Finish the task.
         /// </summary>
         public static string FinishTask {
             get {
