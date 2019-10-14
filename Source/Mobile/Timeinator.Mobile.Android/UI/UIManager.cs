@@ -106,7 +106,13 @@ namespace Timeinator.Mobile.Android
             await mMainThreadDispatcher.ExecuteOnMainThreadAsync(action);
         }
 
-        public void ChangeLanguage(string langCode) => LocalizationResource.Culture = new CultureInfo(langCode);
+        public void ChangeLanguage(string langCode)
+        {
+            var culture = new CultureInfo(langCode);
+            LocalizationResource.Culture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+        }
 
         #endregion
     }
