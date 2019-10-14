@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Timeinator.Mobile.DataAccess;
@@ -61,6 +62,19 @@ namespace Timeinator.Mobile.Core
         #endregion
 
         #region Mapping Methods
+
+        /// <summary>
+        /// Detects order of <see cref="TimeTaskViewModel"/> by Id and applies it to list of <see cref="TimeTaskContext"/>
+        /// </summary>
+        public List<TimeTaskContext> SortLike(List<TimeTaskViewModel> taskViewModels, List<TimeTaskContext> taskContexts)
+        {
+            // Map user order of tasks to a hashtable
+            var posForId = new Hashtable(taskContexts.Count);
+            for (var i = 0; i < taskViewModels.Count; i++)
+                posForId.Add(taskViewModels[i].Id, i);
+            // Order tasks by mapped order
+            return taskContexts.OrderBy((t) => posForId[t.Id]).ToList();
+        }
 
         /// <summary>
         /// Maps a <see cref="TimeTask"/> to a <see cref="TimeTaskContext"/> object
