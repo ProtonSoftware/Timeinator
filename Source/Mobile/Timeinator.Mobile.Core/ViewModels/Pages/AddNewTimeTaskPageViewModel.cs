@@ -61,6 +61,17 @@ namespace Timeinator.Mobile.Core
         public int TaskPrioritySliderValue { get; set; } = 1;
 
         /// <summary>
+        /// The type of currently edited task
+        /// </summary>
+        public TimeTaskType TaskType { get; set; } = TimeTaskType.Generic;
+
+        /// <summary>
+        /// The maximum reachable progress of the task
+        /// In some task types it is set automatically, in other ones its defined by user
+        /// </summary>
+        public int TaskMaximumProgress { get; set; }
+
+        /// <summary>
         /// The id of a task, only set if we are editing existing one
         /// </summary>
         public int TaskId { get; set; }
@@ -118,13 +129,15 @@ namespace Timeinator.Mobile.Core
                 Name = TaskName,
                 Description = TaskDescription,
                 Tags = TaskTagsString.SplitTagsString(),
+                Type = TaskType,
                 AssignedTime = TaskConstantTime,
                 HasConstantTime = TaskHasConstantTime,
                 IsImportant = TaskImportance,
                 IsImmortal = TaskImmortality,
                 Priority = (Priority)TaskPrioritySliderValue,
                 CreationDate = DateTime.Now,
-                Progress = 0
+                Progress = 0,
+                MaxProgress = TaskMaximumProgress.ConvertBasedOnType(TaskType)
             };
 
             // Pass it to the service to handle it
@@ -143,12 +156,11 @@ namespace Timeinator.Mobile.Core
         private async void CancelAndBackAsync()
         {
             // Warn user about unsaved changes
-            var Uresponse = await mUIManager.DisplayPopupMessageAsync(new PopupMessageViewModel(LocalizationResource.UnsavedChanges, LocalizationResource.AreYouSure, LocalizationResource.Yes, LocalizationResource.No));
-
-            if (Uresponse)
+            var vm = new PopupMessageViewModel(LocalizationResource.UnsavedChanges, LocalizationResource.AreYouSure, LocalizationResource.Yes, LocalizationResource.No);
+            if (await mUIManager.DisplayPopupMessageAsync(vm))
             {
                 // Go back to previous page
-                mUIManager.GoBackToPreviousPage(this);
+                await mUIManager.GoBackToPreviousPage(this);
             }
         }
 

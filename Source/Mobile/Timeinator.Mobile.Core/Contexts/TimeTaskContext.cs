@@ -34,14 +34,14 @@ namespace Timeinator.Mobile.Core
         public int Id { get; set; }
 
         /// <summary>
-        /// Unique ordinal number of the task
-        /// </summary>
-        public int OrderId { get; set; }
-
-        /// <summary>
         /// The name of this task
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The type of this task
+        /// </summary>
+        public TimeTaskType Type { get; set; }
 
         /// <summary>
         /// The priority of this task
@@ -78,5 +78,10 @@ namespace Timeinator.Mobile.Core
         /// The date when this task was initially created
         /// </summary>
         public DateTime CreationDate { get; set; }
+
+        /// <summary>
+        /// The maximum reachable progress for this task
+        /// </summary>
+        public double MaxProgress { get; set; }
     }
 }
