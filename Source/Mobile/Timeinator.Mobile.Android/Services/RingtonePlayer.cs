@@ -9,7 +9,7 @@ namespace Timeinator.Mobile.Android
     {
         #region Private Members
 
-        private readonly Ringtone mSound = RingtoneManager.GetRingtone(Application.Context, RingtoneManager.GetDefaultUri(RingtoneType.Alarm));
+        private readonly Ringtone mSound = RingtoneManager.GetRingtone(Application.Context, RingtoneManager.GetDefaultUri(RingtoneType.Ringtone));
 
         #endregion
 
