@@ -4,7 +4,9 @@ using Android.Support.V4.View;
 using DK.Ostebaronen.Droid.ViewPagerIndicator;
 using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Timeinator.Core;
 using Timeinator.Mobile.Core;
 
@@ -25,6 +27,7 @@ namespace Timeinator.Mobile.Android
             var viewModel = BindingContext.DataContext as AddNewTimeTaskPageViewModel;
 
             // Create the fragment pages for every question type
+            // TODO: Make some configuration file to take info like that from one source
             var fragments = new List<MvxFragmentInfo>
             {
                 new MvxFragmentInfo
@@ -49,8 +52,19 @@ namespace Timeinator.Mobile.Android
             // Set the content as fragments using our adapter
             viewPager.Adapter = new MvxFragmentStatePagerAdapter(BaseContext, SupportFragmentManager, fragments);
 
+            // Get the icon indicator and associate it with view pager
             var indicator = FindViewById<IconPageIndicator>(Resource.Id.indicatorAdd);
             indicator.SetViewPager(viewPager);
+
+            // Whenever current displayed fragment changes...
+            indicator.PageSelected += (sender, args) =>
+            {
+                // Get the fragment that is currently displayed
+                var selectedFragment = fragments.ElementAt(args.Position);
+
+                // Change the task type based on that
+                viewModel.TaskType = (TimeTaskType)Enum.Parse(typeof(TimeTaskType), selectedFragment.Title);
+            };
         }
     }
 }
