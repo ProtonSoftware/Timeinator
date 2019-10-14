@@ -50,6 +50,11 @@ namespace Timeinator.Mobile.Core
         #region Public Events
 
         /// <summary>
+        /// Event called when new session is started
+        /// </summary>
+        public event Action TaskStarted = () => { };
+
+        /// <summary>
         /// The event that is fired any time the current task finishes
         /// </summary>
         public event Action TaskFinished = () => { };
@@ -170,17 +175,11 @@ namespace Timeinator.Mobile.Core
         /// Setups new session in the timer
         /// </summary>
         /// <param name="timerAction">The action to fire along with timer ticks</param>
-        /// <param name="taskAction">The action to fire when task's time finishes</param>
-        public void SetupSession(Action timerAction, Action taskAction, Action sessionAction)
+        public void SetupSession(Action timerAction)
         {
-            // Attach provided action as well
-            mSecondsTicker.Elapsed += (s, e) => timerAction.Invoke();
-
-            // Attach provided task action to the task finished event
-            TaskFinished += taskAction;
-
-            // Attach provided session action
-            SessionFinished += sessionAction;
+            if (timerAction != null)
+                // Attach provided action as well
+                mSecondsTicker.Elapsed += (s, e) => timerAction.Invoke();
         }
 
         /// <summary>
@@ -328,6 +327,9 @@ namespace Timeinator.Mobile.Core
 
             // Start the timer
             mSecondsTicker.Start();
+
+            // Inform subscribers
+            TaskStarted.Invoke();
         }
 
         /// <summary>
@@ -336,6 +338,7 @@ namespace Timeinator.Mobile.Core
         private void Reset()
         {
             // Reset events
+            TaskStarted = () => { };
             TaskFinished = () => { };
             SessionFinished = () => { };
 

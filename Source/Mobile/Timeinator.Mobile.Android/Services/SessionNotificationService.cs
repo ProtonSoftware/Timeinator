@@ -61,7 +61,9 @@ namespace Timeinator.Mobile.Android
             mTaskServiceConnection.Request += NotificationRequest;
 
             // Init communication with handler
-            mSessionHandler.SetupSession(TickNotification, TaskNotification, mTaskServiceConnection.Kill);
+            mSessionHandler.SetupSession(TickNotification);
+            mSessionHandler.SessionFinished += () => { mTaskServiceConnection.Kill(); };
+            mSessionHandler.TaskStarted += TaskNotification;
 
             // Update task name
             TaskNotification();
