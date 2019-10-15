@@ -502,6 +502,15 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount of pages.
+        /// </summary>
+        public static string ReadingPagesDescription {
+            get {
+                return ResourceManager.GetString("ReadingPagesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time remaining.
         /// </summary>
         public static string RemainingTime {

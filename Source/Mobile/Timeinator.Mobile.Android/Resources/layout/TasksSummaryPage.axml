@@ -37,7 +37,7 @@
             android:layout_marginRight="4dp"
             android:text="Start"
             style="@style/AccentButton"
-            local:MvxBind="Click StartTasksCommand" />
+            local:MvxBind='Text String("Begin");Click StartTasksCommand' />
 
         <Button
             android:layout_width="0dp"
