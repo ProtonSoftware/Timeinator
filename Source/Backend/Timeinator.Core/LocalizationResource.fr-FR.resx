@@ -187,7 +187,7 @@
     <value>Fonctionnalités</value>
   </data>
   <data name="ImmortalTask" xml:space="preserve">
-    <value>Répétitif tâche</value>
+    <value>Tâche répétitive</value>
   </data>
   <data name="ImportantTask" xml:space="preserve">
     <value>Important tâche</value>
@@ -199,127 +199,127 @@
     <value>Dernière mise à jour</value>
   </data>
   <data name="Loading" xml:space="preserve">
-    <value>Ładowanie...</value>
+    <value>Chargement en cours...</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Następny</value>
+    <value>Procéder</value>
   </data>
   <data name="NextTask" xml:space="preserve">
-    <value>Następne zadanie</value>
+    <value>Tâche suivante</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>Nie</value>
+    <value>Non</value>
   </data>
   <data name="NoTaskSelected" xml:space="preserve">
-    <value>Nie wybrałeś żadnego taska!</value>
+    <value>Vous n'avez sélectionné aucun tâche</value>
   </data>
   <data name="NotEnoughTimeForSession" xml:space="preserve">
     <value>Wybrany czas jest niewystarczający, by zacząc sesję</value>
   </data>
   <data name="Pause" xml:space="preserve">
-    <value>Pauza</value>
+    <value>Pause</value>
   </data>
   <data name="PickSessionTime" xml:space="preserve">
-    <value>Wybierz czas sesji</value>
+    <value>Choisir la durée de la session</value>
   </data>
   <data name="Priority" xml:space="preserve">
-    <value>Priorytet</value>
+    <value>Priorité</value>
   </data>
   <data name="ProvidedListNotPopulated" xml:space="preserve">
-    <value>Podana lista jest pusta</value>
+    <value>La liste fournie est vide</value>
   </data>
   <data name="ProvidedTaskDataInvalid" xml:space="preserve">
-    <value>Podane informacje o tasku nie spełniają wymagań</value>
+    <value>Des informations sur la tâche sont invalides</value>
   </data>
   <data name="QuestionAreYouCertainToDeleteTask" xml:space="preserve">
-    <value>Czy na pewno chcesz usunąc zadanie: {0}?</value>
+    <value>Supprimer la tâche: {0}?</value>
   </data>
   <data name="QuestionAreYouSureToFinishSession" xml:space="preserve">
-    <value>Na pewno chcesz zakończyć sesję?</value>
+    <value>Terminer la session?</value>
   </data>
   <data name="QuestionAreYouSureToFinishTask" xml:space="preserve">
-    <value>Na pewno chcesz zakończyć aktualne zadanie?</value>
+    <value>Terminer tâche courante?</value>
   </data>
   <data name="QuestionTimeRanOutWhatToDo" xml:space="preserve">
-    <value>Skończył się czas na zadanie, co chcesz teraz zrobić?</value>
+    <value>Tâche réalisé, que voulez-vous faire?</value>
   </data>
   <data name="RemainingTime" xml:space="preserve">
-    <value>Pozostały czas</value>
+    <value>Temps restant</value>
   </data>
   <data name="Resume" xml:space="preserve">
-    <value>Wznów</value>
+    <value>Reprendre</value>
   </data>
   <data name="Session" xml:space="preserve">
-    <value>Sesja</value>
+    <value>Session</value>
   </data>
   <data name="SessionFinished" xml:space="preserve">
-    <value>Koniec sesji</value>
+    <value>Session terminée</value>
   </data>
   <data name="SessionLasts" xml:space="preserve">
-    <value>Sesja trwa</value>
+    <value>Session en cours</value>
   </data>
   <data name="SessionPausedWithProgress" xml:space="preserve">
-    <value>Sesja wstrzymana ({0}%)</value>
+    <value>Session en pause ({0}%)</value>
   </data>
   <data name="SessSummary" xml:space="preserve">
-    <value>Wybrana sesja</value>
+    <value>Session actuelle</value>
   </data>
   <data name="SettingChangeLanguageDescription" xml:space="preserve">
-    <value>Język wyświetlany w aplikacji</value>
+    <value>Langue dans l'application</value>
   </data>
   <data name="SettingChangeLanguageName" xml:space="preserve">
-    <value>Język</value>
+    <value>Langue</value>
   </data>
   <data name="SettingDarkModeDescription" xml:space="preserve">
-    <value>Ciemny motyw w aplikacji dla oszczędzania oczu</value>
+    <value>Thème sombre</value>
   </data>
   <data name="SettingDarkModeName" xml:space="preserve">
-    <value>Tryb ciemny</value>
+    <value>Mode nuit</value>
   </data>
   <data name="SettingHighestPriorityDescription" xml:space="preserve">
-    <value>Zadania z najwyższym priorytetem jako pierwsze</value>
+    <value>La plus haute priorité en premier</value>
   </data>
   <data name="SettingHighestPriorityName" xml:space="preserve">
-    <value>Priorytetyzowanie zadań</value>
+    <value>Hiérarchiser les tâches</value>
   </data>
   <data name="SettingRecalculateTasksDescription" xml:space="preserve">
-    <value>Przelicz czas zadań po przerwie, by dostosować do czasu sesji</value>
+    <value>Recalculer pour adapter la tâche à la durée de la session</value>
   </data>
   <data name="SettingRecalculateTasksName" xml:space="preserve">
-    <value>Dostosuj czas zadań</value>
+    <value>Ajuster les tâches</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Ustawienia</value>
+    <value>Paramètres</value>
   </data>
   <data name="StartBreak" xml:space="preserve">
-    <value>Zrób przerwę</value>
+    <value>Commencer une pause</value>
   </data>
   <data name="TaskDeletion" xml:space="preserve">
-    <value>Usuwanie zadania</value>
+    <value>Suppression de tâche</value>
   </data>
   <data name="TaskFinished" xml:space="preserve">
-    <value>Koniec zadania</value>
+    <value>Tâche terminée</value>
   </data>
   <data name="TaskListTitle" xml:space="preserve">
-    <value>Twoje zadania</value>
+    <value>Vos tâches</value>
   </data>
   <data name="TaskName" xml:space="preserve">
-    <value>Nazwa zadania</value>
+    <value>Nom de la tâche</value>
   </data>
   <data name="TimeRanOut" xml:space="preserve">
-    <value>Skończył się czas</value>
+    <value>Pas de temps restant</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Wersja</value>
+    <value>Version</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Tak</value>
+    <value>Oui</value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
-    <value>Etes-vous sûr?</value>
+    <value>Êtes-vous sûr?</value>
   </data>
   <data name="UnsavedChanges" xml:space="preserve">
-    <value>Niezapisane zmiany</value>
+    <value>Modifications non enregistrées</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description (optionnel)</value>
@@ -328,24 +328,27 @@
     <value>Octobre 2019</value>
   </data>
   <data name="Tags" xml:space="preserve">
-    <value>Tagi (opcjonalne, rozdzielane spacją)</value>
+    <value>Étiquettes (optionnelle, espace délimité)</value>
   </data>
   <data name="PromoAds" xml:space="preserve">
-    <value>W trosce o wygodę użytkowania, aplikacja jest darmowa i bez ofensywnych reklam.</value>
+    <value>Ads are everywhere because we are poor and we need money for fuel and food, thx.</value>
+    <comment>W trosce o wygodę użytkowania, aplikacja jest darmowa i bez ofensywnych reklam.</comment>
   </data>
   <data name="PromoContact" xml:space="preserve">
-    <value>Jeśli masz jakieś pytania lub propozycje nowych funkcjonalności, zapraszamy do kontaktu, chętnie pomożemy :)</value>
+    <value>You can text me any time amoureux. :*</value>
+    <comment>Jeśli masz jakieś pytania lub propozycje nowych funkcjonalności, zapraszamy do kontaktu, chętnie pomożemy :)</comment>
   </data>
   <data name="PromoPay" xml:space="preserve">
-    <value>Jeśli chcesz nas wspomóc, przyjmujemy dotacje PayPal pod adresem:</value>
+    <value>Gimme money bro, use this link</value>
+    <comment>Jeśli chcesz nas wspomóc, przyjmujemy dotacje PayPal pod adresem:</comment>
   </data>
   <data name="SearchBarHint" xml:space="preserve">
-    <value>Wpisz nazwę lub tag</value>
+    <value>Tapez un nom ou une étiquette</value>
   </data>
   <data name="TimeinatorSessionTitle" xml:space="preserve">
-    <value>Timeinator Sesja</value>
+    <value>Timeinator Session</value>
   </data>
   <data name="ModeFinishTime" xml:space="preserve">
-    <value>Użyj jako czasu zakończenia</value>
+    <value>Utiliser comme heure de fin</value>
   </data>
 </root>

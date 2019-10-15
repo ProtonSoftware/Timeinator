@@ -271,7 +271,7 @@
     <value>Language</value>
   </data>
   <data name="SettingDarkModeDescription" xml:space="preserve">
-    <value>Dark theme to save your eyes</value>
+    <value>Dark theme</value>
   </data>
   <data name="SettingDarkModeName" xml:space="preserve">
     <value>Dark mode</value>
@@ -283,7 +283,7 @@
     <value>Prioritizing tasks</value>
   </data>
   <data name="SettingRecalculateTasksDescription" xml:space="preserve">
-    <value>Recalculate tasks to match session time after breaks</value>
+    <value>Recalculate tasks to fit them to session duration after breaks</value>
   </data>
   <data name="SettingRecalculateTasksName" xml:space="preserve">
     <value>Adjust tasks</value>
@@ -295,7 +295,7 @@
     <value>Take a break</value>
   </data>
   <data name="TaskDeletion" xml:space="preserve">
-    <value>Task deletion</value>
+    <value>Deleting task</value>
   </data>
   <data name="TaskFinished" xml:space="preserve">
     <value>Task finished</value>
@@ -340,7 +340,7 @@
     <value>You can help us by PayPal under this address:</value>
   </data>
   <data name="SearchBarHint" xml:space="preserve">
-    <value>Type the name or tag</value>
+    <value>Type a name or tag</value>
   </data>
   <data name="TimeinatorSessionTitle" xml:space="preserve">
     <value>Timeinator Session</value>

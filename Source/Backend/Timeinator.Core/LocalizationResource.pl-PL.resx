@@ -229,7 +229,7 @@
     <value>Podana lista jest pusta</value>
   </data>
   <data name="ProvidedTaskDataInvalid" xml:space="preserve">
-    <value>Podane informacje o tasku nie spełniają wymagań</value>
+    <value>Podane informacje o zadaniu nie spełniają wymagań</value>
   </data>
   <data name="QuestionAreYouCertainToDeleteTask" xml:space="preserve">
     <value>Czy na pewno chcesz usunąc zadanie: {0}?</value>
@@ -271,7 +271,7 @@
     <value>Język</value>
   </data>
   <data name="SettingDarkModeDescription" xml:space="preserve">
-    <value>Ciemny motyw w aplikacji dla oszczędzania oczu</value>
+    <value>Ciemny motyw</value>
   </data>
   <data name="SettingDarkModeName" xml:space="preserve">
     <value>Tryb ciemny</value>

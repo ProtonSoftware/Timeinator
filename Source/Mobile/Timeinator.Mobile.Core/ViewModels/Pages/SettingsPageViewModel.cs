@@ -45,7 +45,8 @@ namespace Timeinator.Mobile.Core
         public ObservableCollection<string> LanguageItems { get; set; } = new ObservableCollection<string>
         {
             "Polski",
-            "English"
+            "English",
+            "Français"
         };
 
         /// <summary>
@@ -66,7 +67,11 @@ namespace Timeinator.Mobile.Core
                         mUIManager.ChangeLanguage("en-US");
                         break;
 
-                    // 0 or any not found index is default - Polish language
+                    case 2:
+                        mUIManager.ChangeLanguage("fr-FR");
+                        break;
+
+                    // 0 or any not recognized index is default - Polish language
                     default:
                         mUIManager.ChangeLanguage("pl-PL");
                         break;
