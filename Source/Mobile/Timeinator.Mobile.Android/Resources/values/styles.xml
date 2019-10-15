@@ -38,7 +38,7 @@
 
   <style name="TextLargeBlack">
     <item name="android:textColor">@color/colorBlack</item>
-    <item name="android:textSize">@dimen/abc_text_size_large_material</item>
+    <item name="android:textSize">20sp</item>
     <item name="android:fontFamily">sans-serif</item>
   </style>
 
