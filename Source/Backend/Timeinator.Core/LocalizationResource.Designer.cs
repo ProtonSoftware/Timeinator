@@ -520,7 +520,7 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type the name or tag.
+        ///   Looks up a localized string similar to Type a name or tag.
         /// </summary>
         public static string SearchBarHint {
             get {
@@ -592,7 +592,7 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dark theme to save your eyes.
+        ///   Looks up a localized string similar to Dark theme.
         /// </summary>
         public static string SettingDarkModeDescription {
             get {
@@ -628,7 +628,7 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recalculate tasks to match session time after breaks.
+        ///   Looks up a localized string similar to Recalculate tasks to fit them to session duration after breaks.
         /// </summary>
         public static string SettingRecalculateTasksDescription {
             get {
@@ -673,7 +673,7 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Task deletion.
+        ///   Looks up a localized string similar to Deleting task.
         /// </summary>
         public static string TaskDeletion {
             get {
