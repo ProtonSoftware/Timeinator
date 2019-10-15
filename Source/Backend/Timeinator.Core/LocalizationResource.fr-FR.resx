@@ -214,7 +214,7 @@
     <value>Vous n'avez sélectionné aucun tâche</value>
   </data>
   <data name="NotEnoughTimeForSession" xml:space="preserve">
-    <value>Wybrany czas jest niewystarczający, by zacząc sesję</value>
+    <value>Temps insuffisant pour commencer la session</value>
   </data>
   <data name="Pause" xml:space="preserve">
     <value>Pause</value>
