@@ -246,14 +246,13 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         private async Task UserReadyAsync()
         {
-            // Convert our collection to suitable list of contexts
-            var taskContexts = new List<TimeTaskContext>();
-            foreach (var task in TaskItems)
-            {
-                // Only add enabled tasks for this session
-                if (task.IsEnabled)
-                    taskContexts.Add(mTimeTasksMapper.ReverseMap(task));
-            }
+            // Convert our collection to suitable list of contexts 
+            var taskContexts = TaskItems
+                                    // Take only selected tasks
+                                    .Where(task => task.IsEnabled)
+                                    // Map them as contexts
+                                    .Select(task => mTimeTasksMapper.ReverseMap(task))
+                                    .ToList();
 
             // If user has picked nothing...
             if (taskContexts.Count == 0)

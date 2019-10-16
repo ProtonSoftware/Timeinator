@@ -348,4 +348,7 @@
   <data name="ModeFinishTime" xml:space="preserve">
     <value>Użyj jako czasu zakończenia</value>
   </data>
+  <data name="ReadingPagesDescription" xml:space="preserve">
+    <value>Ilość stron</value>
+  </data>
 </root>
