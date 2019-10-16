@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using MvvmCross.Droid.Support.V7.AppCompat;
-using Timeinator.Mobile.Core;
+using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
 {

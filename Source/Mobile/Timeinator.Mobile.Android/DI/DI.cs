@@ -2,8 +2,9 @@
 using MvvmCross.ViewModels;
 using SimpleInjector;
 using Timeinator.Mobile.DataAccess;
+using Timeinator.Mobile.Domain;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Android
 {
     /// <summary>
     /// Dependency Injection container for this application
@@ -15,7 +16,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// The underlying container from which the dependencies are retrieved
         /// </summary>
-        public static Container Container { get; private set; }
+        public static Container Container { get; set; }
 
         /// <summary>
         /// A shortcut to access the <see cref="ApplicationViewModel"/>
@@ -27,24 +28,9 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public static SettingsPageViewModel Settings => Container.GetInstance<SettingsPageViewModel>();
 
-        /// <summary>
-        /// A shortcut to get appropriate view model for page with injected dependiencies by DI
-        /// </summary>
-        /// <typeparam name="T">Any view model that inherites <see cref="MvxViewModel"/></typeparam>
-        public static T GetInjectedPageViewModel<T>() where T : MvxViewModel => Container.GetInstance<T>();
-
         #endregion
 
         #region Public Methods
-
-        /// <summary>
-        /// Sets up the DI and binds initial view models to that
-        /// </summary>
-        public static void InitialSetup()
-        {
-            // Initialize brand-new DI container
-            Container = new Container().AddTimeinatorServices();
-        }
 
         /// <summary>
         /// Creates the database and applies all the migrations

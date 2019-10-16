@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The interface for handling everything related to time in task session

@@ -7,7 +7,7 @@ using MvvmCross.Droid.Support.V4;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Timeinator.Core;
+using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
 {

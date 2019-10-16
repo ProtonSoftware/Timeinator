@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Resources;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// Converts specified property name to corresponding string value from localization resource

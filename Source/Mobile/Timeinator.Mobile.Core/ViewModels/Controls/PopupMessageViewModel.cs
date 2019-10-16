@@ -1,6 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The view model for a popup message that is shown to user and can accept the response

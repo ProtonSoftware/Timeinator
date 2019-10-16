@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// Manages every UI interactions

@@ -157,11 +157,14 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DI\Configuration\ContainerExtensions.cs" />
+    <Compile Include="DI\DI.cs" />
     <Compile Include="Helpers\MvxFragmentInfo.cs" />
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Services\AndroidNotificationManager.cs" />
     <Compile Include="Helpers\MvxViewPagerFragmentAdapter.cs" />
     <Compile Include="Services\RingtonePlayer.cs" />
+    <Compile Include="Services\ViewModelProvider.cs" />
     <Compile Include="Views\AlarmPage.cs" />
     <Compile Include="Helpers\MovementRecyclerViewItemCallback.cs" />
     <Compile Include="Helpers\SwipeRecyclerViewItemCallback.cs" />
@@ -216,6 +219,9 @@
     <PackageReference Include="MvvmCross.Droid.Support.V7.RecyclerView">
       <Version>6.4.1</Version>
     </PackageReference>
+    <PackageReference Include="SimpleInjector">
+      <Version>4.7.1</Version>
+    </PackageReference>
     <PackageReference Include="System.Buffers">
       <Version>4.5.0</Version>
     </PackageReference>
@@ -229,9 +235,17 @@
       <Project>{AE3E20C1-CC67-4A86-A7FE-AEB92951C715}</Project>
       <Name>Timeinator.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Timeinator.Mobile.Core\Timeinator.Mobile.Core.csproj">
+    <ProjectReference Include="..\Timeinator.Mobile.Core\Timeinator.Mobile.Domain.csproj">
       <Project>{17bbebf5-bd41-412d-9616-6c7e228f8e4a}</Project>
-      <Name>Timeinator.Mobile.Core</Name>
+      <Name>Timeinator.Mobile.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timeinator.Mobile.DataAccess\Timeinator.Mobile.DataAccess.csproj">
+      <Project>{353e215d-8931-4513-9906-5c15df2655c7}</Project>
+      <Name>Timeinator.Mobile.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timeinator.Mobile.Session\Timeinator.Mobile.Session.csproj">
+      <Project>{c8b8f5f4-a8a7-4b9e-811d-000cf38f6fb6}</Project>
+      <Name>Timeinator.Mobile.Session</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

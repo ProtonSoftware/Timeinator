@@ -1,7 +1,7 @@
 ﻿using MvvmCross.IoC;
 using MvvmCross.ViewModels;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The main entry point for the application in MvvmCross environment
@@ -13,13 +13,6 @@ namespace Timeinator.Mobile.Core
         /// </summary>
         public override void Initialize()
         {
-            // If there is no DI setup yet
-            if (DI.Container == null)
-            {
-                // Setup brand-new DI
-                DI.InitialSetup();
-            }
-
             // Set initial page
             RegisterAppStart<LoginPageViewModel>();
 

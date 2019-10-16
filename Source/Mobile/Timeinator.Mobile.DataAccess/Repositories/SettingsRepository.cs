@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Timeinator.Core;
+using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.DataAccess
 {

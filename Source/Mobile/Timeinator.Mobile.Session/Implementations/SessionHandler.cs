@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Timers;
 using Timeinator.Core;
+using Timeinator.Mobile.Domain;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Session
 {
     /// <summary>
     /// User session handler
@@ -14,11 +15,13 @@ namespace Timeinator.Mobile.Core
 
         private readonly ITimeTasksService mTimeTasksService;
         private readonly ITimeTasksCalculator mTimeTasksCalculator;
+        // TODO: God PLEASE NO! GOD!!!
+        private readonly SettingsPageViewModel mSettingsPageViewModel;
 
         /// <summary>
         /// The amount of time for every timer tick
         /// </summary>
-        private readonly TimeSpan mOneTick = TimeSpan.FromSeconds(DI.Settings.TimerTickRate / 1000);
+        private readonly TimeSpan mOneTick;
 
         /// <summary>
         /// The list of current tasks contexts stored in this manager
@@ -76,10 +79,13 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public SessionHandler(ITimeTasksService timeTasksService, ITimeTasksCalculator timeTasksCalculator)
+        public SessionHandler(ITimeTasksService timeTasksService, ITimeTasksCalculator timeTasksCalculator, SettingsPageViewModel settingsPageViewModel)
         {
             mTimeTasksService = timeTasksService;
             mTimeTasksCalculator = timeTasksCalculator;
+            mSettingsPageViewModel = settingsPageViewModel;
+
+            mOneTick = TimeSpan.FromSeconds(mSettingsPageViewModel.TimerTickRate / 1000);
 
             Reset();
         }
@@ -356,7 +362,7 @@ namespace Timeinator.Mobile.Core
                 mSecondsTicker.Dispose();
 
             // Timer ticks every second
-            mSecondsTicker = new Timer(DI.Settings.TimerTickRate);
+            mSecondsTicker = new Timer(mSettingsPageViewModel.TimerTickRate);
 
             // Run our elapsed function every time timer ticks
             mSecondsTicker.Elapsed += SecondsTicker_Elapsed;
@@ -391,7 +397,7 @@ namespace Timeinator.Mobile.Core
         private void RecalculateTasksAfterBreak()
         {
             // Do work only if enabled in settings
-            if (!DI.Settings.RecalculateTasksAfterBreak)
+            if (!mSettingsPageViewModel.RecalculateTasksAfterBreak)
                 return;
 
             // If nothing to calculate then exit

@@ -8,7 +8,7 @@ using MvvmCross.Platforms.Android.Presenters.Attributes;
 using Org.Adw.Library.Widgets.Discreteseekbar;
 using System;
 using Timeinator.Core;
-using Timeinator.Mobile.Core;
+using Timeinator.Mobile.Domain;
 using static Android.App.TimePickerDialog;
 
 namespace Timeinator.Mobile.Android

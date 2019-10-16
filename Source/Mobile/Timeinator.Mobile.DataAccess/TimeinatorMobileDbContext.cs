@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.IO;
+using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.DataAccess
 {

@@ -1,4 +1,4 @@
-﻿namespace Timeinator.Mobile.Core
+﻿namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// Every possible icon in this app that is convertable to Material Icon

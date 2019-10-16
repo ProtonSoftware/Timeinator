@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Timeinator.Core;
-using Timeinator.Mobile.DataAccess;
+using Timeinator.Mobile.Domain;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Session
 {
     /// <summary>
     /// The service that handles all the logic associated with tasks in database interaction

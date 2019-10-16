@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Media;
 using System;
-using Timeinator.Mobile.Core;
+using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
 {

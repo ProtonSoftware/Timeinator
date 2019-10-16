@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The view model for list item control in task list page
@@ -20,11 +20,6 @@ namespace Timeinator.Mobile.Core
         /// Indicates if this task has contant time assigned and should not be recalculated by session algorithm
         /// </summary>
         public bool IsAssignedTime { get; set; }
-
-        /// <summary>
-        /// The date when this task was initially created
-        /// </summary>
-        public DateTime CreationDate { get; set; }
 
         /// <summary>
         /// Indicates if context menu for this item should be visible

@@ -1,6 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The view model for main application state
@@ -10,6 +10,7 @@ namespace Timeinator.Mobile.Core
         #region Private Members
 
         private readonly IUIManager mUIManager;
+        private readonly IViewModelProvider mViewModelProvider;
 
         #endregion
 
@@ -27,9 +28,10 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ApplicationViewModel(IUIManager uiManager)
+        public ApplicationViewModel(IUIManager uiManager, IViewModelProvider viewModelProvider)
         {
             mUIManager = uiManager;
+            mViewModelProvider = viewModelProvider;
         }
 
         #endregion
@@ -50,7 +52,7 @@ namespace Timeinator.Mobile.Core
             // If view model wasnt provided
             if (viewModel == null)
                 // Create new one for new page
-                viewModel = page.GetViewModel();
+                viewModel = page.GetViewModel(mViewModelProvider);
 
             // Change the page on application
             mUIManager.GoToViewModelPage(viewModel);

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Timeinator.Core;
-using Timeinator.Mobile.Core;
+using Timeinator.Mobile.Domain;
 using Timeinator.Mobile.DataAccess;
 using Xunit;
 

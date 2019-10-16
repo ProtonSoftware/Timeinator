@@ -1,6 +1,4 @@
-﻿using Timeinator.Core;
-
-namespace Timeinator.Mobile.Core
+﻿namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The extensions for time task types

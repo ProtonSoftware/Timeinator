@@ -6,7 +6,7 @@ using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Droid.Support.V7.RecyclerView;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using System;
-using Timeinator.Mobile.Core;
+using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
 {

@@ -1,4 +1,4 @@
-﻿using Timeinator.Mobile.Core;
+﻿using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
 {

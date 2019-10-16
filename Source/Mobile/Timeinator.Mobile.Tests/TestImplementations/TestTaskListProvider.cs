@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Timeinator.Core;
-using Timeinator.Mobile.Core;
+using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Tests
 {

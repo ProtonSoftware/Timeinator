@@ -1,5 +1,5 @@
 ﻿using System;
-using Timeinator.Mobile.Core;
+using Timeinator.Mobile.Domain;
 using Xunit;
 
 namespace Timeinator.Mobile.Tests

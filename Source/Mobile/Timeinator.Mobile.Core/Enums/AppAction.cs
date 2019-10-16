@@ -1,4 +1,4 @@
-﻿namespace Timeinator.Mobile.Core
+﻿namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// Every possible action to do whenever application opens up

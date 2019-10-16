@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The view model for task time page where user prepares his session
@@ -15,6 +15,7 @@ namespace Timeinator.Mobile.Core
 
         private readonly ISessionHandler mSessionHandler;
         private readonly IUIManager mUIManager;
+        private readonly ApplicationViewModel mApplicationViewModel;
 
         #endregion
 
@@ -51,7 +52,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksTimePageViewModel(ISessionHandler sessionHandler, IUIManager uiManager)
+        public TasksTimePageViewModel(ISessionHandler sessionHandler, IUIManager uiManager, ApplicationViewModel applicationViewModel)
         {
             // Create commands
             CalculateSessionCommand = new RelayCommand(async () => await CalculateSessionAsync());
@@ -60,6 +61,7 @@ namespace Timeinator.Mobile.Core
             // Get injected DI services
             mSessionHandler = sessionHandler;
             mUIManager = uiManager;
+            mApplicationViewModel = applicationViewModel;
         }
 
         #endregion
@@ -97,7 +99,7 @@ namespace Timeinator.Mobile.Core
             }
 
             // Otherwise, go to next page which shows a summary of calculated user session
-            DI.Application.GoToPage(ApplicationPage.TasksSummary);
+            mApplicationViewModel.GoToPage(ApplicationPage.TasksSummary);
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The view model for about page

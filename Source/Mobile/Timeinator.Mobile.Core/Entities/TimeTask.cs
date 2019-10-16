@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.DataAccess
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The time task that came from user and is saved in the database
