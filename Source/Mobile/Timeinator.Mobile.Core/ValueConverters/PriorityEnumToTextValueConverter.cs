@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The value converter for task's priority to show it as text instead of enum name

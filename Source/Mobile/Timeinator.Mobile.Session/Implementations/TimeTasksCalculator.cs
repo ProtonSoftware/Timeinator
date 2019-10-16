@@ -1,14 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Timeinator.Mobile.Domain;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Session
 {
     /// <summary>
     /// The helper that calculates session tasks
     /// </summary>
     public class TimeTasksCalculator : ITimeTasksCalculator
     {
+        #region Private members
+
+        // TODO: Get rid of this ugly VM
+        private readonly SettingsPageViewModel mSettingsPageViewModel;
+
+        #endregion
+
+        #region Constructor
+
+        public TimeTasksCalculator(SettingsPageViewModel settingsPageViewModel)
+        {
+            mSettingsPageViewModel = settingsPageViewModel;
+        }
+
+        #endregion
+
         #region Interface Implementation
 
         /// <summary>
@@ -22,7 +39,7 @@ namespace Timeinator.Mobile.Core
             var taskConstantTime = contexts.GetConstant().SumTimes();
 
             // Calculate time for remaining tasks
-            var taskPrioritiesTime = TimeSpan.FromMinutes(contexts.GetConstant(true).SumPriorities() * DI.Settings.MinimumTaskTime);
+            var taskPrioritiesTime = TimeSpan.FromMinutes(contexts.GetConstant(true).SumPriorities() * mSettingsPageViewModel.MinimumTaskTime);
 
             // Sum the times and return
             return taskConstantTime + taskPrioritiesTime;
@@ -40,7 +57,7 @@ namespace Timeinator.Mobile.Core
             var calculatedTasks = CalculateAssignedTimes(contexts, sessionTime);
 
             // Return them in order
-            if (DI.Settings.HighestPrioritySetAsFirst)
+            if (mSettingsPageViewModel.HighestPrioritySetAsFirst)
                 return calculatedTasks.OrderBy(x => x.Priority).ToList();
             else
                 return calculatedTasks;
@@ -80,8 +97,9 @@ namespace Timeinator.Mobile.Core
                 var newTime = Fit(task, remainingTime, sumOfPriorities);
 
                 // Skip tasks that would be too short after substraction, we still want to keep minimum time requirement for them 
-                if (newTime < TimeSpan.FromMinutes(DI.Settings.MinimumTaskTime))
-                    newTime = TimeSpan.FromMinutes(DI.Settings.MinimumTaskTime);
+                var minTaskTime = TimeSpan.FromMinutes(mSettingsPageViewModel.MinimumTaskTime);
+                if (newTime < minTaskTime)
+                    newTime = minTaskTime;
                 
                 // Substract the time from task
                 task.DynamicTime = newTime;

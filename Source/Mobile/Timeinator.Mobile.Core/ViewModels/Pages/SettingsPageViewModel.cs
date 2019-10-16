@@ -2,9 +2,8 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Timeinator.Core;
-using Timeinator.Mobile.DataAccess;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The view model for application's settings page

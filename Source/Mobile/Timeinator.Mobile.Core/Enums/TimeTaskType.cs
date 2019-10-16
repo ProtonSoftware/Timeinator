@@ -1,4 +1,4 @@
-﻿namespace Timeinator.Core
+﻿namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// Every possible type of time tasks in this application 

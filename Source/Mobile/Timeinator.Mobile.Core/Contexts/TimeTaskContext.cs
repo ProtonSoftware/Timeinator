@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The context for time task to use as an object in this app

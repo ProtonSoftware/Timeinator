@@ -1,7 +1,7 @@
 ﻿using Android.Content;
 using Android.OS;
 using System;
-using Timeinator.Mobile.Core;
+using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
 {

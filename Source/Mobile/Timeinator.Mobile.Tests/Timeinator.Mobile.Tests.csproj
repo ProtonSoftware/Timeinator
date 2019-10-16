@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Backend\Timeinator.Core\Timeinator.Core.csproj" />
-    <ProjectReference Include="..\Timeinator.Mobile.Core\Timeinator.Mobile.Core.csproj" />
+    <ProjectReference Include="..\Timeinator.Mobile.Core\Timeinator.Mobile.Domain.csproj" />
     <ProjectReference Include="..\Timeinator.Mobile.DataAccess\Timeinator.Mobile.DataAccess.csproj" />
   </ItemGroup>
 

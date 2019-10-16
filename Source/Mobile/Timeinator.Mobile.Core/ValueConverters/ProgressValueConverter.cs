@@ -2,7 +2,7 @@
 using System;
 using System.Globalization;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// Converts double Progress to int or string if parameter provided

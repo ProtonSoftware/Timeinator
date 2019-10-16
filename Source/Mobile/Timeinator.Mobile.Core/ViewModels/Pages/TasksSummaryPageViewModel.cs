@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows.Input;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The view model for tasks summary page
@@ -17,6 +17,8 @@ namespace Timeinator.Mobile.Core
 
         private readonly TimeTasksMapper mTimeTasksMapper;
         private readonly ISessionHandler mSessionHandler;
+        private readonly IViewModelProvider mViewModelProvider;
+        private readonly ApplicationViewModel mApplicationViewModel;
 
         #endregion
 
@@ -58,7 +60,11 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSummaryPageViewModel(ISessionHandler sessionHandler, TimeTasksMapper tasksMapper)
+        public TasksSummaryPageViewModel(
+            ISessionHandler sessionHandler,
+            TimeTasksMapper tasksMapper,
+            ApplicationViewModel applicationViewModel,
+            IViewModelProvider viewModelProvider)
         {
             // Create commands
             StartTasksCommand = new RelayCommand(StartTaskSession);
@@ -68,6 +74,8 @@ namespace Timeinator.Mobile.Core
             // Get injected DI services
             mSessionHandler = sessionHandler;
             mTimeTasksMapper = tasksMapper;
+            mApplicationViewModel = applicationViewModel;
+            mViewModelProvider = viewModelProvider;
 
             // Load tasks from the manager to this page
             LoadTaskList();
@@ -89,11 +97,11 @@ namespace Timeinator.Mobile.Core
             mSessionHandler.UpdateTasks(taskContexts);
 
             // Create brand-new view model for session page
-            var sessionViewModel = DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
+            var sessionViewModel = mViewModelProvider.GetInjectedPageViewModel<TasksSessionPageViewModel>();
             sessionViewModel.InitializeSessionCommand.Execute(null);
 
             // Change to session page
-            DI.Application.GoToPage(ApplicationPage.TasksSession, sessionViewModel);
+            mApplicationViewModel.GoToPage(ApplicationPage.TasksSession, sessionViewModel);
         }
 
         /// <summary>
@@ -106,7 +114,7 @@ namespace Timeinator.Mobile.Core
 
             // TODO: Find better way
             // Go back to task list
-            DI.Application.GoToPage(ApplicationPage.TasksList);
+            mApplicationViewModel.GoToPage(ApplicationPage.TasksList);
         }
 
         /// <summary>

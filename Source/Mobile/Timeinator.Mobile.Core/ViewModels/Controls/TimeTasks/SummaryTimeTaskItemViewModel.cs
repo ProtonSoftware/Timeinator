@@ -1,4 +1,4 @@
-﻿namespace Timeinator.Mobile.Core
+﻿namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The view model for list item control in summary page (shown right before session starts)

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows.Input;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The view model for tasks session page
@@ -18,6 +18,7 @@ namespace Timeinator.Mobile.Core
         private TimeTasksMapper mTimeTasksMapper;
         private IUIManager mUIManager;
         private ISessionHandler mSessionHandler;
+        private ApplicationViewModel mApplicationViewModel;
 
         #endregion
 
@@ -99,7 +100,11 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksSessionPageViewModel()
+        public TasksSessionPageViewModel(
+            TimeTasksMapper timeTasksMapper,
+            IUIManager uiManager,
+            ISessionHandler sessionHandler,
+            ApplicationViewModel applicationViewModel)
         {
             // Create commands
             InitializeSessionCommand = new RelayCommand(InitializeSession);
@@ -107,6 +112,12 @@ namespace Timeinator.Mobile.Core
             PauseCommand = new RelayCommand(() => mSessionHandler.Pause());
             ResumeCommand = new RelayCommand(() => mSessionHandler.Resume());
             FinishTaskCommand = new RelayCommand(FinishTask);
+
+            // Inject DI
+            mTimeTasksMapper = timeTasksMapper;
+            mUIManager = uiManager;
+            mSessionHandler = sessionHandler;
+            mApplicationViewModel = applicationViewModel;
         }
 
         #endregion
@@ -140,9 +151,6 @@ namespace Timeinator.Mobile.Core
 
             // Set default values to key properties to start fresh session
             RemainingTasks = new ObservableCollection<SessionTimeTaskItemViewModel>();
-
-            // Get latest instances of every needed DI services
-            InjectLatestDIServices();
 
             // Start new session providing required actions
             mSessionHandler.SetupSession(UpdateSessionProperties);
@@ -188,23 +196,12 @@ namespace Timeinator.Mobile.Core
         #region Private Helpers
 
         /// <summary>
-        /// Injects latest implementations of DI services into this view model
-        /// </summary>
-        private void InjectLatestDIServices()
-        {
-            // Get every service from DI
-            mSessionHandler = DI.Container.GetInstance<ISessionHandler>();
-            mUIManager = DI.Container.GetInstance<IUIManager>();
-            mTimeTasksMapper = DI.Container.GetInstance<TimeTasksMapper>();
-        }
-
-        /// <summary>
         /// Called when current task's time runs out
         /// </summary>
         private void TaskTimeFinish()
         {
             // Go to alarm page that handles this action
-            DI.Application.GoToPage(ApplicationPage.Alarm);
+            mApplicationViewModel.GoToPage(ApplicationPage.Alarm);
         }
 
         /// <summary>
@@ -261,7 +258,7 @@ namespace Timeinator.Mobile.Core
             SessionOver = true;
 
             // Go to first page
-            DI.Application.GoToPage(ApplicationPage.TasksList);
+            mApplicationViewModel.GoToPage(ApplicationPage.TasksList);
         }
     }
 }

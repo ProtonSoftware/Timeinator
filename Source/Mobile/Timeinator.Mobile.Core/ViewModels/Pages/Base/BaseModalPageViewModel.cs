@@ -1,7 +1,7 @@
 ﻿using MvvmCross.ViewModels;
 using System.Windows.Input;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The base view model for any page that is show as modal and has return button

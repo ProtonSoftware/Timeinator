@@ -8,7 +8,7 @@ using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Platforms.Android;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using SimpleInjector;
-using Timeinator.Mobile.Core;
+using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
 {
@@ -42,10 +42,8 @@ namespace Timeinator.Mobile.Android
             // Add dialogs library to Mvx DI
             Mvx.IoCProvider.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
 
-            // Add Android-specific dependency injection implementations
-            DI.Container.Register<IUIManager, UIManager>(Lifestyle.Singleton);
-            DI.Container.Register<SessionNotificationService>(Lifestyle.Singleton);
-            DI.Container.Register<IRingtonePlayer, RingtonePlayer>(Lifestyle.Singleton);
+            // Create new container
+            DI.Container = new Container().AddTimeinatorServices();
 
             // Migrate the database
             DI.MigrateDatabase();

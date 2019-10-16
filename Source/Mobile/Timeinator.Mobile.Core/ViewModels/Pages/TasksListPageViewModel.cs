@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The view model for main tasks page
@@ -19,6 +19,8 @@ namespace Timeinator.Mobile.Core
         private readonly ITimeTasksService mTimeTasksService;
         private readonly ISessionHandler mSessionHandler;
         private readonly IUIManager mUIManager;
+        private readonly IViewModelProvider mViewModelProvider;
+        private readonly ApplicationViewModel mApplicationViewModel;
 
         /// <summary>
         /// A value of selected item in sorting combobox
@@ -151,21 +153,29 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksListPageViewModel(ITimeTasksService timeTasksService, ISessionHandler sessionHandler, IUIManager uiManager, TimeTasksMapper tasksMapper)
+        public TasksListPageViewModel(
+            ITimeTasksService timeTasksService,
+            ISessionHandler sessionHandler,
+            IUIManager uiManager,
+            IViewModelProvider viewModelProvider,
+            TimeTasksMapper tasksMapper,
+            ApplicationViewModel applicationViewModel)
         {
             // Create commands
-            AddNewTaskCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.AddNewTask));
+            AddNewTaskCommand = new RelayCommand(() => mApplicationViewModel.GoToPage(ApplicationPage.AddNewTask));
             EditTaskCommand = new RelayParameterizedCommand(EditTask);
-            DeleteTaskCommand = new RelayParameterizedCommand(async (param) => await uiManager.ExecuteOnMainThread(async () => await DeleteTaskAsync(param)));
+            DeleteTaskCommand = new RelayParameterizedCommand(async (param) => await mUIManager.ExecuteOnMainThread(async () => await DeleteTaskAsync(param)));
             UserReadyCommand = new RelayCommand(() => UserReadyAsync());
-            OpenSettingsCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.Settings));
-            OpenAboutCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.About));
+            OpenSettingsCommand = new RelayCommand(() => mApplicationViewModel.GoToPage(ApplicationPage.Settings));
+            OpenAboutCommand = new RelayCommand(() => mApplicationViewModel.GoToPage(ApplicationPage.About));
 
             // Get injected DI services
             mTimeTasksService = timeTasksService;
             mSessionHandler = sessionHandler;
             mTimeTasksMapper = tasksMapper;
             mUIManager = uiManager;
+            mViewModelProvider = viewModelProvider;
+            mApplicationViewModel = applicationViewModel;
 
             // Remove all outdated refresh events
             TaskListHelpers.CleanRefreshEvent();
@@ -197,7 +207,8 @@ namespace Timeinator.Mobile.Core
             var taskVM = param as ListTimeTaskItemViewModel;
 
             // Create edit page's view model based on that
-            var pageVM = DI.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>();
+            var pageVM = mViewModelProvider.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>();
+            // TODO: Use Mapper
             pageVM.TaskId = taskVM.Id;
             pageVM.TaskName = taskVM.Name;
             pageVM.TaskDescription = taskVM.Description;
@@ -248,11 +259,11 @@ namespace Timeinator.Mobile.Core
         {
             // Convert our collection to suitable list of contexts 
             var taskContexts = TaskItems
-                                    // Take only selected tasks
-                                    .Where(task => task.IsEnabled)
-                                    // Map them as contexts
-                                    .Select(task => mTimeTasksMapper.ReverseMap(task))
-                                    .ToList();
+                        // Take only selected tasks
+                        .Where(task => task.IsEnabled)
+                        // Map them as contexts
+                        .Select(task => mTimeTasksMapper.ReverseMap(task))
+                        .ToList();
 
             // If user has picked nothing...
             if (taskContexts.Count == 0)
@@ -271,7 +282,7 @@ namespace Timeinator.Mobile.Core
             mSessionHandler.UpdateTasks(taskContexts);
 
             // Change the page
-            DI.Application.GoToPage(ApplicationPage.TasksTime);
+            mApplicationViewModel.GoToPage(ApplicationPage.TasksTime);
         }
 
         #endregion

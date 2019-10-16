@@ -11,7 +11,7 @@ using MvvmCross.Droid.Support.V7.RecyclerView;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using System.Linq;
 using Timeinator.Core;
-using Timeinator.Mobile.Core;
+using Timeinator.Mobile.Domain;
 using static Android.Widget.TextView;
 
 namespace Timeinator.Mobile.Android

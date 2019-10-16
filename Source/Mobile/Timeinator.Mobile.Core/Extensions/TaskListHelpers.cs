@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// TODO: Get rid of this class, all the tasks methods are used exclusively by calculator, others are not needed here, so this shouldnt exist

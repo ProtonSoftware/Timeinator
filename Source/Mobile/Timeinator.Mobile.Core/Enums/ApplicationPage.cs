@@ -1,4 +1,4 @@
-﻿namespace Timeinator.Mobile.Core
+﻿namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// Contains every possible page in this application

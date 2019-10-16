@@ -1,4 +1,4 @@
-﻿namespace Timeinator.Core
+﻿namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// Shows priority of specified task 

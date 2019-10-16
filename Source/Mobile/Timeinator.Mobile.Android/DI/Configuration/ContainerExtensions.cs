@@ -1,7 +1,9 @@
 ﻿using SimpleInjector;
+using Timeinator.Mobile.Session;
 using Timeinator.Mobile.DataAccess;
+using Timeinator.Mobile.Domain;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Android
 {
     /// <summary>
     /// Extension methods for the dependency injection container
@@ -23,6 +25,7 @@ namespace Timeinator.Mobile.Core
             container.Register<ITimeTasksService, TimeTasksService>(Lifestyle.Singleton);
             container.Register<ITimeTasksCalculator, TimeTasksCalculator>(Lifestyle.Singleton);
             container.Register<ISessionHandler, SessionHandler>(Lifestyle.Singleton);
+            container.Register<IViewModelProvider, ViewModelProvider>(Lifestyle.Singleton);
 
             // Inject dependiencies into every page's view model
             container.Register<TasksListPageViewModel>(Lifestyle.Transient);
@@ -36,6 +39,11 @@ namespace Timeinator.Mobile.Core
 
             // Register our application's db context
             container.Register<TimeinatorMobileDbContext>(Lifestyle.Singleton);
+
+            // Add Android-specific dependency injection implementations
+            container.Register<IUIManager, UIManager>(Lifestyle.Singleton);
+            container.Register<SessionNotificationService>(Lifestyle.Singleton);
+            container.Register<IRingtonePlayer, RingtonePlayer>(Lifestyle.Singleton);
 
             // Return the container for chaining
             return container;

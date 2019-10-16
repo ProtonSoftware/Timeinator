@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The view model for alarm page
@@ -12,6 +12,8 @@ namespace Timeinator.Mobile.Core
         #region Private Members
 
         private readonly IRingtonePlayer mRingtonePlayer;
+        private readonly IViewModelProvider mViewModelProvider;
+        private readonly ApplicationViewModel mApplicationViewModel;
 
         #endregion
 
@@ -34,7 +36,7 @@ namespace Timeinator.Mobile.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AlarmPageViewModel(IRingtonePlayer ringtonePlayer)
+        public AlarmPageViewModel(IRingtonePlayer ringtonePlayer, IViewModelProvider viewModelProvider, ApplicationViewModel applicationViewModel)
         {
             // Create commands
             StartBreakCommand = new RelayCommand(StartBreak);
@@ -42,6 +44,8 @@ namespace Timeinator.Mobile.Core
 
             // Get injected DI services
             mRingtonePlayer = ringtonePlayer;
+            mViewModelProvider = viewModelProvider;
+            mApplicationViewModel = applicationViewModel;
         }
 
         #endregion
@@ -82,7 +86,7 @@ namespace Timeinator.Mobile.Core
         private void StartBreak()
         {
             // Get current session view model
-            var viewModel = DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
+            var viewModel = mViewModelProvider.GetInjectedPageViewModel<TasksSessionPageViewModel>();
 
             // Check if there are any other tasks
             if (viewModel.SessionOver)
@@ -92,7 +96,7 @@ namespace Timeinator.Mobile.Core
             }
 
             // Go back to session page
-            DI.Application.GoToPage(ApplicationPage.TasksSession, viewModel);
+            mApplicationViewModel.GoToPage(ApplicationPage.TasksSession, viewModel);
 
             // Start the break
             viewModel.PauseCommand.Execute(null);
@@ -104,7 +108,7 @@ namespace Timeinator.Mobile.Core
         private void FinishTask()
         {
             // Get current session view model
-            var viewModel = DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
+            var viewModel = mViewModelProvider.GetInjectedPageViewModel<TasksSessionPageViewModel>();
 
             // Check if there are any other tasks
             if (viewModel.SessionOver)
@@ -114,7 +118,7 @@ namespace Timeinator.Mobile.Core
             }
 
             // Go back to session page
-            DI.Application.GoToPage(ApplicationPage.TasksSession, viewModel);
+            mApplicationViewModel.GoToPage(ApplicationPage.TasksSession, viewModel);
         }
 
         #endregion

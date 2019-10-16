@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MvvmCross.ViewModels;
-using Timeinator.Mobile.Core;
+using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile
 {

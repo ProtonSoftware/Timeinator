@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.DataAccess
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// The interface for repository that handles time tasks

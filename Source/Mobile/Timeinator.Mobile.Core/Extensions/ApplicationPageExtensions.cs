@@ -1,6 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 
-namespace Timeinator.Mobile.Core
+namespace Timeinator.Mobile.Domain
 {
     /// <summary>
     /// Extensions for <see cref="ApplicationPage"/>
@@ -11,36 +11,36 @@ namespace Timeinator.Mobile.Core
         /// Returns the brand-new view model to use on specified page
         /// </summary>
         /// <param name="page">The page to get view model for</param>
-        public static MvxViewModel GetViewModel(this ApplicationPage page)
+        public static MvxViewModel GetViewModel(this ApplicationPage page, IViewModelProvider viewModelProvider)
         {
             switch (page)
             {
                 case ApplicationPage.Login:
-                    return DI.GetInjectedPageViewModel<LoginPageViewModel>();
+                    return viewModelProvider.GetInjectedPageViewModel<LoginPageViewModel>();
 
                 case ApplicationPage.About:
-                    return DI.GetInjectedPageViewModel<AboutPageViewModel>();
+                    return viewModelProvider.GetInjectedPageViewModel<AboutPageViewModel>();
 
                 case ApplicationPage.Settings:
-                    return DI.GetInjectedPageViewModel<SettingsPageViewModel>();
+                    return viewModelProvider.GetInjectedPageViewModel<SettingsPageViewModel>();
 
                 case ApplicationPage.AddNewTask:
-                    return DI.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>();
+                    return viewModelProvider.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>();
 
                 case ApplicationPage.TasksList:
-                    return DI.GetInjectedPageViewModel<TasksListPageViewModel>();
+                    return viewModelProvider.GetInjectedPageViewModel<TasksListPageViewModel>();
 
                 case ApplicationPage.TasksTime:
-                    return DI.GetInjectedPageViewModel<TasksTimePageViewModel>();
+                    return viewModelProvider.GetInjectedPageViewModel<TasksTimePageViewModel>();
 
                 case ApplicationPage.TasksSummary:
-                    return DI.GetInjectedPageViewModel<TasksSummaryPageViewModel>();
+                    return viewModelProvider.GetInjectedPageViewModel<TasksSummaryPageViewModel>();
 
                 case ApplicationPage.TasksSession:
-                    return DI.GetInjectedPageViewModel<TasksSessionPageViewModel>();
+                    return viewModelProvider.GetInjectedPageViewModel<TasksSessionPageViewModel>();
 
                 case ApplicationPage.Alarm:
-                    return DI.GetInjectedPageViewModel<AlarmPageViewModel>();
+                    return viewModelProvider.GetInjectedPageViewModel<AlarmPageViewModel>();
 
                 default:
                     // Alert developer of an issue
