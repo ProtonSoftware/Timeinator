@@ -124,7 +124,7 @@
     <value>À propos nous</value>
   </data>
   <data name="AddNewTask" xml:space="preserve">
-    <value>Ajouter nouvelle tâche</value>
+    <value>Nouvelle tâche</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>Toutes</value>
@@ -190,7 +190,7 @@
     <value>Tâche répétitive</value>
   </data>
   <data name="ImportantTask" xml:space="preserve">
-    <value>Important tâche</value>
+    <value>Tâche importante</value>
   </data>
   <data name="InvalidData" xml:space="preserve">
     <value>Données invalides</value>
@@ -331,16 +331,13 @@
     <value>Étiquettes (optionnelle, espace délimité)</value>
   </data>
   <data name="PromoAds" xml:space="preserve">
-    <value>Ads are everywhere because we are poor and we need money for fuel and food, thx.</value>
-    <comment>W trosce o wygodę użytkowania, aplikacja jest darmowa i bez ofensywnych reklam.</comment>
+    <value>L'application est gratuite et sans annonces offensives pour améliorer le confort.</value>
   </data>
   <data name="PromoContact" xml:space="preserve">
-    <value>You can text me any time amoureux. :*</value>
-    <comment>Jeśli masz jakieś pytania lub propozycje nowych funkcjonalności, zapraszamy do kontaktu, chętnie pomożemy :)</comment>
+    <value>Si vous avez des questions ou des idées d'amélioration, n'hésitez pas à nous contacter. :)</value>
   </data>
   <data name="PromoPay" xml:space="preserve">
-    <value>Gimme money bro, use this link</value>
-    <comment>Jeśli chcesz nas wspomóc, przyjmujemy dotacje PayPal pod adresem:</comment>
+    <value>Soutenez-nous via PayPal: </value>
   </data>
   <data name="SearchBarHint" xml:space="preserve">
     <value>Tapez un nom ou une étiquette</value>
