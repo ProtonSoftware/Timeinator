@@ -79,7 +79,7 @@ namespace Timeinator.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add new task.
+        ///   Looks up a localized string similar to New task.
         /// </summary>
         public static string AddNewTask {
             get {
