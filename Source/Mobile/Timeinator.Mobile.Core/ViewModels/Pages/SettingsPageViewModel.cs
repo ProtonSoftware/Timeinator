@@ -12,6 +12,7 @@ namespace Timeinator.Mobile.Domain
     {
         #region Private Members
 
+        private readonly ApplicationViewModel mApplicationViewModel;
         private readonly IUIManager mUIManager;
         private readonly ISettingsRepository mSettingsRepository;
 
@@ -110,12 +111,13 @@ namespace Timeinator.Mobile.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public SettingsPageViewModel(IUIManager uiManager, ISettingsRepository settingsRepository)
+        public SettingsPageViewModel(IUIManager uiManager, ISettingsRepository settingsRepository, ApplicationViewModel applicationViewModel)
         {
             // Create commands
             GoBackCommand = new RelayCommand(ClosePage);
 
             // Get injected DI services
+            mApplicationViewModel = applicationViewModel;
             mUIManager = uiManager;
             mSettingsRepository = settingsRepository;
 
@@ -135,8 +137,9 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         private void ClosePage()
         {
-            // Close this page
-            mUIManager.GoBackToPreviousPage(this);
+            // Go back to previous page
+            // NOTE: It's important to reload the page here so UI potentially updates with new language
+            mApplicationViewModel.GoToPage(ApplicationPage.TasksList);
         }
 
         #endregion
