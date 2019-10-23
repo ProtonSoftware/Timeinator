@@ -3,6 +3,7 @@ using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Support.V7.Widget.Helper;
 using Android.Widget;
+using EverythingMe.AndroidUI.OverScroll;
 using MvvmCross;
 using MvvmCross.Binding.Binders;
 using MvvmCross.Binding.Extensions;
@@ -117,6 +118,9 @@ namespace Timeinator.Mobile.Android
                 itemVM.OnEditRequest += (param) => viewModel.EditTaskCommand.Execute(param);
                 itemVM.OnDeleteRequest += (param) => viewModel.DeleteTaskCommand.Execute(param);
             });
+
+            // Allow overscrolling for the task list
+            OverScrollDecoratorHelper.SetUpOverScroll(recyclerView, OverScrollDecoratorHelper.OrientationVertical);
         }
 
         #region Private Helpers
