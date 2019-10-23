@@ -159,7 +159,7 @@ namespace Timeinator.Mobile.Session
         }
 
         /// <summary>
-        /// Initializes this view model state with values that are currently saved in the database
+        /// Initializes settings with values that are currently saved in the database
         /// </summary>
         private void InitializeSettings()
         {
@@ -172,7 +172,7 @@ namespace Timeinator.Mobile.Session
                 try
                 {
                     // Save its value to appropriate property
-                    this["m" + setting.Name] = Convert.ChangeType(setting.Value, setting.Type);
+                    this[setting.Name] = Convert.ChangeType(setting.Value, setting.Type);
                 }
                 // If something fails, that means the setting in database is broken
                 // Therefore, default value of a property will be used and future changes will repair database failures
