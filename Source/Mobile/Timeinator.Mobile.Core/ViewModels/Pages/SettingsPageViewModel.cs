@@ -13,7 +13,7 @@ namespace Timeinator.Mobile.Domain
         #region Private Members
 
         private readonly IUIManager mUIManager;
-        private readonly ISettingsRepository mSettingsRepository;
+        private readonly ISettingsProvider mSettingsProvider;
 
         /// <summary>
         /// The current language used in this application
@@ -22,31 +22,12 @@ namespace Timeinator.Mobile.Domain
 
         #endregion
 
-        #region Private Properties
-
-        /// <summary>
-        /// Allows to get the property of this view model by simply calling its name
-        /// </summary>
-        /// <param name="propertyName">The name of the property to get/set</param>
-        private object this[string propertyName]
-        {
-            get => GetType().GetProperty(propertyName).GetValue(this, null);
-            set => GetType().GetProperty(propertyName).SetValue(this, value, null);
-        }
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>
         /// The list of possible languages in the app
         /// </summary>
-        public ObservableCollection<string> LanguageItems { get; set; } = new ObservableCollection<string>
-        {
-            "Polski",
-            "English",
-            "Français"
-        };
+        public ObservableCollection<string> LanguageItems { get; set; } = new ObservableCollection<string>();
 
         /// <summary>
         /// The language used in this application
@@ -93,16 +74,6 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         public bool RecalculateTasksAfterBreak { get; set; } = true;
 
-        /// <summary>
-        /// The minimum amount of time in minutes that is required for every task in the session
-        /// </summary>
-        public double MinimumTaskTime { get; set; } = 0.1;
-
-        /// <summary>
-        /// The session timer tick rate in miliseconds
-        /// </summary>
-        public int TimerTickRate { get; set; } = 1000;
-
         #endregion
 
         #region Constructor
@@ -110,14 +81,14 @@ namespace Timeinator.Mobile.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public SettingsPageViewModel(IUIManager uiManager, ISettingsRepository settingsRepository)
+        public SettingsPageViewModel(IUIManager uiManager, ISettingsProvider settingsProvider)
         {
             // Create commands
             GoBackCommand = new RelayCommand(ClosePage);
 
             // Get injected DI services
             mUIManager = uiManager;
-            mSettingsRepository = settingsRepository;
+            mSettingsProvider = settingsProvider;
 
             // Load initial settings configuration from database
             InitializeSettings();
@@ -141,6 +112,20 @@ namespace Timeinator.Mobile.Domain
 
         #endregion
 
+        #region Private Properties
+
+        /// <summary>
+        /// Allows to get the property of this view model by simply calling its name
+        /// </summary>
+        /// <param name="propertyName">The name of the property to get/set</param>
+        private object this[string propertyName]
+        {
+            get => GetType().GetProperty(propertyName).GetValue(this, null);
+            set => GetType().GetProperty(propertyName).SetValue(this, value, null);
+        }
+
+        #endregion
+
         #region Private Methods
 
         /// <summary>
@@ -148,22 +133,11 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         private void InitializeSettings()
         {
-            // Get every setting from database
-            var settingList = mSettingsRepository.GetAllSettings();
-
-            // For each one...
-            foreach (var setting in settingList)
-            {
-                try
-                {
-                    // Save its value to appropriate property
-                    this[setting.Name] = Convert.ChangeType(setting.Value, setting.Type);
-                }
-                // If something fails, that means the setting in database is broken
-                // Therefore, default value of a property will be used and future changes will repair database failures
-                // So no need to do anything after catching the exception
-                catch { }
-            }
+            LanguageItems = new ObservableCollection<string>(mSettingsProvider.Languages);
+            LanguageValue = mSettingsProvider.LanguageValue;
+            IsDarkModeOn = mSettingsProvider.IsDarkModeOn;
+            HighestPrioritySetAsFirst = mSettingsProvider.HighestPrioritySetAsFirst;
+            RecalculateTasksAfterBreak = mSettingsProvider.RecalculateTasksAfterBreak;
         }
 
         /// <summary>
@@ -187,7 +161,7 @@ namespace Timeinator.Mobile.Domain
             };
 
             // Save it to the database
-            mSettingsRepository.SaveSetting(propertyInfo);
+            mSettingsProvider.SaveSetting(propertyInfo);
         }
 
         #endregion

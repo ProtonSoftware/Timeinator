@@ -15,8 +15,7 @@ namespace Timeinator.Mobile.Session
 
         private readonly ITimeTasksService mTimeTasksService;
         private readonly ITimeTasksCalculator mTimeTasksCalculator;
-        // TODO: God PLEASE NO! GOD!!!
-        private readonly SettingsPageViewModel mSettingsPageViewModel;
+        private readonly ISettingsProvider mSettingsProvider;
 
         /// <summary>
         /// The amount of time for every timer tick
@@ -79,13 +78,13 @@ namespace Timeinator.Mobile.Session
         /// <summary>
         /// Default constructor
         /// </summary>
-        public SessionHandler(ITimeTasksService timeTasksService, ITimeTasksCalculator timeTasksCalculator, SettingsPageViewModel settingsPageViewModel)
+        public SessionHandler(ITimeTasksService timeTasksService, ITimeTasksCalculator timeTasksCalculator, ISettingsProvider settingsProvider)
         {
             mTimeTasksService = timeTasksService;
             mTimeTasksCalculator = timeTasksCalculator;
-            mSettingsPageViewModel = settingsPageViewModel;
+            mSettingsProvider = settingsProvider;
 
-            mOneTick = TimeSpan.FromSeconds(mSettingsPageViewModel.TimerTickRate / 1000);
+            mOneTick = TimeSpan.FromSeconds(mSettingsProvider.TimerTickRate / 1000);
 
             Reset();
         }
@@ -362,7 +361,7 @@ namespace Timeinator.Mobile.Session
                 mSecondsTicker.Dispose();
 
             // Timer ticks every second
-            mSecondsTicker = new Timer(mSettingsPageViewModel.TimerTickRate);
+            mSecondsTicker = new Timer(mSettingsProvider.TimerTickRate);
 
             // Run our elapsed function every time timer ticks
             mSecondsTicker.Elapsed += SecondsTicker_Elapsed;
@@ -397,7 +396,7 @@ namespace Timeinator.Mobile.Session
         private void RecalculateTasksAfterBreak()
         {
             // Do work only if enabled in settings
-            if (!mSettingsPageViewModel.RecalculateTasksAfterBreak)
+            if (!mSettingsProvider.RecalculateTasksAfterBreak)
                 return;
 
             // If nothing to calculate then exit
