@@ -143,7 +143,7 @@ namespace Timeinator.Mobile.Android
             // Prepare new intent for task service instance
             var intent = new Intent(Application.Context, typeof(TaskService));
             intent.SetAction(action).AddFlags(ActivityFlags.FromBackground);
-            var pendingIntent = PendingIntent.GetService(taskService, id, intent, PendingIntentFlags.Immutable);
+            var pendingIntent = PendingIntent.GetService(taskService, id, intent, PendingIntentFlags.UpdateCurrent);
 
             // Add button action to the notification
             mNotificationBuilder.AddAction(Resource.Drawable.logo, title, pendingIntent);
