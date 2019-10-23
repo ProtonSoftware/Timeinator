@@ -44,7 +44,7 @@ namespace Timeinator.Mobile.Domain
                 switch (LanguageItems.IndexOf(mLanguageValue))
                 {
                     case 1:
-                        mUIManager.ChangeLanguage("en-US");
+                        mUIManager.ChangeLanguage("pl-PL");
                         break;
 
                     case 2:
@@ -53,7 +53,7 @@ namespace Timeinator.Mobile.Domain
 
                     // 0 or any not recognized index is default - Polish language
                     default:
-                        mUIManager.ChangeLanguage("pl-PL");
+                        mUIManager.ChangeLanguage("en-US");
                         break;
                 }
             }
@@ -161,7 +161,7 @@ namespace Timeinator.Mobile.Domain
             };
 
             // Save it to the database
-            mSettingsProvider.SaveSetting(propertyInfo);
+            mSettingsProvider.SetSetting(propertyInfo);
         }
 
         #endregion

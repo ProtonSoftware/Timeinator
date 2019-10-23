@@ -10,9 +10,9 @@ namespace Timeinator.Mobile.Domain
     {
         #region Config
 
-        bool SessionWasFinishTime { get; }
-        int TimerTickRate { get; }
-        double MinimumTaskTime { get; }
+        bool SessionWasFinishTime { get; set; }
+        int TimerTickRate { get; set; }
+        double MinimumTaskTime { get; set; }
 
         #endregion
 
@@ -22,6 +22,6 @@ namespace Timeinator.Mobile.Domain
         bool HighestPrioritySetAsFirst { get; set; }
         bool RecalculateTasksAfterBreak { get; set; }
 
-        void SaveSetting(SettingsPropertyInfo setting);
+        void SetSetting(SettingsPropertyInfo setting);
     }
 }

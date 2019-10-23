@@ -13,6 +13,7 @@ namespace Timeinator.Mobile.Domain
     {
         #region Private Members
 
+        private readonly ISettingsProvider mSettingsProvider;
         private readonly ISessionHandler mSessionHandler;
         private readonly IUIManager mUIManager;
         private readonly ApplicationViewModel mApplicationViewModel;
@@ -52,16 +53,20 @@ namespace Timeinator.Mobile.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TasksTimePageViewModel(ISessionHandler sessionHandler, IUIManager uiManager, ApplicationViewModel applicationViewModel)
+        public TasksTimePageViewModel(ISettingsProvider settingsProvider, ISessionHandler sessionHandler, IUIManager uiManager, ApplicationViewModel applicationViewModel)
         {
             // Create commands
             CalculateSessionCommand = new RelayCommand(async () => await CalculateSessionAsync());
             CancelCommand = new RelayCommand(Cancel);
 
             // Get injected DI services
+            mSettingsProvider = settingsProvider;
             mSessionHandler = sessionHandler;
             mUIManager = uiManager;
             mApplicationViewModel = applicationViewModel;
+
+            // Read mode from settings
+            FinishMode = mSettingsProvider.SessionWasFinishTime;
         }
 
         #endregion
@@ -74,6 +79,9 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         private async Task CalculateSessionAsync()
         {
+            // Save used mode
+            mSettingsProvider.SessionWasFinishTime = FinishMode;
+
             var time = UserTime;
             // Alternative mode
             if (FinishMode)
