@@ -28,7 +28,7 @@ namespace Timeinator.Mobile.Android
             var modecheckbox = FindViewById<CheckBox>(Resource.Id.finishTimeMode);
 
             // Listen for mode changed
-            modecheckbox.Click += Modecheckbox_Click;
+            modecheckbox.CheckedChange += Modecheckbox_Click;
 
             // Find the timepicker on this page
             var timepicker = FindViewById<TimePicker>(Resource.Id.pickerSession);
