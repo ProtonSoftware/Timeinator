@@ -346,7 +346,7 @@
     <value>Timeinator Sesja</value>
   </data>
   <data name="ModeFinishTime" xml:space="preserve">
-    <value>Użyj jako czasu zakończenia</value>
+    <value>Użyj jako godzinę zakończenia</value>
   </data>
   <data name="ReadingPagesDescription" xml:space="preserve">
     <value>Ilość stron</value>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:local="http://schemas.android.com/apk/res-auto"
@@ -12,7 +12,7 @@
 		android:textAlignment="center"
 		android:textSize="@dimen/abc_text_size_display_1_material"
 		android:textColor="@color/colorBlack"
-        local:MvxBind='Text String("PickSessionTime")'
+        local:MvxBind='Text String("PickSessionTime")"
 		android:text="Wybierz czas trwania sesji" />
     <TimePicker
         android:id="@+id/pickerSession"
@@ -22,7 +22,7 @@
         android:layout_height="match_parent"/>
     <CheckBox
         android:text="Use as finish time"
-        local:MvxBind='Text String("ModeFinishTime");Checked FinishMode'
+        local:MvxBind='Text String("ModeFinishTime");Checked FinishMode"
         android:id="@+id/finishTimeMode"
         android:layout_below="@id/pickerSession"
         android:layout_marginHorizontal="@dimen/notification_big_circle_margin"
@@ -45,7 +45,7 @@
             android:layout_marginRight="4dp"
             android:text="Oblicz sesję"
             style="@style/AccentButton"
-            local:MvxBind='Text String("CalcSession");Click CalculateSessionCommand'/>
+            local:MvxBind='Text String("CalcSession");Click CalculateSessionCommand"/>
 
         <Button
             android:layout_width="0dp"
