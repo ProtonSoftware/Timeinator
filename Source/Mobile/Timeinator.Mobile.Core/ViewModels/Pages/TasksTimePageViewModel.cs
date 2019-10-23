@@ -67,6 +67,7 @@ namespace Timeinator.Mobile.Domain
 
             // Read mode from settings
             FinishMode = mSettingsProvider.SessionWasFinishTime;
+            RaisePropertyChanged(nameof(FinishMode)); // TODO: FIX ME
         }
 
         #endregion
