@@ -111,15 +111,33 @@
     android:textSize = "12sp"
     android:fontFamily="sans-serif"/>
 
-<TextView
-    android:layout_width = "match_parent"
+<LinearLayout
+    android:id = "@+id/taskIcons"
+    android:layout_width = "wrap_content"
     android:layout_height = "24dp"
     android:layout_alignParentBottom = "true"
     android:layout_alignParentEnd = "true"
-    android:textAlignment="textEnd"
     android:layout_marginBottom = "16dp"
     android:layout_marginLeft = "16dp"
     android:layout_marginRight = "16dp"
-    local:MvxBind="Text PriorityEnumToText(Priority)" />
+    android:maxLines = "1"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "match_parent"
+        android:layout_weight="1"
+        android:textAlignment="textEnd"
+        local:MvxBind="Text PriorityEnumToText(Priority)" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@drawable/ic_assignment_late_black_24dp"
+        android:tint="@color/colorPrimary"
+        local:MvxBind="Visible IsImportant" />
+
+</LinearLayout>
 
 </RelativeLayout>
