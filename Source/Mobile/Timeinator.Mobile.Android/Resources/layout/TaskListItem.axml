@@ -128,7 +128,15 @@
         android:layout_height = "match_parent"
         android:layout_weight="1"
         android:textAlignment="textEnd"
-        local:MvxBind="Text PriorityEnumToText(Priority)" />
+        local:MvxBind="Text PriorityEnumToIcon(Priority)" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@drawable/icon_type_generic"
+        android:tint="@color/colorPrimary"
+        local:MvxBind="Visible IsImportant" />
 
     <ImageView
         android:layout_width="wrap_content"
