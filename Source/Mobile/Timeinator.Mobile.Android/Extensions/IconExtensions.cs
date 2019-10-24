@@ -29,10 +29,19 @@ namespace Timeinator.Mobile.Android
             switch (taskType)
             {
                 case Priority.One:
-                    return Resource.Drawable.icon_type_generic;
+                    return Resource.Drawable.icon_priority_one;
 
                 case Priority.Two:
-                    return Resource.Drawable.icon_type_reading;
+                    return Resource.Drawable.icon_priority_two;
+
+                case Priority.Three:
+                    return Resource.Drawable.icon_priority_three;
+
+                case Priority.Four:
+                    return Resource.Drawable.icon_priority_four;
+
+                case Priority.Five:
+                    return Resource.Drawable.icon_priority_five;
 
                 default:
                     return -1;
