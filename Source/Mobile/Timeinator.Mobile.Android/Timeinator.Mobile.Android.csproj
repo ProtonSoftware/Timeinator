@@ -165,7 +165,11 @@
     <Compile Include="Helpers\MvxViewPagerFragmentAdapter.cs" />
     <Compile Include="Services\RingtonePlayer.cs" />
     <Compile Include="Services\ViewModelProvider.cs" />
-    <Compile Include="ValueConverters\PriorityEnumToIconsValueConverter.cs" />
+    <Compile Include="ValueConverters\PausedBoolToVisibilityValueConverter.cs" />
+    <Compile Include="ValueConverters\PriorityEnumToIconValueConverter.cs" />
+    <Compile Include="ValueConverters\ProgressValueConverter.cs" />
+    <Compile Include="ValueConverters\StringValueConverter.cs" />
+    <Compile Include="ValueConverters\TimeSpanToTextValueConverter.cs" />
     <Compile Include="ValueConverters\TimeTaskTypeToIconValueConverter.cs" />
     <Compile Include="Views\AlarmPage.cs" />
     <Compile Include="Helpers\MovementRecyclerViewItemCallback.cs" />
