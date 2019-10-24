@@ -325,7 +325,7 @@
     <value>Opis (opcjonalny)</value>
   </data>
   <data name="LastUpdateValue" xml:space="preserve">
-    <value>Piździernik 2019</value>
+    <value>Listopad 2019</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Tagi (opcjonalne, rozdzielane spacją)</value>
@@ -346,7 +346,7 @@
     <value>Timeinator Sesja</value>
   </data>
   <data name="ModeFinishTime" xml:space="preserve">
-    <value>Użyj jako czasu zakończenia</value>
+    <value>Użyj jako godzinę zakończenia</value>
   </data>
   <data name="ReadingPagesDescription" xml:space="preserve">
     <value>Ilość stron</value>
