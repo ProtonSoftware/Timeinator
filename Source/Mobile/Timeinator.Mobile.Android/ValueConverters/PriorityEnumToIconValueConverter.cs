@@ -12,9 +12,11 @@ namespace Timeinator.Mobile.Android
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // Get the actual priority value
             var priority = (Priority)value;
 
-            return $"P: {(int)priority}";
+            // Return it as icon
+            return priority.ToIcon();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
