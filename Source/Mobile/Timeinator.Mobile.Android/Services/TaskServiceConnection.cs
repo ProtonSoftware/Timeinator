@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using Android.App;
+using Android.Content;
 using Android.OS;
 using System;
 using Timeinator.Mobile.Domain;
@@ -142,7 +143,11 @@ namespace Timeinator.Mobile.Android
         {
             if (!IsConnected)
                 return;
-            Binder.Service.StopSelf();
+            // Create intent with stop action
+            var intent = new Intent(Application.Context, typeof(TaskService));
+            intent.SetAction(IntentActions.ACTION_STOP);
+            // Send intent to service
+            Application.Context.StartService(intent);
             IsConnected = false;
         }
     }
