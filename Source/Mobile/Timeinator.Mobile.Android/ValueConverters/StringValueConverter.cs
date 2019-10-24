@@ -1,20 +1,20 @@
 ﻿using MvvmCross.Converters;
 using System;
 using System.Globalization;
+using System.Resources;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Domain
+namespace Timeinator.Mobile.Android
 {
     /// <summary>
-    /// The value converter for task's priority to show it as text instead of enum name
+    /// Converts specified property name to corresponding string value from localization resource
     /// </summary>
-    public class PriorityEnumToTextValueConverter : IMvxValueConverter
+    public class StringValueConverter : IMvxValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var priority = (Priority)value;
-
-            return $"P: {(int)priority}";
+            var resourceManager = new ResourceManager(typeof(LocalizationResource));
+            return resourceManager.GetString(value.ToString());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
