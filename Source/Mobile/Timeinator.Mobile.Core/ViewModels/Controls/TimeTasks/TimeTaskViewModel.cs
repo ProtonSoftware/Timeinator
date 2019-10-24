@@ -47,6 +47,11 @@ namespace Timeinator.Mobile.Domain
         public string Name { get; set; }
 
         /// <summary>
+        /// The type of this task
+        /// </summary>
+        public TimeTaskType Type { get; set; }
+
+        /// <summary>
         /// The priority of this task
         /// </summary>
         public Priority Priority { get; set; }

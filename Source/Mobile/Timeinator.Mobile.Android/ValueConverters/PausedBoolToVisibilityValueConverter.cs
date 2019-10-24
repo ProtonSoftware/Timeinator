@@ -1,20 +1,20 @@
 ﻿using MvvmCross.Converters;
 using System;
 using System.Globalization;
-using System.Resources;
-using Timeinator.Core;
 
-namespace Timeinator.Mobile.Domain
+namespace Timeinator.Mobile.Android
 {
     /// <summary>
-    /// Converts specified property name to corresponding string value from localization resource
+    /// Converts Paused session status to visibility
     /// </summary>
-    public class StringValueConverter : IMvxValueConverter
+    public class PausedBoolToVisibilityValueConverter : IMvxValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var resourceManager = new ResourceManager(typeof(LocalizationResource));
-            return resourceManager.GetString(value.ToString());
+            var status = (bool)value;
+            if (parameter != null)
+                status = !status;
+            return status ? "invisible" : "visible";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

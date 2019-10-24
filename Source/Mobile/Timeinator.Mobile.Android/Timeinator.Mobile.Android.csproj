@@ -165,6 +165,12 @@
     <Compile Include="Helpers\MvxViewPagerFragmentAdapter.cs" />
     <Compile Include="Services\RingtonePlayer.cs" />
     <Compile Include="Services\ViewModelProvider.cs" />
+    <Compile Include="ValueConverters\PausedBoolToVisibilityValueConverter.cs" />
+    <Compile Include="ValueConverters\PriorityEnumToIconValueConverter.cs" />
+    <Compile Include="ValueConverters\ProgressValueConverter.cs" />
+    <Compile Include="ValueConverters\StringValueConverter.cs" />
+    <Compile Include="ValueConverters\TimeSpanToTextValueConverter.cs" />
+    <Compile Include="ValueConverters\TimeTaskTypeToIconValueConverter.cs" />
     <Compile Include="Views\AlarmPage.cs" />
     <Compile Include="Helpers\MovementRecyclerViewItemCallback.cs" />
     <Compile Include="Helpers\SwipeRecyclerViewItemCallback.cs" />
@@ -606,6 +612,36 @@
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_grade_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_grade_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_grade_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_grade_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_grade_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_new_releases_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_new_releases_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_new_releases_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_new_releases_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_new_releases_black_24dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="TiSigning.targets" Condition="'$(Configuration)' == 'Release' and exists('TiSigning.targets')" />

@@ -48,6 +48,9 @@ namespace Timeinator.Mobile.Android
             // Migrate the database
             DI.MigrateDatabase();
 
+            // Create settings provider instance to load every setting initially
+            DI.Container.GetInstance<ISettingsProvider>();
+
             // For now the application doesn't have login features, so simply go to the next page
             DI.Application.GoToPage(ApplicationPage.TasksList);
         }

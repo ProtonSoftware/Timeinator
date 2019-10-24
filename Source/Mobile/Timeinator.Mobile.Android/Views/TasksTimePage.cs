@@ -25,18 +25,17 @@ namespace Timeinator.Mobile.Android
             base.OnStop();
 
             // Find checkbox setting time picker mode
-            var modecheckbox = FindViewById<CheckBox>(Resource.Id.finishTimeMode);
-
-            // Listen for mode changed
-            modecheckbox.CheckedChange += Modecheckbox_Click;
+            var finishModeCheckBox = FindViewById<CheckBox>(Resource.Id.finishTimeMode);
 
             // Find the timepicker on this page
             var timepicker = FindViewById<TimePicker>(Resource.Id.pickerSession);
 
             // Set default values (otherwise it would be current user time, which we don't want)
-            timepicker.Hour = 0;
-            timepicker.Minute = 0;
             timepicker.SetIs24HourView(new Java.Lang.Boolean(true));
+
+            // Listen for mode changed
+            finishModeCheckBox.CheckedChange += CheckBox_CheckedChanged;
+            CheckBox_CheckedChanged(finishModeCheckBox, null);
 
             // Listen out for time changes
             timepicker.TimeChanged += Timepicker_TimeChanged;
@@ -45,15 +44,15 @@ namespace Timeinator.Mobile.Android
         /// <summary>
         /// Fired when mode for time picker has been changed
         /// </summary>
-        private void Modecheckbox_Click(object sender, EventArgs e)
+        private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            // Get checkbox
-            var modecheckbox = sender as CheckBox;
+            // Get finished mode value
+            var isFinishMode = (BindingContext.DataContext as TasksTimePageViewModel).FinishMode;
 
             // Get timepicker
             var timepicker = FindViewById<TimePicker>(Resource.Id.pickerSession);
 
-            if (modecheckbox.Checked)
+            if (isFinishMode)
             {
                 // Set time to Now
                 timepicker.Hour = DateTime.Now.Hour;
