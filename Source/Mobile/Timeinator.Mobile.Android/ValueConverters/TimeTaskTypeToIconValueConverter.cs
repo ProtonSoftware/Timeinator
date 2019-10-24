@@ -12,19 +12,11 @@ namespace Timeinator.Mobile.Android
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // Get the actual task type
             var type = (TimeTaskType)value;
 
-            switch(type)
-            {
-                case TimeTaskType.Generic:
-                    return Resource.Drawable.icon_type_generic;
-
-                case TimeTaskType.Reading:
-                    return Resource.Drawable.icon_type_reading;
-
-                default:
-                    return null;
-            }
+            // Return it as icon
+            return type.ToIcon();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
