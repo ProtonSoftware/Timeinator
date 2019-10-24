@@ -47,7 +47,7 @@ namespace Timeinator.Mobile.Android
                 .SetOnlyAlertOnce(true)
                 .SetOngoing(true)
                 .SetContentIntent(pendingIntent)
-                .SetSmallIcon(Resource.Drawable.logo)
+                .SetSmallIcon(Resource.Drawable.transparent)
                 .SetTicker(LocalizationResource.TimeinatorSessionTitle);
         }
 
