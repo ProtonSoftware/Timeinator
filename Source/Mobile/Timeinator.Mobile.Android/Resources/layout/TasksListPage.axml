@@ -31,11 +31,12 @@
         android:background="@color/colorAccent"
         android:src="@drawable/ic_add_black_18dp"
         local:MvxBind="Click AddNewTaskCommand" />
-    <SearchView
+    <android.support.v7.widget.SearchView
         android:id="@+id/searchBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:iconifiedByDefault="false"
+        local:iconifiedByDefault="false"
         android:focusedByDefault="false"
         local:MvxBind='Query SearchText; QueryHint String("SearchBarHint")'
         android:layout_below="@id/title" />

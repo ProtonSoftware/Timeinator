@@ -3,6 +3,7 @@ using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Support.V7.Widget.Helper;
 using Android.Widget;
+using EverythingMe.AndroidUI.OverScroll;
 using MvvmCross;
 using MvvmCross.Binding.Binders;
 using MvvmCross.Binding.Extensions;
@@ -12,7 +13,6 @@ using MvvmCross.Platforms.Android.Presenters.Attributes;
 using System.Linq;
 using Timeinator.Core;
 using Timeinator.Mobile.Domain;
-using static Android.Widget.TextView;
 
 namespace Timeinator.Mobile.Android
 {
@@ -49,12 +49,12 @@ namespace Timeinator.Mobile.Android
                 // Don't do any operations to avoid multiple bindings
                 return;
 
-            textViewSettings.SetText(LocalizationResource.Settings, BufferType.Normal);
+            textViewSettings.SetText(LocalizationResource.Settings, TextView.BufferType.Normal);
             var imageViewSettings = settingsIcon.FindViewById<ImageView>(Resource.Id.icon);
             imageViewSettings.SetImageResource(Resource.Drawable.ic_settings_black_24dp);
 
             var textViewAbout = aboutIcon.FindViewById<TextView>(Resource.Id.smallLabel);
-            textViewAbout.SetText(LocalizationResource.AboutUs, BufferType.Normal);
+            textViewAbout.SetText(LocalizationResource.AboutUs, TextView.BufferType.Normal);
             var imageViewAbout = aboutIcon.FindViewById<ImageView>(Resource.Id.icon);
             imageViewAbout.SetImageResource(Resource.Drawable.ic_info_black_24dp);
 
@@ -117,6 +117,9 @@ namespace Timeinator.Mobile.Android
                 itemVM.OnEditRequest += (param) => viewModel.EditTaskCommand.Execute(param);
                 itemVM.OnDeleteRequest += (param) => viewModel.DeleteTaskCommand.Execute(param);
             });
+
+            // Allow overscrolling for the task list
+            OverScrollDecoratorHelper.SetUpOverScroll(recyclerView, OverScrollDecoratorHelper.OrientationVertical);
         }
 
         #region Private Helpers

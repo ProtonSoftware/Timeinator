@@ -115,7 +115,7 @@
             style="@style/TextMainBlack"
             android:layout_marginVertical="12dp"
             android:textAlignment="center"
-            android:text="timeinator@gmail.com" />
+            android:text="contact@protonsoftware.net" />
 
         <TextView
             android:layout_width="wrap_content"
