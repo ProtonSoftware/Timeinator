@@ -123,20 +123,20 @@
     android:maxLines = "1"
     android:orientation="horizontal">
 
-    <TextView
-        android:layout_width = "wrap_content"
-        android:layout_height = "match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:textAlignment="textEnd"
-        local:MvxBind="Text PriorityEnumToIcon(Priority)" />
+        android:layout_marginHorizontal="4dp"
+        android:src="@drawable/icon_type_generic"
+        local:MvxBind="DrawableName TimeTaskTypeToIcon(Type)" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:src="@drawable/icon_type_generic"
-        android:tint="@color/colorPrimary"
-        local:MvxBind="Visible IsImportant" />
+        local:MvxBind="DrawableName PriorityEnumToIcon(Priority)" />
 
     <ImageView
         android:layout_width="wrap_content"
