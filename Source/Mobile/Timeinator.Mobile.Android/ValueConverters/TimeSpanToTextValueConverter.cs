@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using Timeinator.Core;
 
-namespace Timeinator.Mobile.Domain
+namespace Timeinator.Mobile.Android
 {
     /// <summary>
     /// The value converter for <see cref="TimeSpan"/> to show as human-friendly text
