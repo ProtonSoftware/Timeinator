@@ -11876,37 +11876,37 @@ namespace Timeinator.Mobile.Android
 			public const int ic_arrow_back_black_18dp = 2131165286;
 			
 			// aapt resource value: 0x7F070067
-			public const int ic_assignment_late_black_24dp = 2131165287;
+			public const int ic_content_paste_24dp = 2131165287;
 			
 			// aapt resource value: 0x7F070068
-			public const int ic_content_paste_24dp = 2131165288;
+			public const int ic_delete_white_24dp = 2131165288;
 			
 			// aapt resource value: 0x7F070069
-			public const int ic_delete_white_24dp = 2131165289;
+			public const int ic_edit_white_24dp = 2131165289;
 			
 			// aapt resource value: 0x7F07006A
-			public const int ic_edit_white_24dp = 2131165290;
+			public const int ic_errorstatus = 2131165290;
 			
 			// aapt resource value: 0x7F07006B
-			public const int ic_errorstatus = 2131165291;
+			public const int ic_grade_black_24dp = 2131165291;
 			
 			// aapt resource value: 0x7F07006C
-			public const int ic_grade_black_24dp = 2131165292;
+			public const int ic_info_black_24dp = 2131165292;
 			
 			// aapt resource value: 0x7F07006D
-			public const int ic_info_black_24dp = 2131165293;
+			public const int ic_library_books_black_24dp = 2131165293;
 			
 			// aapt resource value: 0x7F07006E
-			public const int ic_library_books_black_24dp = 2131165294;
+			public const int ic_mtrl_chip_checked_black = 2131165294;
 			
 			// aapt resource value: 0x7F07006F
-			public const int ic_mtrl_chip_checked_black = 2131165295;
+			public const int ic_mtrl_chip_checked_circle = 2131165295;
 			
 			// aapt resource value: 0x7F070070
-			public const int ic_mtrl_chip_checked_circle = 2131165296;
+			public const int ic_mtrl_chip_close_circle = 2131165296;
 			
 			// aapt resource value: 0x7F070071
-			public const int ic_mtrl_chip_close_circle = 2131165297;
+			public const int ic_new_releases_black_24dp = 2131165297;
 			
 			// aapt resource value: 0x7F070072
 			public const int ic_pause_black_24dp = 2131165298;
