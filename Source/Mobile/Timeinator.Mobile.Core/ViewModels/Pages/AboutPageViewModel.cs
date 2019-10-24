@@ -63,7 +63,7 @@ namespace Timeinator.Mobile.Domain
         private void InitializeAppData()
         {
             var currentAssembly = typeof(App).Assembly.GetName();
-            VersionNumber = currentAssembly.Version.ToString();
+            VersionNumber = currentAssembly.Version.ToString(3);
         }
 
         #endregion

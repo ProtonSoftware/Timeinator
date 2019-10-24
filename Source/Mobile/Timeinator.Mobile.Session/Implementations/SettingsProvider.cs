@@ -14,6 +14,7 @@ namespace Timeinator.Mobile.Session
 
         private readonly ISettingsRepository mSettingsRepository;
 
+        // Defaults
         private bool mSessionWasFinishTime = true;
         private int mTimerTickRate = 1000;
         private double mMinimumTaskTime = 0.1;

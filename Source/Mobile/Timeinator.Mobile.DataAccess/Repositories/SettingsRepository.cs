@@ -84,6 +84,10 @@ namespace Timeinator.Mobile.DataAccess
                 DbSet.Add(entity);
             }
 
+            // Do nothing if Value already set
+            if (entity.Value == setting.Value.ToString())
+                return;
+
             // Change its value
             entity.Value = setting.Value.ToString();
 
