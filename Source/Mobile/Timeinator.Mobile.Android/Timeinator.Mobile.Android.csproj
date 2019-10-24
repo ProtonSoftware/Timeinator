@@ -159,6 +159,7 @@
   <ItemGroup>
     <Compile Include="DI\Configuration\ContainerExtensions.cs" />
     <Compile Include="DI\DI.cs" />
+    <Compile Include="Extensions\IconExtensions.cs" />
     <Compile Include="Helpers\MvxFragmentInfo.cs" />
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Services\AndroidNotificationManager.cs" />

@@ -7,7 +7,6 @@ using MvvmCross.Platforms.Android.Presenters.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Timeinator.Core;
 using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
@@ -30,20 +29,8 @@ namespace Timeinator.Mobile.Android
             // TODO: Make some configuration file to take info like that from one source
             var fragments = new List<MvxFragmentInfo>
             {
-                new MvxFragmentInfo
-                {
-                    Title = TimeTaskType.Generic.ToString(),
-                    IconResourceId = Resource.Drawable.icon_type_generic,
-                    FragmentType = typeof(AddNewTimeTaskFragment),
-                    ViewModel = viewModel
-                },
-                new MvxFragmentInfo
-                {
-                    Title = TimeTaskType.Reading.ToString(),
-                    IconResourceId = Resource.Drawable.icon_type_reading,
-                    FragmentType = typeof(AddNewTimeTaskFragment),
-                    ViewModel = viewModel
-                }
+                new MvxFragmentInfo(TimeTaskType.Generic, viewModel),
+                new MvxFragmentInfo(TimeTaskType.Reading, viewModel)
             };
 
             // Get the view pager from this page
