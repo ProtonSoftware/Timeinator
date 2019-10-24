@@ -13,15 +13,15 @@ namespace Timeinator.Mobile.Session
         #region Private members
 
         // TODO: Get rid of this ugly VM
-        private readonly SettingsPageViewModel mSettingsPageViewModel;
+        private readonly ISettingsProvider mSettingsProvider;
 
         #endregion
 
         #region Constructor
 
-        public TimeTasksCalculator(SettingsPageViewModel settingsPageViewModel)
+        public TimeTasksCalculator(ISettingsProvider settingsProvider)
         {
-            mSettingsPageViewModel = settingsPageViewModel;
+            mSettingsProvider = settingsProvider;
         }
 
         #endregion
@@ -39,7 +39,7 @@ namespace Timeinator.Mobile.Session
             var taskConstantTime = contexts.GetConstant().SumTimes();
 
             // Calculate time for remaining tasks
-            var taskPrioritiesTime = TimeSpan.FromMinutes(contexts.GetConstant(true).SumPriorities() * mSettingsPageViewModel.MinimumTaskTime);
+            var taskPrioritiesTime = TimeSpan.FromMinutes(contexts.GetConstant(true).SumPriorities() * mSettingsProvider.MinimumTaskTime);
 
             // Sum the times and return
             return taskConstantTime + taskPrioritiesTime;
@@ -57,7 +57,7 @@ namespace Timeinator.Mobile.Session
             var calculatedTasks = CalculateAssignedTimes(contexts, sessionTime);
 
             // Return them in order
-            if (mSettingsPageViewModel.HighestPrioritySetAsFirst)
+            if (mSettingsProvider.HighestPrioritySetAsFirst)
                 return calculatedTasks.OrderBy(x => x.Priority).ToList();
             else
                 return calculatedTasks;
@@ -97,7 +97,7 @@ namespace Timeinator.Mobile.Session
                 var newTime = Fit(task, remainingTime, sumOfPriorities);
 
                 // Skip tasks that would be too short after substraction, we still want to keep minimum time requirement for them 
-                var minTaskTime = TimeSpan.FromMinutes(mSettingsPageViewModel.MinimumTaskTime);
+                var minTaskTime = TimeSpan.FromMinutes(mSettingsProvider.MinimumTaskTime);
                 if (newTime < minTaskTime)
                     newTime = minTaskTime;
                 

@@ -18,7 +18,6 @@ namespace Timeinator.Mobile.Android
         {
             // Bind to a single instance of specified models
             container.Register<ApplicationViewModel>(Lifestyle.Singleton);
-            container.Register<SettingsPageViewModel>(Lifestyle.Singleton);
             container.Register<TimeTasksMapper>(Lifestyle.Singleton);
             container.Register<ITimeTasksRepository, TimeTasksRepository>(Lifestyle.Singleton);
             container.Register<ISettingsRepository, SettingsRepository>(Lifestyle.Singleton);
@@ -26,11 +25,13 @@ namespace Timeinator.Mobile.Android
             container.Register<ITimeTasksCalculator, TimeTasksCalculator>(Lifestyle.Singleton);
             container.Register<ISessionHandler, SessionHandler>(Lifestyle.Singleton);
             container.Register<IViewModelProvider, ViewModelProvider>(Lifestyle.Singleton);
+            container.Register<ISettingsProvider, SettingsProvider>(Lifestyle.Singleton);
 
             // Inject dependiencies into every page's view model
             container.Register<TasksListPageViewModel>(Lifestyle.Transient);
             container.Register<TasksTimePageViewModel>(Lifestyle.Transient);
             container.Register<TasksSummaryPageViewModel>(Lifestyle.Transient);
+            container.Register<SettingsPageViewModel>(Lifestyle.Transient);
             container.Register<AlarmPageViewModel>(Lifestyle.Transient);
             container.Register<LoginPageViewModel>(Lifestyle.Transient);
             container.Register<AboutPageViewModel>(Lifestyle.Transient);

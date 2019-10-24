@@ -38,13 +38,18 @@ namespace Timeinator.Mobile.Android
 
         public IBinder Binder { get; private set; }
 
+        public override void OnCreate()
+        {
+            base.OnCreate();
+            mNotificationManager.CreateNotificationChannel(ChannelId);
+            StartForeground(NotificationId, GetNotification());
+        }
+
         [return: GeneratedEnum]
         public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
         {
-            mNotificationManager.CreateNotificationChannel(ChannelId);
-            StartForeground(NotificationId, GetNotification());
             HandleMessage(intent);
-            return StartCommandResult.Sticky;
+            return StartCommandResult.NotSticky;
         }
 
         public override IBinder OnBind(Intent intent)
@@ -54,15 +59,6 @@ namespace Timeinator.Mobile.Android
             RequestHandler = (a) => { };
             Binder = new TaskServiceBinder(this);
             return Binder;
-        }
-
-        public new void StopSelf()
-        {
-            // Kill the notification
-            StopForeground(true);
-
-            // Do base service stopping stuff
-            base.StopSelf();
         }
 
         #endregion
@@ -103,6 +99,8 @@ namespace Timeinator.Mobile.Android
 
                 case IntentActions.ACTION_STOP:
                     {
+                        // Kill the notification
+                        StopForeground(true);
                         StopSelf();
                         return;
                     }
