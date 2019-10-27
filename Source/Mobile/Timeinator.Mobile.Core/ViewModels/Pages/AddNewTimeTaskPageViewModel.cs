@@ -69,7 +69,7 @@ namespace Timeinator.Mobile.Domain
         /// The maximum reachable progress of the task
         /// In some task types it is set automatically, in other ones its defined by user
         /// </summary>
-        public int TaskMaximumProgress { get; set; }
+        public double TaskMaximumProgress { get; set; }
 
         /// <summary>
         /// The id of a task, only set if we are editing existing one

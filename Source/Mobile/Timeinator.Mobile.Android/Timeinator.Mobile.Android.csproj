@@ -168,6 +168,7 @@
     <Compile Include="Services\ViewModelProvider.cs" />
     <Compile Include="ValueConverters\PausedBoolToVisibilityValueConverter.cs" />
     <Compile Include="ValueConverters\PriorityEnumToIconValueConverter.cs" />
+    <Compile Include="ValueConverters\ProgressFractionValueConverter.cs" />
     <Compile Include="ValueConverters\ProgressValueConverter.cs" />
     <Compile Include="ValueConverters\StringValueConverter.cs" />
     <Compile Include="ValueConverters\TimeSpanToTextValueConverter.cs" />
