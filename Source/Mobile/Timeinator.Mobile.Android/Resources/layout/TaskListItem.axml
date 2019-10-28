@@ -126,7 +126,7 @@
             android:layout_marginVertical="6dp"
             android:textColor = "@color/colorBlack"
             android:textSize = "16sp"
-            local:MvxBind="Text ProgressFraction(Progress, MaxProgress)"
+            local:MvxBind="Text ProgressFraction(Progress, MaxProgress); Visible ShouldShowProgress"
             android:layout_below="@id/assignedTime" />
 
         <LinearLayout

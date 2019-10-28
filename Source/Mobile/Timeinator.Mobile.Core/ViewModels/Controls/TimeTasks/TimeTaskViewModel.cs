@@ -20,6 +20,11 @@ namespace Timeinator.Mobile.Domain
         public double Progress { get; set; }
 
         /// <summary>
+        /// Max progress of the task
+        /// </summary>
+        public double MaxProgress { get; set; }
+
+        /// <summary>
         /// Stores static time assigned to the task
         /// </summary>
         public TimeSpan AssignedTime { get; set; }

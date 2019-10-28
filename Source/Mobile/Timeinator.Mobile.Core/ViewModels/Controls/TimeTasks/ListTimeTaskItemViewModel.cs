@@ -26,6 +26,11 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         public bool IsContextMenuVisible { get; set; }
 
+        /// <summary>
+        /// Indicates if task's progress should be visible
+        /// </summary>
+        public bool ShouldShowProgress => Type == TimeTaskType.Reading;
+
         #endregion
 
         #region Events
