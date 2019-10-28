@@ -122,8 +122,6 @@
 	<mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
 		android:layout_below="@id/searchBar"
         android:layout_above="@id/bottomOptions"
-        android:padding="4dp"
-        android:clipToPadding="false"
 		android:id="@+id/taskList"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
