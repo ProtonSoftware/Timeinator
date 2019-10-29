@@ -163,9 +163,9 @@ namespace Timeinator.Mobile.Domain
         #region Private Helpers
 
         /// <summary>
-        /// Loads saved tasks from the <see cref="TimeTasksCalculator"/>
+        /// Loads calculated task list
         /// </summary>
-        public void LoadTaskList()
+        private void LoadTaskList()
         {
             // Update tasks times
             mSessionHandler.Calculate();
@@ -177,7 +177,7 @@ namespace Timeinator.Mobile.Domain
             TaskItems = new ObservableCollection<SummaryTimeTaskItemViewModel>(mTimeTasksMapper.ListMapToSummary(contexts));
 
             // Calculate session time
-            SessionTime = contexts.SumTimes();
+            SessionTime = new TimeSpan(contexts.Select(x => x.AssignedTime.Ticks).Sum());
         }
 
         #endregion
