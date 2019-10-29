@@ -106,6 +106,10 @@ namespace Timeinator.Mobile.Android
             await mMainThreadDispatcher.ExecuteOnMainThreadAsync(action);
         }
 
+        /// <summary>
+        /// Changes application's language
+        /// </summary>
+        /// <param name="langCode">The international code for the language to change to</param>
         public void ChangeLanguage(string langCode)
         {
             var culture = new CultureInfo(langCode);
