@@ -38,6 +38,9 @@ namespace Timeinator.Mobile.Session
         /// <param name="context">The context of a task to add</param>
         public void SaveTask(TimeTaskContext context)
         {
+            // Initialize remaining data based on task's type
+            InitializeTaskWithType(context);
+
             // Map it to the entity
             var entity = mTimeTasksMapper.ReverseMap(context);
 
@@ -90,6 +93,37 @@ namespace Timeinator.Mobile.Session
 
             // Return every found task
             return result;
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Initializes provided task with type-specific data that should be configured here
+        /// </summary>
+        /// <param name="task">The context of task</param>
+        private void InitializeTaskWithType(TimeTaskContext task)
+        {
+            // Based on task's type...
+            switch (task.Type)
+            {
+                // Generic tasks
+                case TimeTaskType.Generic:
+                    {
+                        // Max progress is 100%
+                        task.MaxProgress = 100;
+                    }
+                    break;
+
+                // Reading tasks
+                case TimeTaskType.Reading:
+                    {
+                        // Reading a book is always repeatable
+                        task.IsImmortal = true;
+                    }
+                    break;
+            }
         }
 
         #endregion
