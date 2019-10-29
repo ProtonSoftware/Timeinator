@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MvvmCross.ViewModels;
 using SimpleInjector;
 using Timeinator.Mobile.DataAccess;
-using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
 {
@@ -17,16 +15,6 @@ namespace Timeinator.Mobile.Android
         /// The underlying container from which the dependencies are retrieved
         /// </summary>
         public static Container Container { get; set; }
-
-        /// <summary>
-        /// A shortcut to access the <see cref="ApplicationViewModel"/>
-        /// </summary>
-        public static ApplicationViewModel Application => Container.GetInstance<ApplicationViewModel>();
-
-        /// <summary>
-        /// A shortcut to access the <see cref="SettingsPageViewModel"/>
-        /// </summary>
-        public static SettingsPageViewModel Settings => Container.GetInstance<SettingsPageViewModel>();
 
         #endregion
 
