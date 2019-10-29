@@ -85,7 +85,7 @@ namespace Timeinator.Mobile.Domain
         /// <summary>
         /// List of tags set by user that help finding this task
         /// </summary>
-        public List<string> Tags { get; set; }
+        public ICollection<string> Tags { get; set; }
 
         /// <summary>
         /// The date when this task was initially created

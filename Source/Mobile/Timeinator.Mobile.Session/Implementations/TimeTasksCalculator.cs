@@ -60,10 +60,7 @@ namespace Timeinator.Mobile.Session
             var calculatedTasks = CalculateAssignedTimes(contexts, sessionTime);
 
             // Return them in order
-            if (mSettingsProvider.HighestPrioritySetAsFirst)
-                return calculatedTasks.OrderBy(x => x.Priority).ToList();
-            else
-                return calculatedTasks;
+            return mSettingsProvider.HighestPrioritySetAsFirst ? calculatedTasks.OrderBy(x => x.Priority).ToList() : calculatedTasks;
         }
 
         /// <summary>
@@ -74,9 +71,8 @@ namespace Timeinator.Mobile.Session
         /// <returns>List of recalculated tasks</returns>
         public List<TimeTaskContext> CalculateTasksAfterResume(List<TimeTaskContext> contexts, TimeSpan remainingTime)
         {
-            var tasksLeft = contexts.Count;
             // If we have no remaining tasks then do nothing
-            if (tasksLeft <= 0)
+            if (contexts.Count <= 0)
                 return contexts;
 
             // Get sum of non constant priorities

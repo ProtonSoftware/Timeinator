@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Timeinator.Mobile.Domain
 {
@@ -17,7 +16,7 @@ namespace Timeinator.Mobile.Domain
         }
         public static void RaiseRefreshEvent() => RefreshUITasks.Invoke();
 
-        public static List<string> SplitTagsString(this string tagsString) => string.IsNullOrWhiteSpace(tagsString) ? null : tagsString.Split(' ').ToList();
-        public static string CreateTagsString(this List<string> tagsList) => string.Join(" ", tagsList);
+        public static ICollection<string> SplitTagsString(this string tagsString) => string.IsNullOrWhiteSpace(tagsString) ? null : tagsString.Split(' ');
+        public static string CreateTagsString(this ICollection<string> tagsList) => string.Join(" ", tagsList);
     }
 }
