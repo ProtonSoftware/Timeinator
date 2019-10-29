@@ -84,7 +84,7 @@ namespace Timeinator.Mobile.Session
             // Iterate constant tasks
             foreach (var task in constant)
                 // Shrink according to progress not priority
-                task.DynamicTime = ShrinkProgressedTask(task);
+                task.SessionDynamicTime = ShrinkProgressedTask(task);
 
             // Subtract already used time
             remainingTime -= SumDynamicTimes(constant);
@@ -101,7 +101,7 @@ namespace Timeinator.Mobile.Session
                     newTime = minTaskTime;
                 
                 // Substract the time from task
-                task.DynamicTime = newTime;
+                task.SessionDynamicTime = newTime;
 
                 // Extend AssignedTime if dynamically has been assigned more
                 if (newTime > task.AssignedTime)
@@ -124,7 +124,7 @@ namespace Timeinator.Mobile.Session
         /// <summary>
         /// Returns priority taking progress into account
         /// </summary>
-        private double GetRealPriority(TimeTaskContext context) => (int)context.Priority * (1.0 - context.Progress);
+        private double GetRealPriority(TimeTaskContext context) => (int)context.Priority * (1.0 - context.SessionProgress);
 
         /// <summary>
         /// Sums priorities of every element
@@ -139,12 +139,12 @@ namespace Timeinator.Mobile.Session
         /// <summary>
         /// Sums Assigned Times of every element
         /// </summary>
-        private TimeSpan SumDynamicTimes(List<TimeTaskContext> contexts) => new TimeSpan(contexts.Select(x => x.DynamicTime.Ticks).Sum());
+        private TimeSpan SumDynamicTimes(List<TimeTaskContext> contexts) => new TimeSpan(contexts.Select(x => x.SessionDynamicTime.Ticks).Sum());
 
         /// <summary>
         /// Returns dynamic time according to task progress
         /// </summary>
-        private TimeSpan ShrinkProgressedTask(TimeTaskContext constTask) => (constTask.AssignedTime * (1.0 - constTask.Progress));
+        private TimeSpan ShrinkProgressedTask(TimeTaskContext constTask) => (constTask.AssignedTime * (1.0 - constTask.SessionProgress));
 
         private TimeSpan Fit(TimeTaskContext task, TimeSpan timeLeft, double sumPriority)
         {
@@ -180,20 +180,20 @@ namespace Timeinator.Mobile.Session
                 task.AssignedTime = Fit(task, timeLeft, prioritySum);
 
                 // Set dynamic time
-                task.DynamicTime = new TimeSpan(task.AssignedTime.Ticks);
+                task.SessionDynamicTime = new TimeSpan(task.AssignedTime.Ticks);
 
                 // Reset progress
-                task.Progress = 0;
+                task.SessionProgress = 0;
             }
 
             // For every constant task
             foreach (var task in constantTasks)
             {
                 // Set dynamic time
-                task.DynamicTime = new TimeSpan(task.AssignedTime.Ticks);
+                task.SessionDynamicTime = new TimeSpan(task.AssignedTime.Ticks);
 
                 // Reset progress
-                task.Progress = 0;
+                task.SessionProgress = 0;
             }
 
             // Return both task lists combined together 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Timeinator.Core;
 
 namespace Timeinator.Mobile.Domain
 {
@@ -9,25 +8,6 @@ namespace Timeinator.Mobile.Domain
     /// </summary>
     public class TimeTaskContext
     {
-        #region Session temporary fields
-
-        /// <summary>
-        /// Stores progress of the task
-        /// </summary>
-        public double Progress { get; set; }
-
-        /// <summary>
-        /// Stores static time assigned to the task
-        /// </summary>
-        public TimeSpan AssignedTime { get; set; }
-
-        /// <summary>
-        /// Stores dynamic time assigned to the task
-        /// </summary>
-        public TimeSpan DynamicTime { get; set; }
-
-        #endregion
-
         /// <summary>
         /// Unique id number of the task
         /// </summary>
@@ -49,14 +29,29 @@ namespace Timeinator.Mobile.Domain
         public Priority Priority { get; set; }
 
         /// <summary>
-        /// Used by the user to mark as important (optional)
+        /// Indicates if this task is marked as important (optional)
         /// </summary>
         public bool IsImportant { get; set; }
 
         /// <summary>
-        /// Accurate description of the task
+        /// The user-friendly description for the task
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// The progress of this task in the single session scope
+        /// </summary>
+        public double SessionProgress { get; set; }
+
+        /// <summary>
+        /// The task-specific progress that is saved after every session and can reach up to <see cref="MaxProgress"/>
+        /// </summary>
+        public double Progress { get; set; }
+
+        /// <summary>
+        /// The maximum possible progress for the task that once reached, completes the task
+        /// </summary>
+        public double MaxProgress { get; set; }
 
         /// <summary>
         /// Indicates if this task has constant user-defined assigned time
@@ -72,7 +67,7 @@ namespace Timeinator.Mobile.Domain
         /// <summary>
         /// List of tags set by user that help finding this task
         /// </summary>
-        public List<string> Tags { get; set; }
+        public ICollection<string> Tags { get; set; }
 
         /// <summary>
         /// The date when this task was initially created
@@ -80,8 +75,13 @@ namespace Timeinator.Mobile.Domain
         public DateTime CreationDate { get; set; }
 
         /// <summary>
-        /// The maximum reachable progress for this task
+        /// The time assigned to the task 
         /// </summary>
-        public double MaxProgress { get; set; }
+        public TimeSpan AssignedTime { get; set; }
+
+        /// <summary>
+        /// The dynamic time assigned to the task temporarily in a single session
+        /// </summary>
+        public TimeSpan SessionDynamicTime { get; set; }
     }
 }
