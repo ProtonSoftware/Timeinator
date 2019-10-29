@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Input;
 using Timeinator.Core;
 
@@ -136,8 +135,8 @@ namespace Timeinator.Mobile.Domain
                 IsImmortal = TaskImmortality,
                 Priority = (Priority)TaskPrioritySliderValue,
                 CreationDate = DateTime.Now,
-                Progress = 0,
-                MaxProgress = TaskMaximumProgress.ConvertBasedOnType(TaskType)
+                SessionProgress = 0,
+                MaxProgress = TaskMaximumProgress
             };
 
             // Pass it to the service to handle it
@@ -155,9 +154,18 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         private async void CancelAndBackAsync()
         {
-            // Warn user about unsaved changes
-            var vm = new PopupMessageViewModel(LocalizationResource.UnsavedChanges, LocalizationResource.AreYouSure, LocalizationResource.Yes, LocalizationResource.No);
-            if (await mUIManager.DisplayPopupMessageAsync(vm))
+            // Warn the user about unsaved changes
+            var viewModel = new PopupMessageViewModel
+                (
+                    LocalizationResource.UnsavedChanges, 
+                    LocalizationResource.AreYouSure, 
+                    LocalizationResource.Yes, 
+                    LocalizationResource.No
+                );
+            var userResponse = await mUIManager.DisplayPopupMessageAsync(viewModel);
+
+            // If he agreed to discard changes...
+            if (userResponse)
             {
                 // Go back to previous page
                 await mUIManager.GoBackToPreviousPage(this);

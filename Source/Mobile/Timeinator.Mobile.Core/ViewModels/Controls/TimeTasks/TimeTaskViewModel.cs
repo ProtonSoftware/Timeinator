@@ -1,50 +1,20 @@
 ﻿using MvvmCross.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Windows.Input;
-using Timeinator.Core;
 
 namespace Timeinator.Mobile.Domain
 {
     /// <summary>
-    /// The view model for time task control
+    /// The view model for any time task control
     /// </summary>
     public class TimeTaskViewModel : MvxViewModel
     {
         #region Public Properties
-        #region Session temporary fields
-
-        /// <summary>
-        /// Stores progress of the task
-        /// </summary>
-        public double Progress { get; set; }
-
-        /// <summary>
-        /// Max progress of the task
-        /// </summary>
-        public double MaxProgress { get; set; }
-
-        /// <summary>
-        /// Stores static time assigned to the task
-        /// </summary>
-        public TimeSpan AssignedTime { get; set; }
-
-        /// <summary>
-        /// Stores dynamic time assigned to the task
-        /// </summary>
-        public TimeSpan DynamicTime { get; set; }
-
-        #endregion
 
         /// <summary>
         /// Unique id number of the task
         /// </summary>
         public int Id { get; set; }
-
-        /// <summary>
-        /// Unique ordinal number of the task
-        /// </summary>
-        public int OrderId { get; set; }
 
         /// <summary>
         /// The name of this task
@@ -62,19 +32,29 @@ namespace Timeinator.Mobile.Domain
         public Priority Priority { get; set; }
 
         /// <summary>
-        /// Used by the user to mark as important (optional)
+        /// Indicates if this task is marked as important (optional)
         /// </summary>
         public bool IsImportant { get; set; }
 
         /// <summary>
-        /// Accurate description of the task
+        /// The user-friendly description for the task
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Indicates if this task has constant user-defined assigned time
+        /// The task-specific progress that is saved after every session and can reach up to <see cref="MaxProgress"/>
         /// </summary>
-        public bool HasConstantTime { get; set; }
+        public double Progress { get; set; }
+
+        /// <summary>
+        /// The maximum possible progress for the task that once reached, completes the task
+        /// </summary>
+        public double MaxProgress { get; set; }
+
+        /// <summary>
+        /// The time assigned to the task 
+        /// </summary>
+        public TimeSpan AssignedTime { get; set; }
 
         /// <summary>
         /// Indicates if this task should still be saved after its done

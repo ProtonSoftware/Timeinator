@@ -206,16 +206,7 @@ namespace Timeinator.Mobile.Domain
             var taskVM = param as ListTimeTaskItemViewModel;
 
             // Create edit page's view model based on that
-            var pageVM = mViewModelProvider.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>();
-            // TODO: Use Mapper
-            pageVM.TaskId = taskVM.Id;
-            pageVM.TaskName = taskVM.Name;
-            pageVM.TaskDescription = taskVM.Description;
-            pageVM.TaskTagsString = taskVM.Tags.CreateTagsString();
-            pageVM.TaskConstantTime = taskVM.AssignedTime;
-            pageVM.TaskImmortality = taskVM.IsImmortal;
-            pageVM.TaskPrioritySliderValue = (int)taskVM.Priority;
-            pageVM.TaskImportance = taskVM.IsImportant;
+            var pageVM = mTimeTasksMapper.Map(taskVM, mViewModelProvider.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>());
 
             // Show the page with filled info
             mUIManager.GoToViewModelPage(pageVM);
