@@ -45,7 +45,7 @@
         android:layout_marginEnd = "16dp"
         android:layout_marginTop = "8dp"
         android:maxLines = "1"
-        local:MvxBind="Text TimeSpanToText(DynamicTime)"
+        local:MvxBind="Text TimeSpanToText(SessionDynamicTime)"
         android:text="0h 19 min 0s"
         style="@style/TextMainBlack" />
 

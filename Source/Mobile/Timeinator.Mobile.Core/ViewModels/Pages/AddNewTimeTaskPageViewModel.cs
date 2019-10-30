@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Input;
 using Timeinator.Core;
 
@@ -69,7 +68,12 @@ namespace Timeinator.Mobile.Domain
         /// The maximum reachable progress of the task
         /// In some task types it is set automatically, in other ones its defined by user
         /// </summary>
-        public int TaskMaximumProgress { get; set; }
+        public double TaskMaximumProgress { get; set; }
+
+        /// <summary>
+        /// TODO: Delete
+        /// </summary>
+        public double TaskProgress { get; set; }
 
         /// <summary>
         /// The id of a task, only set if we are editing existing one
@@ -136,8 +140,9 @@ namespace Timeinator.Mobile.Domain
                 IsImmortal = TaskImmortality,
                 Priority = (Priority)TaskPrioritySliderValue,
                 CreationDate = DateTime.Now,
-                Progress = 0,
-                MaxProgress = TaskMaximumProgress.ConvertBasedOnType(TaskType)
+                SessionProgress = 0,
+                Progress = TaskProgress,
+                MaxProgress = TaskMaximumProgress
             };
 
             // Pass it to the service to handle it
@@ -155,9 +160,18 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         private async void CancelAndBackAsync()
         {
-            // Warn user about unsaved changes
-            var vm = new PopupMessageViewModel(LocalizationResource.UnsavedChanges, LocalizationResource.AreYouSure, LocalizationResource.Yes, LocalizationResource.No);
-            if (await mUIManager.DisplayPopupMessageAsync(vm))
+            // Warn the user about unsaved changes
+            var viewModel = new PopupMessageViewModel
+                (
+                    LocalizationResource.UnsavedChanges, 
+                    LocalizationResource.AreYouSure, 
+                    LocalizationResource.Yes, 
+                    LocalizationResource.No
+                );
+            var userResponse = await mUIManager.DisplayPopupMessageAsync(viewModel);
+
+            // If he agreed to discard changes...
+            if (userResponse)
             {
                 // Go back to previous page
                 await mUIManager.GoBackToPreviousPage(this);
@@ -177,7 +191,9 @@ namespace Timeinator.Mobile.Domain
             // If task's name is too short
             if (TaskName.Length < 3 ||
             // Or if user selected constant time but didn't provide one
-            TaskHasConstantTime && TaskConstantTime == TimeSpan.Zero)
+            TaskHasConstantTime && TaskConstantTime == TimeSpan.Zero ||
+            // Or if user selected has finished more pages than the book has available
+            TaskProgress > TaskMaximumProgress)
                 // Show an error
                 return false;
 

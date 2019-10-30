@@ -61,7 +61,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/inputTags"
-        android:visibility="gone"
 		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
         <TextView
             android:layout_width="wrap_content"
@@ -103,7 +102,32 @@
             local:MvxBind='Text String("ReadingPagesDescription")'
             android:text="Ilosc stron" />
         <android.support.design.widget.TextInputEditText
-            android:layout_width="64dp"
+            android:layout_width="52dp"
+            android:digits="0123456789"
+            android:inputType="number"
+            android:maxLength="4"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+            local:MvxBind="Text TaskProgress" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/inputMaxPages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputPages"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+            local:MvxBind='Text String("ReadingMaxPagesDescription")'
+            android:text="Ilosc stron" />
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="52dp"
+            android:digits="0123456789"
+            android:inputType="number"
+            android:maxLength="4"
             android:layout_height="wrap_content"
 		    android:layout_alignParentRight="true"
             local:MvxBind="Text TaskMaximumProgress" />
@@ -113,7 +137,7 @@
         android:id="@+id/inputImportant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/inputPages"
+        android:layout_below="@id/inputMaxPages"
 		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
         <TextView
             android:layout_width="wrap_content"
@@ -127,29 +151,11 @@
 		    android:layout_alignParentRight="true"
             local:MvxBind="Checked TaskImportance" />
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/inputImmortal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/inputImportant"
-		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-		    android:layout_alignParentLeft="true"
-            local:MvxBind='Text String("ImmortalTask")'
-            android:text="Zadanie wielokrotne" />
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-		    android:layout_alignParentRight="true"
-            local:MvxBind="Checked TaskImmortality" />
-    </RelativeLayout>
     <LinearLayout
         android:id="@+id/inputPriority"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/inputImmortal"
+        android:layout_below="@id/inputImportant"
 		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
         android:orientation="horizontal">
         <TextView
@@ -164,22 +170,5 @@
             android:layout_height="wrap_content"
             local:dsb_min="1"
             local:dsb_max="5" />
-    </LinearLayout>
-	<LinearLayout
-        android:id="@+id/bottomNavigation"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-        style="@style/ElevatedCard"
-		android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-			
-		<Button 
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-			android:layout_weight="2"
-			android:text="Zatwierdź"
-            style="@style/AccentButton"
-			local:MvxBind='Text String("Confirm");Click AddTaskCommand'/>
-
     </LinearLayout>
 </RelativeLayout>
