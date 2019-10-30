@@ -349,6 +349,9 @@
     <value>Użyj jako godzinę zakończenia</value>
   </data>
   <data name="ReadingPagesDescription" xml:space="preserve">
+    <value>Przeczytane strony</value>
+  </data>
+  <data name="ReadingMaxPagesDescription" xml:space="preserve">
     <value>Ilość stron</value>
   </data>
 </root>

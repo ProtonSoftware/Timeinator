@@ -6,7 +6,7 @@
     /// </summary>
     public static class TimeTaskTypeExtensions
     {
-        public static double ConvertBasedOnType(this int maxProgress, TimeTaskType type)
+        public static double ConvertBasedOnType(this double maxProgress, TimeTaskType type)
         {
             switch (type)
             {
