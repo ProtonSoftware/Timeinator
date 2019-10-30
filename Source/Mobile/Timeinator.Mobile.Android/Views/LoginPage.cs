@@ -24,7 +24,7 @@ namespace Timeinator.Mobile.Android
             if (Intent.Action == IntentActions.ACTION_GOSESSION)
             {
                 // Change application's page to continue session
-                DI.Application.GoToPage(ApplicationPage.TasksSession);
+                DI.Container.GetInstance<ApplicationViewModel>().GoToPage(ApplicationPage.TasksSession);
                 return;
             }
 
@@ -52,7 +52,7 @@ namespace Timeinator.Mobile.Android
             DI.Container.GetInstance<ISettingsProvider>();
 
             // For now the application doesn't have login features, so simply go to the next page
-            DI.Application.GoToPage(ApplicationPage.TasksList);
+            DI.Container.GetInstance<ApplicationViewModel>().GoToPage(ApplicationPage.TasksList);
         }
     }
 }

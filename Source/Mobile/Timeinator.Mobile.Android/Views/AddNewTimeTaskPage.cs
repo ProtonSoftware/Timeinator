@@ -25,13 +25,23 @@ namespace Timeinator.Mobile.Android
             // Get the view model for this page
             var viewModel = BindingContext.DataContext as AddNewTimeTaskPageViewModel;
 
-            // Create the fragment pages for every question type
-            // TODO: Make some configuration file to take info like that from one source
-            var fragments = new List<MvxFragmentInfo>
+            // Create the fragment pages container for every question type
+            var fragments = new List<MvxFragmentInfo>();
+
+            // If we have a task id...
+            if (viewModel.TaskId != default)
             {
-                new MvxFragmentInfo(TimeTaskType.Generic, viewModel),
-                new MvxFragmentInfo(TimeTaskType.Reading, viewModel)
-            };
+                // That means we are editing a task, so only load a single task's type fragment
+                fragments.Add(new MvxFragmentInfo(viewModel.TaskType, viewModel));
+            }
+            // Otherwise...
+            else
+            {
+                // Add all possible types
+                // TODO: Maybe make some configuration file to take info like that from one source
+                fragments.Add(new MvxFragmentInfo(TimeTaskType.Generic, viewModel));
+                fragments.Add(new MvxFragmentInfo(TimeTaskType.Reading, viewModel));
+            }
 
             // Get the view pager from this page
             var viewPager = FindViewById<ViewPager>(Resource.Id.viewPagerAdd);

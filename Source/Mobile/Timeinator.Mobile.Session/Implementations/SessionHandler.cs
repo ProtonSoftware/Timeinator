@@ -123,7 +123,7 @@ namespace Timeinator.Mobile.Session
         /// <summary>
         /// The duration of the whole current session
         /// </summary>
-        public TimeSpan SessionTime { get; private set; } = default;
+        public TimeSpan SessionTime { get; private set; }
 
         /// <summary>
         /// Time since session has started
@@ -133,12 +133,12 @@ namespace Timeinator.Mobile.Session
         /// <summary>
         /// The time that left in current session task
         /// </summary>
-        public TimeSpan CurrentTimeLeft { get; private set; } = default;
+        public TimeSpan CurrentTimeLeft { get; private set; }
 
         /// <summary>
         /// The duration of current break
         /// </summary>
-        public TimeSpan CurrentBreakDuration { get; set; } = default;
+        public TimeSpan CurrentBreakDuration { get; set; }
 
         #endregion
 
@@ -261,8 +261,8 @@ namespace Timeinator.Mobile.Session
         public void Pause()
         {
             // Save current task's progress
-            mCurrentTask.DynamicTime = CurrentTimeLeft;
-            mCurrentTask.Progress = CurrentTaskCalculatedProgress;
+            mCurrentTask.SessionDynamicTime = CurrentTimeLeft;
+            mCurrentTask.SessionProgress = CurrentTaskCalculatedProgress;
 
             // Start the break
             StartBreak();
@@ -274,14 +274,11 @@ namespace Timeinator.Mobile.Session
         public void Finish()
         {
             // Save current task's progress
-            mCurrentTask.DynamicTime = CurrentTimeLeft;
-            mCurrentTask.Progress = CurrentTaskCalculatedProgress;
-
-            // Get finished task's context
-            var finishedTask = mCurrentTask;
+            mCurrentTask.SessionDynamicTime = CurrentTimeLeft;
+            mCurrentTask.SessionProgress = CurrentTaskCalculatedProgress;
 
             // Add finished task to the list for future reference
-            mFinishedTasks.Add(finishedTask);
+            mFinishedTasks.Add(mCurrentTask);
 
             // If there are no tasks left
             if (mUserTasks.RemainingList.Count <= 0)
@@ -325,10 +322,10 @@ namespace Timeinator.Mobile.Session
         private void StartNextTask(TimeTaskContext context)
         {
             // Set provided time
-            CurrentTimeLeft = context.DynamicTime;
+            CurrentTimeLeft = context.SessionDynamicTime;
 
             // Save it for progress calculations
-            mCurrentTask.DynamicTime = CurrentTimeLeft;
+            mCurrentTask.SessionDynamicTime = CurrentTimeLeft;
 
             // Start the timer
             mSecondsTicker.Start();
@@ -415,7 +412,7 @@ namespace Timeinator.Mobile.Session
             UpdateTasks(updatedTasks);
 
             // Update work property
-            CurrentTimeLeft = mCurrentTask.DynamicTime;
+            CurrentTimeLeft = mCurrentTask.SessionDynamicTime;
         }
         #endregion
 

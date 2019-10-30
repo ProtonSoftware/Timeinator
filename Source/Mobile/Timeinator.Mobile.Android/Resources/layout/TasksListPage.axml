@@ -13,6 +13,8 @@
 		android:layout_height="wrap_content"
 		android:layout_width="match_parent"
 		android:textAlignment="center"
+        style="@style/ElevatedCard"
+        android:elevation="@dimen/cardview_default_elevation"
 		android:textSize="@dimen/abc_text_size_display_2_material"
 		android:textColor="@color/colorBlack"
         local:MvxBind='Text String("TaskListTitle")'
@@ -36,6 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:iconifiedByDefault="false"
+        style="@style/ElevatedCard"
+        android:elevation="@dimen/cardview_default_elevation"
         local:iconifiedByDefault="false"
         android:focusedByDefault="false"
         local:MvxBind='Query SearchText; QueryHint String("SearchBarHint")'
@@ -44,11 +48,9 @@
         android:id="@+id/bottomNavigation"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
-		android:elevation="@dimen/design_bottom_navigation_elevation"
 		android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:background="#fff">
+        style="@style/ElevatedCard">
 			
 		<Button android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -76,11 +78,9 @@
         android:id="@+id/bottomOptions"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
-		android:elevation="@dimen/design_bottom_navigation_elevation"
         android:layout_above="@id/bottomNavigation"
         android:orientation="horizontal"
-        android:background="#fff">
+        style="@style/ElevatedCard">
 
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_height="wrap_content"

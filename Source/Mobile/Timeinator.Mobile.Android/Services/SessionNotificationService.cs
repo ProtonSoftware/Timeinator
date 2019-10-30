@@ -1,6 +1,5 @@
 ﻿using Android.App;
 using Android.Content;
-using System;
 using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
@@ -25,7 +24,7 @@ namespace Timeinator.Mobile.Android
         /// <summary>
         /// Correct task name set flag
         /// </summary>
-        private bool SuccesfulUpdate { get; set; } = false;
+        private bool SuccessfulUpdate { get; set; } = false;
 
         #endregion
 
@@ -82,7 +81,7 @@ namespace Timeinator.Mobile.Android
             var time = mSessionHandler.CurrentTimeLeft;
 
             // Try to set task name if previous attempt failed
-            if (!SuccesfulUpdate)
+            if (!SuccessfulUpdate)
                 TaskNotification();
 
             // Apply changes
@@ -99,7 +98,7 @@ namespace Timeinator.Mobile.Android
         {
             // Update title
             var name = mSessionHandler.GetCurrentTask().Name;
-            SuccesfulUpdate = mTaskServiceConnection.SetTitle(name);
+            SuccessfulUpdate = mTaskServiceConnection.SetTitle(name);
         }
 
         /// <summary>
