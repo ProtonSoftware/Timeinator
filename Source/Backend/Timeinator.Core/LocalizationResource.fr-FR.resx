@@ -348,4 +348,10 @@
   <data name="ModeFinishTime" xml:space="preserve">
     <value>Utiliser comme heure de fin</value>
   </data>
+  <data name="ReadingMaxPagesDescription" xml:space="preserve">
+    <value>XXX</value>
+  </data>
+  <data name="ReadingPagesDescription" xml:space="preserve">
+    <value>XXX</value>
+  </data>
 </root>

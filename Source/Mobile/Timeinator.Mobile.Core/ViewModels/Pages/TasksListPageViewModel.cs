@@ -1,5 +1,4 @@
 ﻿using MvvmCross.ViewModels;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -207,16 +206,7 @@ namespace Timeinator.Mobile.Domain
             var taskVM = param as ListTimeTaskItemViewModel;
 
             // Create edit page's view model based on that
-            var pageVM = mViewModelProvider.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>();
-            // TODO: Use Mapper
-            pageVM.TaskId = taskVM.Id;
-            pageVM.TaskName = taskVM.Name;
-            pageVM.TaskDescription = taskVM.Description;
-            pageVM.TaskTagsString = taskVM.Tags.CreateTagsString();
-            pageVM.TaskConstantTime = taskVM.AssignedTime;
-            pageVM.TaskImmortality = taskVM.IsImmortal;
-            pageVM.TaskPrioritySliderValue = (int)taskVM.Priority;
-            pageVM.TaskImportance = taskVM.IsImportant;
+            var pageVM = mTimeTasksMapper.Map(taskVM, mViewModelProvider.GetInjectedPageViewModel<AddNewTimeTaskPageViewModel>());
 
             // Show the page with filled info
             mUIManager.GoToViewModelPage(pageVM);
@@ -278,7 +268,7 @@ namespace Timeinator.Mobile.Domain
             // Reset handler to a clean state
             mSessionHandler.ClearSessionTasks();
 
-            // Send task contexts to the service
+            // Send task contexts to the handler
             mSessionHandler.UpdateTasks(taskContexts);
 
             // Change the page

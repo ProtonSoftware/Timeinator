@@ -12,7 +12,7 @@ namespace Timeinator.Mobile.Domain
     public class TimeTask : BaseObject<int>
     {
         /// <summary>
-        /// Name of the task
+        /// The name of the task
         /// </summary>
         public string Name { get; set; }
 
@@ -25,9 +25,9 @@ namespace Timeinator.Mobile.Domain
         /// The type of this task
         /// </summary>
         public TimeTaskType Type { get; set; }
-        
+
         /// <summary>
-        /// Used by the user to mark as important (optional)
+        /// Indicates if this task is marked as important (optional)
         /// </summary>
         public bool IsImportant { get; set; }
         
@@ -38,12 +38,12 @@ namespace Timeinator.Mobile.Domain
         public double Progress { get; set; }
 
         /// <summary>
-        /// The maximum possible progress of the task that once reached, finishes it
+        /// The maximum possible progress of the task that once reached, completes it
         /// </summary>
         public double MaxProgress { get; set; }
 
         /// <summary>
-        /// Accurate description of the task
+        /// The user-friendly description of the task
         /// </summary>
         public string Description { get; set; }
 
