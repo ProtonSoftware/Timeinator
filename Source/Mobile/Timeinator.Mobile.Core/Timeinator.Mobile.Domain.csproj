@@ -5,8 +5,8 @@
     <LangVersion>7.1</LangVersion>
     <AssemblyName>Timeinator.Mobile.Domain</AssemblyName>
     <RootNamespace>Timeinator.Mobile.Domain</RootNamespace>
-    <AssemblyVersion>1.3.2.1</AssemblyVersion>
-    <FileVersion>1.3.2.1</FileVersion>
+    <AssemblyVersion>1.3.3.1</AssemblyVersion>
+    <FileVersion>1.3.3.1</FileVersion>
     <PackageId>Timeinator.Mobile.Domain</PackageId>
     <Authors>Timeinator.Mobile.Domain</Authors>
     <Company>Timeinator.Mobile.Domain</Company>

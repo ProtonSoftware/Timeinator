@@ -349,9 +349,9 @@
     <value>Utiliser comme heure de fin</value>
   </data>
   <data name="ReadingMaxPagesDescription" xml:space="preserve">
-    <value>XXX</value>
+    <value>Quantité de pages</value>
   </data>
   <data name="ReadingPagesDescription" xml:space="preserve">
-    <value>XXX</value>
+    <value>Pages finies</value>
   </data>
 </root>
