@@ -65,7 +65,7 @@ namespace Timeinator.Mobile.Domain
         /// <summary>
         /// Detects order of <see cref="TimeTaskViewModel"/> by Id and applies it to list of <see cref="TimeTaskContext"/>
         /// </summary>
-        public List<TimeTaskContext> SortLike(List<TimeTaskViewModel> taskViewModels, List<TimeTaskContext> taskContexts)
+        public List<TimeTaskContext> MatchTaskOrder(List<TimeTaskViewModel> taskViewModels, List<TimeTaskContext> taskContexts)
         {
             // Map user order of tasks to a hashtable
             var posForId = new Hashtable(taskContexts.Count);
@@ -87,6 +87,7 @@ namespace Timeinator.Mobile.Domain
             pageViewModel.TaskPrioritySliderValue = (int)taskViewModel.Priority;
             pageViewModel.TaskImportance = taskViewModel.IsImportant;
             pageViewModel.TaskMaximumProgress = taskViewModel.MaxProgress;
+            pageViewModel.TaskProgress = taskViewModel.Progress;
 
             return pageViewModel;
         }

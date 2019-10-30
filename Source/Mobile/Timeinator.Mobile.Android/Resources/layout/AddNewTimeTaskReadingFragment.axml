@@ -105,6 +105,29 @@
             android:layout_width="52dp"
             android:digits="0123456789"
             android:inputType="number"
+            android:maxLength="4"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+            local:MvxBind="Text TaskProgress" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/inputMaxPages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputPages"
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+            local:MvxBind='Text String("ReadingMaxPagesDescription")'
+            android:text="Ilosc stron" />
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="52dp"
+            android:digits="0123456789"
+            android:inputType="number"
+            android:maxLength="4"
             android:layout_height="wrap_content"
 		    android:layout_alignParentRight="true"
             local:MvxBind="Text TaskMaximumProgress" />
@@ -114,7 +137,7 @@
         android:id="@+id/inputImportant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/inputPages"
+        android:layout_below="@id/inputMaxPages"
 		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
         <TextView
             android:layout_width="wrap_content"

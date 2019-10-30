@@ -71,6 +71,11 @@ namespace Timeinator.Mobile.Domain
         public double TaskMaximumProgress { get; set; }
 
         /// <summary>
+        /// TODO: Delete
+        /// </summary>
+        public double TaskProgress { get; set; }
+
+        /// <summary>
         /// The id of a task, only set if we are editing existing one
         /// </summary>
         public int TaskId { get; set; }
@@ -136,6 +141,7 @@ namespace Timeinator.Mobile.Domain
                 Priority = (Priority)TaskPrioritySliderValue,
                 CreationDate = DateTime.Now,
                 SessionProgress = 0,
+                Progress = TaskProgress,
                 MaxProgress = TaskMaximumProgress
             };
 
@@ -185,7 +191,9 @@ namespace Timeinator.Mobile.Domain
             // If task's name is too short
             if (TaskName.Length < 3 ||
             // Or if user selected constant time but didn't provide one
-            TaskHasConstantTime && TaskConstantTime == TimeSpan.Zero)
+            TaskHasConstantTime && TaskConstantTime == TimeSpan.Zero ||
+            // Or if user selected has finished more pages than the book has available
+            TaskProgress > TaskMaximumProgress)
                 // Show an error
                 return false;
 

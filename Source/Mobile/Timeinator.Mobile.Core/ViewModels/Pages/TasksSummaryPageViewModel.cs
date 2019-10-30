@@ -91,7 +91,7 @@ namespace Timeinator.Mobile.Domain
         private void StartTaskSession()
         {
             // Get tasks from Handler sorted like TaskItems
-            var taskContexts = mTimeTasksMapper.SortLike(TaskItems.Select(vm => vm as TimeTaskViewModel).ToList(), mSessionHandler.GetTasks().WholeList);
+            var taskContexts = mTimeTasksMapper.MatchTaskOrder(TaskItems.Select(vm => vm as TimeTaskViewModel).ToList(), mSessionHandler.GetTasks().WholeList);
 
             // Pass it to the service
             mSessionHandler.UpdateTasks(taskContexts);
@@ -177,7 +177,7 @@ namespace Timeinator.Mobile.Domain
             TaskItems = new ObservableCollection<SummaryTimeTaskItemViewModel>(mTimeTasksMapper.ListMapToSummary(contexts));
 
             // Calculate session time
-            SessionTime = new TimeSpan(contexts.Select(x => x.AssignedTime.Ticks).Sum());
+            SessionTime = mSessionHandler.SessionDuration;
         }
 
         #endregion
