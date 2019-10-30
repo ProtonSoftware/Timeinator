@@ -79,7 +79,7 @@ namespace Timeinator.Mobile.Session
             var sumOfPriorities = SumPriorities(GetConstant(contexts, true));
 
             var constant = GetConstant(contexts);
-            var free = GetConstant(contexts, false);
+            var free = GetConstant(contexts, true);
 
             // Iterate constant tasks
             foreach (var task in constant)
