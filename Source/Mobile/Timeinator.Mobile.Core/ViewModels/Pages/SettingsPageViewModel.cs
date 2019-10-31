@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Timeinator.Core;
 
@@ -13,13 +12,7 @@ namespace Timeinator.Mobile.Domain
         #region Private Members
 
         private readonly ApplicationViewModel mApplicationViewModel;
-        private readonly IUIManager mUIManager;
         private readonly ISettingsProvider mSettingsProvider;
-
-        /// <summary>
-        /// The current language used in this application
-        /// </summary>
-        private string mLanguageValue = "Polski";
 
         #endregion
 
@@ -28,52 +21,22 @@ namespace Timeinator.Mobile.Domain
         /// <summary>
         /// The list of possible languages in the app
         /// </summary>
-        public ObservableCollection<string> LanguageItems { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> LanguageItems { get; private set; }
 
         /// <summary>
         /// The language used in this application
         /// </summary>
-        public string LanguageValue
-        {
-            get => mLanguageValue;
-            set
-            {
-                // Set new value
-                mLanguageValue = value;
-
-                // Change app's language based on that
-                switch (LanguageItems.IndexOf(mLanguageValue))
-                {
-                    case 1:
-                        mUIManager.ChangeLanguage("pl-PL");
-                        break;
-
-                    case 2:
-                        mUIManager.ChangeLanguage("fr-FR");
-                        break;
-
-                    // 0 or any not recognized index is default - Polish language
-                    default:
-                        mUIManager.ChangeLanguage("en-US");
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Indicates if dark mode is set 
-        /// </summary>
-        public bool IsDarkModeOn { get; set; } = false;
+        public string LanguageValue { get; set; }
 
         /// <summary>
         /// If set to true, tasks with highest priority will be the first ones
         /// </summary>
-        public bool HighestPrioritySetAsFirst { get; set; } = true;
+        public bool HighestPrioritySetAsFirst { get; set; } 
 
         /// <summary>
         /// If set to true, whenever break ends remaining tasks will be recalculated for remaining time
         /// </summary>
-        public bool RecalculateTasksAfterBreak { get; set; } = true;
+        public bool RecalculateTasksAfterBreak { get; set; }
 
         #endregion
 
@@ -82,17 +45,16 @@ namespace Timeinator.Mobile.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public SettingsPageViewModel(IUIManager uiManager, ISettingsProvider settingsProvider, ApplicationViewModel applicationViewModel)
+        public SettingsPageViewModel(ISettingsProvider settingsProvider, ApplicationViewModel applicationViewModel)
         {
             // Create commands
             GoBackCommand = new RelayCommand(ClosePage);
 
             // Get injected DI services
             mApplicationViewModel = applicationViewModel;
-            mUIManager = uiManager;
             mSettingsProvider = settingsProvider;
 
-            // Load initial settings configuration from database
+            // Load current setting configuration from the provider
             InitializeSettings();
 
             // Hook to property changed event, so everytime settings are being changed, we save it to the database
@@ -118,7 +80,7 @@ namespace Timeinator.Mobile.Domain
         #region Private Properties
 
         /// <summary>
-        /// Allows to get the property of this view model by simply calling its name
+        /// Allows to get the property of this class by simply calling its name
         /// </summary>
         /// <param name="propertyName">The name of the property to get/set</param>
         private object this[string propertyName]
@@ -132,13 +94,12 @@ namespace Timeinator.Mobile.Domain
         #region Private Methods
 
         /// <summary>
-        /// Initializes this view model state with values that are currently saved in the database
+        /// Initializes this view model state with values from setting provider
         /// </summary>
         private void InitializeSettings()
         {
             LanguageItems = new ObservableCollection<string>(mSettingsProvider.Languages);
             LanguageValue = mSettingsProvider.LanguageValue;
-            IsDarkModeOn = mSettingsProvider.IsDarkModeOn;
             HighestPrioritySetAsFirst = mSettingsProvider.HighestPrioritySetAsFirst;
             RecalculateTasksAfterBreak = mSettingsProvider.RecalculateTasksAfterBreak;
         }
@@ -151,16 +112,12 @@ namespace Timeinator.Mobile.Domain
             // Get changed property's name
             var propertyName = e.PropertyName;
 
-            // Get its type and value based on that
-            var propertyValue = this[propertyName];
-            var propertyType = this[propertyName].GetType();
-
             // Create new property info
             var propertyInfo = new SettingsPropertyInfo
             {
                 Name = propertyName,
-                Type = propertyType,
-                Value = propertyValue
+                Value = this[propertyName],
+                Type = this[propertyName].GetType()
             };
 
             // Save it to the database

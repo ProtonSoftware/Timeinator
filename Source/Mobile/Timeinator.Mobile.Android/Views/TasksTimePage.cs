@@ -46,8 +46,8 @@ namespace Timeinator.Mobile.Android
         /// </summary>
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            // Get finished mode value
-            var isFinishMode = (BindingContext.DataContext as TasksTimePageViewModel).FinishMode;
+            // Get session time mode value
+            var isFinishMode = (BindingContext.DataContext as TasksTimePageViewModel).SessionTimeAsFinishTime;
 
             // Get timepicker
             var timepicker = FindViewById<TimePicker>(Resource.Id.pickerSession);

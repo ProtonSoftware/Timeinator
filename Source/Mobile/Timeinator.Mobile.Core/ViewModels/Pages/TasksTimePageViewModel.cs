@@ -28,9 +28,9 @@ namespace Timeinator.Mobile.Domain
         public TimeSpan UserTime { get; set; }
 
         /// <summary>
-        /// Flag whether to use provided value as finish time or duration
+        /// If set to true, user time is used as finishing timestamp, otherwise user time is just amount of time for session
         /// </summary>
-        public bool FinishMode { get; set; }
+        public bool SessionTimeAsFinishTime { get; set; }
 
         #endregion
 
@@ -65,8 +65,8 @@ namespace Timeinator.Mobile.Domain
             mUIManager = uiManager;
             mApplicationViewModel = applicationViewModel;
 
-            // Read mode from settings
-            FinishMode = mSettingsProvider.SessionWasFinishTime;
+            // Load session time's setting
+            SessionTimeAsFinishTime = mSettingsProvider.SessionTimeAsFinishTime;
         }
 
         #endregion
@@ -80,11 +80,16 @@ namespace Timeinator.Mobile.Domain
         private async Task CalculateSessionAsync()
         {
             // Save used mode
-            mSettingsProvider.SessionWasFinishTime = FinishMode;
+            mSettingsProvider.SetSetting(new SettingsPropertyInfo
+            {
+                Name = nameof(SessionTimeAsFinishTime),
+                Value = SessionTimeAsFinishTime,
+                Type = typeof(bool)
+            });
 
             var time = UserTime;
             // Alternative mode
-            if (FinishMode)
+            if (SessionTimeAsFinishTime)
             {
                 // Subtract Now converted to timespan
                 time -= DateTime.Now - DateTime.Today;
