@@ -179,7 +179,7 @@ namespace Timeinator.Mobile.Session
             foreach (var task in contexts)
             {
                 // Calculate and assign time to task
-                if (task.HasConstantTime)
+                if (!task.HasConstantTime)
                 {
                     task.AssignedTime = Fit(task, timeLeft, prioritySum);
                 }
