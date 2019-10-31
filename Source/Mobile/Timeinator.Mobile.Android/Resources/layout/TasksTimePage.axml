@@ -22,7 +22,7 @@
         android:layout_height="wrap_content" />
     <CheckBox
         android:text="Use as finish time"
-        local:MvxBind='Text String("ModeFinishTime");Checked FinishMode'
+        local:MvxBind='Text String("ModeFinishTime");Checked SessionTimeAsFinishTime'
         android:id="@+id/finishTimeMode"
         android:layout_below="@id/pickerSession"
         android:layout_marginHorizontal="@dimen/notification_big_circle_margin"

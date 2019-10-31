@@ -4,24 +4,20 @@ using Timeinator.Core;
 namespace Timeinator.Mobile.Domain
 {
     /// <summary>
-    /// Interface for managing app settings at runtime
+    /// The interface for setting provider to manage all the settings in this app
     /// </summary>
     public interface ISettingsProvider
     {
-        #region Config
-
-        bool SessionWasFinishTime { get; set; }
-        int TimerTickRate { get; set; }
-        double MinimumTaskTime { get; set; }
-
-        #endregion
+        bool SessionTimeAsFinishTime { get; }
+        int TimerTickRate { get; }
+        double MinimumTaskTime { get; }
 
         List<string> Languages { get; }
-        string LanguageValue { get; set; }
-        bool IsDarkModeOn { get; set; }
-        bool HighestPrioritySetAsFirst { get; set; }
-        bool RecalculateTasksAfterBreak { get; set; }
+        string LanguageValue { get; }
+        bool IsDarkModeOn { get; }
+        bool HighestPrioritySetAsFirst { get; }
+        bool RecalculateTasksAfterBreak { get; }
 
-        void SetSetting(SettingsPropertyInfo setting);
+        void SetSetting(SettingsPropertyInfo setting, bool shouldSaveToDatabase = true);
     }
 }

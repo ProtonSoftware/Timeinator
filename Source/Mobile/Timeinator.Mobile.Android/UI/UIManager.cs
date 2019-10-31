@@ -114,8 +114,8 @@ namespace Timeinator.Mobile.Android
         {
             var culture = new CultureInfo(langCode);
             LocalizationResource.Culture = culture;
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
         }
 
         #endregion
