@@ -1,143 +1,29 @@
-﻿using Timeinator.Mobile.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Timeinator.Core;
+using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Session
 {
     /// <summary>
-    /// Manager for in app settings
+    /// The provider for every app setting
     /// </summary>
-    public class SettingsProvider : ISettingsProvider
+    public class SettingsProvider : ISettingsProvider, INotifyPropertyChanged
     {
         #region Private Members
 
         private readonly ISettingsRepository mSettingsRepository;
+        private readonly IUIManager mUIManager;
 
-        // Defaults
-        private bool mSessionWasFinishTime = true;
-        private int mTimerTickRate = 1000;
-        private double mMinimumTaskTime = 0.1;
-        private string mLanguageValue = "English";
-        private bool mIsDarkModeOn = false;
-        private bool mHighestPrioritySetAsFirst = true;
-        private bool mRecalculateTasksAfterBreak = true;
-
-        #endregion
-
-        #region Interface
-
-        /// <summary>
-        /// Available languages names
-        /// </summary>
-        public List<string> Languages { get; private set; } = new List<string> {
-            "English",
-            "Polski",
-            "Français"
-        };
-
-        /// <summary>
-        /// Flag whether user started last session with a finish time
-        /// </summary>
-        public bool SessionWasFinishTime { get => mSessionWasFinishTime; 
-            set
-            {
-                mSessionWasFinishTime = value;
-                SaveSetting(nameof(SessionWasFinishTime));
-            }
-        }
-
-        /// <summary>
-        /// Rate of session timer (ms)
-        /// </summary>
-        public int TimerTickRate { get => mTimerTickRate;
-            set
-            {
-                mTimerTickRate = value;
-                SaveSetting(nameof(TimerTickRate));
-            }
-        }
-
-        /// <summary>
-        /// Minimum time required to start a task
-        /// </summary>
-        public double MinimumTaskTime { get => mMinimumTaskTime;
-            set
-            {
-                mMinimumTaskTime = value;
-                SaveSetting(nameof(MinimumTaskTime));
-            }
-        }
-
-        /// <summary>
-        /// Current language name
-        /// </summary>
-        public string LanguageValue { get => mLanguageValue;
-            set
-            {
-                mLanguageValue = value;
-                SaveSetting(nameof(LanguageValue));
-            }
-        }
-
-        /// <summary>
-        /// Dark mode enabled flag
-        /// </summary>
-        public bool IsDarkModeOn { get => mIsDarkModeOn;
-            set
-            {
-                mIsDarkModeOn = value;
-                SaveSetting(nameof(IsDarkModeOn));
-            }
-        }
-
-        /// <summary>
-        /// Should put highest priority task on top of session queue
-        /// </summary>
-        public bool HighestPrioritySetAsFirst { get => mHighestPrioritySetAsFirst;
-            set
-            {
-                mHighestPrioritySetAsFirst = value;
-                SaveSetting(nameof(HighestPrioritySetAsFirst));
-            }
-        }
-
-        /// <summary>
-        /// Should recalculate tasks after pausing or finishing early
-        /// </summary>
-        public bool RecalculateTasksAfterBreak { get => mRecalculateTasksAfterBreak;
-            set
-            {
-                mRecalculateTasksAfterBreak = value;
-                SaveSetting(nameof(RecalculateTasksAfterBreak));
-            }
-        }
-
-        /// <summary>
-        /// Update attribute by using name, value and type
-        /// </summary>
-        public void SetSetting(SettingsPropertyInfo setting)
-        {
-            this[setting.Name] = Convert.ChangeType(setting.Value, setting.Type);
-        }
-
-        #endregion
-
-        #region Constructor
-
-        public SettingsProvider(ISettingsRepository settingsRepository)
-        {
-            mSettingsRepository = settingsRepository;
-
-            InitializeSettings();
-        }
+        private string mLanguageValue = "Polski";
 
         #endregion
 
         #region Private Properties
 
         /// <summary>
-        /// Allows to get the property of this view model by simply calling its name
+        /// Allows to get the property of this class by simply calling its name
         /// </summary>
         /// <param name="propertyName">The name of the property to get/set</param>
         private object this[string propertyName]
@@ -148,16 +34,129 @@ namespace Timeinator.Mobile.Session
 
         #endregion
 
-        #region Private Helpers
+        #region Public Properties
 
         /// <summary>
-        /// Update SettingRepository with current value
+        /// The list of all available languages that this app supports
         /// </summary>
-        private void SaveSetting(string name)
+        public List<string> Languages => new List<string> 
         {
-            var setting = new SettingsPropertyInfo { Name = name, Type = this[name].GetType(), Value = this[name] };
-            mSettingsRepository.SaveSetting(setting);
+            "Polski",
+            "English",
+            "Français"
+        };
+
+        /// <summary>
+        /// If set to true, session time will be used as finishing timestamp, otherwise session time is just amount of time for session
+        /// </summary>
+        public bool SessionTimeAsFinishTime { get; private set; } = false;
+
+        /// <summary>
+        /// Rate of session timer (ms)
+        /// </summary>
+        public int TimerTickRate { get; private set; } = 1000;
+
+        /// <summary>
+        /// Minimum time required to start a task
+        /// </summary>
+        public double MinimumTaskTime { get; private set; } = 0.1;
+
+        /// <summary>
+        /// Current language name
+        /// </summary>
+        public string LanguageValue
+        {
+            get => mLanguageValue;
+            private set
+            {
+                // Set new value
+                mLanguageValue = value;
+
+                // Change app's language based on that
+                switch (Languages.IndexOf(mLanguageValue))
+                {
+                    case 1:
+                        mUIManager.ChangeLanguage("en-US");
+                        break;
+
+                    case 2:
+                        mUIManager.ChangeLanguage("fr-FR");
+                        break;
+
+                    // 0 or any not recognized index is default - Polish language
+                    default:
+                        mUIManager.ChangeLanguage("pl-PL");
+                        break;
+                }
+            }
         }
+
+        /// <summary>
+        /// Dark mode enabled flag
+        /// </summary>
+        public bool IsDarkModeOn { get; private set; } = false;
+
+        /// <summary>
+        /// Should put highest priority task on top of session queue
+        /// </summary>
+        public bool HighestPrioritySetAsFirst { get; private set; } = true;
+
+        /// <summary>
+        /// Should recalculate tasks after pausing or finishing early
+        /// </summary>
+        public bool RecalculateTasksAfterBreak { get; private set; } = true;
+
+        /// <summary>
+        /// An event that is fired everytime any setting property changes it's value
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public SettingsProvider(IUIManager uiManager, ISettingsRepository settingsRepository)
+        {
+            // Inject DI services
+            mSettingsRepository = settingsRepository;
+            mUIManager = uiManager;
+
+            // Hook to property changed event, so everytime settings are being changed, we save it to the database
+            PropertyChanged += SettingValueChanged;
+
+            // Initially load all the setting configuration from database
+            InitializeSettings();
+        }
+
+        #endregion
+
+        #region Interface Implementation
+
+        /// <summary>
+        /// Update attribute by using name, value and type
+        /// </summary>
+        public void SetSetting(SettingsPropertyInfo setting)
+        {
+            try
+            {
+                // Save its value to appropriate property
+                this[setting.Name] = Convert.ChangeType(setting.Value, setting.Type);
+
+                // Fire property changed event to inform everyone about the setting change
+                PropertyChanged.Invoke(null, new PropertyChangedEventArgs(setting.Name));
+            }
+            // If something fails, that means the setting in database is broken
+            // Therefore, default value of a property will be used and future changes will repair database failures
+            // So no need to do anything after catching the exception
+            catch { }
+        }
+
+        #endregion
+
+        #region Private Helpers
 
         /// <summary>
         /// Initializes settings with values that are currently saved in the database
@@ -170,16 +169,29 @@ namespace Timeinator.Mobile.Session
             // For each one...
             foreach (var setting in settingList)
             {
-                try
-                {
-                    // Save its value to appropriate property
-                    this[setting.Name] = Convert.ChangeType(setting.Value, setting.Type);
-                }
-                // If something fails, that means the setting in database is broken
-                // Therefore, default value of a property will be used and future changes will repair database failures
-                // So no need to do anything after catching the exception
-                catch { }
+                // Set it's value to associated property
+                SetSetting(setting);
             }
+        }
+
+        /// <summary>
+        /// Fired everytime any of setting properties get changed
+        /// </summary>
+        private void SettingValueChanged(object sender, PropertyChangedEventArgs e)
+        {
+            // Get changed property's name
+            var propertyName = e.PropertyName;
+
+            // Create new property info
+            var propertyInfo = new SettingsPropertyInfo
+            {
+                Name = propertyName,
+                Value = this[propertyName],
+                Type = this[propertyName].GetType()
+            };
+
+            // Save it to the database
+            mSettingsRepository.SaveSetting(propertyInfo);
         }
 
         #endregion
