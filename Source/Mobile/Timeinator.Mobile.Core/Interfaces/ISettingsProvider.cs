@@ -4,7 +4,7 @@ using Timeinator.Core;
 namespace Timeinator.Mobile.Domain
 {
     /// <summary>
-    /// Interface for managing app settings at runtime
+    /// The interface for setting provider to manage all the settings in this app
     /// </summary>
     public interface ISettingsProvider
     {
@@ -18,6 +18,6 @@ namespace Timeinator.Mobile.Domain
         bool HighestPrioritySetAsFirst { get; }
         bool RecalculateTasksAfterBreak { get; }
 
-        void SetSetting(SettingsPropertyInfo setting);
+        void SetSetting(SettingsPropertyInfo setting, bool shouldSaveToDatabase = true);
     }
 }

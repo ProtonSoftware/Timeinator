@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Timeinator.Core;
 using Timeinator.Mobile.Domain;
 
@@ -9,7 +8,7 @@ namespace Timeinator.Mobile.Session
     /// <summary>
     /// The provider for every app setting
     /// </summary>
-    public class SettingsProvider : ISettingsProvider, INotifyPropertyChanged
+    public class SettingsProvider : ISettingsProvider
     {
         #region Private Members
 
@@ -52,17 +51,17 @@ namespace Timeinator.Mobile.Session
         public bool SessionTimeAsFinishTime { get; private set; } = false;
 
         /// <summary>
-        /// Rate of session timer (ms)
+        /// The tick rate in miliseconds that session timer will be based on
         /// </summary>
         public int TimerTickRate { get; private set; } = 1000;
 
         /// <summary>
-        /// Minimum time required to start a task
+        /// The minimum time in minutes required for a task in session
         /// </summary>
         public double MinimumTaskTime { get; private set; } = 0.1;
 
         /// <summary>
-        /// Current language name
+        /// The current selected value of app's language
         /// </summary>
         public string LanguageValue
         {
@@ -92,24 +91,19 @@ namespace Timeinator.Mobile.Session
         }
 
         /// <summary>
-        /// Dark mode enabled flag
+        /// Indicates if dark mode is on
         /// </summary>
         public bool IsDarkModeOn { get; private set; } = false;
 
         /// <summary>
-        /// Should put highest priority task on top of session queue
+        /// If set to true, tasks with highest priority will be the first ones
         /// </summary>
         public bool HighestPrioritySetAsFirst { get; private set; } = true;
 
         /// <summary>
-        /// Should recalculate tasks after pausing or finishing early
+        /// If set to true, whenever break ends remaining tasks will be recalculated for remaining time
         /// </summary>
         public bool RecalculateTasksAfterBreak { get; private set; } = true;
-
-        /// <summary>
-        /// An event that is fired everytime any setting property changes it's value
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -124,9 +118,6 @@ namespace Timeinator.Mobile.Session
             mSettingsRepository = settingsRepository;
             mUIManager = uiManager;
 
-            // Hook to property changed event, so everytime settings are being changed, we save it to the database
-            PropertyChanged += SettingValueChanged;
-
             // Initially load all the setting configuration from database
             InitializeSettings();
         }
@@ -136,17 +127,23 @@ namespace Timeinator.Mobile.Session
         #region Interface Implementation
 
         /// <summary>
-        /// Update attribute by using name, value and type
+        /// Updates specified setting with new value
         /// </summary>
-        public void SetSetting(SettingsPropertyInfo setting)
+        /// <param name="setting">The setting to set</param>
+        /// <param name="shouldSaveToDatabase">Database flag, can be set to false if we don't want setting to be saved</param>
+        public void SetSetting(SettingsPropertyInfo setting, bool shouldSaveToDatabase = true)
         {
             try
             {
-                // Save its value to appropriate property
+                // Set its value to appropriate property
                 this[setting.Name] = Convert.ChangeType(setting.Value, setting.Type);
 
-                // Fire property changed event to inform everyone about the setting change
-                PropertyChanged.Invoke(null, new PropertyChangedEventArgs(setting.Name));
+                // If we should save new value to database
+                if (shouldSaveToDatabase)
+                {
+                    // Do it
+                    mSettingsRepository.SaveSetting(setting);
+                }
             }
             // If something fails, that means the setting in database is broken
             // Therefore, default value of a property will be used and future changes will repair database failures
@@ -170,28 +167,8 @@ namespace Timeinator.Mobile.Session
             foreach (var setting in settingList)
             {
                 // Set it's value to associated property
-                SetSetting(setting);
+                SetSetting(setting, false);
             }
-        }
-
-        /// <summary>
-        /// Fired everytime any of setting properties get changed
-        /// </summary>
-        private void SettingValueChanged(object sender, PropertyChangedEventArgs e)
-        {
-            // Get changed property's name
-            var propertyName = e.PropertyName;
-
-            // Create new property info
-            var propertyInfo = new SettingsPropertyInfo
-            {
-                Name = propertyName,
-                Value = this[propertyName],
-                Type = this[propertyName].GetType()
-            };
-
-            // Save it to the database
-            mSettingsRepository.SaveSetting(propertyInfo);
         }
 
         #endregion
