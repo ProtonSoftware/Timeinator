@@ -11,6 +11,7 @@ namespace Timeinator.Mobile.Domain
     {
         double CurrentTaskCalculatedProgress { get; }
         bool Paused { get; }
+        TimeSpan SessionTime { get; }
         TimeSpan SessionDuration { get; }
         TimeSpan CurrentTimeLeft { get; }
         TimeSpan CurrentBreakDuration { get; set; }

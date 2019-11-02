@@ -177,7 +177,7 @@ namespace Timeinator.Mobile.Domain
             TaskItems = new ObservableCollection<SummaryTimeTaskItemViewModel>(mTimeTasksMapper.ListMapToSummary(contexts));
 
             // Calculate session time
-            SessionTime = mSessionHandler.SessionDuration;
+            SessionTime = mSessionHandler.SessionTime;
         }
 
         #endregion
