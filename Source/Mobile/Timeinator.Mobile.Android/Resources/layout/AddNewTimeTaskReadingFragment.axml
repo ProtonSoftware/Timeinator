@@ -14,14 +14,13 @@
         android:layout_marginTop="16dp"
 		android:paddingHorizontal="@dimen/abc_action_bar_overflow_padding_start_material"
 		local:counterEnabled="true"
-		local:counterMaxLength="50"
-        local:MvxBind='Hint String("TaskName")'
-        android:hint="Nazwa zadania">
+		local:counterMaxLength="50">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            local:MvxBind="Text TaskName" />
+            android:hint="Nazwa zadania"
+            local:MvxBind='Hint String("TaskName"); Text TaskName' />
 
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
@@ -31,14 +30,13 @@
         android:layout_below="@id/inputName"
 		android:paddingHorizontal="@dimen/abc_action_bar_overflow_padding_start_material"
 		local:counterEnabled="true"
-		local:counterMaxLength="100"
-        local:MvxBind='Hint String("Description")'
-        android:hint="Opis (opcjonalny)">
+		local:counterMaxLength="100">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            local:MvxBind="Text TaskDescription" />
+            android:hint="Opis (opcjonalny)"
+            local:MvxBind='Hint String("Description"); Text TaskDescription' />
 
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
@@ -46,14 +44,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/inputDescription"
-		android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
-        local:MvxBind='Hint String("Tags")'
-        android:hint="Tagi (opcjonalne, rozdzielane spacją)">
+		android:padding="@dimen/abc_action_bar_overflow_padding_start_material">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            local:MvxBind="Text TaskTagsString" />
+            android:hint="Tagi (opcjonalne, rozdzielane spacją)"
+            local:MvxBind='Hint String("Tags"); Text TaskTagsString' />
 
     </android.support.design.widget.TextInputLayout>
     <RelativeLayout

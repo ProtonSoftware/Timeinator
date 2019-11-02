@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 using Timeinator.Core;
 using Timeinator.Mobile.Domain;
@@ -149,6 +150,10 @@ namespace Timeinator.Mobile.Session
         /// </summary>
         public void UpdateTasks(List<TimeTaskContext> tasks)
         {
+            if (mSettingsProvider.HighestPrioritySetAsFirst)
+                // Sort descending priority if such setting is enabled
+                tasks = tasks.OrderByDescending(x => x.Priority).ToList();
+
             mUserTasks = new HeadList<TimeTaskContext>(tasks);
             mCurrentTask = mUserTasks.Head;
 

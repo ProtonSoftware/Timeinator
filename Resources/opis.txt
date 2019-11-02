@@ -12,10 +12,8 @@ Jak to dzia³a?
 Nasza aplikacja oblicza czas po jakim powinieneœ zmieniæ aktualnie wykonywan¹ czynnoœæ, ¿eby mieæ czas na pozosta³e. Dziêki temu ka¿dego dnia mo¿esz w pe³ni wykorzystaæ swój potencja³.
 
 Krok po kroku
-Wpisujesz zadania jakie chcesz robiæ z pomoc¹ aplikacji, nastêpnie korzystaj¹c z szerokich opcji zadania konfigurujesz jak bêdziesz je wykonywa³.
-Nastêpnie wybierasz zadania które Ciê aktualnie interesuj¹, mo¿esz skorzystaæ z wygodnych opcji filtrowania, ¿eby poradziæ sobie z d³ug¹ list¹ zadañ.
-Podajesz ile masz czasu do powrotu do obowi¹zków, a Nasza aplikacja przeliczy czas na ka¿de wybrane zadanie, zaproponuje zmianê kolejnoœci jeœli chcesz i mo¿esz dzia³aæ, a kiedy skoñczy siê czas dostaniesz powiadomienie z opcj¹ do rozpoczêcia kolejnego zadania lub odpoczynku.
-Aplikacja zadba abyœ zacz¹³ wszystkie zadania w wyznaczonym przez siebie czasie, chyba ¿e wy³¹czysz t¹ opcjê w ustawieniach i bêdziesz wykonywa³ zadania a¿ nad wszystkim spêdzisz docelow¹ iloœæ czasu.
+Podajesz ile masz czasu do powrotu do obowi¹zków, a Nasza aplikacja przeliczy czas na ka¿de wybrane zadanie, zaproponuje zmianê kolejnoœci i mo¿esz dzia³aæ, a kiedy skoñczy siê czas dostaniesz powiadomienie z opcj¹ do rozpoczêcia kolejnego zadania lub odpoczynku.
+Aplikacja zadba abyœ zacz¹³ wszystkie zadania w wyznaczonym przez siebie czasie, chyba ¿e wy³¹czysz t¹ opcjê w ustawieniach i bêdziesz wykonywa³ zadania, a¿ nad wszystkim spêdzisz docelow¹ iloœæ czasu.
 
 +ANGLAIS
 Fully exploit your free time.
@@ -24,14 +22,11 @@ For whom has this app been created?
 If you are ambitious and have a lot of tasks to accomplish and you always forget something, then you are just like us and this app is made for you.
 
 When creating this app, we followed these two ideas:
-- Our mind is more creative if we give a rest from long, repetetive tasks - that's why our app reminds you to change your current job, so then you get better performance and can push your brain to the limits.
+- Our mind is more creative if we give a rest from long, repetetive tasks - that's why our app reminds you to change your current job, so then you get better performance and can push yourself to the limits.
 - In order to achieve great things, all you need is to repeat any task systematically, whether it is learning a language, reading a thick book or anything else. Do it until you reach your dreamed goal - that is why we allow you to set long term objectives, it is an universal and most efficient way of self improvment.
 
 How does it work?
-Our app calculates when you should change your current assignment to have time for the rest of them. Thanks to that you can fully use your potential.
+Our app calculates when you should change your current assignment to have time for the rest of them. Thanks to that you can fully use your potential every day.
 
 Step by step
-Simply enter any task you want to do and configure it using wide variety of options.
-Next pick few tasks that you are interested to start at the moment. You can use convenient filtering options to navigate on your big task list.
-Set time that you can spend before going back to your duties, so the app can calculate time for each of the selected tasks. It will ask whether you want to reorder some task or use default ordering. When time runs out you will be notified and asked if you need a break or go straight to your next assignment.
-Our app will make sure that all of your tasks are fit in desired time, unless you change settings to mark all jobs as finished only after you spend the exact amount of time on them without counting breaks.
+Set yourself time limit when you have to go back to work, then our app calculates duration of every task you have picked in such way that they fit in specified time range. You will be offered to change the order of tasks and then you can start. As time for a task runs out you will hear an alarm telling you to proceed to the next task, you can take a break now if you wish. Application takes care that you finish doing everything at specified time but this can be disabled in settings so you can set the target amount of time per task instead.
