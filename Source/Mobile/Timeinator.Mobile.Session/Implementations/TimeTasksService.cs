@@ -83,7 +83,7 @@ namespace Timeinator.Mobile.Session
         /// </summary>
         /// <param name="queryString">The filter text for tasks</param>
         /// <returns>A list of found tasks as <see cref="TimeTaskContext"/></returns>
-        public List<TimeTaskContext> LoadStoredTasks(string queryString)
+        public List<TimeTaskContext> LoadStoredTasks(string queryString = "")
         {
             // Get every task in the database
             var dbTasks = mTimeTasksRepository.GetSavedTasksForToday(queryString);

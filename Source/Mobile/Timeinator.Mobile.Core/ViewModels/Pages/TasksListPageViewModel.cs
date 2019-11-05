@@ -35,7 +35,12 @@ namespace Timeinator.Mobile.Domain
         /// <summary>
         /// The current text input from the search bar
         /// </summary>
-        public string mSearchText;
+        private string mSearchText;
+
+        /// <summary>
+        /// The list of time tasks for current session
+        /// </summary>
+        private ObservableCollection<ListTimeTaskItemViewModel> mAllTaskItems;
 
         #endregion
 
@@ -69,16 +74,7 @@ namespace Timeinator.Mobile.Domain
             set
             {
                 mSortValue = value;
-
-                switch (SortItems.IndexOf(mSortValue))
-                {
-                    case 0:
-                        TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(TaskItems.OrderBy(x => x.Name));
-                        break;
-                    case 1:
-                        TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(TaskItems.OrderBy(x => x.CreationDate));
-                        break;
-                }
+                SortVisibleTasks();
             }
         }
 
@@ -107,7 +103,10 @@ namespace Timeinator.Mobile.Domain
             {
                 mSearchText = value;
 
-                TaskListHelpers.RaiseRefreshEvent();
+                TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>
+                    (mAllTaskItems.Where(x => x.Name.Contains(mSearchText) || x.Tags.CreateTagsString().Contains(mSearchText)));
+
+                SortVisibleTasks();
             }
         }
 
@@ -305,13 +304,30 @@ namespace Timeinator.Mobile.Domain
         /// <summary>
         /// Reloads main task list with whatever sits in database currently
         /// </summary>
-        public void ReloadTasks()
+        private void ReloadTasks()
         {
             // Load saved tasks in database
-            var tasks = mTimeTasksService.LoadStoredTasks(SearchText);
+            var tasks = mTimeTasksService.LoadStoredTasks();
 
             // Add them to the list as suitable view models
-            TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(mTimeTasksMapper.ListMapToList(tasks));
+            mAllTaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(mTimeTasksMapper.ListMapToList(tasks));
+            TaskItems = mAllTaskItems;
+        }
+
+        /// <summary>
+        /// Sorts TaskItems
+        /// </summary>
+        private void SortVisibleTasks()
+        {
+            switch (SortItems.IndexOf(SortValue))
+            {
+                case 0:
+                    TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(TaskItems.OrderBy(x => x.Name));
+                    break;
+                case 1:
+                    TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(TaskItems.OrderBy(x => x.CreationDate));
+                    break;
+            }
         }
 
         #endregion

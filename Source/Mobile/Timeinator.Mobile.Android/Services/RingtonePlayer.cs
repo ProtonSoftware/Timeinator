@@ -15,10 +15,13 @@ namespace Timeinator.Mobile.Android
 
         #region Interface Implementation
 
+        /// <inheritdoc />
         public void Play() => mSound.Play();
 
+        /// <inheritdoc />
         public void Stop() => mSound.Stop();
 
+        /// <inheritdoc />
         public void ChangeRingtone(string type)
         {
             throw new NotImplementedException();

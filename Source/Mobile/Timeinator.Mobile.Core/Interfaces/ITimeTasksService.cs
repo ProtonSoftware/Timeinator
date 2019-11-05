@@ -9,7 +9,7 @@ namespace Timeinator.Mobile.Domain
     /// </summary>
     public interface ITimeTasksService
     {
-        List<TimeTaskContext> LoadStoredTasks(string queryString);
+        List<TimeTaskContext> LoadStoredTasks(string queryString = "");
 
         void SaveTask(TimeTaskContext context);
         void RemoveTask(TimeTaskContext context);
