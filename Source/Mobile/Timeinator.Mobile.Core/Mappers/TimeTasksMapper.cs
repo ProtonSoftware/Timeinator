@@ -79,6 +79,7 @@ namespace Timeinator.Mobile.Domain
         {
             pageViewModel.TaskId = taskViewModel.Id;
             pageViewModel.TaskName = taskViewModel.Name;
+            pageViewModel.TaskType = taskViewModel.Type;
             pageViewModel.TaskDescription = taskViewModel.Description;
             pageViewModel.TaskTagsString = taskViewModel.Tags.CreateTagsString();
             pageViewModel.TaskConstantTime = taskViewModel.AssignedTime;
