@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:local="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+    android:id="@+id/taskListPage"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:clipToPadding="false">
+	<TextView
+		android:id="@+id/title"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:textAlignment="center"
+        style="@style/ElevatedCard"
+        android:elevation="@dimen/cardview_default_elevation"
+		android:textSize="@dimen/abc_text_size_display_2_material"
+		android:textColor="@color/colorBlack"
+        local:MvxBind='Text String("TaskListTitle")'
+		android:text="Twoje zadania" />
+    <android.support.design.widget.FloatingActionButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentRight="true"
+		android:layout_gravity="end|bottom"
+		android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
+		android:layout_marginBottom="92dp"
+        local:elevation="@dimen/design_navigation_elevation"
+        android:tint="@color/colorWhite"
+        android:background="@color/colorAccent"
+        android:src="@drawable/ic_add_black_18dp"
+        local:MvxBind="Click AddNewTaskCommand" />
+    <android.support.v7.widget.SearchView
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        style="@style/ElevatedCard"
+        android:elevation="@dimen/cardview_default_elevation"
+        local:iconifiedByDefault="false"
+        android:focusedByDefault="false"
+        local:MvxBind='Query SearchText; QueryHint String("SearchBarHint")'
+        android:layout_below="@id/title" />
+	<LinearLayout
+        android:id="@+id/bottomNavigation"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        style="@style/ElevatedCard">
+			
+		<Button android:layout_width="0dp"
+                android:layout_height="wrap_content"
+				android:layout_weight="2"
+				android:text="Rozpocznij"
+                style="@style/AccentButton"
+				local:MvxBind='Text String("Begin");Click UserReadyCommand'/>
+
+        <include
+                android:id="@+id/settingsIcon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+				android:layout_weight="1"
+                layout="@layout/icontextview" />
+
+        <include
+                android:id="@+id/aboutIcon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+				android:layout_weight="1"
+                layout="@layout/icontextview" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottomOptions"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+        android:layout_above="@id/bottomNavigation"
+        android:orientation="horizontal"
+        style="@style/ElevatedCard">
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:clickable="true"
+                      android:orientation="vertical">
+			
+		    <CheckBox
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:duplicateParentState="true"
+                local:MvxBind="Checked CheckAllBox" />
+            <android.support.design.internal.BaselineLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:clipToPadding="false"
+                android:duplicateParentState="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:duplicateParentState="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                local:MvxBind='Text String("All")'
+                android:text="Wszystkie"
+                android:foregroundTint="@color/material_grey_800"
+                android:textSize="@dimen/design_bottom_navigation_text_size"/>
+            </android.support.design.internal.BaselineLayout>
+        </LinearLayout>
+
+		<MvvmCross.Platforms.Android.Binding.Views.MvxSpinner
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+			local:MvxBind="ItemsSource SortItems; SelectedItem SortValue"/>
+
+    </LinearLayout>
+	<mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
+		android:layout_below="@id/searchBar"
+        android:layout_above="@id/bottomOptions"
+		android:id="@+id/taskList"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		local:MvxItemTemplate="@layout/tasklistitem"
+		local:MvxBind="ItemsSource TaskItems" />
+</RelativeLayout>

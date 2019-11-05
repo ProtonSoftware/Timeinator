@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:local="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+    android:id="@+id/taskSummaryPage"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<TextView
+		android:id="@+id/title"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:textAlignment="center"
+		android:textSize="@dimen/abc_text_size_display_2_material"
+		android:textColor="@color/colorBlack"
+        local:MvxBind='Text String("SessSummary")'
+		android:text="Wybrana sesja" />
+	<mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
+		android:layout_below="@id/title"
+		android:id="@+id/taskList"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		local:MvxItemTemplate="@layout/tasksummaryitem"
+		local:MvxBind="ItemsSource TaskItems" />
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ElevatedCard"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="4dp"
+            android:text="Start"
+            style="@style/AccentButton"
+            local:MvxBind='Text String("Begin");Click StartTasksCommand' />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"
+            android:text="Przerwij"
+            style="@style/DangerButton"
+            local:MvxBind='Text String("Abort");Click CancelCommand' />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottomOptions"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+        style="@style/ElevatedCard"
+        android:layout_above="@id/bottomNavigation"
+        android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextLargeBlack"
+                android:maxLines="1"
+                android:text="Przewidywany czas sesji: 5h 20m 0s"
+                local:MvxBind="Text TimeSpanToText(SessionTime, true)" />
+
+    </LinearLayout>
+</RelativeLayout>

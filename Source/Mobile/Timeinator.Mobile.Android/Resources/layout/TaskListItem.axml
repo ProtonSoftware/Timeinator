@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:tools = "http://schemas.android.com/tools"
+	xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:layout_width = "match_parent"
+    android:layout_height = "wrap_content"
+    android:minHeight="72dp">
+
+    <CheckBox
+        android:id = "@+id/avatar"
+        android:layout_width = "40dp"
+        android:layout_height = "40dp"
+        android:layout_marginBottom = "20dp"
+        android:layout_marginLeft = "16dp"
+        android:layout_marginRight = "16dp"
+        android:layout_marginTop = "20dp"
+        local:MvxBind="Checked IsEnabled"/>
+
+    <LinearLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:layout_marginBottom = "16dp"
+        android:layout_marginStart = "64dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop = "16dp"
+        android:layout_toLeftOf="@id/rightLayout"
+        android:orientation = "vertical">
+
+    <LinearLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:orientation = "horizontal">
+
+        <TextView
+            android:id = "@+id/first_line"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginEnd = "16dp"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            local:MvxBind="Text Name"
+            android:text="First header line PH"
+            style="@style/TextMainBlack" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:orientation = "horizontal">
+
+        <TextView
+            android:id = "@+id/second_line"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:ellipsize="marquee"
+            local:MvxBind="Text Description"
+            tools:text = "This is the second line"
+            style="@style/TextSecondaryGray" />
+
+    </LinearLayout>
+
+    <MvvmCross.Platforms.Android.Binding.Views.MvxLinearLayout
+        android:id="@+id/tagsList"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:orientation = "horizontal"
+        local:MvxItemTemplate="@layout/chipview"
+        local:MvxBind="ItemsSource Tags" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id = "@+id/contextMenu"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_alignParentEnd = "true"
+        android:layout_marginEnd = "16dp"
+        android:layout_marginTop = "20dp"
+        android:maxLines = "1"
+        android:maxWidth = "40dp"
+        android:elevation="@dimen/abc_action_bar_elevation_material"
+        local:MvxBind="Visible IsContextMenuVisible"
+        android:orientation="horizontal">
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            local:MvxBind="Click EditCommand"
+            android:elevation="@dimen/abc_action_bar_elevation_material"
+            android:src="@drawable/ic_edit_white_24dp" />
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            local:MvxBind="Click DeleteCommand"
+            android:elevation="@dimen/abc_action_bar_elevation_material"
+            android:src="@drawable/ic_delete_white_24dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rightLayout"
+        android:layout_width="112dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentEnd = "true">
+
+        <TextView
+            android:id="@+id/assignedTime"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:textAlignment="textEnd"
+            android:layout_marginTop = "20dp"
+            android:maxLines = "1"
+            android:maxWidth = "40dp"
+            local:MvxBind="Text TimeSpanToText(AssignedTime); Visible IsAssignedTime"
+            android:textColor = "@color/colorGray"
+            android:textSize = "14sp"
+            android:fontFamily="sans-serif"/>
+
+        <TextView
+            android:id="@+id/progressFraction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:maxLines = "1"
+            android:layout_marginVertical="6dp"
+            android:textColor = "@color/colorGray"
+            android:textSize = "14sp"
+            android:fontFamily="sans-serif"
+            local:MvxBind="Text ProgressFraction(Progress, MaxProgress); Visible ShouldShowProgress"
+            android:layout_below="@id/assignedTime" />
+
+        <LinearLayout
+            android:id = "@+id/taskIcons"
+            android:layout_width = "match_parent"
+            android:layout_height = "24dp"
+            android:layout_alignParentBottom = "true"
+            android:layout_marginBottom = "16dp"
+            android:maxLines = "1"
+            android:layout_below="@id/progressFraction"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_new_releases_black_24dp"
+                android:tint="@color/colorPrimary"
+                android:layout_weight="1"
+                local:MvxBind="Visible IsImportant" />
+
+            <ImageView
+                android:layout_width="98dp"
+                android:layout_height="match_parent"
+                android:tint="@color/colorAccent"
+                android:layout_weight="1"
+                android:layout_marginLeft="-32dp"
+                android:layout_marginRight="4dp"
+                local:MvxBind="DrawableName PriorityEnumToIcon(Priority)" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                local:MvxBind="DrawableName TimeTaskTypeToIcon(Type)" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:tools = "http://schemas.android.com/tools"
+	xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:layout_width = "match_parent"
+    android:layout_height = "48dp"
+    android:layout_marginTop = "8dp"
+    android:orientation = "vertical">
+
+    <LinearLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:layout_marginBottom = "16dp"
+        android:layout_marginEnd = "56dp"
+        android:layout_marginStart = "16dp"
+        android:layout_marginTop = "8dp"
+        android:orientation = "vertical">
+
+        <LinearLayout
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal">
+
+            <TextView
+                android:id = "@+id/first_line"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginEnd = "16dp"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                local:MvxBind="Text Name"
+                android:text="First header line PH"
+                style="@style/TextMainBlack" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id = "@+id/time_info"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_alignParentEnd = "true"
+        android:layout_marginEnd = "16dp"
+        android:layout_marginTop = "8dp"
+        android:maxLines = "1"
+        local:MvxBind="Text TimeSpanToText(SessionDynamicTime)"
+        android:text="0h 19 min 0s"
+        style="@style/TextMainBlack" />
+
+    <View 
+        style="@style/Divider"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart = "32dp"/>
+
+</RelativeLayout>

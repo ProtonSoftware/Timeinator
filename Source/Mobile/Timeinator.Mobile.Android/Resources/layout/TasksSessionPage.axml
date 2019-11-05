@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:local="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+    android:paddingHorizontal="4dp"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<TextView
+		android:id="@+id/title"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:textAlignment="center"
+		android:textSize="@dimen/abc_text_size_display_2_material"
+		android:textColor="@color/colorBlack"
+        local:MvxBind='Text String("Session")'
+		android:text="Sesja" />
+    <android.support.design.widget.FloatingActionButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentRight="true"
+		android:layout_gravity="end|bottom"
+		android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
+		android:layout_marginBottom="72dp"
+        local:elevation="@dimen/design_navigation_elevation"
+        android:tint="@color/colorWhite"
+        android:background="@color/colorAccent"
+        android:src="@drawable/ic_pause_black_24dp"
+        local:MvxBind="Click PauseCommand;Visibility PausedBoolToVisibility(Paused)" />
+    <android.support.design.widget.FloatingActionButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentRight="true"
+		android:layout_gravity="end|bottom"
+		android:layout_marginRight="@dimen/abc_action_bar_content_inset_material"
+		android:layout_marginBottom="72dp"
+        local:elevation="@dimen/design_navigation_elevation"
+        android:tint="@color/colorWhite"
+        android:background="@color/colorAccent"
+        android:src="@drawable/ic_play_arrow_black_24dp"
+        local:MvxBind="Click ResumeCommand;Visibility PausedBoolToVisibility(Paused, true)" />
+    <LinearLayout
+        android:id="@+id/currentTaskTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginVertical="8dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/ic_content_paste_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            style="@style/TextLargeBlack"
+            local:MvxBind='Text String("CurrentTask")'
+            android:text="Aktualne zadanie" />
+
+    </LinearLayout>
+	<RelativeLayout
+		android:id="@+id/progressLayout"
+		android:layout_above="@id/bottomNavigation"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+        android:gravity="center">
+		<ProgressBar
+			android:id="@+id/progressRing"
+			android:rotation="270"
+			android:layout_height="120dp"
+			android:layout_width="120dp"
+			android:layout_centerInParent="true"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/progress_ring_circle"
+            android:progress="100"
+			android:min="0"
+			android:max="100"
+			local:MvxBind="Progress Progress(TaskProgress)" />
+		<TextView
+			android:id="@+id/progressText"
+            android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:layout_centerInParent="true"
+			style="@style/TextLargeBlack"
+			local:MvxBind="Text Progress(TaskProgress, true)"
+			android:text="20%" />
+	</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/sessionTimeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/progressLayout"
+        android:layout_marginVertical="8dp">
+
+        <ImageView
+            android:id="@+id/sessionTimeIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/ic_access_time_black_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/sessionTimeIcon"
+            android:maxLines="1"
+            style="@style/TextLargeBlack"
+            local:MvxBind='Text String("SessionLasts")'
+            android:text="Sesja trwa" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            style="@style/TextLargeBlack"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+		    local:MvxBind="Text TimeSpanToText(SessionDuration)"
+            android:text="0h 3m 14s" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/remainingTimeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/sessionTimeTitle"
+        android:layout_marginVertical="8dp">
+
+        <ImageView
+            android:id="@+id/remainingTimeIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="4dp"
+            android:src="@drawable/ic_alarm_black_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/remainingTimeIcon"
+            android:maxLines="1"
+            style="@style/TextLargeBlack"
+            local:MvxBind='Text String("RemainingTime")'
+            android:text="Pozostały czas" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:maxLines="1"
+            style="@style/TextLargeBlack"
+            android:textStyle="bold"
+		    local:MvxBind="Text TimeSpanToText(TimeRemaining)"
+            android:text="0h 15m 46s" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
+        style="@style/ElevatedCard"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="4dp"
+            android:text="Zakończ zadanie"
+            style="@style/AccentButton"
+            local:MvxBind='Text String("FinishTask");Click FinishTaskCommand' />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"
+            android:text="Koniec sesji"
+            style="@style/DangerButton"
+            local:MvxBind='Text String("FinishSess");Click EndSessionCommand' />
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/taskContainer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+        style="@style/ElevatedCard"
+	    android:orientation="vertical"
+		android:layout_below="@id/currentTaskTitle"
+		android:layout_above="@id/remainingTimeTitle"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="4dp"
+            local:MvxBind="Visibility PausedBoolToVisibility(Paused, true)"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/breakTimeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-8dp"
+                style="@style/TextLargeBlack"
+                android:textColor="@color/colorWhite"
+                android:layout_centerInParent="true"
+                local:MvxBind='Text String("BreakDuration")'
+                android:text="Czas trwania przerwy" />
+
+            <TextView
+                android:id="@+id/breakTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextLargeBlack"
+                android:textColor="@color/colorWhite"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/breakTimeTitle"
+                local:MvxBind="Text TimeSpanToText(BreakDuration)"
+                android:text="0h 19m 0s" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/taskName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMainBlack"
+            android:layout_marginVertical="8dp"
+            android:layout_marginLeft="8dp"
+            local:MvxBind="Text CurrentTask.Name"
+            android:text="Zadanie pierwsze" />
+        <TextView
+            android:id="@+id/taskDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextSecondaryGray"
+            android:layout_below="@id/taskName"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+            local:MvxBind="Text CurrentTask.Description"
+            android:text="Opis pierwszego zadania, który może być bardzo bardzo długi, ponieważ mogą być tu instrukcje wykonania zadania" />
+        <TextView
+            android:id="@+id/taskTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextMainBlack"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            local:MvxBind="Text TimeSpanToText(CurrentTask.AssignedTime)"
+            android:text="0h 19m 0s" />
+
+	    <mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
+		    android:layout_below="@id/taskDescription"
+		    android:id="@+id/taskList"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+		    local:MvxItemTemplate="@layout/tasksessionitem"
+		    local:MvxBind="ItemsSource RemainingTasks" />
+
+    </RelativeLayout>
+</RelativeLayout>
