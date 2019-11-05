@@ -7,7 +7,7 @@ using MvvmCross.Platforms.Android.Presenters.Attributes;
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity]
+    [Activity(NoHistory = true)]
     public class AlarmPage : MvxAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)

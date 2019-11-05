@@ -7,7 +7,7 @@ using MvvmCross.Platforms.Android.Presenters.Attributes;
 namespace Timeinator.Mobile.Android
 {
     [MvxActivityPresentation]
-    [Activity]
+    [Activity(NoHistory = true)]
     public class TasksSessionPage : MvxAppCompatActivity
     {
         #region Private Members
