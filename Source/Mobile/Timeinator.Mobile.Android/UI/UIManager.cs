@@ -5,7 +5,6 @@ using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 using System;
 using System.Globalization;
-using System.Threading;
 using System.Threading.Tasks;
 using Timeinator.Core;
 using Timeinator.Mobile.Domain;
@@ -13,7 +12,7 @@ using Timeinator.Mobile.Domain;
 namespace Timeinator.Mobile.Android
 {
     /// <summary>
-    /// Manages all the UI stuff in this application
+    /// Manages all the UI interactions in this application
     /// </summary>
     public class UIManager : IUIManager
     {
@@ -43,6 +42,7 @@ namespace Timeinator.Mobile.Android
         /// </summary>
         public UIManager()
         {
+            // Inject all dependiences from Mvx default DI container
             mNavigationService = Mvx.IoCProvider.Resolve<IMvxNavigationService>();
             mMainThreadDispatcher = Mvx.IoCProvider.Resolve<IMvxMainThreadAsyncDispatcher>();
             mUserDialogs = Mvx.IoCProvider.Resolve<IUserDialogs>();
@@ -53,30 +53,18 @@ namespace Timeinator.Mobile.Android
         #region Interface Implementation
 
         /// <summary>
-        /// Changes the current application's page to the one that is associated with specified view model
+        /// Implements <see cref="IUIManager.GoToViewModelPage(MvxViewModel)"/>
         /// </summary>
-        /// <param name="viewModel">The view model for the page</param>
-        public async Task GoToViewModelPage(MvxViewModel viewModel)
-        {
-            await mNavigationService.Navigate(viewModel);
-        }
+        public async Task GoToViewModelPage(MvxViewModel viewModel) => await mNavigationService.Navigate(viewModel);
 
         /// <summary>
-        /// Closes current page from the stack and as a result goes back to the previous one
+        /// Implements <see cref="IUIManager.GoBackToPreviousPage(MvxViewModel)"/>
         /// </summary>
-        /// <param name="viewModel">The view model for the currently shown page that we want to close</param>
-        /// <returns></returns>
-        public async Task GoBackToPreviousPage(MvxViewModel currentVM)
-        {
-            await mNavigationService.Close(currentVM);
-        }
-
+        public async Task GoBackToPreviousPage(MvxViewModel currentVM) => await mNavigationService.Close(currentVM);
+        
         /// <summary>
-        /// Shows the popup to the user based on provided informations
+        /// Implements <see cref="IUIManager.DisplayPopupMessageAsync(PopupMessageViewModel)"/>
         /// </summary>
-        /// <param name="viewmodel">The provided properties of this popup to show</param>
-        /// <returns>If the popup takes user response, true when user accepts and false when not
-        ///          In case popup doesnt take any response from the user, always returns true when popup was shown succesfully</returns>
         public async Task<bool> DisplayPopupMessageAsync(PopupMessageViewModel viewmodel)
         {
             // If we dont want to get any user response...
@@ -97,22 +85,19 @@ namespace Timeinator.Mobile.Android
         }
 
         /// <summary>
-        /// Takes the action on the main application's thread and executes it here
+        /// Implements <see cref="IUIManager.ExecuteOnMainThread(Action)"/>
         /// </summary>
-        /// <param name="action">The action to execute on main thread</param>
-        /// <returns></returns>
-        public async Task ExecuteOnMainThread(Action action)
-        {
-            await mMainThreadDispatcher.ExecuteOnMainThreadAsync(action);
-        }
+        public async Task ExecuteOnMainThread(Action action) => await mMainThreadDispatcher.ExecuteOnMainThreadAsync(action);
 
         /// <summary>
-        /// Changes application's language
+        /// Implements <see cref="IUIManager.ChangeLanguage(string)"/>
         /// </summary>
-        /// <param name="langCode">The international code for the language to change to</param>
         public void ChangeLanguage(string langCode)
         {
+            // Create new culture based on provided code
             var culture = new CultureInfo(langCode);
+
+            // And set it in every possible place so the whole application is now in different language
             LocalizationResource.Culture = culture;
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;

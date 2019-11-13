@@ -26,6 +26,9 @@ namespace Timeinator.Mobile.Android
         {
             base.OnStart();
 
+            // Launch SessionNotificationService
+            DI.Container.GetInstance<SessionNotificationService>();
+
             // Get this page view and data context
             var page = FindViewById(Resource.Id.taskSummaryPage);
             var viewModel = BindingContext.DataContext as TasksSummaryPageViewModel;
@@ -48,9 +51,6 @@ namespace Timeinator.Mobile.Android
                 // Reorder the task list
                 viewModel.ReorderCommand.Execute(parameter);
             };
-
-            // Launch SessionNotificationService
-            DI.Container.GetInstance<SessionNotificationService>();
         }
     }
 }
