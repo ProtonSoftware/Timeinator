@@ -7,6 +7,11 @@ namespace Timeinator.Mobile.Android
     /// </summary>
     public static class IconExtensions
     {
+        /// <summary>
+        /// Converts task's type to Android icon
+        /// </summary>
+        /// <param name="taskType">The task's type to get icon for</param>
+        /// <returns>Icon as Android Resource Id</returns>
         public static int ToIcon(this TimeTaskType taskType)
         {
             // Return associated icon based on provided type
@@ -23,6 +28,11 @@ namespace Timeinator.Mobile.Android
             }
         }
 
+        /// <summary>
+        /// Converts task's priority to Android icon
+        /// </summary>
+        /// <param name="taskType">The task's priority to get icon for</param>
+        /// <returns>Icon as Android Resource Id</returns>
         public static int ToIcon(this Priority taskType)
         {
             // Return associated icon based on provided priority value
