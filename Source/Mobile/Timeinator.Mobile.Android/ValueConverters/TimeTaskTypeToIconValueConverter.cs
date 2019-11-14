@@ -6,7 +6,7 @@ using Timeinator.Mobile.Domain;
 namespace Timeinator.Mobile.Android
 {
     /// <summary>
-    /// The value converter for task's type to get appropriate icon for
+    /// Converts task's type to associated icon to show in UI
     /// </summary>
     public class TimeTaskTypeToIconValueConverter : IMvxValueConverter
     {

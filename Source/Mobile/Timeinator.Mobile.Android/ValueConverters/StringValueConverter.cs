@@ -13,6 +13,8 @@ namespace Timeinator.Mobile.Android
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // Get localization resource and find the appropriate string based on provided value
+            // Culture is not needed to be provided here, because localization resource itself is set to current culture already
             var resourceManager = new ResourceManager(typeof(LocalizationResource));
             return resourceManager.GetString(value.ToString());
         }
