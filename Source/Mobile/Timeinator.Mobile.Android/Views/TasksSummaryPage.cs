@@ -26,7 +26,7 @@ namespace Timeinator.Mobile.Android
         {
             base.OnStart();
 
-            // Launch SessionNotificationService
+            // Initialize notification service for upcoming session
             DI.Container.GetInstance<SessionNotificationService>();
 
             // Get this page view and data context

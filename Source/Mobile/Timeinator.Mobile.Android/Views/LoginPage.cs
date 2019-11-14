@@ -44,7 +44,7 @@ namespace Timeinator.Mobile.Android
             // Add dialogs library to Mvx DI
             Mvx.IoCProvider.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
 
-            // Create new container
+            // Create new DI container
             DI.Container = new Container().AddTimeinatorServices();
 
             // Migrate the database
