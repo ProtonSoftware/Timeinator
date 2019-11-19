@@ -79,27 +79,8 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         private async Task CalculateSessionAsync()
         {
-            // Save used mode
-            mSettingsProvider.SetSetting(new SettingsPropertyInfo
-            {
-                Name = nameof(SessionTimeAsFinishTime),
-                Value = SessionTimeAsFinishTime,
-                Type = typeof(bool)
-            });
-
-            var time = UserTime;
-            // Alternative mode
-            if (SessionTimeAsFinishTime)
-            {
-                // Subtract Now converted to timespan
-                time -= DateTime.Now - DateTime.Today;
-                // If negative then it should be above 24 hours
-                if (time < TimeSpan.FromSeconds(-60))
-                    time += TimeSpan.FromHours(24);
-            }
-
             // Try to set user's selected time as session time
-            var result = mSessionHandler.UpdateDuration(time);
+            var result = mSessionHandler.UpdateDuration(UserTime, SessionTimeAsFinishTime);
 
             // If user's selected time is not enough to start a session...
             if (!result)
@@ -113,6 +94,14 @@ namespace Timeinator.Mobile.Domain
 
             // Otherwise, go to next page which shows a summary of calculated user session
             mApplicationViewModel.GoToPage(ApplicationPage.TasksSummary);
+
+            // Save current session time mode for future use
+            mSettingsProvider.SetSetting(new SettingsPropertyInfo
+            {
+                Name = nameof(SessionTimeAsFinishTime),
+                Value = SessionTimeAsFinishTime,
+                Type = typeof(bool)
+            });
         }
 
         /// <summary>
@@ -120,9 +109,6 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         private void Cancel()
         {
-            // Clear task list in service
-            mSessionHandler.ClearSessionTasks();
-
             // Go back to task list
             mUIManager.GoBackToPreviousPage(this);
         }

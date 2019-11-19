@@ -62,6 +62,7 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         private void InitializeAppData()
         {
+            // Load version number from Timeinator.Mobile.Domain assembly
             var currentAssembly = typeof(App).Assembly.GetName();
             VersionNumber = currentAssembly.Version.ToString(3);
         }

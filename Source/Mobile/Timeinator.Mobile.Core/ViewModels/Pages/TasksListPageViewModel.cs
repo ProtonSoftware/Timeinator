@@ -38,7 +38,8 @@ namespace Timeinator.Mobile.Domain
         private string mSearchText;
 
         /// <summary>
-        /// The list of time tasks for current session
+        /// The list of all available time tasks
+        /// This is the underlying list and it is not directly displayed in the view
         /// </summary>
         private ObservableCollection<ListTimeTaskItemViewModel> mAllTaskItems;
 
@@ -47,14 +48,10 @@ namespace Timeinator.Mobile.Domain
         #region Public Properties
 
         /// <summary>
-        /// The list of time tasks for current session to show in this page
+        /// The list of time tasks that are eligible to be displayed in the list
+        /// This is based on the <see cref="mAllTaskItems"/> list, but with functionalities like sorting and searching
         /// </summary>
         public ObservableCollection<ListTimeTaskItemViewModel> TaskItems { get; set; } = new ObservableCollection<ListTimeTaskItemViewModel>();
-
-        /// <summary>
-        /// The list of every tag that are associated with current list of tasks
-        /// </summary>
-        public ObservableCollection<string> TaskTags { get; set; } = new ObservableCollection<string>();
 
         /// <summary>
         /// The list of possible task list items sorting methods
@@ -73,7 +70,10 @@ namespace Timeinator.Mobile.Domain
             get => mSortValue;
             set
             {
+                // Set the value
                 mSortValue = value;
+
+                // Sort the tasks
                 SortVisibleTasks();
             }
         }
@@ -86,8 +86,10 @@ namespace Timeinator.Mobile.Domain
             get => mCheckAllBox;
             set
             {
+                // Set the value
                 mCheckAllBox = value;
 
+                // Enable or disable all the tasks based on that
                 foreach (var task in TaskItems)
                     task.IsEnabled = mCheckAllBox;
             }
@@ -101,11 +103,14 @@ namespace Timeinator.Mobile.Domain
             get => mSearchText;
             set
             {
+                // Set the value
                 mSearchText = value;
 
+                // Filter all the tasks based on that
                 TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>
                     (mAllTaskItems.Where(x => x.Name.Contains(mSearchText) || x.Tags.CreateTagsString().Contains(mSearchText)));
 
+                // Make sure new list of tasks is sorted
                 SortVisibleTasks();
             }
         }
@@ -175,20 +180,8 @@ namespace Timeinator.Mobile.Domain
             mViewModelProvider = viewModelProvider;
             mApplicationViewModel = applicationViewModel;
 
-            // Remove all outdated refresh events
-            TaskListHelpers.CleanRefreshEvent();
-
-            // Attach reloading function to an event, so everytime tasks need update, it can be fired and updated
-            TaskListHelpers.RefreshUITasks += ReloadTasks;
-
-            // Initially load every task
-            TaskListHelpers.RaiseRefreshEvent();
-
             // Initially, we want to sort tasks alphabetically by default
             SortValue = SortItems[0];
-
-            // Get every unique tag to display in the view
-            GetEveryTaskTags();
         }
 
         #endregion
@@ -236,8 +229,8 @@ namespace Timeinator.Mobile.Domain
                 // Delete the task
                 mTimeTasksService.RemoveTask(mTimeTasksMapper.ReverseMap(taskVM));
 
-                // Refresh the list
-                TaskListHelpers.RaiseRefreshEvent();
+                // Refresh the tasks list
+                ReloadTasks();
             }
         }
 
@@ -264,9 +257,6 @@ namespace Timeinator.Mobile.Domain
                 return;
             }
 
-            // Reset handler to a clean state
-            mSessionHandler.ClearSessionTasks();
-
             // Send task contexts to the handler
             mSessionHandler.UpdateTasks(taskContexts);
 
@@ -279,26 +269,18 @@ namespace Timeinator.Mobile.Domain
         #region Private Helpers
 
         /// <summary>
-        /// Looks up in every task for it's tags and lists them as strings
+        /// Fired whenever this page has loaded and displayed to the user
         /// </summary>
-        private void GetEveryTaskTags()
+        public override void ViewAppearing()
         {
-            // For every task in the list
-            foreach (var task in TaskItems)
-            {
-                // Skip no-tags tasks
-                if (task.Tags == null || task.Tags.Count < 1)
-                    continue;
+            // Do base stuff
+            base.ViewAppearing();
+            
+            // Reload task list so it's up to date
+            ReloadTasks();
 
-                // For each task's tag...
-                foreach (var tag in task.Tags)
-                {
-                    // If its not in the list
-                    if (!TaskTags.Contains(tag))
-                        // Add it
-                        TaskTags.Add(tag);
-                }
-            }
+            // Clear task list in session handler for upcoming session to be initially cleared
+            mSessionHandler.ClearSessionTasks();
         }
 
         /// <summary>
@@ -315,16 +297,19 @@ namespace Timeinator.Mobile.Domain
         }
 
         /// <summary>
-        /// Sorts TaskItems
+        /// Sorts all the tasks that are currently visible in the list
         /// </summary>
         private void SortVisibleTasks()
         {
+            // Based on sorting value...
             switch (SortItems.IndexOf(SortValue))
             {
                 case 0:
+                    // Sort alphabetically
                     TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(TaskItems.OrderBy(x => x.Name));
                     break;
                 case 1:
+                    // Sort by created date
                     TaskItems = new ObservableCollection<ListTimeTaskItemViewModel>(TaskItems.OrderBy(x => x.CreationDate));
                     break;
             }

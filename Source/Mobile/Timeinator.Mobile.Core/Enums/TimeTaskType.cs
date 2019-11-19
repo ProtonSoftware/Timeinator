@@ -6,9 +6,7 @@
     public enum TimeTaskType
     {
         Generic,
-
         Reading,
-        Training,
-
+        Training
     }
 }

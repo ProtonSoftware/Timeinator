@@ -71,7 +71,7 @@ namespace Timeinator.Mobile.Domain
         public double TaskMaximumProgress { get; set; }
 
         /// <summary>
-        /// TODO: Delete
+        /// TODO: Delete once automatic progress is implemented
         /// </summary>
         public double TaskProgress { get; set; }
 
@@ -112,7 +112,7 @@ namespace Timeinator.Mobile.Domain
         #region Command Methods
 
         /// <summary>
-        /// Adds newly created task to the <see cref="TimeTasksCalculator"/>
+        /// Adds newly created task to the list and saves it
         /// </summary>
         public void AddNewTask()
         {
@@ -150,9 +150,6 @@ namespace Timeinator.Mobile.Domain
 
             // Close this page
             mUIManager.GoBackToPreviousPage(this);
-
-            // Refresh UI list so it gets new task
-            TaskListHelpers.RaiseRefreshEvent();
         }
 
         /// <summary>

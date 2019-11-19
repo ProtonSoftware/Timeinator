@@ -165,13 +165,21 @@ namespace Timeinator.Mobile.Session
         /// Sets provided time as user session time
         /// </summary>
         /// <returns>True, if time was set successfully, or false, if time wasn't enough for the current session</returns>
-        public bool UpdateDuration(TimeSpan userTime)
+        public bool UpdateDuration(TimeSpan userTime, bool timeAsFinishHour)
         {
-            // Validate provided time
-            if (ValidateTime(userTime))
+            // Calculate session time based on provided time and mode flag
+            var time = timeAsFinishHour ? userTime - (DateTime.Now - DateTime.Today) : userTime;
+
+            // If it's negative for finish hour mode...
+            if (time < TimeSpan.FromSeconds(-60) && timeAsFinishHour)
+                // Add 24 hours
+                time += TimeSpan.FromHours(24);
+
+            // Validate calculated time
+            if (ValidateTime(time))
             {
                 // It is proper one, so set it
-                SessionTime = userTime;
+                SessionTime = time;
 
                 // And return success
                 return true;

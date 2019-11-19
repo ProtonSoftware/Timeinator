@@ -166,7 +166,7 @@
     <Compile Include="Helpers\MvxViewPagerFragmentAdapter.cs" />
     <Compile Include="Services\RingtonePlayer.cs" />
     <Compile Include="Services\ViewModelProvider.cs" />
-    <Compile Include="ValueConverters\PausedBoolToVisibilityValueConverter.cs" />
+    <Compile Include="ValueConverters\BoolToVisibilityValueConverter.cs" />
     <Compile Include="ValueConverters\PriorityEnumToIconValueConverter.cs" />
     <Compile Include="ValueConverters\ProgressFractionValueConverter.cs" />
     <Compile Include="ValueConverters\ProgressValueConverter.cs" />
