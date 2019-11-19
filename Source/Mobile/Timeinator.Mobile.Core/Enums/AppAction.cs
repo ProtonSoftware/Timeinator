@@ -36,7 +36,7 @@
         ResumeSession,
 
         /// <summary>
-        /// Stop / cancel session
+        /// Stops / cancels session
         /// </summary>
         StopSession
     }

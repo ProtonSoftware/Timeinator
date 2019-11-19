@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Timeinator.Core
 {
@@ -24,6 +23,7 @@ namespace Timeinator.Core
         {
             get
             {
+                // If list is empty, return empty list as well
                 if (WholeList.Count <= 0)
                     return new List<T>();
 

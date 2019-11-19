@@ -86,7 +86,7 @@ namespace Timeinator.Mobile.Android
         /// <param name="progress">The progress of current task</param>
         /// <param name="time">The time left of current task</param>
         /// <param name="taskService">The instance of task service which is running in the background</param>
-        /// <returns></returns>
+        /// <returns>The notification itself, fully built and ready</returns>
         public Notification CreateNotification(string title, int progress, TimeSpan time, TaskService taskService)
         {
             // Set provided title in the notification 
@@ -150,7 +150,7 @@ namespace Timeinator.Mobile.Android
         }
 
         /// <summary>
-        /// Kills all notifications
+        /// Removes every existing notification
         /// </summary>
         public void Kill()
         {

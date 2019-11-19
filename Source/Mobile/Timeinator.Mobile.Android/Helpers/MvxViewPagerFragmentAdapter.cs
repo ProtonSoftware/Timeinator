@@ -75,8 +75,10 @@ namespace Timeinator.Mobile.Android
             // Set the view model of the fragment to use the one from info
             ((MvxFragment)fragment).ViewModel = fragmentInfo.ViewModel;
 
+            // If fragment is one of AddNewTimeTask pages...
             if (fragment is AddNewTimeTaskFragment timeTaskFragment)
             {
+                // Set it's task type
                 timeTaskFragment.Type = (TimeTaskType)System.Enum.Parse(typeof(TimeTaskType), fragmentInfo.Title);
             }
 

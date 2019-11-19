@@ -13,14 +13,34 @@ namespace Timeinator.Mobile.Android
     {
         #region Public Properties
 
+        /// <summary>
+        /// Indicates if this service is successfully connected and ready to use
+        /// </summary>
         public bool IsConnected { get; private set; }
+        
+        /// <summary>
+        /// The Android Binder service which is only used because all the services should run in background
+        /// </summary>
         public TaskServiceBinder Binder { get; private set; }
+
+        /// <summary>
+        /// The event to handle any request coming from notification
+        /// </summary>
+        public event Action<AppAction> Request = (a) => { };
 
         #endregion
 
+        #region Interface Implementation
+
+        /// <summary>
+        /// Called initially when this service is created
+        /// </summary>
         public void OnServiceConnected(ComponentName name, IBinder service)
         {
+            // Get provided android binder
             Binder = service as TaskServiceBinder;
+
+            // Connect this service if binder was provided
             IsConnected = Binder != null;
             if (IsConnected)
             {
@@ -28,127 +48,61 @@ namespace Timeinator.Mobile.Android
             }
         }
 
+        /// <summary>
+        /// This is not called anywhere, just needed for <see cref="IServiceConnection"/> interface implementation
+        /// </summary>
         public void OnServiceDisconnected(ComponentName name)
         {
             Binder = null;
             IsConnected = false;
         }
 
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
-        /// Tells whether service is up and running
+        /// Updates notification data with current task state provided in parameters
         /// </summary>
-        public bool Active
+        /// <param name="title">The task's name</param>
+        /// <param name="progress">The progress of a task to show</param>
+        /// <param name="time">The time left</param>
+        /// <param name="runningState">The state of session</param>
+        /// <returns></returns>
+        public void UpdateTaskData(string title, double progress, TimeSpan time, bool runningState)
         {
-            get
-            {
-                if (!IsConnected)
-                    return false;
-
-                return Binder.Service.IsRunning;
-            }
-        }
-
-        /// <summary>
-        /// Event to handle any request from notification
-        /// </summary>
-        public event Action<AppAction> Request = (a) => { };
-
-        /// <summary>
-        /// Update notification title text
-        /// </summary>
-        public bool SetTitle(string txt)
-        {
-            if (IsConnected)
-            {
-                Binder.Service.Title = txt;
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Update notification title text
-        /// </summary>
-        public bool SetProgress(double p)
-        {
-            if (IsConnected)
-            {
-                Binder.Service.Progress = p;
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Update notification title text
-        /// </summary>
-        public bool SetTime(TimeSpan t)
-        {
-            if (IsConnected)
-            {
-                Binder.Service.Time = t;
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Repaint notification
-        /// </summary>
-        public bool Update()
-        {
+            // Make sure we are connected
             if (!IsConnected)
-                return false;
+                return;
+            
+            // Update all the data in notification service
+            Binder.Service.Title = title;
+            Binder.Service.Progress = (int)progress * 100;
+            Binder.Service.Time = time;
+            Binder.Service.IsRunning = runningState;
             Binder.Service.ReNotify();
-            return true;
         }
 
         /// <summary>
-        /// Set state of Service to paused
-        /// </summary>
-        public bool Stop()
-        {
-            if (!IsConnected)
-                return false;
-            Binder.Service.IsRunning = false;
-            return true;
-        }
-
-        /// <summary>
-        /// Set state of Service to running
-        /// </summary>
-        public bool Start()
-        {
-            if (!IsConnected)
-                return false;
-            Binder.Service.IsRunning = true;
-            return true;
-        }
-
-        /// <summary>
-        /// Set state of Service
-        /// </summary>
-        public bool SetState(bool running)
-        {
-            if (!IsConnected)
-                return false;
-            Binder.Service.IsRunning = running;
-            return true;
-        }
-
-        /// <summary>
-        /// Remove timeinator service
+        /// Concludes the service by sending stop intent action to the application
         /// </summary>
         public void Kill()
         {
+            // Make sure we are connected
             if (!IsConnected)
                 return;
+
             // Create intent with stop action
             var intent = new Intent(Application.Context, typeof(TaskService));
             intent.SetAction(IntentActions.ACTION_STOP);
-            // Send intent to service
+
+            // Send intent to the application
             Application.Context.StartService(intent);
+
+            // Disconnect this service
             IsConnected = false;
         }
+
+        #endregion
     }
 }

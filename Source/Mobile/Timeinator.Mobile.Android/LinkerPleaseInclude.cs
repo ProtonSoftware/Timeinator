@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Windows.Input;
-using Android.App;
-using Android.Content;
-using Android.OS;
+﻿using Android.App;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
@@ -20,6 +11,11 @@ using MvvmCross.Navigation;
 using MvvmCross.Platforms.Android.Binding.Views;
 using MvvmCross.ViewModels;
 using MvvmCross.WeakSubscription;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Reflection;
+using System.Windows.Input;
 
 namespace Timeinator.Mobile.Android
 {

@@ -67,9 +67,6 @@ namespace Timeinator.Mobile.Android
             // Find task list container
             var recyclerView = page.FindViewById<MvxRecyclerView>(Resource.Id.taskList);
 
-            // Subscribe to child view added event to populate tags list for task list items
-            recyclerView.ChildViewAdded += RecyclerView_ChildViewAdded;
-
             // Allow item swiping
             var callback = new SwipeRecyclerViewItemCallback(recyclerView.GetAdapter());
             var itemTouchHelper = new ItemTouchHelper(callback);
@@ -121,22 +118,5 @@ namespace Timeinator.Mobile.Android
             // Allow overscrolling for the task list
             OverScrollDecoratorHelper.SetUpOverScroll(recyclerView, OverScrollDecoratorHelper.OrientationVertical);
         }
-
-        #region Private Helpers
-
-        /// <summary>
-        /// Called whenever new task is added to the main task list
-        /// Used to populate tags list in every item
-        /// </summary>
-        /// <param name="e">Event arguments, one of which is child's view</param>
-        private void RecyclerView_ChildViewAdded(object sender, global::Android.Views.ViewGroup.ChildViewAddedEventArgs e)
-        {
-            // Get the actual view of the child
-            var view = e.Child;
-
-            // TODO: Decide if we do this or not
-        }
-
-        #endregion
     }
 }

@@ -61,6 +61,9 @@ namespace Timeinator.Mobile.Android
 
         #region Android View Methods
 
+        /// <summary>
+        /// Fired when this fragment's view is being created
+        /// </summary>
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             // Do base stuff
@@ -87,8 +90,12 @@ namespace Timeinator.Mobile.Android
             }
         }
 
+        /// <summary>
+        /// Fired when this fragment's view was already successfully created
+        /// </summary>
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
+            // Do base stuff
             base.OnViewCreated(view, savedInstanceState);
 
             // Get all the views in the fragment

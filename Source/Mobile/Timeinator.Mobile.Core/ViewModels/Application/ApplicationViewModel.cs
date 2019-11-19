@@ -30,6 +30,7 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         public ApplicationViewModel(IUIManager uiManager, IViewModelProvider viewModelProvider)
         {
+            // Inject DI services
             mUIManager = uiManager;
             mViewModelProvider = viewModelProvider;
         }

@@ -17,32 +17,34 @@ namespace Timeinator.Mobile.Android
         private readonly TaskServiceConnection mTaskServiceConnection = new TaskServiceConnection();
 
         /// <summary>
-        /// Handler to communicate with and control session status
+        /// The session handler that this service communicate with to proceed with session
         /// </summary>
-        private ISessionHandler mSessionHandler;
-
-        /// <summary>
-        /// Correct task name set flag
-        /// </summary>
-        private bool SuccessfulUpdate { get; set; } = false;
+        private readonly ISessionHandler mSessionHandler;
 
         #endregion
 
         #region Constructor
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public SessionNotificationService(ISessionHandler sessionHandler)
         {
+            // Inject DI services
             mSessionHandler = sessionHandler;
 
-            mSessionHandler.SessionStarted += Initialise;
+            // Listen out for session start
+            mSessionHandler.SessionStarted += Initialize;
         }
 
         #endregion
 
+        #region Private Helpers
+
         /// <summary>
-        /// Setups this service by connecting with the <see cref="TaskServiceConnection"/>
+        /// Initializes this service for a start of new session
         /// </summary>
-        private void Initialise()
+        private void Initialize()
         {
             // If the service is already connected...
             if (mTaskServiceConnection.IsConnected)
@@ -59,46 +61,26 @@ namespace Timeinator.Mobile.Android
             // Attach provided notification interaction action
             mTaskServiceConnection.Request += NotificationRequest;
 
-            // Init communication with handler
-            mSessionHandler.SetupSession(TickNotification);
-            mSessionHandler.SessionFinished += () => { mTaskServiceConnection.Kill(); };
-            mSessionHandler.TaskStarted += TaskNotification;
+            // Initialize communication with handler
+            mSessionHandler.SetupSession(TaskUpdateTick);
 
-            // Update task name
-            TaskNotification();
+            // Listen out for session finish event
+            mSessionHandler.SessionFinished += mTaskServiceConnection.Kill;
         }
 
         /// <summary>
-        /// Notification operations every tick
+        /// Called whenever anything related to current task updates, so we can update all the data in notification
         /// </summary>
-        private void TickNotification()
+        private void TaskUpdateTick()
         {
-            // Get state
+            // Get all the data for current task
+            var title = mSessionHandler.GetCurrentTask().Name;
             var paused = mSessionHandler.Paused;
-            // Get progress
             var progress = mSessionHandler.CurrentTaskCalculatedProgress;
-            // Get time left
             var time = mSessionHandler.CurrentTimeLeft;
 
-            // Try to set task name if previous attempt failed
-            if (!SuccessfulUpdate)
-                TaskNotification();
-
-            // Apply changes
-            mTaskServiceConnection.SetState(!paused);
-            mTaskServiceConnection.SetProgress(progress);
-            mTaskServiceConnection.SetTime(time);
-            mTaskServiceConnection.Update();
-        }
-
-        /// <summary>
-        /// Notification operations every task
-        /// </summary>
-        private void TaskNotification()
-        {
-            // Update title
-            var name = mSessionHandler.GetCurrentTask().Name;
-            SuccessfulUpdate = mTaskServiceConnection.SetTitle(name);
+            // Apply any changes
+            mTaskServiceConnection.UpdateTaskData(title, progress, time, !paused);
         }
 
         /// <summary>
@@ -107,27 +89,32 @@ namespace Timeinator.Mobile.Android
         /// <param name="action">The action user has made</param>
         private void NotificationRequest(AppAction action)
         {
-            // Fire proper command based on the action
-            // So clicking on the notification has the exact same effect as clicking on the page
+            // Fire proper function from handler based on user's action
             switch (action)
             {
                 case AppAction.NextSessionTask:
                     {
                         mSessionHandler.Finish();
-                    } break;
+                    } 
+                    break;
                 case AppAction.PauseSession:
                     {
                         mSessionHandler.Pause();
-                    } break;
+                    } 
+                    break;
                 case AppAction.ResumeSession:
                     {
                         mSessionHandler.Resume();
-                    } break;
+                    }
+                    break;
                 case AppAction.StopSession:
                     {
                         mSessionHandler.EndSession();
-                    } break;
+                    }
+                    break;
             }
         }
+
+        #endregion
     }
 }

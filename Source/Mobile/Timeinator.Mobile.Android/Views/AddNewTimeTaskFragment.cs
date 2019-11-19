@@ -7,7 +7,6 @@ using MvvmCross.Platforms.Android.Binding.BindingContext;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using Org.Adw.Library.Widgets.Discreteseekbar;
 using System;
-using Timeinator.Core;
 using Timeinator.Mobile.Domain;
 using static Android.App.TimePickerDialog;
 
@@ -36,27 +35,11 @@ namespace Timeinator.Mobile.Android
 
         #endregion
 
-        #region Constructor
-
-        /// <summary>
-        /// Default constructor that initializes this fragment with provided data
-        /// </summary>
-        /// <param name="type">The type of this time task</param>
-        public AddNewTimeTaskFragment(TimeTaskType type)
-        {
-            // Get the type for this specific time task
-            Type = type;
-        }
-
-        public AddNewTimeTaskFragment()
-        {
-
-        }
-
-        #endregion
-
         #region Android View Methods
 
+        /// <summary>
+        /// Fired when this fragment's view is being created
+        /// </summary>
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             // Do base stuff (we dont need this view anyway)

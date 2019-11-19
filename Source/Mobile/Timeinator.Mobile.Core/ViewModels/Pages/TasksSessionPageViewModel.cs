@@ -109,11 +109,11 @@ namespace Timeinator.Mobile.Domain
             // Create commands
             InitializeSessionCommand = new RelayCommand(InitializeSession);
             EndSessionCommand = new RelayCommand(EndSessionAsync);
-            PauseCommand = new RelayCommand(() => mSessionHandler.Pause());
-            ResumeCommand = new RelayCommand(() => mSessionHandler.Resume());
-            FinishTaskCommand = new RelayCommand(FinishTask);
+            PauseCommand = new RelayCommand(mSessionHandler.Pause);
+            ResumeCommand = new RelayCommand(mSessionHandler.Resume);
+            FinishTaskCommand = new RelayCommand(mSessionHandler.Finish);
 
-            // Inject DI
+            // Get injected DI services
             mTimeTasksMapper = timeTasksMapper;
             mUIManager = uiManager;
             mSessionHandler = sessionHandler;
@@ -123,14 +123,6 @@ namespace Timeinator.Mobile.Domain
         #endregion
 
         #region Command Methods
-
-        /// <summary>
-        /// Finish task action, tell handler to finish and reload task list
-        /// </summary>
-        private void FinishTask()
-        {
-            mSessionHandler.Finish();
-        }
 
         private void UpdateList()
         {
@@ -226,7 +218,7 @@ namespace Timeinator.Mobile.Domain
                 // Set the task at specified index
                 CurrentTask = viewModels.ElementAt(index);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 // If we get here, the index is not in the list
                 // So the list is either empty...
@@ -237,7 +229,7 @@ namespace Timeinator.Mobile.Domain
                 }
                 else
                     // Or something went wrong and we tried to start the task that doesn't exist
-                    throw e;
+                    throw ex;
             }
 
             // Delete current task from the list

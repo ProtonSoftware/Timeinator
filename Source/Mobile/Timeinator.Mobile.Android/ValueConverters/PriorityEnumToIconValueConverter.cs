@@ -6,7 +6,7 @@ using Timeinator.Mobile.Domain;
 namespace Timeinator.Mobile.Android
 {
     /// <summary>
-    /// The value converter for task's priority to show it as icon
+    /// Converts task's priority to icon that can be shown in UI
     /// </summary>
     public class PriorityEnumToIconValueConverter : IMvxValueConverter
     {

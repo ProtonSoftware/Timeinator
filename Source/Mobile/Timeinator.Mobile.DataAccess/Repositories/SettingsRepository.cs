@@ -27,10 +27,7 @@ namespace Timeinator.Mobile.DataAccess
         /// Default constructor
         /// </summary>
         /// <param name="dbContext">The database context for this application</param>
-        public SettingsRepository(TimeinatorMobileDbContext dbContext) : base(dbContext)
-        {
-
-        }
+        public SettingsRepository(TimeinatorMobileDbContext dbContext) : base(dbContext) { }
 
         #endregion
 
@@ -62,7 +59,7 @@ namespace Timeinator.Mobile.DataAccess
         }
 
         /// <summary>
-        /// Saves specified settin's new value into database
+        /// Saves specified setting's new value into database
         /// </summary>
         /// <param name="setting">The setting that value got changed</param>
         public void SaveSetting(SettingsPropertyInfo setting)
@@ -84,7 +81,7 @@ namespace Timeinator.Mobile.DataAccess
                 DbSet.Add(entity);
             }
 
-            // Do nothing if Value already set
+            // Do nothing if setting's value is already set
             if (entity.Value == setting.Value.ToString())
                 return;
 

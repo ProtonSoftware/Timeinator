@@ -16,7 +16,8 @@ namespace Timeinator.Mobile.Android
         /// <param name="container">DI container</param>
         public static Container AddTimeinatorServices(this Container container)
         {
-            // Bind to a single instance of specified models
+            // Inject singleton services
+            // The instance is created only once and re'used everytime
             container.Register<ApplicationViewModel>(Lifestyle.Singleton);
             container.Register<TimeTasksMapper>(Lifestyle.Singleton);
             container.Register<ITimeTasksRepository, TimeTasksRepository>(Lifestyle.Singleton);
@@ -26,8 +27,15 @@ namespace Timeinator.Mobile.Android
             container.Register<ISessionHandler, SessionHandler>(Lifestyle.Singleton);
             container.Register<IViewModelProvider, ViewModelProvider>(Lifestyle.Singleton);
             container.Register<ISettingsProvider, SettingsProvider>(Lifestyle.Singleton);
+            container.Register<IUIManager, UIManager>(Lifestyle.Singleton);
+            container.Register<SessionNotificationService>(Lifestyle.Singleton);
+            container.Register<IRingtonePlayer, RingtonePlayer>(Lifestyle.Singleton);
 
-            // Inject dependiencies into every page's view model
+            // Inject scoped services
+            // The instance is created for every scope (in this mobile app case, this should work similar to singletons)
+
+            // Inject transient services
+            // The instance is created every single time it is requested in code
             container.Register<TasksListPageViewModel>(Lifestyle.Transient);
             container.Register<TasksTimePageViewModel>(Lifestyle.Transient);
             container.Register<TasksSummaryPageViewModel>(Lifestyle.Transient);
@@ -40,11 +48,6 @@ namespace Timeinator.Mobile.Android
 
             // Register our application's db context
             container.Register<TimeinatorMobileDbContext>(Lifestyle.Singleton);
-
-            // Add Android-specific dependency injection implementations
-            container.Register<IUIManager, UIManager>(Lifestyle.Singleton);
-            container.Register<SessionNotificationService>(Lifestyle.Singleton);
-            container.Register<IRingtonePlayer, RingtonePlayer>(Lifestyle.Singleton);
 
             // Return the container for chaining
             return container;

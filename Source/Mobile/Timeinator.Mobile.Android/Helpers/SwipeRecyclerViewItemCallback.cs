@@ -126,16 +126,20 @@ namespace Timeinator.Mobile.Android
         /// </summary>
         public override int GetMovementFlags(RecyclerView p0, RecyclerView.ViewHolder p1)
         {
+            // Allow left and right movements
             var swipeFlags = ItemTouchHelper.Start | ItemTouchHelper.End;
             return MakeMovementFlags(0, swipeFlags);
         }
 
         /// <summary>
-        /// Called everytime item moves, we just allow it to be
+        /// Called whenever an item is being moved
         /// </summary>
         public override bool OnMove(RecyclerView p0, RecyclerView.ViewHolder p1, RecyclerView.ViewHolder p2)
         {
+            // Inform adapter
             mAdapter.NotifyItemMoved(p1.AdapterPosition, p2.AdapterPosition);
+
+            // Return successful move operation
             return true;
         }
 

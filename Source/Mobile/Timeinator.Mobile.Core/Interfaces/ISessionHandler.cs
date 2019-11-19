@@ -5,7 +5,7 @@ using Timeinator.Core;
 namespace Timeinator.Mobile.Domain
 {
     /// <summary>
-    /// The interface for handling everything related to time in task session
+    /// The interface for handling everything related to session functionallity
     /// </summary>
     public interface ISessionHandler
     {
@@ -16,10 +16,13 @@ namespace Timeinator.Mobile.Domain
         TimeSpan CurrentTimeLeft { get; }
         TimeSpan CurrentBreakDuration { get; set; }
 
-        event Action TaskStarted, TaskFinished, SessionFinished, SessionStarted;
+        event Action TaskStarted;
+        event Action TaskFinished; 
+        event Action SessionFinished; 
+        event Action SessionStarted; 
 
         void SetupSession(Action timerAction);
-        bool UpdateDuration(TimeSpan duration);
+        bool UpdateDuration(TimeSpan userTime, bool timeAsFinishHour);
         void UpdateTasks(List<TimeTaskContext> tasks);
         void Calculate();
         HeadList<TimeTaskContext> GetTasks();

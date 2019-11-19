@@ -28,7 +28,7 @@
         android:tint="@color/colorWhite"
         android:background="@color/colorAccent"
         android:src="@drawable/ic_pause_black_24dp"
-        local:MvxBind="Click PauseCommand;Visibility PausedBoolToVisibility(Paused)" />
+        local:MvxBind="Click PauseCommand;Visibility BoolToVisibility(Paused, true)" />
     <android.support.design.widget.FloatingActionButton
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
         android:tint="@color/colorWhite"
         android:background="@color/colorAccent"
         android:src="@drawable/ic_play_arrow_black_24dp"
-        local:MvxBind="Click ResumeCommand;Visibility PausedBoolToVisibility(Paused, true)" />
+        local:MvxBind="Click ResumeCommand;Visibility BoolToVisibility(Paused)" />
     <LinearLayout
         android:id="@+id/currentTaskTitle"
         android:layout_width="match_parent"
@@ -205,7 +205,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="4dp"
-            local:MvxBind="Visibility PausedBoolToVisibility(Paused, true)"
+            local:MvxBind="Visibility BoolToVisibility(Paused)"
             android:background="@android:color/darker_gray">
 
             <TextView

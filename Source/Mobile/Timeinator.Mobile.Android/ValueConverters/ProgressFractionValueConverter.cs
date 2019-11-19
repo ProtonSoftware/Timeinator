@@ -11,9 +11,11 @@ namespace Timeinator.Mobile.Android
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // Get provided values
             var currentProgress = (double)value;
             var maxProgress = (double)parameter;
 
+            // Return them as formatted string
             return $"{currentProgress} / {maxProgress}";
         }
 

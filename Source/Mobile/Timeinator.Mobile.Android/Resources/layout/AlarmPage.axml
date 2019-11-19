@@ -32,7 +32,6 @@
         android:layout_alignParentBottom="true"
         android:padding="@dimen/abc_action_bar_overflow_padding_start_material"
         android:elevation="@dimen/abc_action_bar_elevation_material"
-		local:MvxBind="Visibility PausedBoolToVisibility(Paused)"
         android:orientation="horizontal">
 
         <Button

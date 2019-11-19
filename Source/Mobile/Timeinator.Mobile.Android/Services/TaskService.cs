@@ -9,115 +9,145 @@ using Timeinator.Mobile.Domain;
 namespace Timeinator.Mobile.Android
 {
     /// <summary>
-    /// Low-level Android Service handling session in the background
+    /// The Android service that helps with handling session in the background while the app is minimized
     /// </summary>
     [Service]
     public class TaskService : Service
     {
         #region Private Members
 
+        // Configuration
+        // TODO: Move this somewhere else, but for now it works just fine with being here
         private static readonly int NotificationId = 3333;
         private static readonly string ChannelId = "com.gummybearstudio.timeinator";
 
+        /// <summary>
+        /// The notification manager for every interactions with actual notification building process
+        /// </summary>
         private readonly AndroidNotificationManager mNotificationManager = new AndroidNotificationManager(ChannelId);
 
         #endregion
 
         #region Public Properties
 
-        public string Title { get; set; } = LocalizationResource.TaskName;
-        public TimeSpan Time { get; set; } = default;
-        public double Progress { get; set; }
-
-        public bool IsRunning { get; set; }
-        public event Action<AppAction> RequestHandler;
-
-        #endregion
-
-        #region Public Service
-
+        /// <summary>
+        /// TODO: Try to remove this binder reference here and see if app still works fine in background
+        /// </summary>
         public IBinder Binder { get; private set; }
 
-        public override void OnCreate()
-        {
-            base.OnCreate();
-            mNotificationManager.CreateNotificationChannel(ChannelId);
-            StartForeground(NotificationId, GetNotification());
-        }
+        /// <summary>
+        /// The current task's name to show as a title of notification
+        /// </summary>
+        public string Title { get; set; } = LocalizationResource.TaskName;
 
-        [return: GeneratedEnum]
-        public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
-        {
-            HandleMessage(intent);
-            return StartCommandResult.NotSticky;
-        }
+        /// <summary>
+        /// The time left for the current task to be finished 
+        /// </summary>
+        public TimeSpan Time { get; set; }
 
-        public override IBinder OnBind(Intent intent)
-        {
-            // Check and handle any incoming action
-            HandleMessage(intent);
-            RequestHandler = (a) => { };
-            Binder = new TaskServiceBinder(this);
-            return Binder;
-        }
+        /// <summary>
+        /// The percentage progress of current task
+        /// </summary>
+        public int Progress { get; set; }
+
+        /// <summary>
+        /// Indicates if notification is currently up and running
+        /// </summary>
+        public bool IsRunning { get; set; }
+
+        /// <summary>
+        /// The event to handle any request coming from notification
+        /// </summary>
+        public event Action<AppAction> RequestHandler;
 
         #endregion
 
         #region Public Methods
 
         /// <summary>
-        /// Current Notification to notify by Service
+        /// Called initially when this service is being created
         /// </summary>
-        public Notification GetNotification()
+        public override void OnCreate()
         {
-            // Prepare data for notification
-            var progress = Progress * 100;
+            // Do base stuff
+            base.OnCreate();
 
-            // Create notification and return it
-            return mNotificationManager.CreateNotification(Title, (int)progress, Time, this);
+            // Create notification channel
+            mNotificationManager.CreateNotificationChannel(ChannelId);
+
+            // Create notification itself and start displaying it
+            StartForeground(NotificationId, GetNotification());
         }
 
         /// <summary>
-        /// Call any action supported by Service
+        /// TODO: Explaination what this function really does
+        /// </summary>
+        [return: GeneratedEnum]
+        public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
+        {
+            // Use provided intent to do requested action
+            HandleMessage(intent);
+
+            // TODO: Explanation why its NotSticky here plz
+            return StartCommandResult.NotSticky;
+        }
+
+        /// <summary>
+        /// Called when new binder is requested for this service
+        /// </summary>
+        /// <param name="intent">The action to perform while creating new binder</param>
+        /// <returns>Created Android Binder</returns>
+        public override IBinder OnBind(Intent intent)
+        {
+            // Use provided intent to do requested action
+            HandleMessage(intent);
+
+            // Reset the event handler
+            RequestHandler = (a) => { };
+
+            // Create new binder with this service inside
+            Binder = new TaskServiceBinder(this);
+
+            // Return the binder itself
+            return Binder;
+        }
+
+        /// <summary>
+        /// Refreshes current notification state with newest available data
+        /// </summary>
+        public void ReNotify() => mNotificationManager.Notify(NotificationId, GetNotification());
+
+        #endregion
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Creates brand-new notification using the manager
+        /// </summary>
+        public Notification GetNotification() => mNotificationManager.CreateNotification(Title, Progress, Time, this);
+
+        /// <summary>
+        /// Runs any action from provided intent
         /// </summary>
         public void HandleMessage(Intent intent)
         {
-            AppAction appAction;
-            switch (intent.Action)
+            // Get the user action based on provided intent
+            var appAction = intent.Action.ToActionEnum();
+
+            // If the action was to stop the session...
+            if (appAction == AppAction.StopSession)
             {
-                case IntentActions.ACTION_NEXTTASK:
-                    appAction = AppAction.NextSessionTask;
-                    break;
-
-                case IntentActions.ACTION_RESUMETASK:
-                    appAction = AppAction.ResumeSession;
-                    break;
-
-                case IntentActions.ACTION_PAUSETASK:
-                    appAction = AppAction.PauseSession;
-                    break;
-
-                case IntentActions.ACTION_STOP:
-                    {
-                        // Kill the notification
-                        StopForeground(true);
-                        StopSelf();
-                        return;
-                    }
-                    
-                default:
-                    return;
+                // Kill the notification
+                StopForeground(true);
+                StopSelf();
+                return;
             }
-            RequestHandler.Invoke(appAction);
-            ReNotify();
-        }
 
-        /// <summary>
-        /// Refresh notification
-        /// </summary>
-        public void ReNotify()
-        {
-            mNotificationManager.Notify(NotificationId, GetNotification());
+            // Perform desired action
+            RequestHandler.Invoke(appAction);
+
+            // Refresh the notification
+            ReNotify();
         }
 
         #endregion

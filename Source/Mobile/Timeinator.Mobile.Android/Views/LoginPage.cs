@@ -3,11 +3,13 @@ using Android.App;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
+using Microsoft.EntityFrameworkCore;
 using MvvmCross;
 using MvvmCross.Droid.Support.V7.AppCompat;
 using MvvmCross.Platforms.Android;
 using MvvmCross.Platforms.Android.Presenters.Attributes;
 using SimpleInjector;
+using Timeinator.Mobile.DataAccess;
 using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
@@ -42,11 +44,11 @@ namespace Timeinator.Mobile.Android
             // Add dialogs library to Mvx DI
             Mvx.IoCProvider.RegisterSingleton<IUserDialogs>(() => UserDialogs.Instance);
 
-            // Create new container
+            // Create new DI container
             DI.Container = new Container().AddTimeinatorServices();
 
             // Migrate the database
-            DI.MigrateDatabase();
+            DI.Container.GetInstance<TimeinatorMobileDbContext>().Database.Migrate();
 
             // Create settings provider instance to load every setting initially
             DI.Container.GetInstance<ISettingsProvider>();

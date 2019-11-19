@@ -5,25 +5,38 @@ using Timeinator.Mobile.Domain;
 
 namespace Timeinator.Mobile.Android
 {
+    /// <summary>
+    /// The player for ringtone sound in Android
+    /// </summary>
     public class RingtonePlayer : IRingtonePlayer
     {
         #region Private Members
 
-        private readonly Ringtone mSound = RingtoneManager.GetRingtone(Application.Context, RingtoneManager.GetDefaultUri(RingtoneType.Ringtone));
+        /// <summary>
+        /// The sound to use when playing
+        /// </summary>
+        private Ringtone mSound = RingtoneManager.GetRingtone(Application.Context, RingtoneManager.GetDefaultUri(RingtoneType.Ringtone));
 
         #endregion
 
         #region Interface Implementation
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Implements <see cref="IRingtonePlayer.Play"/>
+        /// </summary>
         public void Play() => mSound.Play();
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Implements <see cref="IRingtonePlayer.Stop"/>
+        /// </summary>
         public void Stop() => mSound.Stop();
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Implements <see cref="IRingtonePlayer.ChangeRingtone(string)"/>
+        /// </summary>
         public void ChangeRingtone(string type)
         {
+            // TODO: Implement this sometime soon
             throw new NotImplementedException();
         }
 

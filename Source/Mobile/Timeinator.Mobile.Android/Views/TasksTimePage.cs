@@ -30,10 +30,10 @@ namespace Timeinator.Mobile.Android
             // Find the timepicker on this page
             var timepicker = FindViewById<TimePicker>(Resource.Id.pickerSession);
 
-            // Set default values (otherwise it would be current user time, which we don't want)
+            // Set default values (otherwise it would be current user time, which we don't want yet)
             timepicker.SetIs24HourView(new Java.Lang.Boolean(true));
 
-            // Listen for mode changed
+            // Listen out for timepicker mode changing
             finishModeCheckBox.CheckedChange += CheckBox_CheckedChanged;
             CheckBox_CheckedChanged(finishModeCheckBox, null);
 
@@ -52,15 +52,16 @@ namespace Timeinator.Mobile.Android
             // Get timepicker
             var timepicker = FindViewById<TimePicker>(Resource.Id.pickerSession);
 
+            // If mode is on
             if (isFinishMode)
             {
-                // Set time to Now
+                // Set time to current user time
                 timepicker.Hour = DateTime.Now.Hour;
                 timepicker.Minute = DateTime.Now.Minute;
             }
             else
             {
-                // Set time to 0
+                // Set time to 0 and let user pick the amount for session
                 timepicker.Hour = 0;
                 timepicker.Minute = 0;
             }

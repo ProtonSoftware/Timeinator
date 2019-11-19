@@ -25,12 +25,12 @@ namespace Timeinator.Mobile.Domain
         #region Public Properties
 
         /// <summary>
-        /// The list of time tasks for current session to show in this page
+        /// The list of calculated time tasks for upcoming session to show in this page
         /// </summary>
         public ObservableCollection<SummaryTimeTaskItemViewModel> TaskItems { get; set; } = new ObservableCollection<SummaryTimeTaskItemViewModel>();
 
         /// <summary>
-        /// The time needed for current session
+        /// The calculated time for upcoming session
         /// </summary>
         public TimeSpan SessionTime { get; set; }
 
@@ -77,7 +77,7 @@ namespace Timeinator.Mobile.Domain
             mApplicationViewModel = applicationViewModel;
             mViewModelProvider = viewModelProvider;
 
-            // Load tasks from the manager to this page
+            // Load session tasks this page
             LoadTaskList();
         }
 
@@ -109,10 +109,6 @@ namespace Timeinator.Mobile.Domain
         /// </summary>
         private void Cancel()
         {
-            // Clear task list in service
-            mSessionHandler.ClearSessionTasks();
-
-            // TODO: Find better way
             // Go back to task list
             mApplicationViewModel.GoToPage(ApplicationPage.TasksList);
         }
@@ -163,7 +159,7 @@ namespace Timeinator.Mobile.Domain
         #region Private Helpers
 
         /// <summary>
-        /// Loads calculated task list
+        /// Loads calculated tasks list
         /// </summary>
         private void LoadTaskList()
         {

@@ -13,13 +13,14 @@ namespace Timeinator.Mobile.Android
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var prependSentence = "";
-            var timespan = (TimeSpan)value;
+            // Get the provided time value
+            var timeSpan = (TimeSpan)value;
 
-            if (parameter != null)
-                prependSentence = LocalizationResource.EstimatedSessionTimeSemicolon;
+            // If parameter was provided, prepend a text before time values
+            var prependSentence = parameter != null ? LocalizationResource.EstimatedSessionTimeSemicolon : "";
 
-            return $"{prependSentence}{timespan.Hours}h {timespan.Minutes}m {timespan.Seconds}s";
+            // Return formatted string
+            return $"{prependSentence}{timeSpan.Hours}h {timeSpan.Minutes}m {timeSpan.Seconds}s";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
