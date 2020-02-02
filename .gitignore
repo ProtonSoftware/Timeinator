@@ -336,3 +336,4 @@ ASALocalRun/
 .localhistory/
 Source/Mobile/Timeinator.Mobile.Android/TiSigning.targets
 Source/Mobile/Timeinator.Mobile.AndroidNative/TiSigning.targets
+Resources/timeinator.keystore
